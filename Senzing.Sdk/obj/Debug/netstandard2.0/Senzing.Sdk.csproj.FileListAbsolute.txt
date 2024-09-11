@@ -1,0 +1,11 @@
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.csproj.AssemblyReference.cache
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.GeneratedMSBuildEditorConfig.editorconfig
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.AssemblyInfoInputs.cache
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.AssemblyInfo.cs
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.csproj.CoreCompileInputs.cache
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.sourcelink.json
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.deps.json
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.dll
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.pdb
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.dll
+/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/Debug/netstandard2.0/Senzing.Sdk.pdb
