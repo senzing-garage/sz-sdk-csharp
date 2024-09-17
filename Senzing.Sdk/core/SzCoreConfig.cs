@@ -1,7 +1,6 @@
-namespace Senzing.Sdk.Core;
-
 using Senzing.Sdk;
 
+namespace Senzing.Sdk.Core {
 public class SzCoreConfig: SzConfig {
     private SzCoreEnvironment env = null;
 
@@ -12,5 +11,5 @@ public class SzCoreConfig: SzConfig {
     internal void Destroy() {
         
     }
-
+}
 }

@@ -1,5 +1,6 @@
-namespace Senzing.Sdk;
+namespace Senzing.Sdk {
 
 public interface SzEngine {
 
+}
 }

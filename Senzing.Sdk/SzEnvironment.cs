@@ -1,4 +1,4 @@
-﻿namespace Senzing.Sdk;
+﻿namespace Senzing.Sdk {
 
 /// <summary>
 /// Provides a factory interface for obtaining the references to the Senzing SDK 
@@ -45,4 +45,5 @@ public interface SzEnvironment
     /// method called, otherwise <c>false</c>.
     /// </returns>
     bool IsDestroyed();
+}
 }

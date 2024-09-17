@@ -1,4 +1,4 @@
-namespace Senzing.Sdk;
+namespace Senzing.Sdk {
 
 /// <summary>Defines the Java interface to the Senzing product functions.</summary>
 /// 
@@ -21,4 +21,5 @@ public interface SzProduct {
     ///
     /// <exception cref="SzException">Thrown if a failure occurs.</exception>
     string GetVersion();
+}
 }

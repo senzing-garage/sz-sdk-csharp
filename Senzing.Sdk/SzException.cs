@@ -1,5 +1,6 @@
 using System;
 
+namespace Senzing.Sdk {
 /// <summary>
 /// Defines the base exception for Senzing errors.  This adds a property
 /// for the numeric Senzing error code which can optionally be set.
@@ -94,4 +95,5 @@ public class SzException : Exception
     public int? getErrorCode() {
         return this.errorCode;
     }
+}
 }

@@ -1,10 +1,9 @@
-namespace Senzing.Sdk.Core;
-
 using Senzing.Sdk;
 using System;
 using System.Threading;
 
 
+namespace Senzing.Sdk.Core {
 /// <summary>
 /// Provides the core implementation of <see cref="Senzing.Sdk.SzEnvironment"/>
 /// that directly initializes the Senzing SDK modules and provides management
@@ -866,4 +865,5 @@ public class SzCoreEnvironment: SzEnvironment {
         return null;
     }
 
+}
 }

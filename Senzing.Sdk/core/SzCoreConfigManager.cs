@@ -1,7 +1,6 @@
-namespace Senzing.Sdk.Core;
-
 using Senzing.Sdk;
 
+namespace Senzing.Sdk.Core {
 public class SzCoreConfigManager: SzConfigManager {
     private SzCoreEnvironment env = null;
 
@@ -13,4 +12,5 @@ public class SzCoreConfigManager: SzConfigManager {
         
     }
 
+}
 }

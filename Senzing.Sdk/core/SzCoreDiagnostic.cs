@@ -1,7 +1,7 @@
-namespace Senzing.Sdk.Core;
 
 using Senzing.Sdk;
 
+namespace Senzing.Sdk.Core {
 public class SzCoreDiagnostic: SzDiagnostic {
     private SzCoreEnvironment env = null;
 
@@ -13,4 +13,5 @@ public class SzCoreDiagnostic: SzDiagnostic {
         
     }
 
+}
 }
