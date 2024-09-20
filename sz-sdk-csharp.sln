@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senzing.Sdk", "Senzing.Sdk\Senzing.Sdk.csproj", "{EB4FA995-A132-4422-B966-B120DA924702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Senzing.Sdk.Tests", "Senzing.Sdk.Tests\Senzing.Sdk.Tests.csproj", "{632DD128-6953-4143-A94E-34A3B43FBCE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +14,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB4FA995-A132-4422-B966-B120DA924702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4FA995-A132-4422-B966-B120DA924702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4FA995-A132-4422-B966-B120DA924702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4FA995-A132-4422-B966-B120DA924702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{632DD128-6953-4143-A94E-34A3B43FBCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{632DD128-6953-4143-A94E-34A3B43FBCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{632DD128-6953-4143-A94E-34A3B43FBCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{632DD128-6953-4143-A94E-34A3B43FBCE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
