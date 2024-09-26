@@ -18,8 +18,8 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
         return SzDiagnostic_init(Encoding.UTF8.GetBytes(moduleName),
-                                    Encoding.UTF8.GetBytes(iniParams),
-                                    (verboseLogging) ? 1 : 0);
+                                 Encoding.UTF8.GetBytes(iniParams),
+                                 (verboseLogging) ? 1 : 0);
     }
 
     [DllImport ("Sz")]
