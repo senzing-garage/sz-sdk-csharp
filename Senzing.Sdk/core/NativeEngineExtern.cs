@@ -256,6 +256,36 @@ internal class NativeEngineExtern : NativeEngine {
     }
 
     [DllImport ("Sz")]
+    private static extern SzPointerResult Sz_preprocessRecord_helper(
+        byte[] jsonData, long flags);
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="Sz_preprocessRecord_helper"/>. 
+    /// </summary>
+    ///
+    /// <returns>Zero (0) on success and non-zero on failure.</returns>
+    public long PreprocessRecord(string     jsonData,
+                                 long       flags,
+                                 out string response)
+    {
+        SzPointerResult result;
+        result.response = IntPtr.Zero;
+        result.returnCode = 0L;
+        try {
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonData);
+
+            result = Sz_preprocessRecord_helper(jsonBytes, flags);
+
+            response = Utilities.UTF8BytesToString(result.response);
+            return result.returnCode;
+
+        } finally {
+            Utilities.FreeSzBuffer(result.response);
+        }
+    }
+
+    [DllImport ("Sz")]
     private static extern long Sz_deleteRecord(
         byte[] dataSourceCode, byte[] recordID);
 

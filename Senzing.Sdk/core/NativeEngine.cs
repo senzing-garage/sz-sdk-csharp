@@ -172,6 +172,32 @@ internal interface NativeEngine : NativeApi {
                            out string   response);
 
     /// <summary>
+    /// Peforms a hypothetical load of the specified JSON record without
+    /// actually loading the record responding with a JSON document describing
+    /// how the record would be loaded and how the repository would be changed.
+    /// </summary>
+    /// 
+    /// <param name="jsonData">
+    /// A JSON document containing the attribute information for the record.
+    /// </param>
+    /// 
+    /// <param name="flags">
+    /// The flags to control how the operation is performed and specifically
+    /// the content of the response JSON document.
+    /// </param>
+    ///
+    /// <param name="response">
+    /// The <c>string</c> response out parameter that will be set to the JSON
+    /// response document describing how the record would be loaded.
+    /// </param>
+    ///
+    /// <returns>Zero (0) on success and non-zero on failure.</returns>
+    long PreprocessRecord(string        jsonData,
+                          long          flags,
+                          out string    response);
+    
+
+    /// <summary>
     /// Delete the record that has already been loaded.
     /// </summary>
     /// 
