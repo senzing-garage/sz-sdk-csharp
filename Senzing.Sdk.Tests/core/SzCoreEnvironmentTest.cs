@@ -6,41 +6,36 @@ using System;
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 [Parallelizable(ParallelScope.Fixtures)]
-public class SzCoreEnvironmentTest : AbstractTest 
+internal class SzCoreEnvironmentTest : AbstractTest 
 {
-    private static int constructCount = 0;
-    private static int setupCount = 0;
+    private static readonly SzCoreEnvironmentTest Instance
+        = new SzCoreEnvironmentTest();
+    
+    private const string EmployeeDataSource = "EMPLOYEES";
 
-    public SzCoreEnvironmentTest() {
-        constructCount++;
-    }
+    private const string CustomerDataSOurce = "CUSTOMERS";
 
     [OneTimeSetUp]
-    public static void OneTimeSetup() {
-        Console.WriteLine("One-time setup");
-        setupCount++;
+    public void OneTimeSetup() {
+        Instance.BeginTests();
+        Instance.InitializeTestEnvironment();
+
+        string settings = Instance.GetRepoSettings();
+        string instanceName = Instance.GetInstanceName();
+
     }
 
     [OneTimeTearDown]
     public static void OneTimeTearDown() {
-        Console.WriteLine("One-time teardown");
-        setupCount--;
-    }
 
-    [SetUp]
-    public void Setup()
-    {
-        Console.WriteLine($"Pre-Test Setup: {constructCount} / {setupCount}");
-    }
-
-    [TearDown]
-    public void TearDown() {
-        Console.WriteLine($"Post-Test Teardown: {constructCount} / {setupCount}");
     }
 
     [Test]
     public void Test1()
     {
+        if (this == Instance) {
+
+        }
         Assert.Pass();
     }
 
