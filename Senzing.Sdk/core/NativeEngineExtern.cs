@@ -8,8 +8,8 @@ namespace Senzing.Sdk.Core {
 /// that will call the native equivalent <c>extern</c> functions.
 /// </summary>
 internal class NativeEngineExtern : NativeEngine {
-    [DllImport ("Sz")]
-    private static extern int SzEngine_init(
+    [DllImport ("libSz")]
+    private static extern int Sz_init(
         byte[] moduleName, byte[] iniParams, long verboseLogging);
     
     /// <summary>
@@ -17,13 +17,13 @@ internal class NativeEngineExtern : NativeEngine {
     /// <see cref="SzConfig_init"/>
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzEngine_init(Encoding.UTF8.GetBytes(moduleName),
-                             Encoding.UTF8.GetBytes(iniParams),
-                             (verboseLogging) ? 1 : 0);
+        return Sz_init(Encoding.UTF8.GetBytes(moduleName),
+                       Encoding.UTF8.GetBytes(iniParams),
+                       (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
-    private static extern int SzEngine_initWithConfigID(
+    [DllImport ("libSz")]
+    private static extern int Sz_initWithConfigID(
         byte[] moduleName, byte[] iniParams, long initConfigID, long verboseLogging);
     
     /// <summary>
@@ -35,36 +35,36 @@ internal class NativeEngineExtern : NativeEngine {
                                  long   initConfigID,
                                  bool   verboseLogging) 
     {
-        return SzEngine_initWithConfigID(
+        return Sz_initWithConfigID(
             Encoding.UTF8.GetBytes(moduleName),
             Encoding.UTF8.GetBytes(iniParams),
             initConfigID,
             (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
-    private static extern int SzEngine_reinit(long initConfigID);
+    [DllImport ("libSz")]
+    private static extern int Sz_reinit(long initConfigID);
     
     /// <summary>
     /// Implemented to call the external native function
     /// <see cref="SzConfig_reinit"/>.
     /// </summary>
     public long Reinit(long initConfigID) {
-        return SzEngine_reinit(initConfigID);
+        return Sz_reinit(initConfigID);
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzEngine_destroy();
+    [DllImport ("libSz")]
+    private static extern long Sz_destroy();
 
     /// <summary>
     /// Implemented to call the external native function <c>SzConfig_destroy()</c>.
     /// </summary>
     public long Destroy() {
-        return SzEngine_destroy();
+        return Sz_destroy();
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzEngine_getLastException(
+    [DllImport ("libSz")]
+    private static extern long Sz_getLastException(
         [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
     
     /// <summary>
@@ -80,15 +80,15 @@ internal class NativeEngineExtern : NativeEngine {
     /// <returns>An error message</returns>
     public string GetLastException() {
         byte[] buf = new byte[4096];
-        long length = SzEngine_getLastException(buf, buf.Length);
+        long length = Sz_getLastException(buf, buf.Length);
         if (length == 0L) {
             return "";
         }
-        return System.Text.Encoding.UTF8.GetString(buf);
+        return System.Text.Encoding.UTF8.GetString(buf, 0, (int) (length-1));
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzEngine_getLastExceptionCode();
+    [DllImport ("libSz")]
+    private static extern long Sz_getLastExceptionCode();
 
     /// <summary>
     /// Implemented to return the last error code associated with the 
@@ -103,18 +103,18 @@ internal class NativeEngineExtern : NativeEngine {
     /// <returns>An error code</returns>
     ///
     public long GetLastExceptionCode() {
-        return SzEngine_getLastExceptionCode();
+        return Sz_getLastExceptionCode();
     }
 
-    [DllImport ("Sz")]
-    private static extern void SzEngine_clearLastException();
+    [DllImport ("libSz")]
+    private static extern void Sz_clearLastException();
     
     /// <summary>
     /// Implemented to clear the information pertaining to the last
     /// error encountered with the Senzing config funtions.
     /// </summary>
     public void ClearLastException() {
-        SzEngine_clearLastException();
+        Sz_clearLastException();
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ internal class NativeEngineExtern : NativeEngine {
         public long returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_primeEngine();
 
     /// <summary>
@@ -151,7 +151,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_primeEngine();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_stats_helper();
 
     /// <summary>
@@ -177,7 +177,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzLongResult Sz_getActiveConfigID_helper();
 
     /// <summary>
@@ -197,7 +197,7 @@ internal class NativeEngineExtern : NativeEngine {
         return result.returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_addRecord(
         byte[] dataSourceCode, byte[] recordID, byte[] jsonData);
 
@@ -218,7 +218,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_addRecord(codeBytes, idBytes, jsonBytes);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_addRecordWithInfo_helper(
         byte[] dataSourceCode, byte[] recordID, byte[] jsonData, long flags);
 
@@ -255,7 +255,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_preprocessRecord_helper(
         byte[] jsonData, long flags);
 
@@ -285,7 +285,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_deleteRecord(
         byte[] dataSourceCode, byte[] recordID);
 
@@ -302,7 +302,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_deleteRecord(codeBytes, idBytes);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_deleteRecordWithInfo_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -336,7 +336,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_reevaluateRecord(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -356,7 +356,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_reevaluateRecord(codeBytes, idBytes, flags);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_reevaluateRecordWithInfo_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -390,7 +390,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_reevaluateEntity(long entityID, long flags);
 
     /// <summary>
@@ -403,7 +403,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_reevaluateEntity(entityID, flags);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_reevaluateEntityWithInfo_helper(
         long entityID, long flags);
 
@@ -431,7 +431,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_searchByAttributes_helper(byte[] jsonData);
 
     /// <summary>
@@ -457,7 +457,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_searchByAttributes_V2_helper(
         byte[] jsonData, long flags);
 
@@ -485,7 +485,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_searchByAttributes_V3_helper(
         byte[] jsonData, byte[] searchProfile, long flags);
 
@@ -517,7 +517,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getEntityByEntityID_helper(long entityID);
 
     /// <summary>
@@ -542,7 +542,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getEntityByEntityID_V2_helper(
         long entityID, long flags);
 
@@ -570,7 +570,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getEntityByRecordID_helper(
         byte[] dataSourceCode, byte[] recordID);
 
@@ -601,7 +601,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getEntityByRecordID_V2_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -635,7 +635,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findInterestingEntitiesByEntityID_helper(
         long entityID, long flags);
 
@@ -664,7 +664,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findInterestingEntitiesByRecordID_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -698,7 +698,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityID_helper(
         long entityID1, long entityID2, long maxDegrees);
 
@@ -729,7 +729,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityID_V2_helper(
         long entityID1, long entityID2, long maxDegrees, long flags);
 
@@ -762,7 +762,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordID_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -806,7 +806,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordID_V2_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -853,7 +853,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityIDWithAvoids_helper(
         long entityID1, long entityID2, long maxDegrees, byte[] avoidedEntities);
 
@@ -888,7 +888,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityIDWithAvoids_V2_helper(
         long    entityID1,
         long    entityID2,
@@ -929,7 +929,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordIDWithAvoids_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -977,7 +977,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordIDWithAvoids_V2_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -1028,7 +1028,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityIDIncludingSource_helper(
         long    entityID1,
         long    entityID2,
@@ -1070,7 +1070,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByEntityIDIncludingSource_V2_helper(
         long    entityID1,
         long    entityID2,
@@ -1115,7 +1115,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordIDIncludingSource_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -1167,7 +1167,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findPathByRecordIDIncludingSource_V2_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -1222,7 +1222,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findNetworkByEntityID_helper(
         byte[]  entityList,
         long    maxDegrees,
@@ -1260,7 +1260,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findNetworkByEntityID_V2_helper(
         byte[]  entityList,
         long    maxDegrees,
@@ -1301,7 +1301,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findNetworkByRecordID_helper(
         byte[]  recordList,
         long    maxDegrees,
@@ -1339,7 +1339,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_findNetworkByRecordID_V2_helper(
         byte[]  recordList,
         long    maxDegrees,
@@ -1380,7 +1380,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyRecordInEntity_helper(
         byte[] dataSourceCode, byte[] recordID);
 
@@ -1411,7 +1411,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyRecordInEntity_V2_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -1443,7 +1443,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyRecords_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -1484,7 +1484,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyRecords_V2_helper(
         byte[] dataSourceCode1,
         byte[] recordID1,
@@ -1528,7 +1528,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyEntities_helper(
         long entityID1, long entityID2);
 
@@ -1556,7 +1556,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_whyEntities_V2_helper(
         long entityID1, long entityID2, long flags);
 
@@ -1585,7 +1585,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
   
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_howEntityByEntityID_helper(long entityID);
 
     /// <summary>
@@ -1610,7 +1610,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
   
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_howEntityByEntityID_V2_helper(
         long entityID, long flags);
 
@@ -1639,7 +1639,7 @@ internal class NativeEngineExtern : NativeEngine {
 
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getVirtualEntityByRecordID_helper(
         byte[] recordList);
 
@@ -1668,7 +1668,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getVirtualEntityByRecordID_V2_helper(
         byte[] recordList, long flags);
 
@@ -1698,7 +1698,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
   
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getRecord_helper(
         byte[] dataSourceCode, byte[] recordID);
 
@@ -1729,7 +1729,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getRecord_V2_helper(
         byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -1761,7 +1761,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_exportJSONEntityReport_helper(long flags);
 
     /// <summary>
@@ -1782,7 +1782,7 @@ internal class NativeEngineExtern : NativeEngine {
         return result.returnCode;        
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_exportCSVEntityReport_helper(
         byte[] csvColumnList, long flags);
 
@@ -1810,7 +1810,7 @@ internal class NativeEngineExtern : NativeEngine {
 
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_fetchNext_helper(IntPtr exportHandle);
 
     /// <summary>
@@ -1834,7 +1834,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_closeExport_helper(IntPtr exportHandle);
 
     /// <summary>
@@ -1849,7 +1849,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_closeExport_helper(exportHandle);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_processRedoRecord(byte[] redoRecord);
 
     /// <summary>
@@ -1864,7 +1864,7 @@ internal class NativeEngineExtern : NativeEngine {
         return Sz_processRedoRecord(redoBytes);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_processRedoRecordWithInfo_helper(
         byte[] redoReord);
 
@@ -1893,7 +1893,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult Sz_getRedoRecord_helper();
 
     /// <summary>
@@ -1917,7 +1917,7 @@ internal class NativeEngineExtern : NativeEngine {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long Sz_countRedoRecords();
 
     /// <summary>

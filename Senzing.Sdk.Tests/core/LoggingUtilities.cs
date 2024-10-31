@@ -492,5 +492,19 @@ public class LoggingUtilities
         SetLastLoggedAndThrow(e);
         return new Exception(); // we never get here
     }
+
+    /// <summary>
+    /// Formats the specified excpeption as a <c>string</c>.
+    /// </summary>
+    public static string FormatException(string? msg, Exception e) {
+        StringBuilder sb = new StringBuilder();
+        if (msg != null) {
+            sb.AppendLine(msg);
+            sb.AppendLine("-----------------------------------------");
+        }
+        sb.AppendLine(e.ToString());
+        sb.AppendLine(e.StackTrace);
+        return sb.ToString();
+    }
 }
 }

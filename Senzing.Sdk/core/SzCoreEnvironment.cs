@@ -150,7 +150,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// </returns>
     public static SzCoreEnvironment GetActiveInstance() {
         lock (ClassMonitor) {
-            if (currentInstance == null) {
+           if (currentInstance == null) {
                 return null;
             }
             Interlocked.MemoryBarrier();
@@ -160,7 +160,7 @@ public class SzCoreEnvironment: SzEnvironment {
                     case State.Destroying:
                         // wait until destroyed and fall through
                         WaitUntilDestroyed(currentInstance);
-                        goto case State.Destroying;
+                        goto case State.Destroyed;
                     case State.Destroyed:
                         // if still set but destroyed, clear it and fall through
                         currentInstance = null;
@@ -403,9 +403,14 @@ public class SzCoreEnvironment: SzEnvironment {
                 // increment the executing count
                 Interlocked.Increment(ref this.executingCount);
             }
-        
-            return task();
-
+            try {
+                return task();
+            } catch (SzException) {
+                throw;
+            } catch (Exception e) {
+                throw new SzException(e);
+            }
+            
         } finally {
             lock (this.monitor) {
                 Interlocked.Decrement(ref this.executingCount);

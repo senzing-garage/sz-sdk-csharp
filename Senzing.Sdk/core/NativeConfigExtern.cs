@@ -8,7 +8,7 @@ namespace Senzing.Sdk.Core {
 /// call the native equivalent <c>extern</c> functions.
 /// </summary>
 internal class NativeConfigExtern : NativeConfig {
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern int SzConfig_init(byte[] moduleName, byte[] iniParams, long verboseLogging);
     
     /// <summary>
@@ -20,7 +20,7 @@ internal class NativeConfigExtern : NativeConfig {
                               (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfig_destroy();
 
     /// <summary>
@@ -30,7 +30,7 @@ internal class NativeConfigExtern : NativeConfig {
         return SzConfig_destroy();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfig_getLastException([MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
     
     /// <summary>
@@ -50,10 +50,10 @@ internal class NativeConfigExtern : NativeConfig {
         if (length == 0L) {
             return "";
         }
-        return System.Text.Encoding.UTF8.GetString(buf);
+        return System.Text.Encoding.UTF8.GetString(buf, 0, (int) (length-1));
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfig_getLastExceptionCode();
 
     /// <summary>
@@ -72,7 +72,7 @@ internal class NativeConfigExtern : NativeConfig {
         return SzConfig_getLastExceptionCode();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern void SzConfig_clearLastException();
     
     /// <summary>
@@ -92,7 +92,7 @@ internal class NativeConfigExtern : NativeConfig {
         public long returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfig_create_helper();
 
     /// <summary>
@@ -113,7 +113,7 @@ internal class NativeConfigExtern : NativeConfig {
         return result.returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfig_load_helper(byte[] bytes);
 
     /// <summary>
@@ -135,7 +135,7 @@ internal class NativeConfigExtern : NativeConfig {
         return result.returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfig_save_helper(IntPtr handle);
 
     /// <summary>
@@ -159,7 +159,7 @@ internal class NativeConfigExtern : NativeConfig {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfig_close_helper(IntPtr handle);
 
     /// <summary>
@@ -174,7 +174,7 @@ internal class NativeConfigExtern : NativeConfig {
         return SzConfig_close_helper(configHandle);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfig_listDataSources_helper(
         IntPtr handle);
     
@@ -199,7 +199,7 @@ internal class NativeConfigExtern : NativeConfig {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfig_addDataSource_helper(
         IntPtr handle, byte[] bytes);
     
@@ -228,7 +228,7 @@ internal class NativeConfigExtern : NativeConfig {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfig_deleteDataSource_helper(IntPtr handle,
                                                                 byte[] bytes);
 

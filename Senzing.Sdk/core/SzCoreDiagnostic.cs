@@ -33,13 +33,29 @@ public class SzCoreDiagnostic: SzDiagnostic {
             // construct the native delegate
             this.nativeApi = new NativeDiagnosticExtern();
 
-            // initialize the native delegate
-            long returnCode = this.nativeApi.Init(this.env.GetInstanceName(),
-                                                  this.env.GetSettings(),
-                                                  this.env.IsVerboseLogging());
-            
-            // handle the return code
-            this.env.HandleReturnCode(returnCode, this.nativeApi);
+            long? configID = this.env.GetConfigID();
+            // check if we are initializing with a config ID
+            if (configID == null) {
+                // initialize the native delegate
+                long returnCode = this.nativeApi.Init(
+                    this.env.GetInstanceName(),
+                    this.env.GetSettings(),
+                    this.env.IsVerboseLogging());
+
+                // handle the return code
+                this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            } else {
+                // initialize the native delegate
+                long returnCode = this.nativeApi.InitWithConfigID(
+                    this.env.GetInstanceName(),
+                    this.env.GetSettings(),
+                    configID ?? 0L,
+                    this.env.IsVerboseLogging());
+
+                // handle the return code
+                this.env.HandleReturnCode(returnCode, this.nativeApi);
+            }
 
             // no return value so return null
             return null;

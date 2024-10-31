@@ -7,7 +7,7 @@ namespace Senzing.Sdk.Core {
 /// 
 /// </summary>
 internal class NativeProductExtern : NativeProduct {
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern int SzProduct_init(byte[] moduleName, byte[] iniParams, long verboseLogging);
     
     /// <summary>
@@ -19,7 +19,7 @@ internal class NativeProductExtern : NativeProduct {
                               (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzProduct_destroy();
 
     /// <summary>
@@ -29,7 +29,7 @@ internal class NativeProductExtern : NativeProduct {
         return SzProduct_destroy();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern IntPtr SzProduct_license();
 
     /// <summary>
@@ -39,7 +39,7 @@ internal class NativeProductExtern : NativeProduct {
         return Utilities.UTF8BytesToString(SzProduct_license());
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern IntPtr SzProduct_version();
 
     /// <summary>
@@ -51,7 +51,7 @@ internal class NativeProductExtern : NativeProduct {
         return Utilities.UTF8BytesToString(SzProduct_version());
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzProduct_getLastException([MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
     
     /// <summary>
@@ -71,10 +71,10 @@ internal class NativeProductExtern : NativeProduct {
         if (length == 0L) {
             return "";
         }
-        return System.Text.Encoding.UTF8.GetString(buf);
+        return System.Text.Encoding.UTF8.GetString(buf, 0, (int) (length-1));
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzProduct_getLastExceptionCode();
 
     /// <summary>
@@ -93,7 +93,7 @@ internal class NativeProductExtern : NativeProduct {
         return SzProduct_getLastExceptionCode();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern void SzProduct_clearLastException();
     
     /// <summary>

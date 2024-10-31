@@ -172,7 +172,7 @@ public class RepositoryManager
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                if (fileInfo.Name.EndsWith(".template")
+                if (!fileInfo.Name.EndsWith(".template")
                     && !EXCLUDED_TEMPLATE_FILES.Contains(fileInfo.Name.ToLower()))
                 {
                     templateFiles.Add(fileInfo);
@@ -335,10 +335,8 @@ public class RepositoryManager
         // specified schema file
         lock (TEMPLATE_DATABASE_MAP)
         {
-            FileInfo templateDatabase = TEMPLATE_DATABASE_MAP[schemaFile];
-            if (templateDatabase != null)
-            {
-                return templateDatabase;
+            if (TEMPLATE_DATABASE_MAP.ContainsKey(schemaFile)) {
+                return TEMPLATE_DATABASE_MAP[schemaFile];
             }
         }
 
@@ -406,7 +404,6 @@ public class RepositoryManager
                                             bool silent)
     {
         Configuration? result = null;
-
         if (directory.Exists)
         {
             if (!IsDirectory(directory.FullName))
@@ -592,7 +589,6 @@ public class RepositoryManager
                     long returnCode = CONFIG_API.Create(out IntPtr configHandle);
                     if (returnCode != 0)
                     {
-                        Console.Error.WriteLine("RETURN CODE: " + returnCode);
                         String msg = LogError("NativeConfig.create()", CONFIG_API);
                         throw new InvalidOperationException(msg);
                     }
@@ -615,7 +611,7 @@ public class RepositoryManager
                                                           out long resultConfigId);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfigMgr.addConfig()",
+                        String msg = LogError("NativeConfigManager.AddConfig()",
                                                 CONFIG_MGR_API);
                         throw new InvalidOperationException(msg);
                     }
@@ -623,7 +619,7 @@ public class RepositoryManager
                     returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfigId);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfigMgr.setDefaultConfigID()",
+                        String msg = LogError("NativeConfigManager.SetDefaultConfigID()",
                                                 CONFIG_MGR_API);
                         throw new InvalidOperationException(msg);
                     }
@@ -693,8 +689,8 @@ public class RepositoryManager
                 if (returnCode != 0)
                 {
                     CONFIG_API.Destroy();
-                    LogError("NativeConfigMgr.init()", CONFIG_MGR_API);
-                    throw new InvalidOperationException(initJsonText);
+                    string msg = LogError("NativeConfigManager.Init()", CONFIG_MGR_API);
+                    throw new InvalidOperationException(msg);
                 }
                 baseInitializedWith = initializer;
             }
@@ -1715,18 +1711,18 @@ public class RepositoryManager
         string configJsonText = configJson.ToJsonString();
         returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out long resultConfigId);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.AddConfig()", CONFIG_MGR_API);
+            LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
             return null;
         }
         returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfigId);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.SetDefaultConfigID()", CONFIG_MGR_API);
+            LogError("NativeConfigManager.SetDefaultConfigID()", CONFIG_MGR_API);
             return null;
         }
 
         returnCode = CONFIG_MGR_API.GetConfig(resultConfigId, out string resultConfigJson);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.GetConfig()", CONFIG_MGR_API);
+            LogError("NativeConfigManager.GetConfig()", CONFIG_MGR_API);
             return null;
         }
 
@@ -1952,14 +1948,14 @@ public class RepositoryManager
 
         returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out resultConfig);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.AddConfig()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigMgr.AddConfig() failed");
+            LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
+            throw new Exception("NativeConfigManager.AddConfig() failed");
         }
 
         returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfig);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.SetDefaultConfigID()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigMgr.SetDefaultConfigID() failed");
+            LogError("NativeConfigManager.SetDefaultConfigID()", CONFIG_MGR_API);
+            throw new Exception("NativeConfigManager.SetDefaultConfigID() failed");
         }
 
         // get the result config and its ID for the result
@@ -1979,14 +1975,14 @@ public class RepositoryManager
         long returnCode = CONFIG_MGR_API.GetDefaultConfigID(out long configID);
         if (returnCode != 0)
         {
-            LogError("NativeConfigMgr.GetDefaultConfigID()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigMgr.GetDefaultConfigID() failed");
+            LogError("NativeConfigManager.GetDefaultConfigID()", CONFIG_MGR_API);
+            throw new Exception("NativeConfigManager.GetDefaultConfigID() failed");
         }
         string? configJson = null;
         returnCode = CONFIG_MGR_API.GetConfig(configID, out configJson);
         if (returnCode != 0) {
-            LogError("NativeConfigMgr.GetConfig()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigMgr.GetConfig() failed");
+            LogError("NativeConfigManager.GetConfig()", CONFIG_MGR_API);
+            throw new Exception("NativeConfigManager.GetConfig() failed");
         }
         JsonNode? node = JsonNode.Parse(configJson);
         if (node == null) {

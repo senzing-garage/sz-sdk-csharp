@@ -8,7 +8,7 @@ namespace Senzing.Sdk.Core {
 /// that will call the native equivalent <c>extern</c> functions.
 /// </summary>
 internal class NativeDiagnosticExtern : NativeDiagnostic {
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern int SzDiagnostic_init(
         byte[] moduleName, byte[] iniParams, long verboseLogging);
     
@@ -22,7 +22,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
                                  (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern int SzDiagnostic_initWithConfigID(
         byte[] moduleName, byte[] iniParams, long initConfigID, long verboseLogging);
     
@@ -42,7 +42,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
             (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern int SzDiagnostic_reinit(long initConfigID);
     
     /// <summary>
@@ -53,7 +53,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         return SzDiagnostic_reinit(initConfigID);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzDiagnostic_destroy();
 
     /// <summary>
@@ -63,7 +63,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         return SzDiagnostic_destroy();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzDiagnostic_getLastException(
         [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
     
@@ -84,10 +84,10 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         if (length == 0L) {
             return "";
         }
-        return System.Text.Encoding.UTF8.GetString(buf);
+        return System.Text.Encoding.UTF8.GetString(buf, 0, (int) (length-1));
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzDiagnostic_getLastExceptionCode();
 
     /// <summary>
@@ -106,7 +106,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         return SzDiagnostic_getLastExceptionCode();
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern void SzDiagnostic_clearLastException();
     
     /// <summary>
@@ -128,7 +128,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
     }
 
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzDiagnostic_getDatastoreInfo_helper();
 
     /// <summary>
@@ -153,7 +153,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzDiagnostic_checkDatastorePerformance_helper(
         long secondsToRun);
 
@@ -179,7 +179,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzDiagnostic_purgeRepository();
 
     /// <summary>
@@ -194,7 +194,7 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
         return SzDiagnostic_purgeRepository();
     }
 
-   [DllImport ("Sz")]
+   [DllImport ("libSz")]
     private static extern SzPointerResult SzDiagnostic_getFeature_helper(long libFeatID);
 
     /// <summary>

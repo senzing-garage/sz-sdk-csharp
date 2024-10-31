@@ -8,31 +8,31 @@ namespace Senzing.Sdk.Core {
 /// that will call the native equivalent <c>extern</c> functions.
 /// </summary>
 internal class NativeConfigManagerExtern : NativeConfigManager {
-    [DllImport ("Sz")]
-    private static extern int SzConfigManager_init(
+    [DllImport ("libSz")]
+    private static extern int SzConfigMgr_init(
         byte[] moduleName, byte[] iniParams, long verboseLogging);
     
     /// <summary>
     /// Implemented to call the external native function <c>SzConfig_init()</c>.
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzConfigManager_init(Encoding.UTF8.GetBytes(moduleName),
-                                    Encoding.UTF8.GetBytes(iniParams),
-                                    (verboseLogging) ? 1 : 0);
+        return SzConfigMgr_init(Encoding.UTF8.GetBytes(moduleName),
+                                Encoding.UTF8.GetBytes(iniParams),
+                                (verboseLogging) ? 1 : 0);
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzConfigManager_destroy();
+    [DllImport ("libSz")]
+    private static extern long SzConfigMgr_destroy();
 
     /// <summary>
     /// Implemented to call the external native function <c>SzConfig_destroy()</c>.
     /// </summary>
     public long Destroy() {
-        return SzConfigManager_destroy();
+        return SzConfigMgr_destroy();
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzConfigManager_getLastException(
+    [DllImport ("libSz")]
+    private static extern long SzConfigMgr_getLastException(
         [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
     
     /// <summary>
@@ -48,15 +48,15 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
     /// <returns>An error message</returns>
     public string GetLastException() {
         byte[] buf = new byte[4096];
-        long length = SzConfigManager_getLastException(buf, buf.Length);
+        long length = SzConfigMgr_getLastException(buf, buf.Length);
         if (length == 0L) {
             return "";
         }
-        return System.Text.Encoding.UTF8.GetString(buf);
+        return System.Text.Encoding.UTF8.GetString(buf, 0, (int) (length-1));
     }
 
-    [DllImport ("Sz")]
-    private static extern long SzConfigManager_getLastExceptionCode();
+    [DllImport ("libSz")]
+    private static extern long SzConfigMgr_getLastExceptionCode();
 
     /// <summary>
     /// Implemented to return the last error code associated with the 
@@ -71,18 +71,18 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
     /// <returns>An error code</returns>
     ///
     public long GetLastExceptionCode() {
-        return SzConfigManager_getLastExceptionCode();
+        return SzConfigMgr_getLastExceptionCode();
     }
 
-    [DllImport ("Sz")]
-    private static extern void SzConfigManager_clearLastException();
+    [DllImport ("libSz")]
+    private static extern void SzConfigMgr_clearLastException();
     
     /// <summary>
     /// Implemented to clear the information pertaining to the last
     /// error encountered with the Senzing config funtions.
     /// </summary>
     public void ClearLastException() {
-        SzConfigManager_clearLastException();
+        SzConfigMgr_clearLastException();
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         public long returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzLongResult SzConfigMgr_addConfig_helper(
         byte[] config, byte[] comments);
 
@@ -130,7 +130,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         return result.returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfigMgr_getConfig_helper(long configID);
 
     /// <summary>
@@ -154,7 +154,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzPointerResult SzConfigMgr_getConfigList_helper();
 
     /// <summary>
@@ -178,7 +178,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         }
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfigMgr_setDefaultConfigID(long configID);
 
     /// <summary>
@@ -193,7 +193,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         return SzConfigMgr_setDefaultConfigID(configID);
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern SzLongResult SzConfigMgr_getDefaultConfigID_helper();
 
     /// <summary>
@@ -213,7 +213,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         return result.returnCode;
     }
 
-    [DllImport ("Sz")]
+    [DllImport ("libSz")]
     private static extern long SzConfigMgr_replaceDefaultConfigID(
         long oldConfigID, long newConfigID);
 
