@@ -11,7 +11,6 @@ using System.Collections.Immutable;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-[Parallelizable(ParallelScope.Fixtures)]
 internal class SzCoreEnvironmentTest : AbstractTest 
 {
     private static readonly object monitor = new object();
@@ -143,8 +142,8 @@ internal class SzCoreEnvironmentTest : AbstractTest
                     env2 = SzCoreEnvironment.NewBuilder().Settings(DefaultSettings).Build();
         
                     // if we get here then we failed
-                    Assert.Fail("Was able to construct a second factory when first "
-                                + "was not yet destroyed");
+                    Fail("Was able to construct a second factory when first "
+                         + "was not yet destroyed");
         
                 } catch (InvalidOperationException) {
                     // this exception was expected
@@ -208,8 +207,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 } catch (AssertionException) {
                     throw;
                 } catch (Exception e) {
-                    Assert.Fail(LoggingUtilities.FormatException(
-                        "First Environment instance is not active.", e));
+                    Fail("First Environment instance is not active.", e);
                 }
     
                 // destroy the first environment
@@ -218,11 +216,11 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 // check it is now inactive
                 try {
                     env1.EnsureActive();
-                    Assert.Fail("First Environment instance is still active.");
+                    Fail("First Environment instance is still active.");
     
                 } catch (AssertionException) {
                     throw;
-                } catch (Exception e) {
+                } catch (Exception) {
                     // do nothing
                 } finally {
                     // clear the env1 reference
@@ -241,8 +239,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 } catch (AssertionException) {
                     throw;
                 } catch (Exception e) {
-                    Assert.Fail(LoggingUtilities.FormatException(
-                        "Second Environment instance is not active.", e));
+                    Fail("Second Environment instance is not active.", e);
                 }
     
                 // destroy the second environment
@@ -251,11 +248,11 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 // check it is now inactive
                 try {
                     env2.EnsureActive();
-                    Assert.Fail("Second Environment instance is still active.");
+                    Fail("Second Environment instance is still active.");
     
                 } catch (AssertionException) {
                     throw;
-                } catch (Exception e) {
+                } catch (Exception) {
                     // do nothing
                 } finally {
                     // clear the env2 reference
@@ -321,8 +318,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                     } catch (AssertionException) {
                         throw;
                     } catch (Exception e) {
-                        Assert.Fail(LoggingUtilities.FormatException(
-                            "Failed execute with exception", e));
+                        Fail("Failed execute with exception", e);
                     }
                 }
 
@@ -352,7 +348,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                         throw new SzException(expected);
                    });
     
-                   Assert.Fail("Expected SzException was not thrown");
+                   Fail("Expected SzException was not thrown");
     
                 } catch (SzException e) {
                     Assert.That(e.Message, Is.EqualTo(expected), 
@@ -361,8 +357,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 } catch (AssertionException) {
                     throw;
                 } catch (Exception e) {
-                    Assert.Fail(LoggingUtilities.FormatException(
-                        "Failed execute with exception", e));
+                    Fail("Failed execute with exception", e);
                 }
     
             } finally {
@@ -531,15 +526,14 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 env.Execute<object?>(() => {
                     return null;
                 });
-                Assert.Fail("Unexpectedly managed to execute on a destroyed instance");
+                Fail("Unexpectedly managed to execute on a destroyed instance");
 
             } catch (InvalidOperationException) {
                 // all is well
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Failed with unexpected exception", e));
+                Fail("Failed with unexpected exception", e);
             }
 
             try {
@@ -548,8 +542,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Thread joining failed with an exception.", e));
+                Fail("Thread joining failed with an exception.", e);
             }
 
             Assert.IsNotNull(destroyDuration[0], "Destroy duration was not record");
@@ -557,12 +550,10 @@ internal class SzCoreEnvironmentTest : AbstractTest
                         + destroyDuration[0] + "ms");
 
             if (failures[0] != null) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Busy thread got an exception.", failures[0]));
+                Fail("Busy thread got an exception.", failures[0]);
             }
             if (failures[1] != null) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Destroying thread got an exception.", failures[1]));
+                Fail("Destroying thread got an exception.", failures[1]);
             }
 
         });
@@ -660,8 +651,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                                   "SzConfig instance reporting that it is NOT destroyed");
 
             } catch (SzException e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got SzException during test", e));
+                Fail("Got SzException during test", e);
 
             } finally {
                 if (env != null) env.Destroy();
@@ -706,8 +696,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                             "SzConfigManager instance reporting that it is NOT destroyed");
 
             } catch (SzException e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got SzException during test", e));
+                Fail("Got SzException during test", e);
 
             } finally {
                 if (env != null) env.Destroy();
@@ -751,8 +740,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                             "SzDiagnostic instance reporting that it is NOT destroyed");
 
             } catch (SzException e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got SzException during test", e));
+                Fail("Got SzException during test", e);
 
             } finally {
                 if (env != null) env.Destroy();
@@ -796,8 +784,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                             "SzEngine instance reporting that it is NOT destroyed");
 
             } catch (SzException e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got SzException during test", e));
+                Fail("Got SzException during test", e);
 
             } finally {
                 if (env != null) env.Destroy();
@@ -841,8 +828,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                             "SzProduct instance reporting that it is NOT destroyed");
 
             } catch (SzException e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got SzException during test", e));
+                Fail("Got SzException during test", e);
 
             } finally {
                 if (env != null) env.Destroy();
@@ -979,15 +965,15 @@ internal class SzCoreEnvironmentTest : AbstractTest
                     env.HandleReturnCode(returnCode, fakeNativeApi);
 
                     if (returnCode != 0) {
-                        Assert.Fail("The handleReturnCode() function did "
-                                    + "not throw an exception with return code: "
-                                    + returnCode);
+                        Fail("The handleReturnCode() function did "
+                             + "not throw an exception with return code: "
+                             + returnCode);
                     }
     
                 } catch (SzException e) {
                     if (returnCode == 0) {
-                        Assert.Fail("Unexpected exception from handleReturnCode() "
-                                    + "with return code: " + returnCode, e);
+                        Fail("Unexpected exception from handleReturnCode() "
+                             + "with return code: " + returnCode, e);
                     } else {
                         Assert.IsInstanceOf(typeof(SzException), e, "Type of exception is not as expected");
                         SzException sze = (SzException) e;
@@ -1049,8 +1035,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got exception in TestGetActiveConfigID: " + info, e));
+                Fail("Got exception in TestGetActiveConfigID: " + info, e);
     
             } finally {
                 if (env != null) env.Destroy();
@@ -1088,8 +1073,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got exception in TestGetActiveConfigIDDefault: " + info, e));
+                Fail("Got exception in TestGetActiveConfigIDDefault: " + info, e);
                 
             } finally {
                 if (env != null) env.Destroy();
@@ -1112,8 +1096,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 throw;
             } catch (Exception e) {
                 Console.Error.WriteLine(e);
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Caught an unexpected exeption", e));
+                Fail("Caught an unexpected exeption", e);
             } finally {
                 if (env != null) env.Destroy();
             }
@@ -1220,8 +1203,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got exception in TestReinitialize: " + info, e));
+                Fail("Got exception in TestReinitialize: " + info, e);
     
             } finally {
                 if (env != null) env.Destroy();
@@ -1312,8 +1294,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             } catch (AssertionException) {
                 throw;
             } catch (Exception e) {
-                Assert.Fail(LoggingUtilities.FormatException(
-                    "Got exception in TestReinitializeDefault: " + info, e));
+                Fail("Got exception in TestReinitializeDefault: " + info, e);
     
             } finally {
                 if (env != null) env.Destroy();

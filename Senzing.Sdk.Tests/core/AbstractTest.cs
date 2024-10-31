@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Senzing.Sdk.Core;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Collections;
 using System.Collections.Generic;
@@ -1433,6 +1434,62 @@ internal abstract class AbstractTest {
             sb.Append(c);
         }
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// Parses a JSON object from the specified text.
+    /// </summary>
+    ///
+    /// <param name="text">The text to parse</param>
+    ///
+    /// <returns>
+    /// The <see cref="System.Text.Json.Nodes.JsonObject"/> that was parsed.
+    /// </returns>
+    protected static JsonObject ParseJsonObject(string text) {
+        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions() {
+            CommentHandling = JsonCommentHandling.Skip
+        });
+        if (node == null) {
+            throw new JsonException(
+                    "Failed to parse text as JSON: " + text);
+        }
+
+        return ((JsonNode) node).AsObject();
+    }
+
+    /// <summary>
+    /// Parses a JSON array from the specified text.
+    /// </summary>
+    ///
+    /// <param name="text">The text to parse</param>
+    ///
+    /// <returns>
+    /// The <see cref="System.Text.Json.Nodes.JsonArray"/> that was parsed.
+    /// </returns>
+    protected static JsonArray ParseJsonArray(string text) {
+        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions() {
+            CommentHandling = JsonCommentHandling.Skip
+        });
+        if (node == null) {
+            throw new JsonException(
+                    "Failed to parse text as JSON: " + text);
+        }
+
+        return ((JsonNode) node).AsArray();
+    }
+
+    /// <summary>
+    /// Triggers the failure of a test with an optional message and optional
+    /// exception
+    /// </summary>
+    protected static void Fail(string? message, Exception? e = null) {
+        if (message == null && e == null) {
+            Assert.Fail();
+        } else if (e != null) {
+            Assert.Fail(LoggingUtilities.FormatException(message,e));
+        } else {
+            Assert.Fail(message);
+        }
     }
 }
 }
