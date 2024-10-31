@@ -225,7 +225,7 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The configuration ID for the default config ID.
     /// </returns>
-    protected long GetDefaultConfigId(NativeConfigManager configMgr) {
+    protected long GetDefaultConfigID(NativeConfigManager configMgr) {
         long returnCode = configMgr.GetDefaultConfigID(out long configID);
         if (returnCode != 0) {
             throw new Exception(configMgr.GetLastException());

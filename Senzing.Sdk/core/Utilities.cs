@@ -2,12 +2,13 @@
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Senzing.Sdk.Core {
 /// <summary>
 /// Provides utilities for the implementation of the core Senzing SDK.
 /// </summary>
-internal class Utilities {
+internal static class Utilities {
     /// <summary>
     /// The default buffer size for hex formatting.
     /// </summaryf>
@@ -57,13 +58,6 @@ internal class Utilities {
     /// control characters (i.e.: those without shortcut escape sequences).
      /// </summary>
     private const int JSON_ESCAPE_CONTROL_COUNT = 6;
-
-    /// <summary>
-    /// Private default constructor.
-    /// </summary>
-    private Utilities() {
-        // do nothing
-    }
 
     /// <summary>
     /// Formats a <code>long</code> integer value as hexadecimal with 
@@ -235,5 +229,25 @@ internal class Utilities {
         SzHelper_free(pointer);
     }
 
+    /// <summary>
+    /// A random number generator.
+    /// </summary>
+    private static readonly Random PRNG = new Random(Environment.TickCount);
+
+    /// <summary>
+    /// Shuffles a list.
+    /// </summary>
+    internal static void Shuffle<T>(this IList<T> list) {
+        lock (PRNG) {
+            int count   = list.Count;
+            int last    = count - 1;
+            for (int index = 0; index < last; ++index) {
+                int randomIndex     = PRNG.Next(index, count);
+                T   tmp             = list[index];
+                list[index]         = list[randomIndex];
+                list[randomIndex]   = tmp;
+            }
+        }
+	}
 }
 }

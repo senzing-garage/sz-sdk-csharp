@@ -22,7 +22,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// </remarks>
     /// 
     /// <seealso cref="Builder.InstanceName" />
-    public const string DEFAULT_INSTANCE_NAME = "Senzing Instance";
+    public const string DefaultInstanceName = "Senzing Instance";
 
     /// <summary>
     /// The default "bootstrap" settings with which to initialize the
@@ -45,7 +45,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// </remarks>
     /// 
     /// <seealso cref="Builder.Settings" />
-    public const string DEFAULT_SETTINGS = "{ }";
+    public const string DefaultSettings = "{ }";
 
     /// <summary>
     /// The number of milliseconds to delay (if not notified) until checking
@@ -57,7 +57,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// <summary>
     /// Internal object for class-wide synchronized locking.
     /// </summary>
-    private static readonly Object CLASS_MONITOR = new Object();
+    private static readonly Object ClassMonitor = new Object();
 
     /// <summary>
     /// Enumerates the possible states for an instance of <c>SzCoreEnvironment</c>.
@@ -149,7 +149,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// if there is no active instance.
     /// </returns>
     public static SzCoreEnvironment GetActiveInstance() {
-        lock (CLASS_MONITOR) {
+        lock (ClassMonitor) {
             if (currentInstance == null) {
                 return null;
             }
@@ -191,7 +191,7 @@ public class SzCoreEnvironment: SzEnvironment {
     /// The explicit configuration ID to initialize with or <c>null</c> if
     /// using the default configuration.
     /// </summary>
-    private long? configId = null;
+    private long? configID = null;
 
     /// <summary>
     /// The <see cref="SzCoreProduct"/> instance to use.
@@ -244,23 +244,23 @@ public class SzCoreEnvironment: SzEnvironment {
     /// The verbose logging setting for Senzing environment.
     /// </param>
     /// 
-    /// <param name="configId">
+    /// <param name="configID">
     /// The explicit config ID for the Senzing environment initialization,
     /// or <code>null</code> if using the default configuration.
     /// </param>
     private SzCoreEnvironment(string    instanceName,
                               string    settings,
                               bool      verboseLogging,
-                              long?     configId) 
+                              long?     configID) 
     {
         // set the fields
         this.readWriteLock  = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
         this.instanceName   = instanceName;
         this.settings       = settings;
         this.verboseLogging = verboseLogging;
-        this.configId       = configId;
+        this.configID       = configID;
 
-        lock (CLASS_MONITOR) {
+        lock (ClassMonitor) {
             SzCoreEnvironment activeEnvironment = GetActiveInstance();
             if (activeEnvironment != null) {
                 throw new InvalidOperationException(
@@ -303,7 +303,7 @@ public class SzCoreEnvironment: SzEnvironment {
         lock (environment.monitor) {
             while (environment.state != State.Destroyed) {
                 try {
-                    Monitor.Wait(environment, DestroyDelay);
+                    Monitor.Wait(environment.monitor, DestroyDelay);
                 } catch (ThreadInterruptedException) {
                     // ignore the exception
                 }
@@ -353,13 +353,13 @@ public class SzCoreEnvironment: SzEnvironment {
     /// in the repository should be used.
     /// </remarks>
     /// 
-    /// <returns>
+    /// <returns>q
     /// The explicit configuration ID with which to initialize the Senzing
     /// environment, or <c>null</c> if the default configuration ID
     /// configured in the repository should be used.
     /// </returns>
-    internal long? GetConfigId() {
-        return this.configId;
+    internal long? GetConfigID() {
+        return this.configID;
     }
     
     /// <summary>
@@ -388,11 +388,11 @@ public class SzCoreEnvironment: SzEnvironment {
     /// <exception cref="System.InvalidOperationException">
     /// If this <c>SzCoreEnvironment</c> instance has already been destroyed.
     /// </exception>
-    internal T execute<T>(Func<T> task)
+    internal T Execute<T>(Func<T> task)
     {
         ReaderWriterLockSlim localLock = null;
         try {
-            // acquire a wrie lock while checking if acive
+            // acquire a wrie lock while checking if acive 
             localLock = this.AcquireReadLock();
             lock (this.monitor) {
                 if (this.state != State.Active) {
@@ -409,7 +409,7 @@ public class SzCoreEnvironment: SzEnvironment {
         } finally {
             lock (this.monitor) {
                 Interlocked.Decrement(ref this.executingCount);
-                Monitor.PulseAll(this);
+                Monitor.PulseAll(this.monitor);
             }
             localLock = this.ReleaseLock(localLock);
         }
@@ -437,11 +437,55 @@ public class SzCoreEnvironment: SzEnvironment {
     /// If this instance is not active.
     /// </exception>
     internal void EnsureActive() {
-        lock (CLASS_MONITOR) {
+        lock (ClassMonitor) {
             if (this.state != State.Active) {
                 throw new InvalidOperationException(
                     "The SzCoreEnvironment instance has already been destroyed.");
             }
+        }
+    }
+
+    /// <summary>
+    /// Handles the Senzing native return code and coverts it to the proper
+    /// <see cref="Senzing.Sdk.SzException"/> if it is not zero (0).
+    /// </summary>
+    ///
+    /// <param name="returnCode">
+    /// The return code to handle.
+    /// </param>
+    ///
+    /// <param name="nativeApi">
+    /// The <see cref="Senzing.Sdk.Core.NativeApi"/> implementation that
+    /// produced the return code on this current thread.
+    /// </param>
+    internal void HandleReturnCode(long returnCode, NativeApi nativeApi)
+    {
+        if (returnCode == 0L) {
+            return;
+        }
+        // TODO(barry): Map the exception properly
+        long    errorCode   = nativeApi.GetLastExceptionCode();
+        string  message     = nativeApi.GetLastException();
+        nativeApi.ClearLastException();
+        switch (errorCode) {
+            case 23L:
+                goto case 3131L;
+            case 24L:
+                goto case 3131L;
+            case 88L:
+                goto case 3131L;
+            case 3131L:
+                throw new SzBadInputException(errorCode, message);
+            case 2207L:
+                throw new SzUnknownDataSourceException(errorCode, message);
+            case 33L:
+                goto case 37L;
+            case 37L:
+                throw new SzNotFoundException(errorCode, message);
+            case 7245L:
+                throw new SzReplaceConflictException(errorCode, message);
+            default:
+                throw new SzException(errorCode, message);
         }
     }
 
@@ -563,7 +607,7 @@ public class SzCoreEnvironment: SzEnvironment {
 
                 // set the flag for destroying
                 this.state = State.Destroying;
-                Monitor.PulseAll(this);
+                Monitor.PulseAll(this.monitor);
             }
 
             // acquire an exclusive lock for destroying to ensure
@@ -603,7 +647,7 @@ public class SzCoreEnvironment: SzEnvironment {
             // set the state
             lock (this.monitor) {
                 this.state = State.Destroyed;
-                Monitor.PulseAll(this);
+                Monitor.PulseAll(this.monitor);
             }
         } finally {
             localLock = this.ReleaseLock(localLock);
@@ -626,21 +670,102 @@ public class SzCoreEnvironment: SzEnvironment {
     }
 
     /// <summary>
+    /// Implemented to call the underlying native method to obtain
+    /// the active config ID.
+    /// </summary>
+    public long GetActiveConfigID()
+    {
+        ReaderWriterLockSlim localLock = null;
+        try {
+            // get a read lock to ensure we remain active while
+            // executing the operation
+            localLock = this.AcquireReadLock();
+            
+            // ensure we have initialized the engine or diagnostic
+            lock (this.monitor) {
+                this.EnsureActive();
+
+                // check if the core engine has been initialized
+                if (this.coreEngine == null) {
+                    // initialize the engine if not yet initialized
+                    this.GetEngine();
+                }
+            }
+
+            // get the active config ID from the native engine
+            long configID = this.Execute(() => {
+                NativeEngine nativeEngine = this.coreEngine.GetNativeApi(); 
+                long returnCode = nativeEngine.GetActiveConfigID(out long result);
+                this.HandleReturnCode(returnCode, nativeEngine);
+                return result;
+            });
+
+            // return the config ID
+            return configID;
+
+        } finally {
+            localLock = this.ReleaseLock(localLock);
+        }
+    }
+
+    /// <summary>
+    /// Implemented to call the underlying native method to reinitialize.
+    /// </summary>
+    public void Reinitialize(long configID)
+    {
+        ReaderWriterLockSlim localLock = null;
+        try {
+            // get an exclusive write lock
+            localLock = this.AcquireWriteLock();
+            
+            lock (this.monitor) {
+                // set the config ID for future native initializations
+                this.configID = configID;
+
+                // check if we have already initialized the engine or diagnostic
+                if (this.coreEngine != null) {
+                    // engine already initialized so we need to reinitalize
+                    this.Execute<object>(() => {
+                        long returnCode = this.coreEngine.GetNativeApi().Reinit(configID);
+                        this.HandleReturnCode(returnCode, this.coreEngine.GetNativeApi());
+                        return null;
+                    });
+
+                } else if (this.coreDiagnostic != null) {
+                    // diagnostic already initialized so we need to reinitalize
+                    // NOTE: we do not need to do this if we reinitialized the
+                    // engine since the configuration ID is globally set
+                    this.Execute<object>(() => {
+                        long returnCode = this.coreDiagnostic.GetNativeApi().Reinit(configID);
+                        this.HandleReturnCode(returnCode, this.coreDiagnostic.GetNativeApi());
+                        return null;
+                    });
+                } else {
+                    // force initialization to ensure the configuration ID is valid
+                    this.GetEngine();
+                }
+            }
+        } finally {
+            localLock = this.ReleaseLock(localLock);
+        }
+    }
+
+    /// <summary>
     /// The builder class for creating an instance of <see cref="SzCoreEnvironment"/>.
     /// </summary>
     public class Builder 
     {
         /// <summary>
         /// The settings for the builder which default to
-        /// <see cref="SzCoreEnvironment.DEFAULT_SETTINGS" />
+        /// <see cref="SzCoreEnvironment.DefaultSettings" />
         /// </summary>
-        private string settings = SzCoreEnvironment.DEFAULT_SETTINGS;
+        private string settings = SzCoreEnvironment.DefaultSettings;
 
         /// <summary>
         /// The instance name for the builder which defaults to
-        /// <see cref="SzCoreEnvironment.DEFAULT_INSTANCE_NAME" />
+        /// <see cref="SzCoreEnvironment.DefaultInstanceName" />
         /// </summary>
-        private string instanceName = SzCoreEnvironment.DEFAULT_INSTANCE_NAME;
+        private string instanceName = SzCoreEnvironment.DefaultInstanceName;
 
         /// <summary>
         /// The verbose logging setting for the builder which defaults
@@ -656,14 +781,14 @@ public class SzCoreEnvironment: SzEnvironment {
         /// If not provided explicitly then the configured default configuration
         /// in the Senzing repository is used.
         /// </remarks>
-        private long? configId = null;
+        private long? configID = null;
 
         /// <summary>Default constructor.</summary>
         public Builder() {
-            this.settings       = DEFAULT_SETTINGS;
-            this.instanceName   = DEFAULT_INSTANCE_NAME;
+            this.settings       = DefaultSettings;
+            this.instanceName   = DefaultInstanceName;
             this.verboseLogging = false;
-            this.configId       = null;
+            this.configID       = null;
         }
 
         /// <summmary>
@@ -673,7 +798,7 @@ public class SzCoreEnvironment: SzEnvironment {
         /// 
         /// <remarks>
         /// If this is set to <c>null</c> or empty-string then
-        /// <see cref="SzCoreEnvironment.DEFAULT_SETTINGS" /> will be used to provide
+        /// <see cref="SzCoreEnvironment.DefaultSettings" /> will be used to provide
         /// limited funtionality.
         /// </remarks>
         /// 
@@ -683,13 +808,13 @@ public class SzCoreEnvironment: SzEnvironment {
         /// 
         /// <returns>A reference to this instance.</returns>
         /// 
-        /// <seealso cref="SzCoreEnvironment.DEFAULT_SETTINGS" />
+        /// <seealso cref="SzCoreEnvironment.DefaultSettings" />
         public Builder Settings(string settings) {
             if (settings != null && settings.Trim().Length == 0) {
                 settings = null;
             }
             this.settings = (settings == null)
-                ? DEFAULT_SETTINGS : settings.Trim();
+                ? DefaultSettings : settings.Trim();
             return this;
         }
 
@@ -700,7 +825,7 @@ public class SzCoreEnvironment: SzEnvironment {
         /// 
         /// <remarks>
         /// Call this method to override the default value of
-        /// <see cref="SzCoreEnvironment.DEFAULT_INSTANCE_NAME" />
+        /// <see cref="SzCoreEnvironment.DefaultInstanceName" />
         /// </remarks>
         /// 
         /// <param name="instanceName">
@@ -710,13 +835,13 @@ public class SzCoreEnvironment: SzEnvironment {
         /// 
         /// <returns>A reference to this instance</returns>
         /// 
-        /// <seealso cref="SzCoreEnvironment.DEFAULT_INSTANCE_NAME"/>
+        /// <seealso cref="SzCoreEnvironment.DefaultInstanceName"/>
         public Builder InstanceName(string instanceName) {
             if (instanceName != null && instanceName.Trim().Length == 0) {
                 instanceName = null;
             }
             this.instanceName = (instanceName == null) 
-                ? DEFAULT_INSTANCE_NAME : instanceName.Trim();
+                ? DefaultInstanceName : instanceName.Trim();
             return this;
         }
 
@@ -744,15 +869,15 @@ public class SzCoreEnvironment: SzEnvironment {
         /// SzCoreEnvironment}.  If not specified then the default configuration
         /// ID obtained from the Senzing repository is used.
         /// 
-        /// @param configId The explicit configuration ID to use to initialize the
+        /// @param configID The explicit configuration ID to use to initialize the
         ///                 {@link SzCoreEnvironment}, or <code>null</code> if the
         ///                 default configuration ID from the Senzing repository
         ///                 should be used.
         /// 
         /// @return A reference to this instance.
         
-        public Builder ConfigId(long? configId) {
-            this.configId = configId;
+        public Builder ConfigID(long? configID) {
+            this.configID = configID;
             return this;
         }
 
@@ -782,7 +907,7 @@ public class SzCoreEnvironment: SzEnvironment {
             return new SzCoreEnvironment(this.instanceName,
                                          this.settings,
                                          this.verboseLogging,
-                                         this.configId);
+                                         this.configID);
         }
     }
 

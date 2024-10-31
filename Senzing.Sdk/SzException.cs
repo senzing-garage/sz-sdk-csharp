@@ -8,7 +8,7 @@ namespace Senzing.Sdk {
 public class SzException : Exception 
 {
     /// <summary>The underlying Senzing error code.</summary>
-    private int? errorCode = null;
+    private long? errorCode = null;
     
     /// <summary>Default constructor.</summary>
     public SzException() {
@@ -33,7 +33,7 @@ public class SzException : Exception
     /// <param name="errorCode">The underlying Senzing error code.</param>
     ///
     /// <param name="message">The message explaining the reason for the exception.</param>
-    public SzException(int? errorCode, string message) 
+    public SzException(long? errorCode, string message) 
         : base(message)
     {
         this.errorCode = errorCode;
@@ -76,7 +76,7 @@ public class SzException : Exception
     /// <param name="message">The message explaining the reason for the exception.</param>
     ///
     /// <param name="cause">The underlying cause for the exception.</param>
-    public SzException(int? errorCode, string message, Exception cause) 
+    public SzException(long? errorCode, string message, Exception cause) 
         : base(message, cause)
     {
         this.errorCode = errorCode;
@@ -92,7 +92,7 @@ public class SzException : Exception
     /// The underlying Senzing error code associated with the
     /// exception, or <c>null</c> if none was associated.
     /// </returns>
-    public int? getErrorCode() {
+    public long? GetErrorCode() {
         return this.errorCode;
     }
 }
