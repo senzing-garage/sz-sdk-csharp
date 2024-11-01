@@ -282,7 +282,7 @@ internal abstract class AbstractTest {
                                  string         dataSource)
     {
         StringBuilder sb = new StringBuilder("{\"DSRC_CODE\": ");
-        sb.Append(Utilities.jsonEscape(dataSource)).Append('}');
+        sb.Append(Utilities.JsonEscape(dataSource)).Append('}');
         string json = sb.ToString();
 
         long returnCode = config.AddDataSource(

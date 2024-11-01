@@ -104,7 +104,7 @@ internal static class Utilities {
     /// The quoted escaped <c>string</c> or <c>"null"</c> if the specified
     /// parameter is <c>null</c>.
     /// </returns>
-    public static string jsonEscape(string text) {
+    public static string JsonEscape(string text) {
         if (text == null) {
             return "null";
         }

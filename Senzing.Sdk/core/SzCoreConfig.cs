@@ -1,4 +1,5 @@
 using Senzing.Sdk;
+using System;
 
 namespace Senzing.Sdk.Core {
 public class SzCoreConfig: SzConfig {
@@ -84,5 +85,138 @@ public class SzCoreConfig: SzConfig {
             return (this.nativeApi == null);
         }
     }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_create_helper"/>.
+    /// </summary>
+    public IntPtr CreateConfig() {
+        return this.env.Execute(() => {            
+            // call the underlying C function
+            long returnCode = this.nativeApi.Create(out IntPtr result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_load_helper"/>. 
+    /// </summary>
+    public IntPtr ImportConfig(string configDefinition) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.Load(configDefinition,
+                                                  out IntPtr result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_save_helper"/>. 
+    /// </summary>
+    public string ExportConfig(IntPtr configHandle) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.Save(configHandle,
+                                                  out string result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the contents of the buffer
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_close_helper"/>. 
+    /// </summary>
+    public void CloseConfig(IntPtr configHandle) {
+        this.env.Execute<object>(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.Close(configHandle);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+            
+            // return null
+            return null;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_listDataSources_helper"/>. 
+    /// </summary>
+    public string GetDataSources(IntPtr configHandle) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.ListDataSources(configHandle,
+                                                             out string result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the contents of the buffer
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_addDataSource_helper"/>.
+    /// </summary>
+    public string AddDataSource(IntPtr configHandle, string dataSourceCode) {
+        return this.env.Execute(() => {
+            // format the JSON for the native call
+            string inputJson = "{\"DSRC_CODE\":" 
+                             + Utilities.JsonEscape(dataSourceCode) + "}";
+
+            // call the underlying C function
+            long returnCode = this.nativeApi.AddDataSource(
+                configHandle, inputJson, out string result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return null
+            return result;
+        });              
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfig_deleteDataSource_helper"/>.
+    /// </summary>
+    public void DeleteDataSource(IntPtr configHandle, string dataSourceCode) {
+        this.env.Execute<object>(() => {
+            // format the JSON for the JNI call
+            string inputJson = "{\"DSRC_CODE\":"
+                             + Utilities.JsonEscape(dataSourceCode) + "}";
+
+            // call the underlying C function
+            long returnCode = this.nativeApi.DeleteDataSource(
+                configHandle, inputJson);
+            
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return null
+            return null;
+        });
+    }
+
 }
 }

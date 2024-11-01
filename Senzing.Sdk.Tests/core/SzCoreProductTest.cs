@@ -60,6 +60,9 @@ internal class SzCoreProductTest : AbstractTest {
                 Assert.IsNotNull(product.GetNativeApi(),
                         "Underlying native API is unexpectedly null");
                 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetNativeApi test with exception", e);
             }
