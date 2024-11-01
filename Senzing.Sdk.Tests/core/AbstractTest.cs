@@ -786,7 +786,7 @@ internal abstract class AbstractTest {
     /// <param name="expectedKeys">
     /// The zero or more expected property keys.
     /// </param>
-    public static void ValidateJsonDataMap(JsonObject       jsonData, 
+    public static void ValidateJsonDataMap(JsonObject?      jsonData, 
                                            params string[]  expectedKeys) 
     {
         ValidateJsonDataMap(null,
@@ -808,7 +808,7 @@ internal abstract class AbstractTest {
     /// The zero or more expected property keys.
     /// </param>
     public static void ValidateJsonDataMap(string?          testInfo,
-                                           JsonObject       jsonData,
+                                           JsonObject?      jsonData,
                                            params string[]  expectedKeys)
     {
         ValidateJsonDataMap(testInfo, jsonData, true, expectedKeys);
@@ -828,7 +828,7 @@ internal abstract class AbstractTest {
     /// The zero or more expected property keys -- these are either a minimum 
     /// or exact set depending on the <c>strict</c> parameter.
     /// </param>
-    public static void ValidateJsonDataMap(JsonObject       jsonData,
+    public static void ValidateJsonDataMap(JsonObject?      jsonData,
                                            bool             strict,
                                            params string[]  expectedKeys) {
         ValidateJsonDataMap(null, jsonData, strict, expectedKeys);
@@ -852,7 +852,7 @@ internal abstract class AbstractTest {
     /// or exact set depending on the <c>strict</c> parameter.
     /// </param>
     public static void ValidateJsonDataMap(string?          testInfo,
-                                           JsonObject       jsonData,
+                                           JsonObject?      jsonData,
                                            bool             strict,
                                            params string[]  expectedKeys) 
     {
@@ -863,29 +863,30 @@ internal abstract class AbstractTest {
         if (jsonData == null) {
             Assert.Fail("Expected json data but got null value" + suffix);
             throw new Exception("Expected json data but got null value" + suffix);
-        }
-
-        ISet<string> actualKeySet = new HashSet<string>();
-        ISet<string> expectedKeySet = new HashSet<string>();
-        IEnumerator<KeyValuePair<string,JsonNode?>> enumerator = jsonData.GetEnumerator();
-        while (enumerator.MoveNext()) {
-            actualKeySet.Add(enumerator.Current.Key);
-        }
-        foreach (string key in expectedKeys) {
-            expectedKeySet.Add(key);
-            if (!actualKeySet.Contains(key)) {
-                Assert.Fail("JSON property missing from json data: " + key + " / " + jsonData
-                            + suffix);
+        } else {
+            ISet<string> actualKeySet = new HashSet<string>();
+            ISet<string> expectedKeySet = new HashSet<string>();
+            IEnumerator<KeyValuePair<string,JsonNode?>> enumerator
+                = jsonData.GetEnumerator();
+            while (enumerator.MoveNext()) {
+                actualKeySet.Add(enumerator.Current.Key);
+            }
+            foreach (string key in expectedKeys) {
+                expectedKeySet.Add(key);
+                if (!actualKeySet.Contains(key)) {
+                    Assert.Fail("JSON property missing from json data: "
+                                + key + " / " + jsonData + suffix);
+                }
+            }
+            if (strict && expectedKeySet.Count != actualKeySet.Count) {
+                ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
+                foreach (string key in expectedKeySet) {
+                    extraKeySet.Remove(key);
+                }
+                Assert.Fail("Unexpected JSON properties in json data: "
+                            + extraKeySet + suffix);
             }
         }
-        if (strict && expectedKeySet.Count != actualKeySet.Count) {
-            ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
-            foreach (string key in expectedKeySet) {
-                extraKeySet.Remove(key);
-            }
-            Assert.Fail("Unexpected JSON properties in json data: " + extraKeySet + suffix);
-        }
-
     }
 
     /// <summary>
@@ -896,7 +897,7 @@ internal abstract class AbstractTest {
     ///
     /// <param name="jsonData">The json data to validate.</param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
-    public static void ValidateJsonDataMapArray(JsonArray       jsonData,
+    public static void ValidateJsonDataMapArray(JsonArray?      jsonData,
                                                 params string[] expectedKeys)
     {
         ValidateJsonDataMapArray(null, jsonData, true, expectedKeys);
@@ -914,7 +915,7 @@ internal abstract class AbstractTest {
     /// <param name="jsonData">The json data to validate.</param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
     public static void ValidateJsonDataMapArray(string?         testInfo,
-                                                JsonArray       jsonData,
+                                                JsonArray?      jsonData,
                                                 params string[] expectedKeys) {
         ValidateJsonDataMapArray(testInfo, jsonData, true, expectedKeys);
     }
@@ -931,7 +932,7 @@ internal abstract class AbstractTest {
     /// allowed to be present.
     /// </param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
-    public static void ValidateJsonDataMapArray(JsonArray       jsonData,
+    public static void ValidateJsonDataMapArray(JsonArray?      jsonData,
                                                 bool            strict,
                                                 params string[] expectedKeys) {
         ValidateJsonDataMapArray(null, jsonData, strict, expectedKeys);
@@ -954,7 +955,7 @@ internal abstract class AbstractTest {
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
     /// </summary>
     public static void ValidateJsonDataMapArray(string?         testInfo,
-                                                JsonArray       jsonData,
+                                                JsonArray?      jsonData,
                                                 bool            strict,
                                                 params string[] expectedKeys)
     {
@@ -962,36 +963,45 @@ internal abstract class AbstractTest {
                 ? " ( " + testInfo + " )"
                 : "";
 
-        ISet<string> expectedKeySet = new HashSet<string>();
-        foreach (string key in expectedKeys) {
-            expectedKeySet.Add(key);
-        }
+        if (jsonData == null) {
+            Assert.Fail("Expected json data but got null value" + suffix);
+            throw new Exception("Expected json data but got null value" + suffix);
+        } else {
+            ISet<string> expectedKeySet = new HashSet<string>();
+            foreach (string key in expectedKeys) {
+                expectedKeySet.Add(key);
+            }
 
-        for (int index = 0; index < jsonData.Count; index++) {
-            JsonNode? node = jsonData[index];
-            if (node == null) {
-                throw new Exception("Null object in an array with valid index");
-            }
-            JsonObject obj = ((JsonNode) node).AsObject();
-            
-            ISet<string> actualKeySet = new HashSet<string>();
-            IEnumerator<KeyValuePair<string,JsonNode?>> enumerator = obj.GetEnumerator();
-            while (enumerator.MoveNext()) {
-                actualKeySet.Add(enumerator.Current.Key);
-            }
-            foreach (string key in expectedKeySet) {
-                if (!actualKeySet.Contains(key)) {
-                    Assert.Fail("JSON property missing from json data array element: "
-                                 + key + " / " + actualKeySet + suffix);
+            for (int index = 0; index < jsonData.Count; index++) {
+                JsonNode? node = jsonData[index];
+                if (node == null) {
+                    throw new Exception("Null object in an array with valid index");
+                }
+                JsonObject obj = ((JsonNode) node).AsObject();
+                
+                ISet<string> actualKeySet = new HashSet<string>();
+                IEnumerator<KeyValuePair<string,JsonNode?>> enumerator
+                    = obj.GetEnumerator();
+                while (enumerator.MoveNext()) {
+                    actualKeySet.Add(enumerator.Current.Key);
+                }
+                foreach (string key in expectedKeySet) {
+                    if (!actualKeySet.Contains(key)) {
+                        Assert.Fail(
+                            "JSON property missing from json data array element: "
+                             + key + " / " + actualKeySet + suffix);
+                    }
+                }
+                if (strict && expectedKeySet.Count != actualKeySet.Count) {
+                    ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
+                    foreach (string key in expectedKeySet) {
+                        extraKeySet.Remove(key);
+                    } 
+                    Assert.Fail("Unexpected JSON properties in json data: "
+                                + extraKeySet + suffix);
                 }
             }
-            if (strict && expectedKeySet.Count != actualKeySet.Count) {
-                ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
-                foreach (string key in expectedKeySet) {
-                    extraKeySet.Remove(key);
-                } 
-                Assert.Fail("Unexpected JSON properties in json data: " + extraKeySet + suffix);
-            }
+
         }
     }
 

@@ -85,5 +85,113 @@ public class SzCoreConfigManager: SzConfigManager {
         }
     }
 
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_addConfig_helper"/>. 
+    /// </summary>
+    public long AddConfig(string configDefinition, string configComment)
+    {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.AddConfig(
+                configDefinition, configComment, out long configID);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return configID;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_getConfig_helper"/>. 
+    /// </summary>
+    public string GetConfig(long configID) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.GetConfig(
+                configID, out string config);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return config;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_getConfigList_helper"/>. 
+    /// </summary>
+    public string GetConfigs() {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.GetConfigList(out string configList);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return configList;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_getDefaultConfigID_helper"/>. 
+    /// </summary>
+    public long GetDefaultConfigID() {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.GetDefaultConfigID(out long configID);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the config handle
+            return configID;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_replaceDefaultConfigID"/>. 
+    /// </summary>
+    public void ReplaceDefaultConfigID(long currentDefaultConfigID,
+                                       long newDefaultConfigID)
+    {
+        this.env.Execute<object>(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.ReplaceDefaultConfigID(
+                currentDefaultConfigID, newDefaultConfigID);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return null
+            return null;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzConfigMgr_setDefaultConfigID_helper"/>. 
+    /// </summary>
+    public void SetDefaultConfigID(long configID) {
+        this.env.Execute<object>(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.SetDefaultConfigID(configID);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return null
+            return null;
+        });
+    }
+
 }
 }

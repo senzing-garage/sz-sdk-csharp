@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Senzing.Sdk.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9de0041f0d581e19d7fb6b88b3faec454323aa6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b11e064c1ef9b18876c82b610d00696c33570fd5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Senzing.Sdk.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Senzing.Sdk.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
