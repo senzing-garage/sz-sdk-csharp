@@ -1,5 +1,0 @@
-is_global = true
-build_property.RootNamespace = Senzing.Sdk
-build_property.ProjectDir = /Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
