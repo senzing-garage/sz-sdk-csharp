@@ -101,5 +101,76 @@ public class SzCoreDiagnostic: SzDiagnostic {
             return (this.nativeApi == null);
         }
     }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzDiagnostic_getDatastoreInfo_helper"/>. 
+    /// </summary>
+    public string GetDatastoreInfo() {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.GetDatastoreInfo(out string info);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the JSON from the string buffer
+            return info;
+        });
+    }
+    
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+    /// </summary>
+    public string CheckDatastorePerformance(int secondsToRun) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.CheckDatastorePerformance(
+                secondsToRun, out string result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the JSON from the string buffer
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+    /// </summary>
+    public string GetFeature(long featureID) {
+        return this.env.Execute(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.GetFeature(
+                featureID, out string result);
+
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return the JSON from the string buffer
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Implemented to call the external native helper function 
+    /// <see cref="SzDiagnostic_purgeRepository"/>. 
+    /// </summary>
+    public void PurgeRepository() {
+        this.env.Execute<object>(() => {
+            // call the underlying C function
+            long returnCode = this.nativeApi.PurgeRepository();
+            
+            // handle any error code if there is one
+            this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+            // return null
+            return null;
+        });
+        
+    }
 }
 }

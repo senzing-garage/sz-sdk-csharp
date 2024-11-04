@@ -189,10 +189,20 @@ internal static class Utilities {
     /// </returns>
     internal static string UTF8BytesToString(IntPtr byteArrayPointer)
     {
+        if (byteArrayPointer == IntPtr.Zero) {
+            return null;
+        }
+
         // determine the length of the array (look for null terminator)
         int len = 0;
-        while (Marshal.ReadByte(byteArrayPointer, len) != 0) {
-            ++len;
+        try {
+            while (Marshal.ReadByte(byteArrayPointer, len) != 0) {
+                ++len;
+            }
+        } catch (Exception) {
+            Console.Error.WriteLine("INITIAL POINTER VALUE: " + byteArrayPointer);
+            Console.Error.WriteLine("LENGTH: " + len);
+            throw;
         }
 
         // allocate a buffer
