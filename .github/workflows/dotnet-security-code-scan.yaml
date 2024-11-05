@@ -27,10 +27,13 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Set up projects
+        uses: security-code-scan/security-code-scan-add-action@v1
+
       - name: build
         run: |
           dotnet restore
-          dotnet build Senzing.Sdk
+          dotnet build
 
       - name: Convert sarif for uploading to GitHub
         uses: security-code-scan/security-code-scan-results-action@v1
