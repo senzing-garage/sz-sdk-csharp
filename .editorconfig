@@ -4,7 +4,7 @@ root = true
 
 # All files
 [*]
-end_of_line = lf
+end_of_line = crlf
 charset = utf-8
 
 # Xml files
@@ -23,7 +23,6 @@ indent_size = 2
 tab_width = 2
 
 # New line preferences
-end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
 dotnet_sort_system_directives_first = true

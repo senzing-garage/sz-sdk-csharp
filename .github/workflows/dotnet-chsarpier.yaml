@@ -27,6 +27,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-      - run: |
+      - name: run csharpier
+        run: |
           dotnet tool restore
           dotnet csharpier --check .
