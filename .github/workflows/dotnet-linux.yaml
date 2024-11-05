@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage.cobertura.xml
-          path: ${{ github.workspace }}/coverage.cobertura.xml
+          path: coverage.cobertura.xml
 
   coverage:
     name: Coverage
