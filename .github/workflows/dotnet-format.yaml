@@ -33,7 +33,7 @@ jobs:
 
       - name: dotnet format whitespace
         run: |
-          # shellcheck disable=SC2035
+          # shellcheck disable=SC2035,SC2010
           folders=$(ls -d */ | grep -v docs)
           while IFS= read -r folder; do
             echo "[INFO] dotnet format whitespace $folder --verify-no-changes --verbosity detailed"
