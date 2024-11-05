@@ -39,4 +39,3 @@ jobs:
             echo "[INFO] dotnet format whitespace $folder --verify-no-changes --verbosity detailed"
             dotnet format whitespace "$folder" --folder --verify-no-changes
           done <<< "$folders"
-

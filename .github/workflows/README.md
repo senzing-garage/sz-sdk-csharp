@@ -44,16 +44,6 @@ When a change is committed to GitHub or a Pull Request is opened against the mai
     - [actions/setup-dotnet]
     - [csharpier]
 
-## dotnet-code-analysis.yaml
-
-When a change is committed to GitHub or a Pull Request is opened against the main branch, this action runs [code analysis].
-
-- [dotnet-code-analysis.yaml]
-  - Uses:
-    - [actions/checkout]
-    - [actions/setup-dotnet]
-    - [dotnet/code-analysis]
-
 ## dotnet-darwin.yaml
 
 When a Pull Request is opened against the main branch, this action runs `dotnet test` on the Darwin/macOS platform to perform unit tests and code coverage.
@@ -137,12 +127,9 @@ this action moves the PR on the "Garage" project board to "Done".
 [Add Labels Standardized GitHub Action]: add-labels-standardized.yaml
 [Add to Project Garage Dependabot GitHub Action]: add-to-project-garage-dependabot.yaml
 [Add to Project Garage GitHub Action]: add-to-project-garage.yaml
-[code analysis]: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview?tabs=net-8
 [csharpier]: https://csharpier.com/docs/ContinuousIntegration
 [Dependabot Approve and Merge GitHub Action]: dependabot-approve-and-merge.yaml
 [dotnet-csharpier.yaml]: dotnet-csharpier.yaml
-[dotnet/code-analysis]: https://github.com/dotnet/code-analysis
-[dotnet-code-analysis.yaml]: dotnet-code-analysis.yaml
 [dotnet-darwin.yaml]: dotnet-darwin.yaml
 [dotnet-format.yaml]: dotnet-format.yaml
 [dotnet-linux.yaml]: dotnet-linux.yaml
