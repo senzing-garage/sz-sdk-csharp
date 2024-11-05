@@ -32,8 +32,10 @@ jobs:
           dotnet restore sz-sdk-csharp.sln
 
       - name: Run .NET Code Analysis
+        env:
+          DOTNET_ROLL_FORWARD: LatestMajor
         uses: dotnet/code-analysis@main
-        id: code-analysis
         with:
           build-breaking: true
           all-categories: all
+
