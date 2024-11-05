@@ -1,0 +1,40 @@
+name: dotnet format
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet-format:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dotnet-version: "8"
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: dotnet format style
+        run: |
+          dotnet format style -v detailed --severity info --verify-no-changes
+
+      - name: dotnet format whitespace
+        run: |
+          folders=$(ls -d */ | grep -v docs)
+          while IFS= read -r folder; do
+            echo "[INFO] dotnet format whitespace $folder --verify-no-changes --verbosity detailed"
+            dotnet format whitespace "$folder" --folder --verify-no-changes
+          done <<< "$folders"

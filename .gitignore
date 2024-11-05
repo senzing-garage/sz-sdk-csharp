@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+# Test Results
+Senzing.Sdk.Tests/TestResults
+coverage.cobertura.xml
+
+#Debug
+**/Debug
