@@ -12,10 +12,6 @@ permissions:
 jobs:
   dotnet-security-code-scan:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        include:
-          - dotnet-version: "3.1.0"
 
     steps:
       - name: checkout repository
@@ -23,11 +19,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: nuget/setup-nuget@04b0c2b8d1b97922f67eca497d7cf0bf17b8ffe1
-      - uses: microsoft/setup-msbuild@v1.0.2
+      - uses: nuget/setup-nuget@v2
+
+      - uses: microsoft/setup-msbuild@v2
 
       - name: Set up projects for analysis
-        uses: security-code-scan/security-code-scan-add-action@f8ff4f2763ed6f229eded80b1f9af82ae7f32a0d
+        uses: security-code-scan/security-code-scan-add-action@v1
 
       - name: build
         run: |
@@ -35,6 +32,8 @@ jobs:
           dotnet build
 
       - name: Convert sarif for uploading to GitHub
+        env:
+          DOTNET_ROLL_FORWARD: LatestMajor
         uses: security-code-scan/security-code-scan-results-action@v1
 
       - name: Upload sarif
