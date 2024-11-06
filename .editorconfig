@@ -1,6 +1,7 @@
 # generated via dotnet
 # https://learn.microsoft.com/en-us/community/content/how-to-enforce-dotnet-format-using-editorconfig-github-actions#option-3-creating-an-editorconfig-file-using-the-dotnet-cli
 root = true
+roslynator_analyzers.enabled_by_default = true
 
 # All files
 [*]

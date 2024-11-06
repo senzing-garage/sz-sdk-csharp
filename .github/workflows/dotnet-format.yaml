@@ -29,17 +29,5 @@ jobs:
 
       - name: dotnet format all
         run: |
+          dotnet restore
           dotnet format --verify-no-changes --verbosity diagnostic
-
-      - name: dotnet format style
-        run: |
-          dotnet format style -v detailed --severity info --verify-no-changes
-
-      - name: dotnet format whitespace
-        run: |
-          # shellcheck disable=SC2035,SC2010
-          folders=$(ls -d */ | grep -v docs)
-          while IFS= read -r folder; do
-            echo "[INFO] dotnet format whitespace $folder --verify-no-changes --verbosity detailed"
-            dotnet format whitespace "$folder" --folder --verify-no-changes
-          done <<< "$folders"
