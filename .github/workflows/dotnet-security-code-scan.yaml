@@ -23,9 +23,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - uses: actions/setup-dotnet@v4
-      #  with:
-      #    dotnet-version: ${{ matrix.dotnet-version }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Set up projects
         uses: security-code-scan/security-code-scan-add-action@v1
