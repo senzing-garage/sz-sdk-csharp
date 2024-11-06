@@ -46,6 +46,7 @@ jobs:
           SENZING_DATA_DIR: "/opt/senzing/er/data"
         run: |
           ls -tlc /opt/senzing/er/
+          ls -tlc /opt/senzing/er/lib
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
 
       - name: Store coverage file
