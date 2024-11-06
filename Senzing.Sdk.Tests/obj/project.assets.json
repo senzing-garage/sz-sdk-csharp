@@ -1311,19 +1311,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/slkern/.nuget/packages/": {}
+    "/Users/barry/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk.Tests/Senzing.Sdk.Tests.csproj",
+      "projectUniqueName": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk.Tests/Senzing.Sdk.Tests.csproj",
       "projectName": "Senzing.Sdk.Tests",
-      "projectPath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk.Tests/Senzing.Sdk.Tests.csproj",
-      "packagesPath": "/Users/slkern/.nuget/packages/",
-      "outputPath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk.Tests/obj/",
+      "projectPath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk.Tests/Senzing.Sdk.Tests.csproj",
+      "packagesPath": "/Users/barry/.nuget/packages/",
+      "outputPath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk.Tests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/slkern/.nuget/NuGet/NuGet.Config"
+        "/Users/barry/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1335,8 +1335,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {
-              "projectPath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj"
+            "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {
+              "projectPath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj"
             }
           }
         }
@@ -1397,7 +1397,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

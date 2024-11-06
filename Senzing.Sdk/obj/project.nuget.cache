@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "PfmFGxwIEjI=",
+  "dgSpecHash": "zGDKCMu724E=",
   "success": true,
-  "projectFilePath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
+  "projectFilePath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
   "expectedPackageFiles": [
-    "/Users/slkern/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "/Users/slkern/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
-    "/Users/slkern/.nuget/packages/roslynator.analyzers/4.12.9/roslynator.analyzers.4.12.9.nupkg.sha512"
+    "/Users/barry/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/Users/barry/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }

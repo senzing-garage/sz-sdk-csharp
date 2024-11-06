@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {}
+    "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {}
   },
   "projects": {
-    "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {
+    "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
+        "projectUniqueName": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
         "projectName": "Senzing.Sdk",
-        "projectPath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
-        "packagesPath": "/Users/slkern/.nuget/packages/",
-        "outputPath": "/Users/slkern/dev/sz-sdk-csharp/Senzing.Sdk/obj/",
+        "projectPath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/Senzing.Sdk.csproj",
+        "packagesPath": "/Users/barry/.nuget/packages/",
+        "outputPath": "/Users/barry/dev/senzing/sz-sdk-csharp/Senzing.Sdk/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/slkern/.nuget/NuGet/NuGet.Config"
+          "/Users/barry/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -48,12 +48,6 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
-            },
-            "roslynator.analyzers": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[4.12.9, )"
             }
           },
           "imports": [
@@ -67,7 +61,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/RuntimeIdentifierGraph.json"
         }
       }
     }
