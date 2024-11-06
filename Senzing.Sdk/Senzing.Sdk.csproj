@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <AnalysisMode>Recommended</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
     <AnalysisModeSecurity>All</AnalysisModeSecurity>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
