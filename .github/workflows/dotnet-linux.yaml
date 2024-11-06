@@ -63,3 +63,5 @@ jobs:
     permissions:
       pull-requests: write
     uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@senzing-garage-sz-sdk-csharp-35-skern
+    with:
+      thresholds: "50 90"
