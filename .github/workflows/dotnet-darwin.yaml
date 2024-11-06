@@ -43,7 +43,7 @@ jobs:
       - name: Run DotNet tests
         env:
           DYLD_LIBRARY_PATH: "/opt/senzing/er/lib"
-          SENZING_DATA_DIR: "/opt/senzing/data"
+          SENZING_DATA_DIR: "/opt/senzing/er/data"
         run: |
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
 
