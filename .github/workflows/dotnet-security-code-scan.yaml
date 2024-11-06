@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   dotnet-security-code-scan:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         include:
@@ -23,12 +23,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+      - uses: nuget/setup-nuget@04b0c2b8d1b97922f67eca497d7cf0bf17b8ffe1
+      - uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Set up projects
-        uses: security-code-scan/security-code-scan-add-action@v1
+      - name: Set up projects for analysis
+        uses: security-code-scan/security-code-scan-add-action@f8ff4f2763ed6f229eded80b1f9af82ae7f32a0d
 
       - name: build
         run: |
