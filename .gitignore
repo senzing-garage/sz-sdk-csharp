@@ -31,9 +31,10 @@
 *.out
 *.app
 
-# Test Results
-Senzing.Sdk.Tests/TestResults
+# Generated files from dotnet builds
+Senzing.Sdk/bin/
+Senzing.Sdk/obj/
+Senzing.Sdk.Tests/bin/
+Senzing.Sdk.Tests/obj/
+target/
 coverage.cobertura.xml
-
-#Debug
-**/Debug

@@ -131,6 +131,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.IsNotNull(configMgr.GetNativeApi(),
                                  "Underlying native API is unexpectedly null");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetNativeApi test with exception", e);
             }
@@ -149,6 +152,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(this.defaultConfigID, Is.Not.EqualTo(0L), 
                             "Config ID is zero (0)");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testAddConfigDefault test with exception", e);
             }
@@ -167,6 +173,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(this.modifiedConfigID, Is.Not.EqualTo(0L),
                             "Config ID is zero (0)");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testAddConfigModified test with exception", e);
             }
@@ -184,6 +193,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(configDefinition, Is.EqualTo(this.defaultConfig),
                              "Configuration retrieved is not as expected");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetConfigDefault test with exception", e);
             }
@@ -201,6 +213,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(configDefinition, Is.EqualTo(this.modifiedConfig),
                              "Configuration retrieved is not as expected");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetConfigModified test with exception", e);
             }
@@ -253,6 +268,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.IsTrue(comments2 != null && comments.Contains((string)comments2),
                               "Second config comment not as expected");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetConfigs test with exception", e);
             }
@@ -270,6 +288,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(configID, Is.EqualTo(0L),
                             "Initial default config ID is not zero (0)");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testGetDefaultConfigIDInitial test with exception", e);
             }
@@ -289,6 +310,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(configID, Is.EqualTo(this.defaultConfigID),
                             "Set default config ID is not as expected");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testSetDefaultConfigID test with exception", e);
             }
@@ -308,6 +332,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 Assert.That(configID, Is.EqualTo(this.modifiedConfigID),
                             "Replaced default config ID is not as expected");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (Exception e) {
                 Fail("Failed testReplaceDefaultConfigID test with exception", e);
             }
@@ -325,6 +352,9 @@ internal class SzCoreConfigManagerTest : AbstractTest {
                 
                 Fail("Replaced default config ID when it should not have been possible");
 
+            } catch (AssertionException) {
+                throw;
+                
             } catch (SzReplaceConflictException) {
                 // expected exception
 
