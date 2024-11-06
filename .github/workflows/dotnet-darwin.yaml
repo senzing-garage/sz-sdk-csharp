@@ -42,7 +42,7 @@ jobs:
 
       - name: Run DotNet tests
         env:
-          DYLD_LIBRARY_PATH: "/opt/senzing/er/lib"
+          DYLD_PRINT_LIBRARIES: "/opt/senzing/er/lib"
           SENZING_DATA_DIR: "/opt/senzing/er/data"
         run: |
           ls -tlc /opt/senzing/er/
