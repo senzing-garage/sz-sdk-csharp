@@ -42,9 +42,10 @@ jobs:
 
       - name: Run DotNet tests
         env:
-          PATH: 'C:\Program Files\Senzing\er\lib'
+          LD_LIBRARY_PATH: 'C:\Program Files\Senzing\er\lib'
           SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
+          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
 
       - name: Store coverage file
