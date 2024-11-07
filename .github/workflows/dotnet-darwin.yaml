@@ -45,6 +45,7 @@ jobs:
           DYLD_LIBRARY_PATH: "/opt/senzing/er/lib"
           SENZING_DATA_DIR: "/opt/senzing/er/data"
         run: |
+          ln -s /opt/senzing/er/lib/libSz.so /opt/senzing/er/lib/libSz.dylib
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
 
       - name: Store coverage file
