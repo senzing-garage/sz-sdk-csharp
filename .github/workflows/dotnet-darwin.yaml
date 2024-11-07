@@ -42,11 +42,9 @@ jobs:
 
       - name: Run DotNet tests
         env:
-          DYLD_PRINT_LIBRARIES: "/opt/senzing/er/lib"
+          DYLD_LIBRARY_PATH: "/opt/senzing/er/lib"
           SENZING_DATA_DIR: "/opt/senzing/er/data"
         run: |
-          ls -tlc /opt/senzing/er/
-          ls -tlc /opt/senzing/er/lib
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
 
       - name: Store coverage file

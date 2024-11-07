@@ -77,17 +77,6 @@ When a change is committed to GitHub or a Pull Request is opened against the mai
     - [actions/upload-artifact]
     - [senzing-factory/build-resources/.../csharp-coverage-comment.yaml]
 
-## dotnet-security-code-scan.yaml
-
-When a change is committed to GitHub or a Pull Request is opened against the main branch, this action runs [security code scan].
-
-- [dotnet-security-code-scan.yaml]
-  - Uses:
-    - [actions/checkout]
-    - [actions/setup-dotnet]
-    - [security-code-scan/security-code-scan-results-action]
-    - [github/codeql-action/upload-sarif]
-
 ## dotnet-windows.yaml
 
 When a Pull Request is opened against the main branch, this action runs `dotnet test` on the Darwin/macOS platform to perform unit tests and code coverage.
@@ -133,15 +122,11 @@ this action moves the PR on the "Garage" project board to "Done".
 [dotnet-darwin.yaml]: dotnet-darwin.yaml
 [dotnet-format.yaml]: dotnet-format.yaml
 [dotnet-linux.yaml]: dotnet-linux.yaml
-[dotnet-security-code-scan.yaml]: dotnet-security-code-scan.yaml
 [dotnet-windows.yaml]: dotnet-windows.yaml
 [dotnet format]: https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-format
-[github/codeql-action/upload-sarif]: https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github
 [Lint Workflows GitHub Action]: lint-workflows.yaml
 [Move PR to Done Dependabot GitHub Action]: move-pr-to-done-dependabot.yaml
 [move-pr-to-done-dependabot.yaml]: move-pr-to-done-dependabotyaml
-[security code scan]: https://security-code-scan.github.io/
-[security-code-scan/security-code-scan-results-action]: https://github.com/security-code-scan/security-code-scan
 [senzing-factory/build-resources/.../add-labels-to-issue.yaml]: https://github.com/senzing-factory/build-resources/blob/main/.github/workflows/add-labels-to-issue.yaml
 [senzing-factory/build-resources/.../add-to-project-dependabot.yaml]: https://github.com/senzing-factory/build-resources/blob/main/.github/workflows/add-to-project-dependabot.yaml
 [senzing-factory/build-resources/.../add-to-project.yaml]: https://github.com/senzing-factory/build-resources/blob/main/.github/workflows/add-to-project.yaml
