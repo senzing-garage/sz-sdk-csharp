@@ -47,6 +47,7 @@ jobs:
         run: |
           echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
