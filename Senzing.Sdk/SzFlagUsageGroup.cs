@@ -1,9 +1,12 @@
+using System;
+
 namespace Senzing.Sdk {
 /// <summary>
 /// Enumerates the various classifications of usage groups for the
 /// <see cref="SzFlag"/> instances.
 /// </summary>
-public enum SzFlagUsageGroup {
+[Flags]
+public enum SzFlagUsageGroup : long {
     /// <summary>
     /// Flags in this usage group can be used for operations that modify the
     /// entity repository by adding records, revaluating records or entities,
@@ -18,7 +21,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzModifyFlags,
+    SzModifyFlags = (1L << 0),
 
     /// <summary>
     /// Flags in this usage group can be used for operations that retrieve record
@@ -58,7 +61,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzRecordFlags,
+    SzRecordFlags = (1L << 1),
 
     /// <summary>
     /// Flags in this usage group can be used for operations that retrieve
@@ -167,7 +170,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzEntityFlags,
+    SzEntityFlags = (1L << 2),
 
     /// <summary>
     /// Flags in this usage group can be used to control the methodology for
@@ -287,7 +290,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzFindPathFlags,
+    SzFindPathFlags = (1L << 3),
 
     /// <summary>
     /// Flags in this usage group can be used to control the methodology for
@@ -404,7 +407,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzFindNetworkFlags,
+    SzFindNetworkFlags = (1L << 4),
 
     /// <summary>
     /// Flags in this usage group can be used for operations that search for 
@@ -551,7 +554,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzSearchFlags,
+    SzSearchFlags = (1L << 5),
 
     /// <summary>
     /// Flags in this usage group can be used for operations that export 
@@ -685,7 +688,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzExportFlags,
+    SzExportFlags = (1L << 6),
 
     /// <summary>
     /// Flags in this usage group can be used to control the methodology for
@@ -808,7 +811,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzWhyFlags,
+    SzWhyFlags = (1L << 7),
 
     /// <summary>
     /// Flags in this usage group can be used to control the methodology for
@@ -860,7 +863,7 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzHowFlags,
+    SzHowFlags = (1L << 8),
 
     /// <summary>
     /// Flags in this usage group can be used for operations that retrieve
@@ -922,6 +925,104 @@ public enum SzFlagUsageGroup {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-    SzVirtualEntityFlags
+    SzVirtualEntityFlags = (1L << 9)
 }
+
+[System.AttributeUsage(System.AttributeTargets.Field)]
+internal class SzFlagUsageGroupsAttribute : System.Attribute {
+    internal readonly SzFlagUsageGroup groups;
+    public SzFlagUsageGroupsAttribute(SzFlagUsageGroup groups) {
+        this.groups = groups;
+    }
+}
+
+internal static class SzFlagUsageGroupSets {
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant
+    /// to use for <see cref="SzFlag"/> instances that can only be used
+    /// for "modify" operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzModifySet 
+        = SzFlagUsageGroup.SzModifyFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply
+    /// to <see cref="SzFlag"/> instances that retrieve entity data pertaining
+    /// to inclusion of related entities and the details of related entities.
+    /// </summary>
+    internal const SzFlagUsageGroup SzRelationSet
+        = SzFlagUsageGroup.SzEntityFlags | SzFlagUsageGroup.SzSearchFlags
+        | SzFlagUsageGroup.SzExportFlags | SzFlagUsageGroup.SzFindPathFlags
+        | SzFlagUsageGroup.SzFindNetworkFlags | SzFlagUsageGroup.SzWhyFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply
+    /// to apply to <see cref="SzFlag"/> instances that retrieve entity data since
+    /// they are used by most operations.
+    /// </summary>
+    /// <remarks>
+    /// Flags that use this aggregate constant should not affect inclusion of or
+    /// details of related entities.
+    /// </remarks>
+    internal const SzFlagUsageGroup SzEntitySet
+        = SzRelationSet | SzFlagUsageGroup.SzVirtualEntityFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply
+    /// to <see cref="SzFlag"/> instances that retrieve entity data <b>and</b>
+    /// also apply to "how" operations.
+    /// </summary>
+    /// <remarks>
+    /// Flags that use this aggregate constant should not affect inclusion of
+    /// or details of related entities.
+    /// </remarks>
+    internal const SzFlagUsageGroup SzEntityHowSet 
+        = SzRelationSet | SzFlagUsageGroup.SzHowFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that retrieve record data since they are used
+    /// by most other groups and can be specifically used for retrieving a single
+    /// record.
+    /// </summary>
+    internal const SzFlagUsageGroup SzEntityRecordSet 
+        = SzEntitySet | SzFlagUsageGroup.SzRecordFlags;
+    
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that can be used only for "how analysis" and
+    /// "why analysis" operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzHowWhySet 
+        = SzFlagUsageGroup.SzWhyFlags | SzFlagUsageGroup.SzHowFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that can only be used for "search" operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzSearchSet = SzFlagUsageGroup.SzSearchFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that can only be used for "export" operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzExportSet = SzFlagUsageGroup.SzExportFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that can only be used for "find path"
+    /// operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzFindPathSet
+        = SzFlagUsageGroup.SzFindPathFlags;
+
+    /// <summary>
+    /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+    /// <see cref="SzFlag"/> instances that can only be used for "find network"
+    /// operations.
+    /// </summary>
+    internal const SzFlagUsageGroup SzFindNetworkSet
+        = SzFlagUsageGroup.SzFindNetworkFlags;
+}
+
 }

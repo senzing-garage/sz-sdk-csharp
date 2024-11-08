@@ -12,384 +12,391 @@ internal class NativeFlags {
     /// The bitwise flag for export functionality to indicate that
     /// we should include "resolved" relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_MULTI_RECORD_ENTITIES = (1L << 0);
+    public const long SzExportIncludeMultiRecordEntities = (1L << 0);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include "possibly same" relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_POSSIBLY_SAME = (1L << 1);
+    public const long SzExportIncludePossiblySame = (1L << 1);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include "possibly related" relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_POSSIBLY_RELATED = (1L << 2);
+    public const long SzExportIncludePossiblyRelated = (1L << 2);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include "name only" relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_NAME_ONLY = (1L << 3);
+    public const long SzExportIncludeNameOnly = (1L << 3);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include "disclosed" relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_DISCLOSED = (1L << 4);
+    public const long SzExportIncludeDisclosed = (1L << 4);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include singleton entities.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_SINGLE_RECORD_ENTITIES = (1L << 5);
+    public const long SzExportIncludeSingleRecordEntities = (1L << 5);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include all entities.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_ALL_ENTITIES
-      = (SZ_EXPORT_INCLUDE_MULTI_RECORD_ENTITIES 
-        | SZ_EXPORT_INCLUDE_SINGLE_RECORD_ENTITIES);
+    public const long SzExportIncludeAllEntities
+      = (SzExportIncludeMultiRecordEntities 
+        | SzExportIncludeSingleRecordEntities);
 
     /// <summary>
     /// The bitwise flag for export functionality to indicate that
     /// we should include all relationships.
     /// </summary>
-    internal const long SZ_EXPORT_INCLUDE_ALL_HAVING_RELATIONSHIPS
-      = (SZ_EXPORT_INCLUDE_POSSIBLY_SAME
-         | SZ_EXPORT_INCLUDE_POSSIBLY_RELATED
-         | SZ_EXPORT_INCLUDE_NAME_ONLY 
-         | SZ_EXPORT_INCLUDE_DISCLOSED);
+    public const long SzExportIncludeAllHavingRelationships
+      = (SzExportIncludePossiblySame
+         | SzExportIncludePossiblyRelated
+         | SzExportIncludeNameOnly 
+         | SzExportIncludeDisclosed);
 
     /// <summary>
     /// The bitwise flag for including possibly-same relations for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_POSSIBLY_SAME_RELATIONS = (1L << 6);
+    public const long SzEntityIncludePossiblySameRelations = (1L << 6);
 
     /// <summary>
     /// The bitwise flag for including possibly-related relations for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_POSSIBLY_RELATED_RELATIONS = (1L << 7);
+    public const long SzEntityIncludePossiblyRelatedRelations = (1L << 7);
 
     /// <summary>
     /// The bitwise flag for including name-only relations for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_NAME_ONLY_RELATIONS = (1L << 8);
+    public const long SzEntityIncludeNameOnlyRelations = (1L << 8);
 
     /// <summary>
     /// The bitwise flag for including disclosed relations for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_DISCLOSED_RELATIONS = (1L << 9);
+    public const long SzEntityIncludeDisclosedRelations = (1L << 9);
 
     /// <summary>
     /// The bitwise flag for including all relations for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_ALL_RELATIONS
-      = (SZ_ENTITY_INCLUDE_POSSIBLY_SAME_RELATIONS
-         | SZ_ENTITY_INCLUDE_POSSIBLY_RELATED_RELATIONS
-         | SZ_ENTITY_INCLUDE_NAME_ONLY_RELATIONS
-         | SZ_ENTITY_INCLUDE_DISCLOSED_RELATIONS);
+    public const long SzEntityIncludeAllRelations
+      = (SzEntityIncludePossiblySameRelations
+         | SzEntityIncludePossiblyRelatedRelations
+         | SzEntityIncludeNameOnlyRelations
+         | SzEntityIncludeDisclosedRelations);
 
     /// <summary>
     /// The bitwise flag for including all features for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_ALL_FEATURES = (1L << 10);
+    public const long SzEntityIncludeAllFeatures = (1L << 10);
 
     /// <summary>
     /// The bitwise flag for including representative features for entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_REPRESENTATIVE_FEATURES = (1L << 11);
+    public const long SzEntityIncludeRepresentativeFeatures = (1L << 11);
 
     /// <summary>
     /// The bitwise flag for including the name of the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_ENTITY_NAME = (1L << 12);
+    public const long SzEntityIncludeEntityName = (1L << 12);
 
     /// <summary>
     /// The bitwise flag for including the record summary of the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_SUMMARY = (1L << 13);
+    public const long SzEntityIncludeRecordSummary = (1L << 13);
 
     /// <summary>
     /// The bitwise flag for including the record types of the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_TYPES = (1L << 28);
+    public const long SzEntityIncludeRecordTypes = (1L << 28);
 
     /// <summary>
     /// The bitwise flag for including the basic record data for the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_DATA = (1L << 14);
+    public const long SzEntityIncludeRecordData = (1L << 14);
 
     /// <summary>
     /// The bitwise flag for including the record matching info for the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_MATCHING_INFO = (1L << 15);
+    public const long SzEntityIncludeRecordMatchingInfo = (1L << 15);
 
     /// <summary>
     /// The bitwise flag for including the record json data for the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_JSON_DATA = (1L << 16);
+    public const long SzEntityIncludeRecordJsonData = (1L << 16);
 
     /// <summary>
     /// The bitwise flag for including the record unmapped data for the entity.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_UNMAPPED_DATA = (1L << 31);
+    public const long SzEntityIncludeRecordUnmappedData = (1L << 31);
 
     /// <summary>
     /// The bitwise flag for the features identifiers for the records.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_FEATURES = (1L << 18);
+    public const long SzEntityIncludeRecordFeatures = (1L << 18);
 
     /// <summary>
     /// The bitwise flag for the features identifiers for the records.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_FEATURE_DETAILS = (1L << 35);
+    public const long SzEntityIncludeRecordFeatureDetails = (1L << 35);
 
     /// <summary>
     /// The bitwise flag for the features identifiers for the records.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RECORD_FEATURE_STATS = (1L << 36);
+    public const long SzEntityIncludeRecordFeatureStats = (1L << 36);
 
     /// <summary>
     /// The bitwise flag for including the name of the related entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RELATED_ENTITY_NAME = (1L << 19);
+    public const long SzEntityIncludeRelatedEntityName = (1L << 19);
 
     /// <summary>
     /// The bitwise flag for including the record matching info of the related.
     /// entities
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RELATED_MATCHING_INFO = (1L << 20);
+    public const long SzEntityIncludeRelatedMatchingInfo = (1L << 20);
 
     /// <summary>
     /// The bitwise flag for including the record summary of the related entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RELATED_RECORD_SUMMARY = (1L << 21);
+    public const long SzEntityIncludeRelatedRecordSummary = (1L << 21);
 
     /// <summary>
     /// The bitwise flag for including the record types of the related entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RELATED_RECORD_TYPES = (1L << 29);
+    public const long SzEntityIncludeRelatedRecordTypes = (1L << 29);
 
     /// <summary>
     /// The bitwise flag for including the basic record data of the related.
     /// entities.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_RELATED_RECORD_DATA = (1L << 22);
+    public const long SzEntityIncludeRelatedRecordData = (1L << 22);
 
     /// <summary>
     /// The bitwise flag for including internal features in entity output.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_INTERNAL_FEATURES = (1L << 23);
+    public const long SzEntityIncludeInternalFeatures = (1L << 23);
 
     /// <summary>
     /// The bitwise flag for including feature statistics in entity output.
     /// </summary>
-    internal const long SZ_ENTITY_INCLUDE_FEATURE_STATS = (1L << 24);
+    public const long SzEntityIncludeFeatureStats = (1L << 24);
 
     /// <summary>
     /// The bitwise flag for including internal features.
     /// </summary>
-    internal const long SZ_INCLUDE_MATCH_KEY_DETAILS = (1L << 34);
+    public const long SzIncludeMatchKeyDetails = (1L << 34);
 
     /// <summary>
     /// The bitwise flag for find-path functionality to indicate that
     /// avoided entities are strictly forbidden.
     /// </summary>
-    internal const long SZ_FIND_PATH_STRICT_AVOID = (1L << 25);
+    public const long SzFindPathStrictAvoid = (1L << 25);
 
     /// <summary>
     /// The bitwise flag for find-path functionality to include
     /// matching info on entity paths.
     /// </summary>
-    internal const long SZ_FIND_PATH_INCLUDE_MATCHING_INFO = (1L << 30);
+    public const long SzFindPathIncludeMatchingInfo = (1L << 30);
 
     /// <summary>
     /// The bitwise flag for find-path functionality to include
     /// matching info on entity paths.
     /// </summary>
-    internal const long SZ_FIND_NETWORK_INCLUDE_MATCHING_INFO = (1L << 33);
+    public const long SzFindNetworkIncludeMatchingInfo = (1L << 33);
 
     /// <summary>
     /// The bitwise flag for including feature scores.
     /// </summary>
-    internal const long SZ_INCLUDE_FEATURE_SCORES = (1L << 26);
+    public const long SzIncludeFeatureScores = (1L << 26);
 
     /// <summary>
     /// The bitwise flag for including statistics from search results.
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_STATS = (1L << 27);
+    public const long SzSearchIncludeStats = (1L << 27);
 
     /// <summary>
     /// The bitwise flag for search functionality to indicate that
     /// we should include "resolved" match level results.
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_RESOLVED = (SZ_EXPORT_INCLUDE_MULTI_RECORD_ENTITIES);
+    public const long SzSearchIncludeResolved
+      = (SzExportIncludeMultiRecordEntities);
 
     /// <summary>
     /// The bitwise flag for search functionality to indicate that
     /// we should include "possibly same" match level results.
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_POSSIBLY_SAME
-      = (SZ_EXPORT_INCLUDE_POSSIBLY_SAME);
+    public const long SzSearchIncludePossiblySame
+      = (SzExportIncludePossiblySame);
 
     /// <summary>
     /// The bitwise flag for search functionality to indicate that
     /// we should include "possibly related" match level results.
     ///
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_POSSIBLY_RELATED
-      = (SZ_EXPORT_INCLUDE_POSSIBLY_RELATED);
+    public const long SzSearchIncludePossiblyRelated
+      = (SzExportIncludePossiblyRelated);
 
     /// <summary>
     /// The bitwise flag for search functionality to indicate that
     /// we should include "name only" match level results.
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_NAME_ONLY = (SZ_EXPORT_INCLUDE_NAME_ONLY);
+    public const long SzSearchIncludeNameOnly = (SzExportIncludeNameOnly);
 
     /// <summary>
     /// The bitwise flag for search functionality to indicate that
     /// we should include all match level results.
     /// </summary>
-    internal const long SZ_SEARCH_INCLUDE_ALL_ENTITIES
-      = (SZ_SEARCH_INCLUDE_RESOLVED 
-         | SZ_SEARCH_INCLUDE_POSSIBLY_SAME
-         | SZ_SEARCH_INCLUDE_POSSIBLY_RELATED
-         | SZ_SEARCH_INCLUDE_NAME_ONLY);
+    public const long SzSearchIncludeAllEntities
+      = (SzSearchIncludeResolved 
+         | SzSearchIncludePossiblySame
+         | SzSearchIncludePossiblyRelated
+         | SzSearchIncludeNameOnly);
 
     /// <summary>
     /// The default recommended bitwise flag values for getting records.
     /// </summary>
-    internal const long SZ_RECORD_DEFAULT_FLAGS = (SZ_ENTITY_INCLUDE_RECORD_JSON_DATA);
+    public const long SzRecordDefaultFlags = (SzEntityIncludeRecordJsonData);
 
     /// <summary>
     /// The default recommended bitwise flag values for getting entities.
     /// </summary>
-    internal const long SZ_ENTITY_DEFAULT_FLAGS
-      = (SZ_ENTITY_INCLUDE_ALL_RELATIONS
-         | SZ_ENTITY_INCLUDE_REPRESENTATIVE_FEATURES
-         | SZ_ENTITY_INCLUDE_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RECORD_SUMMARY
-         | SZ_ENTITY_INCLUDE_RECORD_DATA
-         | SZ_ENTITY_INCLUDE_RECORD_MATCHING_INFO
-         | SZ_ENTITY_INCLUDE_RELATED_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RELATED_RECORD_SUMMARY
-         | SZ_ENTITY_INCLUDE_RELATED_MATCHING_INFO);
+    public const long SzEntityDefaultFlags
+      = (SzEntityIncludeAllRelations
+         | SzEntityIncludeRepresentativeFeatures
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary
+         | SzEntityIncludeRecordData
+         | SzEntityIncludeRecordMatchingInfo
+         | SzEntityIncludeRelatedEntityName
+         | SzEntityIncludeRelatedRecordSummary
+         | SzEntityIncludeRelatedMatchingInfo);
 
     /// <summary>
     /// The default recommended bitwise flag values for getting entities.
     /// </summary>
-    internal const long SZ_ENTITY_BRIEF_DEFAULT_FLAGS
-      = (SZ_ENTITY_INCLUDE_RECORD_MATCHING_INFO
-         | SZ_ENTITY_INCLUDE_ALL_RELATIONS
-         | SZ_ENTITY_INCLUDE_RELATED_MATCHING_INFO);
+    public const long SzEntityBriefDefaultFlags
+      = (SzEntityIncludeRecordMatchingInfo
+         | SzEntityIncludeAllRelations
+         | SzEntityIncludeRelatedMatchingInfo);
 
     /// <summary>
     /// The default recommended bitwise flag values for exporting entities.
     /// </summary>
-    internal const long SZ_EXPORT_DEFAULT_FLAGS
-      = (SZ_EXPORT_INCLUDE_ALL_ENTITIES
-         | SZ_ENTITY_DEFAULT_FLAGS);
+    public const long SzExportDefaultFlags
+      = (SzExportIncludeAllEntities
+         | SzEntityDefaultFlags);
 
     /// <summary>
     /// The default recommended bitwise flag values for finding entity paths.
     /// </summary>
-    internal const long SZ_FIND_PATH_DEFAULT_FLAGS
-      = (SZ_FIND_PATH_INCLUDE_MATCHING_INFO
-         | SZ_ENTITY_INCLUDE_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RECORD_SUMMARY);
+    public const long SzFindPathDefaultFlags
+      = (SzFindPathIncludeMatchingInfo
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary);
 
     /// <summary>
     /// The default recommended bitwise flag values for finding entity networks.
     /// </summary>
-    internal const long SZ_FIND_NETWORK_DEFAULT_FLAGS
-      = (SZ_FIND_NETWORK_INCLUDE_MATCHING_INFO
-         | SZ_ENTITY_INCLUDE_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RECORD_SUMMARY);
+    public const long SzFindNetworkDefaultFlags
+      = (SzFindNetworkIncludeMatchingInfo
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary);
 
     /// <summary>
     /// The default recommended bitwise flag values for why-entities analysis 
     /// on entities.
     /// </summary>
-    internal const long SZ_WHY_ENTITIES_DEFAULT_FLAGS
-      = (SZ_ENTITY_DEFAULT_FLAGS
-         | SZ_ENTITY_INCLUDE_INTERNAL_FEATURES
-         | SZ_ENTITY_INCLUDE_FEATURE_STATS
-         | SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzWhyEntitiesDefaultFlags
+      = (SzEntityDefaultFlags
+         | SzEntityIncludeInternalFeatures
+         | SzEntityIncludeFeatureStats
+         | SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for why-records analysis 
     /// on entities.
     /// </summary>
-    internal const long SZ_WHY_RECORDS_DEFAULT_FLAGS
-      = (SZ_ENTITY_DEFAULT_FLAGS
-         | SZ_ENTITY_INCLUDE_INTERNAL_FEATURES
-         | SZ_ENTITY_INCLUDE_FEATURE_STATS
-         | SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzWhyRecordsDefaultFlags
+      = (SzEntityDefaultFlags
+         | SzEntityIncludeInternalFeatures
+         | SzEntityIncludeFeatureStats
+         | SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for why-record-in analysis
     /// on entities.
     /// </summary>
-    internal const long SZ_WHY_RECORD_IN_ENTITY_DEFAULT_FLAGS
-      = (SZ_ENTITY_DEFAULT_FLAGS
-         | SZ_ENTITY_INCLUDE_INTERNAL_FEATURES
-         | SZ_ENTITY_INCLUDE_FEATURE_STATS
-         | SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzWhyRecordInEntityDefaultFlags
+      = (SzEntityDefaultFlags
+         | SzEntityIncludeInternalFeatures
+         | SzEntityIncludeFeatureStats
+         | SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for how-analysis on entities.
     /// </summary>
-    internal const long SZ_HOW_ENTITY_DEFAULT_FLAGS
-      = (SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzHowEntityDefaultFlags
+      = (SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for virtual-entity-analysis
     /// on entities.
     /// </summary>
-    internal const long SZ_VIRTUAL_ENTITY_DEFAULT_FLAGS
-      = (SZ_ENTITY_DEFAULT_FLAGS);
+    public const long SzVirtualEntityDefaultFlags
+      = (SzEntityIncludeRepresentativeFeatures
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary
+         | SzEntityIncludeRecordData
+         | SzEntityIncludeRecordMatchingInfo);
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes,
     /// returning all matching entities.
     /// </summary>
-    internal const long SZ_SEARCH_BY_ATTRIBUTES_ALL
-      = (SZ_SEARCH_INCLUDE_ALL_ENTITIES
-         | SZ_ENTITY_INCLUDE_REPRESENTATIVE_FEATURES
-         | SZ_ENTITY_INCLUDE_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RECORD_SUMMARY
-         | SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzSearchByAttributesAll
+      = (SzSearchIncludeAllEntities
+         | SzEntityIncludeRepresentativeFeatures
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary
+         | SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes,
     /// returning only strongly matching entities.
     /// </summary>
-    internal const long SZ_SEARCH_BY_ATTRIBUTES_STRONG
-      = (SZ_SEARCH_INCLUDE_RESOLVED
-         | SZ_SEARCH_INCLUDE_POSSIBLY_SAME
-         | SZ_ENTITY_INCLUDE_REPRESENTATIVE_FEATURES
-         | SZ_ENTITY_INCLUDE_ENTITY_NAME
-         | SZ_ENTITY_INCLUDE_RECORD_SUMMARY
-         | SZ_INCLUDE_FEATURE_SCORES);
+    public const long SzSearchByAttributesStrong
+      = (SzSearchIncludeResolved
+         | SzSearchIncludePossiblySame
+         | SzEntityIncludeRepresentativeFeatures
+         | SzEntityIncludeEntityName
+         | SzEntityIncludeRecordSummary
+         | SzIncludeFeatureScores);
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes,
     /// returning minimal data with all matches.
     /// </summary>
-    internal const long SZ_SEARCH_BY_ATTRIBUTES_MINIMAL_ALL = (SZ_SEARCH_INCLUDE_ALL_ENTITIES);
+    public const long SzSearchByAttributesMinimalAll 
+      = (SzSearchIncludeAllEntities);
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes,
     /// returning the minimal data, and returning only the strongest matches.
     /// </summary>
-    internal const long SZ_SEARCH_BY_ATTRIBUTES_MINIMAL_STRONG
-      = (SZ_SEARCH_INCLUDE_RESOLVED | SZ_SEARCH_INCLUDE_POSSIBLY_SAME);
+    public const long SzSearchByAttributesMinimalStrong
+      = (SzSearchIncludeResolved | SzSearchIncludePossiblySame);
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes.
     /// </summary>
-    internal const long SZ_SEARCH_BY_ATTRIBUTES_DEFAULT_FLAGS = (SZ_SEARCH_BY_ATTRIBUTES_ALL);
+    public const long SzSearchByAttributesDefaultFlags
+      = (SzSearchByAttributesAll);
 }
 }

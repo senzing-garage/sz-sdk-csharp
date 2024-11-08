@@ -1,4 +1,107 @@
+using System;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Text;
+
 namespace Senzing.Sdk {
+
+/// <summary>
+/// Encapsulates a flag value with its name since some flags have the
+/// same values, but different usages depending on the symbol which which
+/// they are referenced.
+/// </summary>
+internal class SzFlagInfo : IComparable {
+    /// <summary>The read-only symbolic name</summary>
+    internal readonly string name;
+    /// <summary>The read-only bitwise flag value</summary>
+    internal readonly SzFlag value;
+    /// <summary>The usage groups for this flag</summary>
+    internal readonly SzFlagUsageGroup groups;
+
+    /// <summary>Constructs with the field info</summary>
+    internal SzFlagInfo(FieldInfo fieldInfo) {
+        this.name   = fieldInfo.Name;
+        this.value  = (SzFlag) fieldInfo.GetValue(null);
+
+        object[] attrs = fieldInfo.GetCustomAttributes(
+            typeof(SzFlagUsageGroupsAttribute), false);
+
+        this.groups = (attrs.Length > 0) 
+            ? ((SzFlagUsageGroupsAttribute) attrs[0]).groups
+            : ((SzFlagUsageGroup) 0L);
+    }
+
+    /// <summary>Provides a sensible equality implementation.</summary>
+    public override bool Equals(object obj) {
+        if (obj == null) return false;
+        if (this.GetType() != obj.GetType()) return false;
+        SzFlagInfo info = (obj as SzFlagInfo);
+        return (Object.Equals(this.name, info.name)
+                && Object.Equals(this.value, info.value));
+    }
+    /// <summary>Provides a sensible hash code implementation.</summary>
+    public override int GetHashCode() {
+        return this.name.GetHashCode() ^ this.value.GetHashCode();
+    }
+    /// <summary>Provides a sensible comparison implementation.</summary>
+    public int CompareTo(object obj) {
+        if (obj == null) return 1;
+        if (this.GetType() != obj.GetType()) {
+            throw new ArgumentException(
+                "Cannot compare " + this.GetType() + " to " + obj.GetType());
+        }
+        SzFlagInfo info = (obj as SzFlagInfo);
+        int result = this.name.CompareTo(info.name);
+        if (result != 0) return result;
+        long diff = ((long) this.value) - ((long) info.value);
+        if (diff == 0L) return 0;
+        return (diff < 0L) ? -1 : 1;
+    }
+    /// <summary>Provides a sensible conversion to string</summary>
+    public override string ToString() {
+        return this.name + " (" + Utilities.HexFormat((Int64) this.value) + ")";
+    }
+}
+
+/// <summary>
+/// Internal class for encapsulating info pertaining to flag usage groups.
+/// </summary>
+internal class SzFlagUsageGroupInfo {
+    internal readonly SzFlagUsageGroup group;
+    internal readonly SzFlag flags;
+
+    internal readonly IDictionary<string,SzFlagInfo> infoByName;
+    internal readonly IDictionary<SzFlag,SzFlagInfo> infoByFlag;
+    internal SzFlagUsageGroupInfo(SzFlagUsageGroup group, ICollection<SzFlagInfo> flagInfos) {
+        this.group = group;
+        this.infoByName = new Dictionary<string,SzFlagInfo>();
+        this.infoByFlag = new Dictionary<SzFlag,SzFlagInfo>();
+        
+        SzFlag aggregateFlags = (SzFlag) 0L;
+
+        foreach (SzFlagInfo flagInfo in flagInfos) {
+            if ((flagInfo.groups & group) == 0) {
+                throw new ArgumentException(
+                    "The specified group (" + group + " ) is not found in the flag info "
+                    + "groups.  flagInfo=[ " + flagInfo + " ], flagInfoGroups=[ "
+                    + flagInfo.groups + " ]");
+            }
+            aggregateFlags |= flagInfo.value;
+            this.infoByName.Add(flagInfo.name, flagInfo);
+            if (this.infoByFlag.ContainsKey(flagInfo.value)) {
+                throw new ArgumentException(
+                    "Cannot have the same flag by differnet names in the same group: "
+                        + "group=[ " + this.group + " ], flag=[ " + flagInfo
+                        + " ], existing=[ " + this.infoByFlag[flagInfo.value] + " ]");
+            }
+            this.infoByFlag.Add(flagInfo.value, flagInfo);
+        }
+
+        // set the flags
+        this.flags = aggregateFlags;
+    }
+}
+
 /// <summary>
 /// Provides aggregate <see cref="SzFlag"/> constants as well as
 /// extension methods and utility methods pertaining to 
@@ -132,7 +235,7 @@ public static class SzFlags {
     /// </summary>
     ///
     /// <seealso cref="SzFlagUsageGroup.SzWhyFlags"/>
-    public const SzFlag SzWhyFlags
+    public const SzFlag SzWhyAllFlags
         = SzEntityAllFlags | SzFlag.SzIncludeFeatureScores;
 
     /// <summary>
@@ -142,7 +245,7 @@ public static class SzFlags {
     /// </summary>
     ///
     /// <seealso cref="SzFlagUsageGroup.SzHowFlags"/>
-    public const SzFlag SzHowFlags
+    public const SzFlag SzHowAllFlags
         = SzFlag.SzIncludeMatchKeyDetails | SzFlag.SzIncludeFeatureScores;
 
     /// <summary>
@@ -885,6 +988,367 @@ public static class SzFlags {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-   public const SzFlag SzSearchByAttributesDefaultFlags = SzSearchByAttributesAll;
+    public const SzFlag SzSearchByAttributesDefaultFlags = SzSearchByAttributesAll;
+
+    /// <summary>
+    /// Mapping of individual flag values to the possible names to which they belong.
+    /// </summary>
+    private static readonly IDictionary<SzFlag,List<SzFlagInfo>> FlagInfoByFlag
+        = new Dictionary<SzFlag,List<SzFlagInfo>>();
+
+    /// <summary>
+    /// Mapping of string flag names to flag values.
+    /// </summary>
+    private static readonly IDictionary<string,SzFlagInfo> FlagInfoByName
+        = new Dictionary<string,SzFlagInfo>();
+
+    /// <summary>
+    /// Mapping of individual group values to the group info objects.
+    /// </summary>
+    private static readonly IDictionary<SzFlagUsageGroup,SzFlagUsageGroupInfo> GroupInfoByGroup
+        = new Dictionary<SzFlagUsageGroup,SzFlagUsageGroupInfo>();
+
+    /// <summary>
+    /// The number of possible flags bits that can be set.
+    /// </summary>
+    private const int FlagsBitCount = 64;
+
+    /// <summary>
+    /// The class initializer.
+    /// </summary>
+    static SzFlags() {
+        Type flagType = typeof(SzFlag);
+        Type groupType = typeof(SzFlagUsageGroup);
+
+        Array allFlags = Enum.GetValues(flagType);
+        Array allGroups = Enum.GetValues(groupType);
+
+        IDictionary<SzFlagUsageGroup,IList<SzFlagInfo>> groupFlagInfos
+            = new Dictionary<SzFlagUsageGroup,IList<SzFlagInfo>>();
+
+        foreach (SzFlagUsageGroup group in allGroups) {
+            groupFlagInfos[group] = new List<SzFlagInfo>();
+        }
+
+        foreach (SzFlag flag in allFlags) {
+            FlagInfoByFlag[flag] = new List<SzFlagInfo>();
+        }
+
+        BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static;
+        foreach (FieldInfo fieldInfo in flagType.GetFields(bindingFlags)) {
+            SzFlagInfo flagInfo = new SzFlagInfo(fieldInfo);
+            
+            FlagInfoByFlag[flagInfo.value].Add(flagInfo);
+            FlagInfoByName[flagInfo.name] = flagInfo;
+            foreach (SzFlagUsageGroup group in allGroups) {
+                if ((group & flagInfo.groups) != 0L) {
+                    groupFlagInfos[group].Add(flagInfo);
+                }
+            }
+        }
+
+        foreach (KeyValuePair<SzFlag,List<SzFlagInfo>> pair in FlagInfoByFlag) {
+            pair.Value.Sort((info1,info2) => info1.name.CompareTo(info2.name));
+        }
+
+        foreach (SzFlagUsageGroup group in allGroups) {
+            IList<SzFlagInfo> flagInfos = groupFlagInfos[group];
+            SzFlagUsageGroupInfo groupInfo = new SzFlagUsageGroupInfo(group, flagInfos);
+            GroupInfoByGroup.Add(group, groupInfo);
+        }
+    }
+
+    /// <summary>
+    /// Extension method for <see cref="SzFlagUsageGroup"/> to obtain the
+    /// aggregate <see cref="SzFlag"/> value for all flags associated with
+    /// the group.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// If the subject <see cref="SzFlagUsageGroup"/> is itself an aggregate
+    /// value of multiple groups then the aggregate flag values for all
+    /// flags belonging to all the individual groups is returned (i.e.: the
+    /// union of the flags for each groups).  If the respective 
+    /// <see cref="SzFlagUsageGroup"/> is zero (0) then <see cref="SzNoFlags"/>
+    /// (zero) is returned.
+    /// </remarks>
+    ///
+    /// <param name="group">
+    /// The <see cref="SzFlagUsageGroup"/> on which to operate.
+    /// </param>
+    ///
+    /// <returns>
+    /// The aggregate <see cref="SzFlag"/> value with the bits set for all
+    /// flags belonging to all the <see cref="SzFlagUsageGroup"/> values.
+    /// </returns>
+    public static SzFlag GetFlags(this SzFlagUsageGroup group) {
+        if (GroupInfoByGroup.ContainsKey(group)) {
+            SzFlagUsageGroupInfo info = GroupInfoByGroup[group];
+            return info.flags;
+        }
+        SzFlag  result  = SzNoFlags;
+        foreach (SzFlagUsageGroupInfo info in GroupInfoByGroup.Values) {
+            if ((group & info.group) != 0L) {
+                result |= info.flags;
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Formats a <c>string</c> representation of the specified 
+    /// <see cref="SzFlag"/> according to the <see cref="SzFlag"/>
+    /// instances associated with the respective <see cref="SzFlagUsageGroup"/>.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// <p>
+    /// <b>NOTE:</b> This method is useful in logging which flags were past to a
+    /// particular method using the <see cref="SzFlagUsageGroup"/> for the flags that
+    /// are accepted by that method.
+    /// <p>
+    /// Some <see cref="SzFlag"/> values have the same underlying bitwise flag value
+    /// which can lead to ambiguity with the default <c>ToString()</c> implementation
+    /// for enums.  However, none of the <see cref="SzFlag"/> instances for a single
+    /// <see cref="SzFlagUsageGroup"/> should overlap in bitwise values and this
+    /// method will prefer the <see cref="SzFlag"/> symbol belonging to the respective
+    /// <see cref="SzFlagUsageGroup"/> for formatting the <c>string</c>.
+    /// <p>
+    /// If the respective <see cref="SzFlagUsageGroup"/> is an aggregate group value
+    /// representing multiple groups (or no groups) then this method simply defaults 
+    /// to formatting the set bit values using numeric representation, foregoing the
+    /// use of symbolic flag names altogether.
+    /// </remarks>
+    ///
+    /// <param name="group">
+    /// The <see cref="SzFlagUsageGroup"/> on which to operate.
+    /// </param>
+    ///
+    /// <param name="flag">
+    /// The <see cref="SzFlag"/> value (which may be an aggregate value) to format
+    /// as a <c>string</c>.
+    /// </param>
+    /// 
+    /// <returns>
+    /// The <c>string</c> describing the specified flags.
+    /// </returns>
+    public static string ToString(this SzFlagUsageGroup group, SzFlag flag) {
+        SzFlagUsageGroupInfo groupInfo = (GroupInfoByGroup.ContainsKey(group))
+            ? GroupInfoByGroup[group]
+            : null;
+
+        StringBuilder sb = new StringBuilder();
+        string prefix = "";
+        if (flag == ((SzFlag) 0L)) {
+            // handle the zero
+            sb.Append("{ NONE }");
+
+        } else {
+            for (int index = 0; index < FlagsBitCount; index++) {
+                long    singleBit   = (1L << index);
+                SzFlag  singleFlag  = (SzFlag) singleBit;
+
+                // check if the flag bit is represented
+                if ((singleFlag & flag) != 0L) {
+                    // if we have only one then use it directly
+                    if (groupInfo == null
+                        || (!groupInfo.infoByFlag.ContainsKey(singleFlag)))
+                    {
+                        sb.Append(prefix);
+                        sb.Append(Utilities.HexFormat(singleBit));
+                        prefix = " | ";
+                    } else {
+                        SzFlagInfo flagInfo = groupInfo.infoByFlag[singleFlag];
+                        sb.Append(prefix);
+                        sb.Append(flagInfo.name);
+                        prefix = " | ";
+                    }
+                }
+            }
+        }
+        sb.Append(" [");
+        sb.Append(Utilities.HexFormat((long) flag));
+        sb.Append("]");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Gets the aggregate <see cref="SzFlagUsageGroup"/> value representing
+    /// the one or more usage groups associated with the respective
+    /// <see cref="SzFlag"/>.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// If the respective <see cref="SzFlag"/> is an aggregate value of the 
+    /// defined <see cref="SzFlag"/> constants then the returned 
+    /// <see cref="SzFlagUsageGroup"/> value will aggregate all those 
+    /// individual group flags that are associated with <b>all</b> of the
+    /// individual flags.
+    /// <p>
+    /// <b>NOTE:</b> If a flag value is ambiguous because of a shared bit value
+    /// (e.g.: some search and export flags) then the groups for all are 
+    /// returned.  To get a disambiguated result, use the static 
+    /// <c>GetGroups(string)</c> method.
+    /// </remarks>
+    ///
+    /// <param name="flag">
+    /// The <see cref="SzFlag"/> instance on which to operate.
+    /// </param>
+    ///
+    /// <returns>
+    /// The <see cref="SzFlagUsageGroup"/> value that aggregates all the
+    /// groups associated with every flag in the respective <see cref="SzFlag"/>.
+    /// </returns>
+    public static SzFlagUsageGroup GetGroups(this SzFlag flag) {
+        SzFlagUsageGroup result = (SzFlagUsageGroup) 0L;
+        if (FlagInfoByFlag.ContainsKey(flag)) {
+            IList<SzFlagInfo> infoList = FlagInfoByFlag[flag];
+            foreach (SzFlagInfo flagInfo in infoList) {
+                result |= flagInfo.groups;
+            }
+        } else if (flag != SzNoFlags) {
+            for (int index = 0; index < FlagsBitCount; index++) {
+                SzFlag singleFlag = (SzFlag) (1L << index);
+                if ((flag & singleFlag) != 0L) {
+                    if (FlagInfoByFlag.ContainsKey(singleFlag)) {
+                        IList<SzFlagInfo> infoList = FlagInfoByFlag[singleFlag];
+                        foreach (SzFlagInfo flagInfo in infoList) {
+                            result |= flagInfo.groups;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Gets the aggregate <see cref="SzFlagUsageGroup"/> value representing
+    /// the one or more usage groups associated with the specified symbolic
+    /// <see cref="SzFlag"/> name.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// If the specified name is not recognized as a symbolic name from 
+    /// the <see cref="SzFlag"/> <c>enum</c> then an
+    /// <see cref="System.ArgumentException"/> is thrown.
+    /// </remarks>
+    ///
+    /// <param name="symbolicFlagName">
+    /// The symbolic flag name from the <see cref="SzFlag"/> <c>enum</c>.
+    /// </param>
+    ///
+    /// <returns>
+    /// The <see cref="SzFlagUsageGroup"/> value that aggregates all the
+    /// groups associated with the specified <see cref="SzFlag"/> symbolic
+    /// name.
+    /// </returns>
+    ///
+    /// <exception cref="System.ArgumentException">
+    /// If the specified symbolic flag name is not recognized as an enum
+    /// symbol from the <see cref="SzFlag"/> <c>enum</c>.
+    /// </exception>
+    public static SzFlagUsageGroup GetGroups(string symbolicFlagName) {
+        if (!FlagInfoByName.ContainsKey(symbolicFlagName)) {
+            throw new ArgumentException(
+                "Unrecognized symbolic SzFlag name: " + symbolicFlagName);
+        } else {
+            return FlagInfoByName[symbolicFlagName].groups;
+        }
+    }
+
+    /// <summary>
+    /// Returns the <c>string</c> representation describing the respective
+    /// <see cref="SzFlag"/> value.
+    /// </summary>
+    ///
+    /// <param name="flag">
+    /// The <see cref="SzFlag"/> on which to operate.
+    /// </param>
+    /// 
+    /// <returns>
+    /// The <c>string</c> representation describing the respective 
+    /// <see cref="SzFlag"/> which may be an aggregate value.
+    /// </returns>
+    public static string ToFlagString(this SzFlag flag) {
+        return ToString(flag);
+    }
+
+    /// <summary>
+    /// Returns the <c>string</c> representation describing the specified
+    /// <see cref="SzFlag"/> value.
+    /// </summary>
+    ///
+    /// <param name="flag">
+    /// The <see cref="SzFlag"/> to format as a <c>string</c>.
+    /// </param>
+    /// 
+    /// <returns>
+    /// The <c>string</c> representation describing the specified 
+    /// <see cref="SzFlag"/> which may be an aggregate value.
+    /// </returns>
+    public static string ToString(SzFlag? flag) {
+        StringBuilder sb = new StringBuilder();
+        string prefix  = "";
+        SzFlag szFlag = (flag ?? SzFlags.SzNoFlags);
+
+        if (flag == null || flag == SzNoFlags) {
+            sb.Append("{ NONE }");
+        } else if (FlagInfoByFlag.ContainsKey(szFlag)) {
+            IList<SzFlagInfo> infoList = FlagInfoByFlag[szFlag];
+            if (infoList.Count == 1) {
+                sb.Append(prefix);
+                sb.Append(infoList[0].name);
+                prefix = " | ";
+            } else {
+                sb.Append(prefix);
+                sb.Append("{ ");                
+                string prefix2 = "";
+                foreach (SzFlagInfo flagInfo in infoList) {
+                    sb.Append(prefix2);
+                    sb.Append(flagInfo.name);
+                    prefix2 = " / ";
+                }
+                sb.Append(" }");
+                prefix = " | ";
+            }
+        } else {
+            for (int index = 0; index < FlagsBitCount; index++) {
+                long singleBit = 1L << index;
+                SzFlag singleFlag = (SzFlag) singleBit;
+
+                // skip the bits that are not set
+                if ((szFlag & singleFlag) == 0L) continue;
+
+                if (!FlagInfoByFlag.ContainsKey(singleFlag)) {
+                    sb.Append(prefix);
+                    sb.Append(Utilities.HexFormat(singleBit));
+                    prefix = " | ";
+                } else {
+                    IList<SzFlagInfo> infoList = FlagInfoByFlag[singleFlag];
+                    if (infoList.Count == 1) {
+                        sb.Append(prefix);
+                        sb.Append(infoList[0].name);
+                        prefix = " | ";
+                    } else {
+                        sb.Append(prefix);
+                        sb.Append("{ ");                
+                        string prefix2 = "";
+                        foreach (SzFlagInfo flagInfo in infoList) {
+                            sb.Append(prefix2);
+                            sb.Append(flagInfo.name);
+                            prefix2 = " / ";
+                        }
+                        sb.Append(" }");
+                        prefix = " | ";
+                     }
+                }
+            }
+        }
+        sb.Append(" [");
+        sb.Append(Utilities.HexFormat((long) szFlag));
+        sb.Append("]");
+        return sb.ToString();
+    }
 }
 }

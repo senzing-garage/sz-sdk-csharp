@@ -10,22 +10,22 @@ using System.Collections.Immutable;
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
  internal class SzCoreDiagnosticTest : AbstractTest {
-    private const string TEST_DATA_SOURCE = "TEST";
+    private const string TESTData_SOURCE = "TEST";
     private const string TEST_RECORD_ID = "ABC123";
 
     private const long FLAGS 
-        = NativeFlags.SZ_ENTITY_INCLUDE_ALL_FEATURES
-        | NativeFlags.SZ_ENTITY_INCLUDE_ENTITY_NAME
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_SUMMARY
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_TYPES
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_DATA
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_JSON_DATA
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_MATCHING_INFO
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_UNMAPPED_DATA
-        | NativeFlags.SZ_ENTITY_INCLUDE_RECORD_FEATURES
-        | NativeFlags.SZ_ENTITY_INCLUDE_INTERNAL_FEATURES
-        | NativeFlags.SZ_INCLUDE_MATCH_KEY_DETAILS
-        | NativeFlags.SZ_INCLUDE_FEATURE_SCORES;
+        = NativeFlags.SzEntityIncludeAllFeatures
+        | NativeFlags.SzEntityIncludeEntityName
+        | NativeFlags.SzEntityIncludeRecordSummary
+        | NativeFlags.SzEntityIncludeRecordTypes
+        | NativeFlags.SzEntityIncludeRecordData
+        | NativeFlags.SzEntityIncludeRecordJsonData
+        | NativeFlags.SzEntityIncludeRecordMatchingInfo
+        | NativeFlags.SzEntityIncludeRecordUnmappedData
+        | NativeFlags.SzEntityIncludeRecordFeatures
+        | NativeFlags.SzEntityIncludeInternalFeatures
+        | NativeFlags.SzIncludeMatchKeyDetails
+        | NativeFlags.SzIncludeFeatureScores;
 
     private SzCoreEnvironment? env = null;
 
@@ -33,7 +33,7 @@ using System.Collections.Immutable;
 
     private static string AddAndGetTestEntity(NativeEngine nativeEngine) {
         JsonObject jsonObj = new JsonObject();
-        jsonObj.Add("DATA_SOURCE", JsonValue.Create(TEST_DATA_SOURCE));
+        jsonObj.Add("DATA_SOURCE", JsonValue.Create(TESTData_SOURCE));
         jsonObj.Add("RECORD_ID", JsonValue.Create(TEST_RECORD_ID));
         jsonObj.Add("NAME_FULL", JsonValue.Create("Joe Schmoe"));
         jsonObj.Add("EMAIL_ADDRESS", JsonValue.Create("joeschmoe@nowhere.com"));
@@ -42,7 +42,7 @@ using System.Collections.Immutable;
 
         // add a record
         long returnCode = nativeEngine.AddRecord(
-            TEST_DATA_SOURCE, TEST_RECORD_ID, recordDefinition);
+            TESTData_SOURCE, TEST_RECORD_ID, recordDefinition);
 
         if (returnCode != 0) {
             throw new Exception(nativeEngine.GetLastException());
@@ -50,7 +50,7 @@ using System.Collections.Immutable;
             
         // get the entity 
         returnCode = nativeEngine.GetEntityByRecordID(
-            TEST_DATA_SOURCE, TEST_RECORD_ID, FLAGS, out string result);
+            TESTData_SOURCE, TEST_RECORD_ID, FLAGS, out string result);
 
         // return the result
         return result;
@@ -184,7 +184,7 @@ using System.Collections.Immutable;
                                     .Build();
 
         NativeEngine engine = ((SzCoreEngine)this.Env.GetEngine()).GetNativeApi();
-        engine.GetEntityByRecordID(TEST_DATA_SOURCE, 
+        engine.GetEntityByRecordID(TESTData_SOURCE, 
                                    TEST_RECORD_ID,
                                    FLAGS,
                                    out string entityJSON);
@@ -285,7 +285,7 @@ using System.Collections.Immutable;
             } catch (Exception e) {
                 String dataStoreInfo = this.Env.GetDiagnostic().GetDatastoreInfo();
                 NativeEngine engine = ((SzCoreEngine)this.Env.GetEngine()).GetNativeApi();
-                long returnCode = engine.GetEntityByRecordID(TEST_DATA_SOURCE, 
+                long returnCode = engine.GetEntityByRecordID(TESTData_SOURCE, 
                                                              TEST_RECORD_ID,
                                                              FLAGS,
                                                              out string entityJSON);

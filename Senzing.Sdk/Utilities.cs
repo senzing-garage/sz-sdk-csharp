@@ -4,7 +4,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
-namespace Senzing.Sdk.Core {
+namespace Senzing.Sdk {
 /// <summary>
 /// Provides utilities for the implementation of the core Senzing SDK.
 /// </summary>
@@ -12,52 +12,52 @@ internal static class Utilities {
     /// <summary>
     /// The default buffer size for hex formatting.
     /// </summaryf>
-    private const int HEX_BUFFER_SIZE = 20;
+    private const int HexBufferSize = 20;
 
     /// <summary>
     /// The number of bits to initially shift the <c>0xFFFF</c>
     /// mask for hex formatting.
     /// </summary>
-    private const int HEX_MASK_INITIAL_SHIFT = 48;
+    private const int HexMaskInitialShift = 48;
 
     /// <summary>
     /// The bit mask to use for hex formatting.
     /// </summary>
-    private const int HEX_MASK = 0xFFFF;
+    private const int HexMask = 0xFFFF;
 
     /// <summary>
     /// The number of bits to shift the hex bit mask with each 
     /// loop iteration when hex formatting.
     /// </summary>
-    private const int HEX_MASK_BIT_SHIFT = 16;
+    private const int HexMaskBitShift = 16;
 
     /// <summary>
     /// The number of bits in a "nibble" (used for hex formatting).
     /// </summary>
-    private const int HEX_NIBBLE_SIZE = 4;
+    private const int HexNibbleSize = 4;
 
     /// <summary>
     /// The radix used for hexadecmial (16).
     /// </summary>
-    private const int HEX_RADIX = 16;
+    private const int HexRadix = 16;
 
     /// <summary>
     /// The number of hex digits that are formatted adjacent before
     /// requiring a space.
     /// </summary>
-    private const int HEX_DIGIT_COUNT = 4;
+    private const int HexDigitCount = 4;
 
     /// <summary>
     /// The number of additional characters required to escape a basic
     /// control character (e.g.: backspace, tab, newline and other whitespace).
     /// </summary>
-    private const int JSON_ESCAPE_BASIC_COUNT = 1;
+    private const int JsonEscapeBasicCount = 1;
 
     /// <summary>
     /// The numeber of additional characters required to escape non-basic
     /// control characters (i.e.: those without shortcut escape sequences).
      /// </summary>
-    private const int JSON_ESCAPE_CONTROL_COUNT = 6;
+    private const int JsonEscapeControlCount = 6;
 
     /// <summary>
     /// Formats a <code>long</code> integer value as hexadecimal with 
@@ -68,17 +68,17 @@ internal static class Utilities {
     /// 
     /// <returns>The value formatted as a <c>string</c>.</returns>
     internal static string HexFormat(Int64 value) {
-        StringBuilder   sb      = new StringBuilder(HEX_BUFFER_SIZE);
-        Int64           mask    = HEX_MASK << HEX_MASK_INITIAL_SHIFT;
+        StringBuilder   sb      = new StringBuilder(HexBufferSize);
+        Int64           mask    = HexMask << HexMaskInitialShift;
         string          prefix  = "";
 
-        for (int index = 0; index < HEX_NIBBLE_SIZE; index++) {
+        for (int index = 0; index < HexNibbleSize; index++) {
             Int64 masked = value & mask;
-            mask = (Int64) (((UInt64) mask) >> HEX_MASK_BIT_SHIFT);
-            masked = (Int64) (((UInt64) masked) >> (((HEX_NIBBLE_SIZE - 1) - index) * HEX_RADIX));
+            mask = (Int64) (((UInt64) mask) >> HexMaskBitShift);
+            masked = (Int64) (((UInt64) masked) >> (((HexNibbleSize - 1) - index) * HexRadix));
             sb.Append(prefix);
-            string hex = Convert.ToString(masked, HEX_RADIX);
-            for (int zero = hex.Length; zero < HEX_DIGIT_COUNT; zero++) {
+            string hex = Convert.ToString(masked, HexRadix);
+            for (int zero = hex.Length; zero < HexDigitCount; zero++) {
                 sb.Append("0");
             }
             sb.Append(hex);
@@ -120,10 +120,10 @@ internal static class Utilities {
                 case '\t':
                 case '"':
                 case '\\':
-                    delta = JSON_ESCAPE_BASIC_COUNT;
+                    delta = JsonEscapeBasicCount;
                     break;
                 default:
-                    delta = (c < ' ') ? JSON_ESCAPE_CONTROL_COUNT : 0;
+                    delta = (c < ' ') ? JsonEscapeControlCount : 0;
                     break;
             };
             escapeCount += delta;
@@ -160,7 +160,7 @@ internal static class Utilities {
                         sb.Append(c);
                     } else {
                         sb.Append("\\u00");
-                        string hex = Convert.ToString((Int32)c, HEX_RADIX);
+                        string hex = Convert.ToString((Int32)c, HexRadix);
                         if (hex.Length == 1) {
                             sb.Append("0"); // one more zero if single-digit hex
                         }
