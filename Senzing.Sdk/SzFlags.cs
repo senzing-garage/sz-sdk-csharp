@@ -491,15 +491,15 @@ public static class SzFlags {
         = (SzFlag.SzEntityIncludeRecordJsonData);
 
     /// <summary>
-    /// The aggregate <see cref="SzFlag"/> to produce the default level of
-    /// detail when retrieving entities.
+    /// The aggregate <see cref="SzFlag"/> to produce basic entity output without
+    /// any related entity data.
     /// </summary>
     /// <remarks>
+    /// This constant may be used directly but is primarily used as a basis for
+    /// other aggregate constants.
+    /// <p>
     /// The included <see cref="SzFlag"/> values are:
     /// <list>
-    ///   <item>
-    ///      <description>All flags from <see cref="SzEntityIncludeAllRelations"/></description>
-    ///   </item>
     ///   <item>
     ///      <description><see cref="SzFlag.SzEntityIncludeRepresentativeFeatures"/></description>
     ///   </item>
@@ -514,6 +514,56 @@ public static class SzFlags {
     ///   </item>
     ///   <item>
     ///      <description><see cref="SzFlag.SzEntityIncludeRecordMatchingInfo"/></description>
+    ///   </item>
+    /// </list>
+    /// <p>
+    /// All the flags in this constant belong to the 
+    /// <see cref="SzFlagUsageGroup.SzEntityFlags"/> usage group, and by extension 
+    /// belong to the following usage groups which are super sets:
+    /// <list>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+    ///   </item>
+    /// </list>
+    /// </remarks>
+    /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+    public const SzFlag SzEntityCoreFlags 
+        = SzFlag.SzEntityIncludeRepresentativeFeatures
+            | SzFlag.SzEntityIncludeEntityName
+            | SzFlag.SzEntityIncludeRecordSummary
+            | SzFlag.SzEntityIncludeRecordData
+            | SzFlag.SzEntityIncludeRecordMatchingInfo;
+
+    /// <summary>
+    /// The aggregate <see cref="SzFlag"/> to produce the default level of
+    /// detail when retrieving entities.
+    /// </summary>
+    /// <remarks>
+    /// The included <see cref="SzFlag"/> values are:
+    /// <list>
+    ///   <item>
+    ///      <description>All flags from <see cref="SzEntityCoreFlags"/></description>
+    ///   </item>
+    ///   <item>
+    ///      <description>All flags from <see cref="SzEntityIncludeAllRelations"/></description>
+    ///   </item>
+    ///   <item>
+    ///      <description><see cref="SzFlag.SzEntityIncludeRepresentativeFeatures"/></description>
     ///   </item>
     ///   <item>
     ///      <description><see cref="SzFlag.SzEntityIncludeRelatedEntityName"/></description>
@@ -552,12 +602,8 @@ public static class SzFlags {
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>
     public const SzFlag SzEntityDefaultFlags 
-        = SzEntityIncludeAllRelations
-            | SzFlag.SzEntityIncludeRepresentativeFeatures
-            | SzFlag.SzEntityIncludeEntityName
-            | SzFlag.SzEntityIncludeRecordSummary
-            | SzFlag.SzEntityIncludeRecordData
-            | SzFlag.SzEntityIncludeRecordMatchingInfo
+        = SzEntityCoreFlags
+            | SzEntityIncludeAllRelations
             | SzFlag.SzEntityIncludeRelatedEntityName
             | SzFlag.SzEntityIncludeRelatedRecordSummary
             | SzFlag.SzEntityIncludeRelatedMatchingInfo;
@@ -834,16 +880,7 @@ public static class SzFlags {
     /// The included <see cref="SzFlag"/> values are:
     /// <list>
     ///   <item>
-    ///      <description><see cref="SzFlag.SzEntityIncludeEntityName"/></description>
-    ///   </item>
-    ///   <item>
-    ///      <description><see cref="SzFlag.SzEntityIncludeRecordSummary"/></description>
-    ///   </item>
-    ///   <item>
-    ///      <description><see cref="SzFlag.SzEntityIncludeRecordData"/></description>
-    ///   </item>
-    ///   <item>
-    ///      <description><see cref="SzFlag.SzEntityIncludeRecordMatchingInfo"/></description>
+    ///      <description>All flags from <see cref="SzEntityCoreFlags"/></description>
     ///   </item>
     /// </list>
     /// <p>
@@ -855,12 +892,7 @@ public static class SzFlags {
     /// </list>
     /// </remarks>
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-    public const SzFlag SzVirtualEntityDefaultFlags 
-        = SzFlag.SzEntityIncludeRepresentativeFeatures
-            | SzFlag.SzEntityIncludeEntityName
-            | SzFlag.SzEntityIncludeRecordSummary
-            | SzFlag.SzEntityIncludeRecordData
-            | SzFlag.SzEntityIncludeRecordMatchingInfo;
+    public const SzFlag SzVirtualEntityDefaultFlags = SzEntityCoreFlags;
 
     /// <summary>
     /// The aggregate <see cref="SzFlag"/> indicating that search results
@@ -1450,5 +1482,15 @@ public static class SzFlags {
         sb.Append("]");
         return sb.ToString();
     }
+
+    /// <summary>
+    /// Converts a nullable <see cref="SzFlag"/> to a non-null
+    /// <c>long</c> value representation of the flag with all the
+    /// appropriate bits set.
+    /// </summary>
+    public static long ToLong(SzFlag? flags) {
+        return (long) (flags ?? SzNoFlags);
+    }
+
 }
 }
