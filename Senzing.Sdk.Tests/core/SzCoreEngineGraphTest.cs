@@ -7,30 +7,14 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Senzing.Sdk;
-using Senzing.Sdk.Tests;
 using Senzing.Sdk.Core;
-using Senzing.Sdk.Tests.Core;
 using System.Collections.Immutable;
 
 using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlag;
 using static Senzing.Sdk.SzFlagUsageGroup;
 using NUnit.Framework.Internal;
-using System.Reflection.Metadata.Ecma335;
 
-internal static class DebugExtensions {
-    public static string ToDebugString<K,V>(this IDictionary<K,V> dict) {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("{ ");
-        string prefix = "";
-        foreach (KeyValuePair<K,V> pair in dict) {
-            sb.Append(prefix).Append("[ ").Append(pair.Key).Append(":");
-            sb.Append(pair.Value).Append(" ]");
-            prefix = ", ";
-        }
-        return sb.ToString();
-    }
-}
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreEngineGraphTest : AbstractTest {
@@ -195,11 +179,9 @@ internal class SzCoreEngineGraphTest : AbstractTest {
     override protected void PrepareRepository() {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
-        SortedSet<string> dataSources = SortedSetOf("CUSTOMERS",
-                                                    "WATCHLIST",
-                                                    "PASSENGERS",
-                                                    "EMPLOYEES",
-                                                    "VIPS");
+        SortedSet<string> dataSources = SortedSetOf(PassengersDataSource,
+                                                    EmployeesDataSource,
+                                                    VipsDataSource);
 
         FileInfo passengerFile = this.PreparePassengerFile();
         FileInfo employeeFile = this.PrepareEmployeeFile();

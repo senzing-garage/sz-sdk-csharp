@@ -1947,6 +1947,16 @@ public class RepositoryManager
         }
 
         returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out resultConfig);
+
+        string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string filePath = Path.Combine(homeDir,
+                                       "config-" + Path.GetRandomFileName() + ".json");
+        FileStream fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+        StreamWriter sw = new StreamWriter(fs, new UTF8Encoding());
+        sw.Write(configJsonText);
+        sw.Flush();
+        fs.Close();
+        
         if (returnCode != 0) {
             LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
             throw new Exception("NativeConfigManager.AddConfig() failed");

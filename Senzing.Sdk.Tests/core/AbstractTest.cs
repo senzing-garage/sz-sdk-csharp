@@ -8,6 +8,31 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Senzing.Sdk.Tests.Core {
+
+internal static class DebugExtensions {
+    public static string ToDebugString<K,V>(this IDictionary<K,V> dict) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{ ");
+        string prefix = "";
+        foreach (KeyValuePair<K,V> pair in dict) {
+            sb.Append(prefix).Append("[ ").Append(pair.Key).Append(":");
+            sb.Append(pair.Value).Append(" ]");
+            prefix = ", ";
+        }
+        return sb.ToString();
+    }
+    public static string ToDebugString<T>(this ICollection<T> coll) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{ ");
+        string prefix = "";
+        foreach (T elem in coll) {
+            sb.Append(prefix).Append("[ ").Append(elem).Append(" ]");
+            prefix = ", ";
+        }
+        return sb.ToString();
+    }
+}
+
 internal abstract class AbstractTest {
     /// <summary>
     /// UTF8 encoding constant.
@@ -576,7 +601,6 @@ internal abstract class AbstractTest {
 
         } catch (Exception e) {
             Console.Error.WriteLine(e);
-            Console.Error.WriteLine(e.StackTrace);
             throw;
 
         } finally {
