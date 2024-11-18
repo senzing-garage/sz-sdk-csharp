@@ -38,7 +38,7 @@ public class SzReplaceConflictException : SzException
     /// The message explaining the reason for the exception.
     /// </param>
     public SzReplaceConflictException(long? errorCode, string message) 
-        : base(message)
+        : base(errorCode, message)
     {
         // do nothing
     }
@@ -85,7 +85,7 @@ public class SzReplaceConflictException : SzException
     ///
     /// <param name="cause">The underlying cause for the exception.</param>
     public SzReplaceConflictException(long? errorCode, string message, Exception cause) 
-        : base(message, cause)
+        : base(errorCode, message, cause)
     {
         // do nothing
     }

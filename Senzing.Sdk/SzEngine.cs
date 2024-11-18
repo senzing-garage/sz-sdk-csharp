@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using static Senzing.Sdk.SzFlags;
+using static Senzing.Sdk.SzFlag;
 
 namespace Senzing.Sdk {
 
@@ -98,7 +100,7 @@ public interface SzEngine {
     string AddRecord(string     dataSourceCode,
                      string     recordID,
                      string     recordDefinition,
-                     SzFlag?    flags = SzFlags.SzNoFlags);
+                     SzFlag?    flags = SzNoFlags);
 
     /// <summary>
     /// Performs a hypothetical load of a the record described by the specified
@@ -140,7 +142,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlag.SzEntityIncludeRecordFeatureStats"/>
     /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
     string PreprocessRecord(string  recordDefinition,
-                            SzFlag? flags = SzFlags.SzRecordDefaultFlags);
+                            SzFlag? flags = SzRecordDefaultFlags);
 
     /// <summary>
     /// Delete a previously loaded record identified by the specified 
@@ -196,7 +198,7 @@ public interface SzEngine {
     /// </summary>
     string DeleteRecord(string  dataSourceCode,
                         string  recordID,
-                        SzFlag? flags = SzFlags.SzNoFlags);
+                        SzFlag? flags = SzNoFlags);
 
     /// <summary>
     /// Reevaluate the record identified by the specified data source code
@@ -254,7 +256,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
     string ReevaluateRecord(string  dataSourceCode,
                             string  recordID,
-                            SzFlag? flags = SzFlags.SzNoFlags);
+                            SzFlag? flags = SzNoFlags);
 
     /// <summary>
     /// Reevaluate a resolved entity identified by the specified entity ID.
@@ -298,7 +300,7 @@ public interface SzEngine {
     /// 
     /// <seealso cref="SzFlag.SzWithInfo"/>
     /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
-    string ReevaluateEntity(long entityId, SzFlag? flags = SzFlags.SzNoFlags);
+    string ReevaluateEntity(long entityId, SzFlag? flags = SzNoFlags);
 
     /// <summary>
     /// This method searches for entities that match or relate to the provided
@@ -361,7 +363,7 @@ public interface SzEngine {
     string SearchByAttributes(
         string  attributes, 
         string  searchProfile,
-        SzFlag? flags = SzFlags.SzSearchByAttributesDefaultFlags);
+        SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
     /// <summary>
     /// This method is equivalent to calling
@@ -403,7 +405,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlagUsageGroup.SzSearchFlags"/>
     string SearchByAttributes(
         string  attributes,
-        SzFlag? flags = SzFlags.SzSearchByAttributesDefaultFlags);
+        SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
     /// <summary>
     /// This method is used to retrieve information about a specific resolved
@@ -446,7 +448,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlags.SzEntityBriefDefaultFlags"/>
     /// <seealso cref="SzFlagUsageGroup.SzEntityFlags"/>
     string GetEntity(long       entityId,
-                     SzFlag?    flags = SzFlags.SzEntityDefaultFlags);
+                     SzFlag?    flags = SzEntityDefaultFlags);
 
     /// <summary>
     /// This method is used to retrieve information about the resolved entity
@@ -501,7 +503,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlagUsageGroup.SzEntityFlags"/>
     string GetEntity(string     dataSourceCode,
                      string     recordID,
-                     SzFlag?    flags = SzFlags.SzEntityDefaultFlags);
+                     SzFlag?    flags = SzEntityDefaultFlags);
 
     /// <summary>
     /// Finds a relationship path between two entities identified by their
@@ -587,7 +589,7 @@ public interface SzEngine {
                     int             maxDegrees,
                     ISet<long>      avoidEntityIDs,
                     ISet<string>    requiredDataSources,
-                    SzFlag?         flags = SzFlags.SzFindPathDefaultFlags);
+                    SzFlag?         flags = SzFindPathDefaultFlags);
 
     /// <summary>
     /// Finds a relationship path between two entities identified by the
@@ -692,7 +694,7 @@ public interface SzEngine {
         int    maxDegrees,
         ISet<(string dataSourceCode,string recordID)> avoidRecordKeys,
         ISet<string> requiredDataSources,
-        SzFlag? flags = SzFlags.SzFindPathDefaultFlags);
+        SzFlag? flags = SzFindPathDefaultFlags);
 
     /// <summary>
     /// Finds a network of entity relationships surrounding the paths between
@@ -765,7 +767,7 @@ public interface SzEngine {
         int          maxDegrees,
         int          buildOutDegrees,
         int          buildOutMaxEntities,
-        SzFlag?      flags = SzFlags.SzFindNetworkDefaultFlags);
+        SzFlag?      flags = SzFindNetworkDefaultFlags);
 
     /// <summary>
     /// Finds a network of entity relationships surrounding the paths between
@@ -843,7 +845,7 @@ public interface SzEngine {
         int maxDegrees,
         int buildOutDegrees,
         int buildOutMaxEntities,
-        SzFlag? flags = SzFlags.SzFindNetworkDefaultFlags);
+        SzFlag? flags = SzFindNetworkDefaultFlags);
 
     /// <summary>
     /// Determines why the record identified by the specified data source
@@ -900,7 +902,7 @@ public interface SzEngine {
     string WhyRecordInEntity(
         string      dataSourceCode,
         string      recordID,
-        SzFlag?     flags = SzFlags.SzWhyRecordInEntityDefaultFlags);
+        SzFlag?     flags = SzWhyRecordInEntityDefaultFlags);
 
     /// <summary>
     /// Determines ways in which two records identified by their data source
@@ -968,7 +970,7 @@ public interface SzEngine {
                       string    recordID1,
                       string    dataSourceCode2,
                       string    recordID2,
-                      SzFlag?   flags = SzFlags.SzWhyRecordsDefaultFlags);
+                      SzFlag?   flags = SzWhyRecordsDefaultFlags);
 
     /// <summary>
     /// Determines the ways in which two entities identified by the specified
@@ -1014,7 +1016,7 @@ public interface SzEngine {
     /// <seealso cref="WhyRecordInEntity(string,string,SzFlag)"/>
     string WhyEntities(long     entityId1,
                        long     entityId2,
-                       SzFlag?  flags = SzFlags.SzWhyEntitiesDefaultFlags);
+                       SzFlag?  flags = SzWhyEntitiesDefaultFlags);
 
     /// <summary>
     /// Deterimes how an entity identified by the specified entity ID was
@@ -1055,7 +1057,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlags.SzHowEntityDefaultFlags"/>
     /// <seealso cref="SzFlagUsageGroup.SzHowFlags"/>
     /// <seealso cref="GetVirtualEntity"/>
-    string HowEntity(long entityId, SzFlag? flags = SzFlags.SzHowEntityDefaultFlags);
+    string HowEntity(long entityId, SzFlag? flags = SzHowEntityDefaultFlags);
 
     /// <summary>
     /// Describes a hypothetically entity that would be composed of the one or
@@ -1105,7 +1107,7 @@ public interface SzEngine {
     /// <seealso cref="HowEntity(long,SzFlag)"/>
     string GetVirtualEntity(
         ISet<(string dataSourceCode,string recordID)> recordKeys,
-        SzFlag? flags = SzFlags.SzVirtualEntityDefaultFlags);
+        SzFlag? flags = SzVirtualEntityDefaultFlags);
 
     /// <summary>
     /// Retrieves the record identified by the specified data source code
@@ -1157,7 +1159,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
     string GetRecord(string     dataSourceCode,
                      string     recordID,
-                     SzFlag?    flags = SzFlags.SzRecordDefaultFlags);
+                     SzFlag?    flags = SzRecordDefaultFlags);
 
     /// <summary>
     /// Iniitiates an export of entity data as JSON-lines format and returns an
@@ -1197,7 +1199,7 @@ public interface SzEngine {
     /// <seealso cref="FetchNext"/>
     /// <seealso cref="CloseExport"/>
     /// <seealso cref="ExportCsvEntityReport"/>
-    IntPtr ExportJsonEntityReport(SzFlag? flags = SzFlags.SzExportDefaultFlags);
+    IntPtr ExportJsonEntityReport(SzFlag? flags = SzExportDefaultFlags);
 
     /// <summary>
     /// Iniitiates an export of entity data in CSV format and returns an
@@ -1245,7 +1247,7 @@ public interface SzEngine {
     /// <seealso cref="ExportJsonEntityReport(SzFlag)"/>
     IntPtr ExportCsvEntityReport(
         string  csvColumnList, 
-        SzFlag? flags = SzFlags.SzExportDefaultFlags);
+        SzFlag? flags = SzExportDefaultFlags);
 
     /// <summary>
     /// Fetches the next line of entity data from the export identified
@@ -1334,7 +1336,7 @@ public interface SzEngine {
     /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
     /// <seealso cref="GetRedoRecord"/>
     /// <seealso cref="CountRedoRecords"/> 
-    string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzFlags.SzNoFlags);
+    string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzNoFlags);
 
     /// <summary>
     /// Retrieves a pending redo record from the reevaluation queue.

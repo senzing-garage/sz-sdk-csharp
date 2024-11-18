@@ -69,15 +69,15 @@ internal abstract class AbstractTest {
     /// <c>true</c> if replaying previous results and <c>false</c>
     /// if using the live API.
     /// </summary>
-    protected void BeginTests() {
+    protected virtual void BeginTests() {
         // do nothing for now
     }
 
     /// <summary>
     /// Signals the end of the current test suite.
     /// </summary>
-    protected void EndTests() {
-        // do nothing for now
+    protected virtual void EndTests() {
+        this.ConditionallyLogCounts(true);
     }
 
     /// <summary>
@@ -662,7 +662,7 @@ internal abstract class AbstractTest {
     /// By default this function does nothing.  The repository directory
     /// can be obtained via <see cref="GetRepositoryDirectory"/>.
     /// </remarks>
-    protected void PrepareRepository() {
+    protected virtual void PrepareRepository() {
         // do nothing
     }
 
@@ -1004,6 +1004,32 @@ internal abstract class AbstractTest {
 
         }
     }
+
+    protected static List<T> ListOf<T>(params T[] elems) {
+        List<T> result = new List<T>(elems.Length);
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
+
+    protected static SortedSet<T> SortedSetOf<T>(params T[] elems) {
+        SortedSet<T> result = new SortedSet<T>();
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
+    protected static ISet<T> SetOf<T>(params T[] elems) {
+        ISet<T> result = new HashSet<T>();
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
 
     /// <summary>
     /// Generates option combos for the specified variants.

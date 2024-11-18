@@ -633,8 +633,13 @@ public class RecordReader {
         string dsrc = (node == null) ? "" : node.GetValue<string>().ToUpper();
         
         // get the mapped data source
-        string? dataSource = this.dataSourceMap[dsrc];
-        if (dataSource == null) dataSource = this.dataSourceMap["*"];
+        string? dataSource = null;
+        if (this.dataSourceMap.ContainsKey(dsrc)) {
+            dataSource = this.dataSourceMap[dsrc];
+        }
+        if (dataSource == null && this.dataSourceMap.ContainsKey("*")) {
+            dataSource = this.dataSourceMap["*"];
+        }
         if (dataSource != null && dataSource.Trim().Length == 0) {
             dataSource = null;
         }
@@ -673,7 +678,7 @@ public class RecordReader {
         /// <summary>
         /// Iterator over <see cref="System.Text.Json.Nodes.JsonObject"/> records.
         /// </summary>
-        private IEnumerator<JsonObject> recordEnum;
+        private IEnumerator<JsonNode?> recordEnum;
 
         /// <summary>
         /// Indicates whether or not the JSON properly parses to avoid
@@ -701,10 +706,10 @@ public class RecordReader {
                 }
 
                 JsonArray jsonArr = ((JsonNode) node).AsArray();
-                this.recordEnum = jsonArr.GetValues<JsonObject>().GetEnumerator();
+                this.recordEnum = jsonArr.GetEnumerator();
 
             } catch (Exception e) {
-                this.recordEnum = (new List<JsonObject>()).GetEnumerator();
+                this.recordEnum = (new List<JsonNode?>()).GetEnumerator();
                 if (e is JsonException) {
                     JsonException je = (JsonException) e;
                     Console.Error.WriteLine("MESSAGE: " + je.Message);
@@ -727,7 +732,10 @@ public class RecordReader {
             while (result == null) {
                 try {
                     if (!recordEnum.MoveNext()) break;
-                    result = owner.AugmentRecord(this.recordEnum.Current);
+                    result = this.recordEnum.Current?.AsObject();
+                    if (result != null) {
+                        result = owner.AugmentRecord(result);
+                    }
                     this.errant = false; // clear the errant flag
 
                 } catch (Exception e) {
@@ -907,14 +915,16 @@ public class RecordReader {
                     continue;
                 } else if (quoted && c == '"') {
                     // advance past the separator or to the end
-                    for (index = index + 1; index < length && c != ','; index++) {
+                    for (index = index + 1; index < length; index++) {
                         c = line[index];
+                        if (c == ',') break;
                         if (!Char.IsWhiteSpace(c) && (c != ',')) {
                             throw new FormatException(
                                 "Badly formatted CSV at line " + lineNumber
                                 + " at position " + index + ": " + line);
                         }
                     }
+
                     quoted = false;
                     fields.Add(field.ToString().Trim());
                     field.Clear();

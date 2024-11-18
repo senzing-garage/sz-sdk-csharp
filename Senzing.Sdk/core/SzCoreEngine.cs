@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
+using static Senzing.Sdk.SzFlagUsageGroup;
+
 namespace Senzing.Sdk.Core {
 public class SzCoreEngine: SzEngine {
     /// <summary>
@@ -15,16 +19,6 @@ public class SzCoreEngine: SzEngine {
     /// generated but was not requested.
     /// </summary>
     internal const string NoInfo = "{}";
-
-    /// <summary>
-    /// Scope the <c>SzWithInfo</c> constant without the <c>SzFlag.</c> prefix.
-    /// </summary>
-    private const SzFlag SzWithInfo = SzFlag.SzWithInfo;
-
-    /// <summary>
-    /// Scope the <c>SzNoFlags</c> constant without the <c>SzFlags.</c> prefix.
-    /// </summary>
-    private const SzFlag SzNoFlags = SzFlags.SzNoFlags;
     
     /// <summary>
     /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
@@ -138,7 +132,7 @@ public class SzCoreEngine: SzEngine {
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             long returnCode = 0;
             string result = NoInfo;
@@ -182,11 +176,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string PreprocessRecord(
         string  recordDefinition,
-        SzFlag? flags = SzFlags.SzRecordDefaultFlags)
+        SzFlag? flags = SzRecordDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
             
             long returnCode = this.nativeApi.PreprocessRecord(
                     recordDefinition, downstreamFlags, out string result);
@@ -248,11 +242,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string DeleteRecord(string   dataSourceCode,
                                string   recordID,
-                               SzFlag?  flags = SzFlags.SzNoFlags)
+                               SzFlag?  flags = SzNoFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             long returnCode = 0;
             string result = NoInfo;
@@ -296,10 +290,10 @@ public class SzCoreEngine: SzEngine {
     /// </returns>
     public IntPtr ExportCsvEntityReport(
         string  csvColumnList,
-        SzFlag? flags = SzFlags.SzExportDefaultFlags)
+        SzFlag? flags = SzExportDefaultFlags)
     {
         // clear out the SDK-specific flags
-        long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+        long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
         return this.env.Execute(() => {
             long returnCode = this.nativeApi.ExportCSVEntityReport(
@@ -322,10 +316,10 @@ public class SzCoreEngine: SzEngine {
     /// Zero (0) on success and non-zero on failure.
     /// </returns>
     public IntPtr ExportJsonEntityReport(
-        SzFlag? flags = SzFlags.SzExportDefaultFlags)
+        SzFlag? flags = SzExportDefaultFlags)
     {
         // clear out the SDK-specific flags
-        long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+        long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
         return this.env.Execute(() => {
             long returnCode = this.nativeApi.ExportJSONEntityReport(
@@ -391,7 +385,7 @@ public class SzCoreEngine: SzEngine {
     /// <returns>
     /// The encoded JSON string of entity ID's.
     /// </returns>
-    protected static string EncodeEntityIDs(ISet<long> entityIDs) {
+    internal static string EncodeEntityIDs(ISet<long> entityIDs) {
         StringBuilder sb = new StringBuilder();
         sb.Append("{\"ENTITIES\":[");
         if (entityIDs != null) {
@@ -440,7 +434,7 @@ public class SzCoreEngine: SzEngine {
     /// </param>
     /// 
     /// <returns>The encoded JSON string of record keys.</returns>
-    protected static string EncodeRecordKeys(
+    internal static string EncodeRecordKeys(
         ISet<(string dataSourceCode,string recordID)> recordKeys)
     {
         StringBuilder sb = new StringBuilder();
@@ -487,7 +481,7 @@ public class SzCoreEngine: SzEngine {
     /// </param>
     ///
     /// <returns>The encoded JSON string of record keys.</returns>
-    protected static string EncodeDataSources(ISet<string> dataSources) {
+    internal static string EncodeDataSources(ISet<string> dataSources) {
         StringBuilder sb = new StringBuilder();
         sb.Append("{\"DATA_SOURCES\":[");
         if (dataSources != null) {
@@ -513,10 +507,10 @@ public class SzCoreEngine: SzEngine {
         int         maxDegrees,
         int         buildOutDegrees,
         int         buildOutMaxEntities,
-        SzFlag?     flags = SzFlags.SzFindNetworkDefaultFlags)
+        SzFlag?     flags = SzFindNetworkDefaultFlags)
     {        
         // clear out the SDK-specific flags
-        long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+        long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
         return this.env.Execute(() => {
             string jsonEntityIDs = EncodeEntityIDs(entityIDs);
@@ -548,10 +542,10 @@ public class SzCoreEngine: SzEngine {
         int          maxDegrees,
         int          buildOutDegrees,
         int          buildOutMaxEntities,
-        SzFlag?      flags = SzFlags.SzFindNetworkDefaultFlags)
+        SzFlag?      flags = SzFindNetworkDefaultFlags)
     {        
         // clear out the SDK-specific flags
-        long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+        long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
         return this.env.Execute(() => {
             string jsonRecordKeys = EncodeRecordKeys(recordKeys);
@@ -586,10 +580,10 @@ public class SzCoreEngine: SzEngine {
         int             maxDegrees,
         ISet<long>      avoidEntityIDs,
         ISet<string>    requiredDataSources,
-        SzFlag?         flags = SzFlags.SzFindPathDefaultFlags)
+        SzFlag?         flags = SzFindPathDefaultFlags)
     {
         // clear out the SDK-specific flags
-        long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+        long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
         return this.env.Execute(() => {
             long returnCode = 0;
@@ -659,10 +653,10 @@ public class SzCoreEngine: SzEngine {
         int             maxDegrees,
         ISet<(string dataSourceCode,string recordID)> avoidRecordKeys,
         ISet<string>    requiredDataSources,
-        SzFlag?         flags = SzFlags.SzFindPathDefaultFlags)
+        SzFlag?         flags = SzFindPathDefaultFlags)
     {
         // clear out the SDK-specific flags
-        long downstreamFlags = (SzFlags.ToLong(flags) & SdkFlagMask);
+        long downstreamFlags = (FlagsToLong(flags) & SdkFlagMask);
 
         return this.env.Execute(() => {
             string result = "";
@@ -739,11 +733,11 @@ public class SzCoreEngine: SzEngine {
     ///
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string GetEntity(long    entityId,
-                            SzFlag? flags = SzFlags.SzEntityDefaultFlags)
+                            SzFlag? flags = SzEntityDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.GetEntityByEntityID(
@@ -765,11 +759,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string GetEntity(string  dataSourceCode,
                             string  recordID,
-                            SzFlag? flags = SzFlags.SzEntityDefaultFlags)
+                            SzFlag? flags = SzEntityDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.GetEntityByRecordID(
@@ -794,11 +788,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string GetRecord(string  dataSourceCode,
                             string  recordID,
-                            SzFlag? flags = SzFlags.SzRecordDefaultFlags)
+                            SzFlag? flags = SzRecordDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.GetRecord(
@@ -855,11 +849,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string GetVirtualEntity(
         ISet<(string dataSourceCode,string recordID)> recordKeys,
-        SzFlag? flags = SzFlags.SzVirtualEntityDefaultFlags)
+        SzFlag? flags = SzVirtualEntityDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // get the record ID JSON
             string jsonRecordstring = EncodeRecordKeys(recordKeys);
@@ -884,11 +878,11 @@ public class SzCoreEngine: SzEngine {
     ///
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string HowEntity(long entityId, 
-                            SzFlag? flags = SzFlags.SzHowEntityDefaultFlags)
+                            SzFlag? flags = SzHowEntityDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.HowEntityByEntityID(
@@ -931,7 +925,7 @@ public class SzCoreEngine: SzEngine {
     ///
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string ProcessRedoRecord(string  redoRecord, 
-                                    SzFlag? flags = SzFlags.SzNoFlags)
+                                    SzFlag? flags = SzNoFlags)
     {
         return this.env.Execute(() => {
             long returnCode = 0;
@@ -963,11 +957,11 @@ public class SzCoreEngine: SzEngine {
     ///
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string ReevaluateEntity(long     entityId,
-                                   SzFlag?  flags = SzFlags.SzNoFlags)
+                                   SzFlag?  flags = SzNoFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             long returnCode = 0;
             string result = NoInfo;
@@ -1008,11 +1002,11 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string ReevaluateRecord(string   dataSourceCode,
                                    string   recordID,
-                                   SzFlag?  flags = SzFlags.SzNoFlags)
+                                   SzFlag?  flags = SzNoFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             long returnCode = 0;
             string result = NoInfo;
@@ -1061,11 +1055,11 @@ public class SzCoreEngine: SzEngine {
     public string SearchByAttributes(
         string  attributes,
         string  searchProfile,
-        SzFlag? flags = SzFlags.SzSearchByAttributesDefaultFlags)
+        SzFlag? flags = SzSearchByAttributesDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // declare the result variables
             long    returnCode  = 0L;
@@ -1105,7 +1099,7 @@ public class SzCoreEngine: SzEngine {
     /// <returns>Zero (0) on success and non-zero on failure.</returns>
     public string SearchByAttributes(
         string  attributes, 
-        SzFlag? flags = SzFlags.SzSearchByAttributesDefaultFlags)
+        SzFlag? flags = SzSearchByAttributesDefaultFlags)
     {
         return this.SearchByAttributes(attributes, null, flags);
     }
@@ -1119,11 +1113,11 @@ public class SzCoreEngine: SzEngine {
     public string WhyEntities(
         long    entityId1,
         long    entityId2,
-        SzFlag? flags = SzFlags.SzWhyEntitiesDefaultFlags)
+        SzFlag? flags = SzWhyEntitiesDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.WhyEntities(
@@ -1146,11 +1140,11 @@ public class SzCoreEngine: SzEngine {
     public string WhyRecordInEntity(
         string  dataSourceCode,
         string  recordID,
-        SzFlag? flags = SzFlags.SzWhyRecordInEntityDefaultFlags)
+        SzFlag? flags = SzWhyRecordInEntityDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.WhyRecordInEntity(
@@ -1178,11 +1172,11 @@ public class SzCoreEngine: SzEngine {
         string  recordID1,
         string  dataSourceCode2,
         string  recordID2,
-        SzFlag? flags = SzFlags.SzWhyRecordsDefaultFlags)
+        SzFlag? flags = SzWhyRecordsDefaultFlags)
     {
         return this.env.Execute(() => {
             // clear out the SDK-specific flags
-            long downstreamFlags = SzFlags.ToLong(flags) & SdkFlagMask;
+            long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
             // check if we have flags to pass downstream
             long returnCode = this.nativeApi.WhyRecords(

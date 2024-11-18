@@ -2,6 +2,7 @@ namespace Senzing.Sdk.Tests.Core;
 
 using NUnit.Framework;
 using System;
+using Senzing.Sdk.Tests;
 using Senzing.Sdk.Core;
 using System.Text.Json;
 using System.Text.Json.Nodes;

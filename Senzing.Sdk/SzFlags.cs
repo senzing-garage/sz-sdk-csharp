@@ -1314,7 +1314,7 @@ public static class SzFlags {
     /// <returns>
     /// The <c>string</c> describing the specified flags.
     /// </returns>
-    public static string ToString(this SzFlagUsageGroup group, SzFlag? flag) {
+    public static string FlagsToString(this SzFlagUsageGroup group, SzFlag? flag) {
         SzFlagUsageGroupInfo groupInfo = (GroupInfoByGroup.ContainsKey(group))
             ? GroupInfoByGroup[group]
             : null;
@@ -1402,8 +1402,8 @@ public static class SzFlags {
     /// The <c>string</c> representation describing the respective 
     /// <see cref="SzFlag"/> which may be an aggregate value.
     /// </returns>
-    public static string ToFlagString(this SzFlag flag) {
-        return ToString(flag);
+    public static string FlagsToString(this SzFlag flag) {
+        return FlagsToString((SzFlag?)flag);
     }
 
     /// <summary>
@@ -1419,7 +1419,7 @@ public static class SzFlags {
     /// The <c>string</c> representation describing the specified 
     /// <see cref="SzFlag"/> which may be an aggregate value.
     /// </returns>
-    public static string ToString(SzFlag? flag) {
+    public static string FlagsToString(SzFlag? flag) {
         StringBuilder sb = new StringBuilder();
         string prefix  = "";
         SzFlag szFlag = (flag ?? SzFlags.SzNoFlags);
@@ -1488,7 +1488,7 @@ public static class SzFlags {
     /// <c>long</c> value representation of the flag with all the
     /// appropriate bits set.
     /// </summary>
-    public static long ToLong(SzFlag? flags) {
+    public static long FlagsToLong(SzFlag? flags) {
         return (long) (flags ?? SzNoFlags);
     }
 
