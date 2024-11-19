@@ -1,6 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-using Senzing.Sdk;
-
 namespace Senzing.Sdk.Tests.Core;
 
 using NUnit.Framework;

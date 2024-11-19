@@ -19,6 +19,7 @@ internal static class DebugExtensions {
             sb.Append(pair.Value).Append(" ]");
             prefix = ", ";
         }
+        sb.Append(" }");
         return sb.ToString();
     }
     public static string ToDebugString<T>(this ICollection<T> coll) {
@@ -29,6 +30,7 @@ internal static class DebugExtensions {
             sb.Append(prefix).Append("[ ").Append(elem).Append(" ]");
             prefix = ", ";
         }
+        sb.Append(" }");
         return sb.ToString();
     }
 }
@@ -1042,6 +1044,26 @@ internal abstract class AbstractTest {
         SortedSet<T> result = new SortedSet<T>();
         foreach (T elem in elems) {
             result.Add(elem);
+        }
+        return result;
+    }
+
+    protected static SortedDictionary<K,V> SortedMapOf<K,V>(params (K,V)[] tuples) 
+        where K : notnull
+    {
+        SortedDictionary<K,V> result = new SortedDictionary<K, V>();
+        foreach ((K,V) tuple in tuples) {
+            result.Add(tuple.Item1, tuple.Item2);
+        }
+        return result;
+    }
+
+    protected static Dictionary<K,V> MapOf<K,V>(params (K,V)[] tuples) 
+        where K : notnull
+    {
+        Dictionary<K,V> result = new Dictionary<K, V>();
+        foreach ((K,V) tuple in tuples) {
+            result.Add(tuple.Item1, tuple.Item2);
         }
         return result;
     }

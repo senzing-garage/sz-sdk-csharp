@@ -14,8 +14,8 @@ internal class NativeProductExtern : NativeProduct {
     /// Implemented to call the external native function <c>SzProduct_init()</c>.
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzProduct_init(Encoding.UTF8.GetBytes(moduleName),
-                              Encoding.UTF8.GetBytes(iniParams),
+        return SzProduct_init(Utilities.StringToUTF8Bytes(moduleName),
+                              Utilities.StringToUTF8Bytes(iniParams),
                               (verboseLogging) ? 1 : 0);
     }
 

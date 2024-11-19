@@ -16,8 +16,8 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
     /// Implemented to call the external native function <c>SzConfig_init()</c>.
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzConfigMgr_init(Encoding.UTF8.GetBytes(moduleName),
-                                Encoding.UTF8.GetBytes(iniParams),
+        return SzConfigMgr_init(Utilities.StringToUTF8Bytes(moduleName),
+                                Utilities.StringToUTF8Bytes(iniParams),
                                 (verboseLogging) ? 1 : 0);
     }
 
@@ -122,8 +122,8 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
         result.response = 0L;
         result.returnCode = 0L;
 
-        byte[] configBytes  = Encoding.UTF8.GetBytes(configStr);
-        byte[] commentBytes = Encoding.UTF8.GetBytes(configComments);
+        byte[] configBytes  = Utilities.StringToUTF8Bytes(configStr);
+        byte[] commentBytes = Utilities.StringToUTF8Bytes(configComments);
 
         result = SzConfigMgr_addConfig_helper(configBytes, commentBytes);
         configID = result.response;
@@ -159,7 +159,7 @@ internal class NativeConfigManagerExtern : NativeConfigManager {
 
     /// <summary>
     /// Implemented to call the external native helper function 
-    /// <see cref="SzConfigMgr_getConfig_helper"/>. 
+    /// <see cref="SzConfigMgr_getConfigList_helper"/>. 
     /// </summary>
     ///
     /// <returns>

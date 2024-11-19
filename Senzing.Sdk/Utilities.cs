@@ -176,6 +176,26 @@ internal static class Utilities {
     }
 
     /// <summary>
+    /// Converts a string to a <b>null terminated</b> array of UTF-8 encoded bytes.
+    /// </summary>
+    /// 
+    /// <param name="text">
+    /// The <c>string</c> to encode.
+    /// </param>
+    /// 
+    /// <returns>
+    /// The null-terminated array of bytes.
+    /// </returns>
+    internal static byte[] StringToUTF8Bytes(string text)
+    {
+        byte[] bytes1 = Encoding.UTF8.GetBytes(text);
+        byte[] bytes2 = new byte[bytes1.Length + 1];
+        Array.Copy(bytes1, 0, bytes2, 0, bytes1.Length);
+        bytes2[bytes2.Length - 1] = 0;
+        return bytes2;
+    }
+
+    /// <summary>
     /// Converts a pointer a null-terminated array of UTF-8 encoded
     /// bytes to a <c>string</c>.
     /// </summary>

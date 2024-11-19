@@ -348,11 +348,6 @@ public class SzCoreEngine: SzEngine {
 
             this.env.HandleReturnCode(returnCode, this.nativeApi);
 
-            // get the result
-            if (result.Length == 0) {
-                result = null;
-            }
-
             // return the next export chunk
             return result;
         });

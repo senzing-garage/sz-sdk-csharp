@@ -893,7 +893,7 @@ public class RecordReader {
         /// <param name="lineNumber">
         /// The current line number in the CSV.
         /// </param>
-        private static IList<string> ParseCSVLine(string line, int lineNumber) {
+        public static IList<string> ParseCSVLine(string line, int lineNumber) {
             IList<string> fields = new List<string>();
             line = line.Trim();
             int index = 0;
