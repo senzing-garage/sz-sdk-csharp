@@ -157,7 +157,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
     private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
         = new Dictionary<long, ISet<(string,string)>>();
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
     private SzCoreEnvironment Env {
        get {

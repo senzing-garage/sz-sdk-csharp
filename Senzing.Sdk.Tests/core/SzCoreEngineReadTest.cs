@@ -187,7 +187,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
                  EFG789,
                  FGH012).AsReadOnly();
     
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
     private SzCoreEnvironment Env {
        get {
@@ -224,6 +224,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
                 if (returnCode != 0) {
                     throw new Exception(nativeEngine.GetLastException());
                 }
+
                 // parse the JSON 
                 JsonObject? jsonObj     = JsonNode.Parse(result)?.AsObject();
                 JsonObject? entity      = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
@@ -1144,7 +1145,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
             }
         }
-        
+
         return result;
     }
 

@@ -44,12 +44,12 @@ internal abstract class AbstractTest {
     /// <summary>
     /// The number of tests that failed for this instance.
     /// </summary>
-    private int failureCount = 0;
+    private int failureCount;
 
     /// <summary>
     /// The number of tests that succeeded for this instance.
     /// </summary>
-    private int successCount = 0;
+    private int successCount;
 
     /// <summary>
     /// The time of the last progress log.
@@ -64,7 +64,7 @@ internal abstract class AbstractTest {
     /// <summary>
     /// Whether or not the repository has been created.
     /// </summary>
-    private bool repoCreated = false;
+    private bool repoCreated;
 
     /// <summary>
     /// Protected default constructor.

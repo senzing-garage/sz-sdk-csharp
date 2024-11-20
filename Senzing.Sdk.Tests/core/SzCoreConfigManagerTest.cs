@@ -12,15 +12,15 @@ using System.Text.Json.Nodes;
 internal class SzCoreConfigManagerTest : AbstractTest {
     private const string CUSTOMERS_DATA_SOURCE = "CUSTOMERS";
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
-    private string? defaultConfig = null;
+    private string? defaultConfig;
 
-    private string? modifiedConfig = null;
+    private string? modifiedConfig;
 
-    private long defaultConfigID = 0L;
+    private long defaultConfigID;
 
-    private long modifiedConfigID = 0L;
+    private long modifiedConfigID;
 
     private const string DEFAULT_COMMENT = "Default";
 

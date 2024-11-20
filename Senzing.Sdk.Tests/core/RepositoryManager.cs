@@ -16,7 +16,7 @@ using Microsoft.Data.Sqlite;
 
 namespace Senzing.Sdk.Tests.Core
 {
-public class RepositoryManager
+public static class RepositoryManager
 {
     /// <summary>
     /// UTF8 encoding constant.
@@ -51,8 +51,8 @@ public class RepositoryManager
 
     private static readonly object MONITOR = new object();
 
-    private static string? baseInitializedWith = null;
-    private static string? engineInitializedWith = null;
+    private static string? baseInitializedWith;
+    private static string? engineInitializedWith;
 
     private static readonly IDictionary<FileInfo, FileInfo>
         TEMPLATE_DATABASE_MAP = new Dictionary<FileInfo, FileInfo>();

@@ -43,7 +43,7 @@ public class InstallLocations
     /// <summary>
     /// Indicates if the installation direction is from a development build.
     /// </summary>
-    private bool devBuild = false;
+    private bool devBuild;
 
     /// <summary>
     /// Default constructor.

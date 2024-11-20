@@ -1,11 +1,10 @@
 using System.Collections.Frozen;
 using System.Collections.Immutable;
-using System.Diagnostics.Contracts;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Text;
-using NUnit.Framework.Internal.Commands;
-using System.IO;
+
+using static Senzing.Sdk.Tests.Util.TextUtilities;
 
 namespace Senzing.Sdk.Tests.IO {
 
@@ -683,12 +682,12 @@ public class RecordReader {
         /// <summary>
         /// Indicates whether or not the JSON properly parses to avoid
         /// </summary>
-        private bool errant = false;
+        private bool errant;
 
         /// <summary>
         /// The line number for the last error.
         /// </summary>
-        private long? errorLineNumber = null;
+        private long? errorLineNumber;
 
         /// <summary>
         /// Constructor.
@@ -780,12 +779,12 @@ public class RecordReader {
         /// <summary>
         /// The current line number.
         /// </summary>
-        private long lineNumber = 0;
+        private long lineNumber;
 
         /// <summary>
         /// The error line number if an error is found.
         /// </summary>
-        private long? errorLineNumber = null;
+        private long? errorLineNumber;
 
         /// <summary>
         /// Constructs with the specified parameters.
@@ -875,75 +874,12 @@ public class RecordReader {
         /// <summary>
         /// The current line number.
         /// </summary>
-        private int lineNumber = 0;
+        private int lineNumber;
 
         /// <summary>
         /// The line number for the last error.
         /// </summary>
-        private long? errorLineNumber = null;
-
-        /// <summary>
-        /// Parses the CSV line.
-        /// </summary>
-        ///
-        /// <param name="line">
-        /// The line to parse.
-        /// </param>
-        ///
-        /// <param name="lineNumber">
-        /// The current line number in the CSV.
-        /// </param>
-        public static IList<string> ParseCSVLine(string line, int lineNumber) {
-            IList<string> fields = new List<string>();
-            line = line.Trim();
-            int index = 0;
-            int length = line.Length;
-
-            bool quoted   = false;
-            bool escaping = false;
-            StringBuilder field = new StringBuilder();
-            for (index = 0; index < length; index++) {
-                char c = line[index];
-                if (escaping) {
-                    field.Append(c);
-                    escaping = false;
-                } else if (c == '\\') {
-                    escaping = true;
-                    continue;
-                } else if (!quoted && field.Length == 0 && c == '"') {
-                    quoted = true;
-                    continue;
-                } else if (quoted && c == '"') {
-                    // advance past the separator or to the end
-                    for (index = index + 1; index < length; index++) {
-                        c = line[index];
-                        if (c == ',') break;
-                        if (!Char.IsWhiteSpace(c) && (c != ',')) {
-                            throw new FormatException(
-                                "Badly formatted CSV at line " + lineNumber
-                                + " at position " + index + ": " + line);
-                        }
-                    }
-
-                    quoted = false;
-                    fields.Add(field.ToString().Trim());
-                    field.Clear();
-
-                } else if (!quoted && c == ',') {
-                    fields.Add(field.ToString().Trim());
-                    field.Clear();
-
-                } else if (field.Length == 0 && Char.IsWhiteSpace(c)) {
-                    // skip leading whitespace
-                    continue;
-                } else {
-                    field.Append(c);
-                }
-            }
-
-            // return the fields
-            return fields;
-        }
+        private long? errorLineNumber;
 
         public CsvRecordProvider(RecordReader owner, StreamReader reader) {
             this.owner      = owner;

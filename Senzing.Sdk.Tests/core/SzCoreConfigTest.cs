@@ -15,11 +15,11 @@ internal class SzCoreConfigTest : AbstractTest {
 
     private const string EMPLOYEES_DATA_SOURCE = "EMPLOYEES";
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
-    private string? defaultConfig = null;
+    private string? defaultConfig;
 
-    private string? modifiedConfig = null;
+    private string? modifiedConfig;
 
     private SzCoreEnvironment Env {
         get {

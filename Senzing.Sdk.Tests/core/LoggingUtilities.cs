@@ -10,7 +10,7 @@ namespace Senzing.Sdk.Tests.Core
 /// <summary>
 /// Provides logging utilities.
 /// </summary>
-public class LoggingUtilities
+public static class LoggingUtilities
 {
     /// <summary>
     /// Used for good measure to avoid interlacing of out debug output.
@@ -35,27 +35,19 @@ public class LoggingUtilities
     /// <summary>
     /// The base product ID to log with if the calling package is not overidden.
     /// </summary>
-    public const string BASE_PRODUCT_ID = "5025";
+    public const string BaseProductID = "5025";
 
     /// <summary>
     /// The last logged exception in this thread.
     /// </summary>
-    private static readonly ThreadLocal<long?> LAST_LOGGED_EXCEPTION
+    private static readonly ThreadLocal<long?> LastLoggedException
         = new ThreadLocal<long?>();
 
     /// <summary>
     /// The dictionary of package prefixes to product ID's.
     /// </summary>
-    private static readonly IDictionary<string, string> PRODUCT_ID_MAP
+    private static readonly IDictionary<string, string> ProductIDMap
         = new Dictionary<string, string>();
-
-    /// <summary>
-    /// Private default constructor
-    /// </summary>
-    private LoggingUtilities()
-    {
-        // do nothing
-    }
 
     /// <summary>
     /// Sets the product ID to use when logging messages for classes in the
@@ -67,9 +59,9 @@ public class LoggingUtilities
     public static void SetProductIdForPackage(string packageName,
                                                 string productId)
     {
-        lock (PRODUCT_ID_MAP)
+        lock (ProductIDMap)
         {
-            PRODUCT_ID_MAP.Add(packageName, productId);
+            ProductIDMap.Add(packageName, productId);
         }
     }
 
@@ -163,14 +155,14 @@ public class LoggingUtilities
     /// <returns>The product ID with which to log</returns>
     public static String GetProductIdForNamespace(string namespaceName)
     {
-        lock (PRODUCT_ID_MAP)
+        lock (ProductIDMap)
         {
             do
             {
                 // check if we have a product ID for the package
-                if (PRODUCT_ID_MAP.ContainsKey(namespaceName))
+                if (ProductIDMap.ContainsKey(namespaceName))
                 {
-                    return PRODUCT_ID_MAP[namespaceName];
+                    return ProductIDMap[namespaceName];
                 }
 
                 // check if the package name begins with com.senzing and get next part
@@ -192,7 +184,7 @@ public class LoggingUtilities
             } while (namespaceName.Length > 0 && !namespaceName.Equals("Senzing"));
 
             // return the base product ID if we get here
-            return BASE_PRODUCT_ID;
+            return BaseProductID;
         }
     }
 
@@ -439,9 +431,9 @@ public class LoggingUtilities
     /// </returns>
     public static bool IsLastLoggedException(Exception e) {
         if (e == null) return false;
-        if (LAST_LOGGED_EXCEPTION.Value == null) return false;
+        if (LastLoggedException.Value == null) return false;
         long? value = ExceptionToLong(e);
-        return (LAST_LOGGED_EXCEPTION.Value == value);
+        return (LastLoggedException.Value == value);
     }
 
     /// <summary>
@@ -457,7 +449,7 @@ public class LoggingUtilities
     /// The <see cref="System.Exception"/> to set as the last logged exception.
     /// </param>
     public static void SetLastLoggedException(Exception e) {
-        LAST_LOGGED_EXCEPTION.Value = ExceptionToLong(e);
+        LastLoggedException.Value = ExceptionToLong(e);
     }
 
     /// <summary>

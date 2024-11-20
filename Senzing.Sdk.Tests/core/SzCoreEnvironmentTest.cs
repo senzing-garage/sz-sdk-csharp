@@ -22,13 +22,13 @@ internal class SzCoreEnvironmentTest : AbstractTest
     
     private const string CustomersDataSource = "CUSTOMERS";
 
-    private long configID1 = 0L;
+    private long configID1;
 
-    private long configID2 = 0L;
+    private long configID2;
 
-    private long configID3 = 0L;
+    private long configID3;
 
-    private long defaultConfigID = 0L;
+    private long defaultConfigID;
 
     [OneTimeSetUp]
     public void InitializeEnvironment() {

@@ -10,7 +10,7 @@ using System.Text.Json.Nodes;
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreProductTest : AbstractTest {
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
 
     private SzCoreEnvironment Env {

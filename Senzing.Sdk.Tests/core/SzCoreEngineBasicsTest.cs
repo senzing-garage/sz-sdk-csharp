@@ -11,7 +11,7 @@ using Senzing.Sdk.Tests.Core;
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreEngineBasicsTest : AbstractTest {
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
     private SzCoreEnvironment Env {
         get {

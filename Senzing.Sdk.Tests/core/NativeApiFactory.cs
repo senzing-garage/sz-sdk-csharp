@@ -18,19 +18,19 @@ internal class NativeApiFactory {
     /// to authorize uninstalling the <see cref="NativeApiProvider"/>, or
     /// <c>null</c> if no provider is installed.
     /// </summary>
-    private static AccessToken? current_token = null;
+    private static AccessToken? current_token;
 
     /// <summary>
     /// The currently installed <see cref="NativeApiProvider"/>, or
     /// <c>null</c> if no provider is installed.
     /// </summary>
-    private static NativeApiProvider? api_provider = null;
+    private static NativeApiProvider? api_provider;
 
     /// <summary>
     /// The <see cref="Senzing.Sdk.Tests.NativeApi.InstallLocations"/>
     /// describing the installation directories.
     /// </summary>
-    private static InstallLocations? INSTALL_LOCATIONS = null;
+    private static InstallLocations? INSTALL_LOCATIONS;
 
     /// <summary>
     /// Internal object for instance-wide synchronized locking.

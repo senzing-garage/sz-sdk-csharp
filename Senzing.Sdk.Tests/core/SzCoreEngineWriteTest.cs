@@ -299,7 +299,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                  VipGHI123,
                  VipJKL456).AsReadOnly();
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
     private SzCoreEnvironment Env {
        get {
