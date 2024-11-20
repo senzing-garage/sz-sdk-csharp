@@ -1031,7 +1031,7 @@ internal abstract class AbstractTest {
         }
     }
 
-    protected static List<T> ListOf<T>(params T[] elems) {
+    internal static List<T> ListOf<T>(params T[] elems) {
         List<T> result = new List<T>(elems.Length);
         foreach (T elem in elems) {
             result.Add(elem);
@@ -1040,7 +1040,7 @@ internal abstract class AbstractTest {
     }
 
 
-    protected static SortedSet<T> SortedSetOf<T>(params T[] elems) {
+    internal static SortedSet<T> SortedSetOf<T>(params T[] elems) {
         SortedSet<T> result = new SortedSet<T>();
         foreach (T elem in elems) {
             result.Add(elem);
@@ -1048,7 +1048,7 @@ internal abstract class AbstractTest {
         return result;
     }
 
-    protected static SortedDictionary<K,V> SortedMapOf<K,V>(params (K,V)[] tuples) 
+    internal static SortedDictionary<K,V> SortedMapOf<K,V>(params (K,V)[] tuples) 
         where K : notnull
     {
         SortedDictionary<K,V> result = new SortedDictionary<K, V>();
@@ -1058,7 +1058,7 @@ internal abstract class AbstractTest {
         return result;
     }
 
-    protected static Dictionary<K,V> MapOf<K,V>(params (K,V)[] tuples) 
+    internal static Dictionary<K,V> MapOf<K,V>(params (K,V)[] tuples) 
         where K : notnull
     {
         Dictionary<K,V> result = new Dictionary<K, V>();
@@ -1068,7 +1068,7 @@ internal abstract class AbstractTest {
         return result;
     }
 
-    protected static ISet<T> SetOf<T>(params T[] elems) {
+    internal static ISet<T> SetOf<T>(params T[] elems) {
         ISet<T> result = new HashSet<T>();
         foreach (T elem in elems) {
             result.Add(elem);

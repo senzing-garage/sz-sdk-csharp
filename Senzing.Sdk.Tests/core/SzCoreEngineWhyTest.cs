@@ -15,9 +15,6 @@ using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlag;
 using static Senzing.Sdk.SzFlagUsageGroup;
 using NUnit.Framework.Internal;
-using static Senzing.Sdk.Tests.Util.TextUtilities;
-using static Senzing.Sdk.Utilities;
-using System.Numerics;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
