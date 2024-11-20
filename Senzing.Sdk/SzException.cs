@@ -7,6 +7,15 @@ namespace Senzing.Sdk {
 /// </summary>
 public class SzException : Exception 
 {
+    /// <summary>
+    /// Gets the underlying Senzing error code associated with the
+    /// exception or <c>null</c> if no error code was associated
+    /// with the exception.
+    /// </summary>
+    public long? ErrorCode { get {
+        return this.errorCode;
+    }}
+
     /// <summary>The underlying Senzing error code.</summary>
     private long? errorCode = null;
     
@@ -82,18 +91,5 @@ public class SzException : Exception
         this.errorCode = errorCode;
     }
 
-    /// <summary>
-    /// Gets the underlying Senzing error code associated with the
-    /// exception.  This returns <c>null</c> if no error code was 
-    /// associated with the exception.
-    /// </summary>
-    ///
-    /// <returns>
-    /// The underlying Senzing error code associated with the
-    /// exception, or <c>null</c> if none was associated.
-    /// </returns>
-    public long? GetErrorCode() {
-        return this.errorCode;
-    }
 }
 }

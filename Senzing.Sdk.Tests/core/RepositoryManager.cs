@@ -1947,6 +1947,7 @@ public class RepositoryManager
         }
 
         returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out resultConfig);
+        
         if (returnCode != 0) {
             LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
             throw new Exception("NativeConfigManager.AddConfig() failed");

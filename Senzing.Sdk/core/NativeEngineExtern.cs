@@ -1802,7 +1802,12 @@ internal class NativeEngineExtern : NativeEngine {
         result.response = IntPtr.Zero;
         result.returnCode = 0L;
 
-        byte[] columnBytes = Encoding.UTF8.GetBytes(csvColumnList);
+        byte[] columnBytes = Utilities.StringToUTF8Bytes(csvColumnList);
+        StringBuilder sb = new StringBuilder();
+        for (int index = 0; index < columnBytes.Length; index++) {
+            sb.Append((char) columnBytes[index]);
+        }
+        Console.Error.WriteLine("***** COLUMNS: " + columnBytes + " / " + sb.ToString());
 
         result = Sz_exportCSVEntityReport_helper(columnBytes, flags);
         exportHandle = result.response;

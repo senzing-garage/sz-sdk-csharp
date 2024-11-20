@@ -17,8 +17,8 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
     /// <see cref="SzConfig_init"/>
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzDiagnostic_init(Encoding.UTF8.GetBytes(moduleName),
-                                 Encoding.UTF8.GetBytes(iniParams),
+        return SzDiagnostic_init(Utilities.StringToUTF8Bytes(moduleName),
+                                 Utilities.StringToUTF8Bytes(iniParams),
                                  (verboseLogging) ? 1 : 0);
     }
 
@@ -36,8 +36,8 @@ internal class NativeDiagnosticExtern : NativeDiagnostic {
                                  bool   verboseLogging) 
     {
         return SzDiagnostic_initWithConfigID(
-            Encoding.UTF8.GetBytes(moduleName),
-            Encoding.UTF8.GetBytes(iniParams),
+            Utilities.StringToUTF8Bytes(moduleName),
+            Utilities.StringToUTF8Bytes(iniParams),
             initConfigID,
             (verboseLogging) ? 1 : 0);
     }

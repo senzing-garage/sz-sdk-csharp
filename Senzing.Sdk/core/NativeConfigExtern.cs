@@ -15,9 +15,9 @@ internal class NativeConfigExtern : NativeConfig {
     /// Implemented to call the external native function <c>SzConfig_init()</c>.
     /// </summary>
     public long Init(string moduleName, string iniParams, bool verboseLogging) {
-        return SzConfig_init(Encoding.UTF8.GetBytes(moduleName),
-                              Encoding.UTF8.GetBytes(iniParams),
-                              (verboseLogging) ? 1 : 0);
+        return SzConfig_init(Utilities.StringToUTF8Bytes(moduleName),
+                             Utilities.StringToUTF8Bytes(iniParams),
+                             (verboseLogging) ? 1 : 0);
     }
 
     [DllImport ("libSz")]
@@ -129,7 +129,7 @@ internal class NativeConfigExtern : NativeConfig {
         result.response = IntPtr.Zero;
         result.returnCode = 0L;
         
-        byte[] bytes = Encoding.UTF8.GetBytes(jsonConfig);
+        byte[] bytes = Utilities.StringToUTF8Bytes(jsonConfig);
         result = SzConfig_load_helper(bytes);
         configHandle = result.response;
         return result.returnCode;
@@ -219,7 +219,7 @@ internal class NativeConfigExtern : NativeConfig {
         result.response = IntPtr.Zero;
         result.returnCode = 0L;
         try {
-            byte[] bytes = Encoding.UTF8.GetBytes(inputJson);
+            byte[] bytes = Utilities.StringToUTF8Bytes(inputJson);
             result = SzConfig_addDataSource_helper(configHandle, bytes);
             response = Utilities.UTF8BytesToString(result.response);
             return result.returnCode;
@@ -241,7 +241,7 @@ internal class NativeConfigExtern : NativeConfig {
     /// Zero (0) on success and non-zero on failure.
     /// </returns>
     public long DeleteDataSource(IntPtr configHandle, string inputJson) {
-        byte[] bytes = Encoding.UTF8.GetBytes(inputJson);
+        byte[] bytes = Utilities.StringToUTF8Bytes(inputJson);
         return SzConfig_deleteDataSource_helper(configHandle, bytes);
     }
 

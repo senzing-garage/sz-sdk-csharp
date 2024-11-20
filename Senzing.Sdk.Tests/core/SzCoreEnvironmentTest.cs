@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Senzing.Sdk.Core;
+using Senzing.Sdk.Tests;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -65,7 +66,6 @@ internal class SzCoreEnvironmentTest : AbstractTest
     {
         try {
             this.TeardownTestEnvironment();
-            this.ConditionallyLogCounts(true);
         } finally {
             this.EndTests();
         }
@@ -977,7 +977,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                     } else {
                         Assert.IsInstanceOf(typeof(SzException), e, "Type of exception is not as expected");
                         SzException sze = (SzException) e;
-                        Assert.That(sze.GetErrorCode(), Is.EqualTo(errorCode),
+                        Assert.That(sze.ErrorCode, Is.EqualTo(errorCode),
                                     "Error code of exception is not as expected");
                         Assert.That(e.Message, Is.EqualTo(errorMessage),
                                     "Error message of exception is not as expected");

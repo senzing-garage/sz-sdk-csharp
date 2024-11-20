@@ -158,7 +158,7 @@ internal class SzFlagsTest : AbstractTest {
                             "Value for group (" + group + ") has a different "
                             + "primitive long value ("
                             + Utilities.HexFormat((long) groupFlagsValue)
-                            + " / " + group.ToString(SzFlags.GetFlags(group)) 
+                            + " / " + group.FlagsToString(SzFlags.GetFlags(group)) 
                             + ") than expected (" + Utilities.HexFormat((long) value) 
                             + "): " + name);
             
@@ -253,7 +253,7 @@ internal class SzFlagsTest : AbstractTest {
                                 "Groups by flag name (" + name 
                                     + ") does not contain group ("
                                     + group  + ") but group contains flag (" 
-                                    + name + " / " + flag.ToFlagString() + ")");
+                                    + name + " / " + flag.FlagsToString() + ")");
             
                 } else {
                     Assert.IsTrue(flagsByName.ContainsKey(name),
@@ -261,18 +261,18 @@ internal class SzFlagsTest : AbstractTest {
                                 + ") contains group ("
                                 + group  + ") but group flags by name "
                                 + "does not contains flag (" 
-                                + name + " / " + flag.ToFlagString() + ")");
+                                + name + " / " + flag.FlagsToString() + ")");
                     Assert.IsTrue(namesByFlag.ContainsKey(flag),
                                 "Groups by flag name (" + name 
                                 + ") contains group ("
                                 + group  + ") but group flag names by flag "
                                 + "does not contains flag (" 
-                                + name + " / " + flag.ToFlagString() + ")");
+                                + name + " / " + flag.FlagsToString() + ")");
                     Assert.That((long) (flags & flag), Is.Not.EqualTo(0L),
                                 "Groups by flag name (" + name 
                                 + ") contains group (" + group 
                                 + " ) but group does not contain flag (" 
-                                + name + " / " + group.ToString(flag) + ")");                
+                                + name + " / " + group.FlagsToString(flag) + ")");                
                 }
             }
         });
@@ -378,7 +378,7 @@ internal class SzFlagsTest : AbstractTest {
                 SzFlag flags = SzFlags.GetFlags(SzFlags.SzNoFlagUsageGroups);
 
                 Fail("Was unexpectedly able to get flags for "
-                    + "SzNoFlagUsageGroups: " + SzFlags.ToFlagString(flags));
+                    + "SzNoFlagUsageGroups: " + SzFlags.FlagsToString(flags));
 
             } catch (ArgumentException) {
                 // expected
@@ -429,7 +429,7 @@ internal class SzFlagsTest : AbstractTest {
                 SzFlag flags = SzFlags.GetFlags(aggregateGroups);
 
                 Fail("Was unexpectedly able to get flags for "
-                    + "aggregate group: " + SzFlags.ToFlagString(flags));
+                    + "aggregate group: " + SzFlags.FlagsToString(flags));
 
             } catch (ArgumentException) {
                 // expected
@@ -482,7 +482,7 @@ internal class SzFlagsTest : AbstractTest {
         this.PerformTest(() => {
             SzFlag? flag        = args.flag;
             string  expected    = args.expected;
-            string? actual      = SzFlags.ToString(flag);
+            string? actual      = SzFlags.FlagsToString(flag);
             Assert.That(actual, Is.EqualTo(expected),
                         "ToFlagString(this SzFlag) did not return as expected.  "
                         + "actual=[ " + actual + " ], expected=[ " + expected + " ]");
@@ -502,7 +502,7 @@ internal class SzFlagsTest : AbstractTest {
     [Test, TestCaseSource(nameof(GetEnumFlagGroups))]
     public void TestZeroToString(SzFlagUsageGroup group) {
         this.PerformTest(() => {
-            string text = group.ToString(SzFlags.SzNoFlags);
+            string text = group.FlagsToString(SzFlags.SzNoFlags);
             Assert.IsNotNull(text, "The result for zero is null");
             Assert.IsTrue(text.IndexOf("NONE") >= 0,
                         "The result for zero does not contain NONE");
@@ -593,13 +593,13 @@ internal class SzFlagsTest : AbstractTest {
                     Assert.That((long) (groups & group), Is.Not.EqualTo(0L),
                         "Group (" + group + ") has flag (" + name + ") but the "
                         + "flag does not have the group.  flagsForGroup=[ "
-                        + flagsByName.Keys + " / " + SzFlags.ToFlagString(flags)
+                        + flagsByName.Keys + " / " + SzFlags.FlagsToString(flags)
                         + " ], groupsForFlag=[ " + groups + "]");
                 } else {
                     Assert.That((long) (groups & group), Is.EqualTo(0L),
                         "Group (" + group + ") has flag (" + name + ") but the "
                         + "flag does not have the group.  flagsForGroup=[ "
-                        + flagsByName.Keys + " / " + SzFlags.ToFlagString(flags)
+                        + flagsByName.Keys + " / " + SzFlags.FlagsToString(flags)
                         + " ], groupsForFlag=[ " + groups + "]");
                 }
             }
@@ -627,14 +627,6 @@ internal class SzFlagsTest : AbstractTest {
         });
     }
 
-
-    private static ISet<string> SetOf(params string[] strings) {
-        ISet<string> result = new HashSet<string>();
-        foreach (string elem in strings) {
-            result.Add(elem);
-        }
-        return result;
-    }
 
     private static IList<(SzFlagUsageGroup,SzFlag?,ISet<string>)> GetGroupToStringParameters() {
         IList<(SzFlagUsageGroup,SzFlag?,ISet<string>)> result
@@ -724,14 +716,14 @@ internal class SzFlagsTest : AbstractTest {
         
         string[] separators = [ " | ", " ["];
         this.PerformTest(() => {
-            string actual = group.ToString(flags);
+            string actual = group.FlagsToString(flags);
             Assert.IsNotNull(actual, 
-                "Result from SzFlagUsageGroup.ToString(SzFlag) was null: " + testData);
+                "Result from SzFlagUsageGroup.FlagsToString(SzFlag) was null: " + testData);
             Assert.That(actual.Length, Is.Not.EqualTo(0),
-                "Result from SzFlagUsageGroup.ToString(SzFlag) was empty: " + testData);
+                "Result from SzFlagUsageGroup.FlagsToString(SzFlag) was empty: " + testData);
 
             Assert.IsTrue(actual.EndsWith("]"),
-                "Result from SzFlagUsageGroup.ToString(SzFlag) does not end with ']': "
+                "Result from SzFlagUsageGroup.FlagsToString(SzFlag) does not end with ']': "
                 + "actual=[ " + actual + " ], " + testData);
             
             // trim the trailing bracket
@@ -764,4 +756,21 @@ internal class SzFlagsTest : AbstractTest {
         });
     }
 
+    [Test]
+    [TestCaseSource(nameof(GetEnumMappings))]
+    [TestCaseSource(nameof(GetFlagsMappings))]
+    public void TestFlagsToLong((string name, SzFlag flag) args) {
+        string name = args.name;
+        SzFlag flag = args.flag;
+        long value = SzFlags.FlagsToLong(flag);
+        Assert.That(value, Is.EqualTo((long) flag),
+            "FlagsToLong not as expected for flags: " + name);
+    }
+
+    [Test]
+    public void TestNullFlagsToLong() {
+        long value = SzFlags.FlagsToLong(null);
+        Assert.That(value, Is.EqualTo(0L),
+            "FlagsToLong not as expected for null flags");
+    }
 }

@@ -39,7 +39,7 @@ public class SzUnknownDataSourceException : SzBadInputException
     /// The message explaining the reason for the exception.
     /// </param>
     public SzUnknownDataSourceException(long? errorCode, string message) 
-        : base(message)
+        : base(errorCode, message)
     {
         // do nothing
     }
@@ -85,10 +85,10 @@ public class SzUnknownDataSourceException : SzBadInputException
     /// </param>
     ///
     /// <param name="cause">The underlying cause for the exception.</param>
-    public SzUnknownDataSourceException(long?        errorCode, 
+    public SzUnknownDataSourceException(long?       errorCode, 
                                         string      message, 
                                         Exception   cause) 
-        : base(message, cause)
+        : base(errorCode, message, cause)
     {
         // do nothing
     }

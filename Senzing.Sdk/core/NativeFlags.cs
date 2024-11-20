@@ -265,15 +265,21 @@ internal class NativeFlags {
     public const long SzRecordDefaultFlags = (SzEntityIncludeRecordJsonData);
 
     /// <summary>
-    /// The default recommended bitwise flag values for getting entities.
+    /// The default recommended bitwise flag values for basic enitty output.
     /// </summary>
-    public const long SzEntityDefaultFlags
-      = (SzEntityIncludeAllRelations
-         | SzEntityIncludeRepresentativeFeatures
+    public const long SzEntityCoreFlags
+      = (SzEntityIncludeRepresentativeFeatures
          | SzEntityIncludeEntityName
          | SzEntityIncludeRecordSummary
          | SzEntityIncludeRecordData
-         | SzEntityIncludeRecordMatchingInfo
+         | SzEntityIncludeRecordMatchingInfo);
+
+    /// <summary>
+    /// The default recommended bitwise flag values for getting entities.
+    /// </summary>
+    public const long SzEntityDefaultFlags
+      = (SzEntityCoreFlags
+         | SzEntityIncludeAllRelations
          | SzEntityIncludeRelatedEntityName
          | SzEntityIncludeRelatedRecordSummary
          | SzEntityIncludeRelatedMatchingInfo);
@@ -349,12 +355,7 @@ internal class NativeFlags {
     /// The default recommended bitwise flag values for virtual-entity-analysis
     /// on entities.
     /// </summary>
-    public const long SzVirtualEntityDefaultFlags
-      = (SzEntityIncludeRepresentativeFeatures
-         | SzEntityIncludeEntityName
-         | SzEntityIncludeRecordSummary
-         | SzEntityIncludeRecordData
-         | SzEntityIncludeRecordMatchingInfo);
+    public const long SzVirtualEntityDefaultFlags = SzEntityCoreFlags;
 
     /// <summary>
     /// The default recommended bitwise flag values for searching by attributes,

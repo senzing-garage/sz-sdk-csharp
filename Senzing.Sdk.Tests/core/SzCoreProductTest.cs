@@ -2,6 +2,7 @@ namespace Senzing.Sdk.Tests.Core;
 
 using NUnit.Framework;
 using System;
+using Senzing.Sdk.Tests;
 using Senzing.Sdk.Core;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -62,7 +63,7 @@ internal class SzCoreProductTest : AbstractTest {
                 
             } catch (AssertionException) {
                 throw;
-                
+
             } catch (Exception e) {
                 Fail("Failed testGetNativeApi test with exception", e);
             }

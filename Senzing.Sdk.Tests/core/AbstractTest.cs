@@ -8,6 +8,33 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Senzing.Sdk.Tests.Core {
+
+internal static class DebugExtensions {
+    public static string ToDebugString<K,V>(this IDictionary<K,V> dict) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{ ");
+        string prefix = "";
+        foreach (KeyValuePair<K,V> pair in dict) {
+            sb.Append(prefix).Append("[ ").Append(pair.Key).Append(":");
+            sb.Append(pair.Value).Append(" ]");
+            prefix = ", ";
+        }
+        sb.Append(" }");
+        return sb.ToString();
+    }
+    public static string ToDebugString<T>(this ICollection<T> coll) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("{ ");
+        string prefix = "";
+        foreach (T elem in coll) {
+            sb.Append(prefix).Append("[ ").Append(elem).Append(" ]");
+            prefix = ", ";
+        }
+        sb.Append(" }");
+        return sb.ToString();
+    }
+}
+
 internal abstract class AbstractTest {
     /// <summary>
     /// UTF8 encoding constant.
@@ -69,15 +96,15 @@ internal abstract class AbstractTest {
     /// <c>true</c> if replaying previous results and <c>false</c>
     /// if using the live API.
     /// </summary>
-    protected void BeginTests() {
+    protected virtual void BeginTests() {
         // do nothing for now
     }
 
     /// <summary>
     /// Signals the end of the current test suite.
     /// </summary>
-    protected void EndTests() {
-        // do nothing for now
+    protected virtual void EndTests() {
+        this.ConditionallyLogCounts(true);
     }
 
     /// <summary>
@@ -576,7 +603,6 @@ internal abstract class AbstractTest {
 
         } catch (Exception e) {
             Console.Error.WriteLine(e);
-            Console.Error.WriteLine(e.StackTrace);
             throw;
 
         } finally {
@@ -662,7 +688,7 @@ internal abstract class AbstractTest {
     /// By default this function does nothing.  The repository directory
     /// can be obtained via <see cref="GetRepositoryDirectory"/>.
     /// </remarks>
-    protected void PrepareRepository() {
+    protected virtual void PrepareRepository() {
         // do nothing
     }
 
@@ -1004,6 +1030,52 @@ internal abstract class AbstractTest {
 
         }
     }
+
+    internal static List<T> ListOf<T>(params T[] elems) {
+        List<T> result = new List<T>(elems.Length);
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
+
+    internal static SortedSet<T> SortedSetOf<T>(params T[] elems) {
+        SortedSet<T> result = new SortedSet<T>();
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
+    internal static SortedDictionary<K,V> SortedMapOf<K,V>(params (K,V)[] tuples) 
+        where K : notnull
+    {
+        SortedDictionary<K,V> result = new SortedDictionary<K, V>();
+        foreach ((K,V) tuple in tuples) {
+            result.Add(tuple.Item1, tuple.Item2);
+        }
+        return result;
+    }
+
+    internal static Dictionary<K,V> MapOf<K,V>(params (K,V)[] tuples) 
+        where K : notnull
+    {
+        Dictionary<K,V> result = new Dictionary<K, V>();
+        foreach ((K,V) tuple in tuples) {
+            result.Add(tuple.Item1, tuple.Item2);
+        }
+        return result;
+    }
+
+    internal static ISet<T> SetOf<T>(params T[] elems) {
+        ISet<T> result = new HashSet<T>();
+        foreach (T elem in elems) {
+            result.Add(elem);
+        }
+        return result;
+    }
+
 
     /// <summary>
     /// Generates option combos for the specified variants.
