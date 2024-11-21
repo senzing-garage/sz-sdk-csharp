@@ -18,7 +18,7 @@ jobs:
             senzingsdk-version: "staging-v4"
 
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -27,7 +27,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-      - name: install Senzing SDK
+      - name: Install Senzing SDK
         uses: senzing-factory/github-action-install-senzing-sdk@v1
         with:
           senzingsdk-version: ${{ matrix.senzingsdk-version }}
@@ -40,14 +40,18 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.Tests
 
+      - name: Update Path
+        run: |
+          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
+
       - name: Run DotNet tests
         env:
-          Path: 'C:\"Program Files"\Senzing\er\lib;%Path%'
+          # Path: 'C:\"Program Files"\Senzing\er\lib;%Path%'
           LD_LIBRARY_PATH: 'C:\Program Files\Senzing\er\lib'
           SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
-          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
           $env:path
+          ls "C:\Program Files\Senzing\er\lib"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
