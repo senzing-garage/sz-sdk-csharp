@@ -24,6 +24,7 @@ jobs:
       - name: Print path
         run: |
           $env:path
+          $env:GITHUB_PATH
 
   windows-append:
     runs-on: windows-latest
@@ -31,10 +32,22 @@ jobs:
     steps:
       - name: Add to "Path" environment variable
         run: |
-          printf "C:\Program Files\Senzing\er\lib" | Out-File -FilePath "$env:GITHUB_PATH" -Encoding utf8 -Append
+          printf 'C:\Program Files\Senzing\er\lib' | Out-File -FilePath "$env:GITHUB_PATH" -Encoding utf8 -Append
 
       - name: Print path
         run: |
           $env:path
+          $env:GITHUB_PATH
 
-# Add-Content $env:GITHUB_PATH "C:\directory\to\add\to\path"
+  windows-add-content:
+    runs-on: windows-latest
+
+    steps:
+      - name: Add to "Path" environment variable
+        run: |
+          Add-Content $env:GITHUB_PATH "C:\Program Files\Senzing\er\lib"
+
+      - name: Print path
+        run: |
+          $env:path
+          $env:GITHUB_PATH
