@@ -16,8 +16,8 @@ dotnet_diagnostic.CAxxxx.severity = error
 #### Core EditorConfig Options ####
 
 # Indentation and spacing
-indent_size = 2
-tab_width = 2
+indent_size = 4
+tab_width = 4
 
 # New line preferences
 insert_final_newline = true
@@ -366,3 +366,39 @@ dotnet_naming_style.s_camelcase.required_suffix =
 dotnet_naming_style.s_camelcase.word_separator = 
 dotnet_naming_style.s_camelcase.capitalization = camel_case
 
+
+# Rules for test code
+[{Senzing.Sdk.Tests/**}]
+
+# Need to disable "is never null" because removing the guards causes build
+# errors complaining that the field could be null
+dotnet_diagnostic.CA1508.severity = none;
+
+# Catching Exception is a normal thing in the test code to check for any exception.
+dotnet_diagnostic.CA1031.severity = none;
+
+# Test suite code is not really published so "externally visible" nested classes are fine
+dotnet_diagnostic.CA1034.severity = none;
+
+# No plans to localize strings in test sutie -- literal strings used for output
+dotnet_diagnostic.CA1303.severity = none
+
+# sometimes you want a static constructor to initialize static fields
+dotnet_diagnostic.CA1810.severity = NONE
+
+# Suppress warnings about removing code from the assembly regarding classes
+# that are "never instantiated" because they are instantiated by the test runner
+dotnet_diagnostic.CA1812.severity = NONE
+
+# This rule is overly-aggressive in suggesting Dictionary.TryGetValue usage
+# even when it is not appropriate
+dotnet_diagnostic.CA1854.severity = NONE
+
+# No need to force usage of concrete class names over interfaces for local
+# variables for "performance" reasons.  Better to enforce the interface contract
+# is used rather than allowing access to non-interface methods.
+dotnet_diagnostic.CA1859.severity = NONE
+
+# Nobody cares about the miniscual performance improvement gained by marking 
+# some test classes as "sealed" -- in fact it causes problems for later development
+dotnet_diagnostic.CA1852.severity = NONE
