@@ -369,8 +369,9 @@ internal class SzFlagsTest : AbstractTest
             flags.Add(flag);
             allFlags |= flag;
         }
-        unchecked { 
-            flags.Add((SzFlag) (1L << 45));
+        unchecked
+        {
+            flags.Add((SzFlag)(1L << 45));
         }
         flags.Sort();
         int start = 0;
@@ -909,128 +910,138 @@ internal class SzFlagsTest : AbstractTest
     [Test]
     public void TestFlagInfo()
     {
-        Type enumType = typeof(SzFlag);
-        BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static;
-        SzFlagInfo? previous = null;
-        foreach (FieldInfo fieldInfo in enumType.GetFields(bindingFlags))
+        this.PerformTest(() =>
         {
-            SzFlagInfo flagInfo1 = new SzFlagInfo(fieldInfo);
-            SzFlagInfo flagInfo2 = new SzFlagInfo(fieldInfo);
-
-            Assert.That(flagInfo1, Is.EqualTo(flagInfo2),
-                "Flag info for same field (" + fieldInfo.Name + ") are not equal: "
-                + "flagInfo1=[ " + flagInfo1 + " ], flagInfo2=[ " + flagInfo2 + " ]");
-
-            Assert.IsNotNull(flagInfo1.ToString(),
-                "SzFlagInfo.ToString() returned null for field: " + fieldInfo.Name);
-
-            string expectedString = fieldInfo.Name + " ("
-                + Utilities.HexFormat((long)(((SzFlag?)fieldInfo.GetValue(null)) ?? SzFlags.SzNoFlags))
-                + ")";
-
-            Assert.That(flagInfo1.ToString(), Is.EqualTo(expectedString),
-                "SzFlagInfo.ToString() not as expected: " + fieldInfo.Name);
-
-            Assert.That(flagInfo1.CompareTo(flagInfo2), Is.EqualTo(0),
-                "SzFlagInfo.CompareTo() not returning zero for equal elements: "
-                + fieldInfo.Name);
-
-            Assert.That(flagInfo1.GetHashCode(), Is.EqualTo(flagInfo2.GetHashCode()),
-                "SzFlagInfo.GetHashCode() values not equal for equal objects: " + fieldInfo.Name);
-
-            Assert.IsTrue(flagInfo1.Equals(flagInfo1),
-                "SzFlagInfo.Equals(self) expectedly returned false: " + fieldInfo.Name);
-
-            Assert.That(flagInfo1.CompareTo(flagInfo1), Is.EqualTo(0),
-                "SzFlagInfo.CompareTo(self) expectedly returned non-zero: " + fieldInfo.Name);
-
-            Assert.IsTrue(flagInfo1.CompareTo(null) > 0,
-                "SzFlagInfo.CompareTo(null) expectedly returned non-positive: " + fieldInfo.Name);
-
-            try
+            Type enumType = typeof(SzFlag);
+            BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static;
+            SzFlagInfo? previous = null;
+            foreach (FieldInfo fieldInfo in enumType.GetFields(bindingFlags))
             {
-                int compareResult = flagInfo1.CompareTo("Hello");
-                Assert.Fail("Compared SzFlagInfo to string without an exception: " + fieldInfo.Name);
-            }
-            catch (ArgumentException)
-            {
-                // expected
-            }
-            if (previous != null)
-            {
-                Assert.That(flagInfo1, Is.Not.EqualTo(previous),
-                     "SzFlagInfo for " + fieldInfo.Name + " unexpectedly compared equal to "
-                     + "SzFlagInfo for " + previous.name + " via EqualTo()");
+                SzFlagInfo flagInfo1 = new SzFlagInfo(fieldInfo);
+                SzFlagInfo flagInfo2 = new SzFlagInfo(fieldInfo);
 
-                int compare = flagInfo1.CompareTo(previous);
-                int reverseCompare = previous.CompareTo(flagInfo1);
-                int expectedCompare = String.Compare(flagInfo1.name,
-                                                     previous.name,
-                                                     StringComparison.Ordinal);
+                Assert.That(flagInfo1, Is.EqualTo(flagInfo2),
+                    "Flag info for same field (" + fieldInfo.Name + ") are not equal: "
+                    + "flagInfo1=[ " + flagInfo1 + " ], flagInfo2=[ " + flagInfo2 + " ]");
 
-                Assert.That(compare, Is.Not.EqualTo(0),
-                    "SzFlagInfo for " + fieldInfo.Name + " unexpectedly compared equal to "
-                    + "SzFlagInfo for " + previous.name + "via CompareTo()");
-                Assert.That(reverseCompare, Is.Not.EqualTo(0),
-                    "SzFlagInfo for " + fieldInfo.Name + " unexpectedly reverse compared "
-                    + "equal to SzFlagInfo for " + previous.name + "via CompareTo()");
-                Assert.That(compare, Is.Not.EqualTo(reverseCompare),
-                    "Reverse comparision for " + flagInfo1.name + " versus "
-                    + previous.name + " unexpectedly equal to forward comparison");
-                Assert.That((compare < 0), Is.EqualTo(expectedCompare < 0),
-                    "Comparison ordering for " + flagInfo1.name + " versus "
-                    + previous.name + "not as expected");
-                Assert.That((compare < 0), Is.Not.EqualTo(reverseCompare < 0),
-                    "Reverse comparision ordering for " + flagInfo1.name
-                    + " versus " + previous.name
-                    + " unexpectedly equal to forward comparison");
+                Assert.IsNotNull(flagInfo1.ToString(),
+                    "SzFlagInfo.ToString() returned null for field: " + fieldInfo.Name);
+
+                string expectedString = fieldInfo.Name + " ("
+                    + Utilities.HexFormat((long)(((SzFlag?)fieldInfo.GetValue(null)) ?? SzFlags.SzNoFlags))
+                    + ")";
+
+                Assert.That(flagInfo1.ToString(), Is.EqualTo(expectedString),
+                    "SzFlagInfo.ToString() not as expected: " + fieldInfo.Name);
+
+                Assert.That(flagInfo1.CompareTo(flagInfo2), Is.EqualTo(0),
+                    "SzFlagInfo.CompareTo() not returning zero for equal elements: "
+                    + fieldInfo.Name);
+
+                Assert.That(flagInfo1.GetHashCode(), Is.EqualTo(flagInfo2.GetHashCode()),
+                    "SzFlagInfo.GetHashCode() values not equal for equal objects: " + fieldInfo.Name);
+
+                Assert.IsTrue(flagInfo1.Equals(flagInfo1),
+                    "SzFlagInfo.Equals(self) expectedly returned false: " + fieldInfo.Name);
+
+                Assert.That(flagInfo1.CompareTo(flagInfo1), Is.EqualTo(0),
+                    "SzFlagInfo.CompareTo(self) expectedly returned non-zero: " + fieldInfo.Name);
+
+                Assert.IsTrue(flagInfo1.CompareTo(null) > 0,
+                    "SzFlagInfo.CompareTo(null) expectedly returned non-positive: " + fieldInfo.Name);
+
+                try
+                {
+                    int compareResult = flagInfo1.CompareTo("Hello");
+                    Assert.Fail("Compared SzFlagInfo to string without an exception: " + fieldInfo.Name);
+                }
+                catch (ArgumentException)
+                {
+                    // expected
+                }
+                if (previous != null)
+                {
+                    Assert.That(flagInfo1, Is.Not.EqualTo(previous),
+                        "SzFlagInfo for " + fieldInfo.Name + " unexpectedly compared equal to "
+                        + "SzFlagInfo for " + previous.name + " via EqualTo()");
+
+                    int compare = flagInfo1.CompareTo(previous);
+                    int reverseCompare = previous.CompareTo(flagInfo1);
+                    int expectedCompare = String.Compare(flagInfo1.name,
+                                                        previous.name,
+                                                        StringComparison.Ordinal);
+
+                    Assert.That(compare, Is.Not.EqualTo(0),
+                        "SzFlagInfo for " + fieldInfo.Name + " unexpectedly compared equal to "
+                        + "SzFlagInfo for " + previous.name + "via CompareTo()");
+                    Assert.That(reverseCompare, Is.Not.EqualTo(0),
+                        "SzFlagInfo for " + fieldInfo.Name + " unexpectedly reverse compared "
+                        + "equal to SzFlagInfo for " + previous.name + "via CompareTo()");
+                    Assert.That(compare, Is.Not.EqualTo(reverseCompare),
+                        "Reverse comparision for " + flagInfo1.name + " versus "
+                        + previous.name + " unexpectedly equal to forward comparison");
+                    Assert.That((compare < 0), Is.EqualTo(expectedCompare < 0),
+                        "Comparison ordering for " + flagInfo1.name + " versus "
+                        + previous.name + "not as expected");
+                    Assert.That((compare < 0), Is.Not.EqualTo(reverseCompare < 0),
+                        "Reverse comparision ordering for " + flagInfo1.name
+                        + " versus " + previous.name
+                        + " unexpectedly equal to forward comparison");
+                }
+                previous = flagInfo1;
             }
-            previous = flagInfo1;
-        }
+        });
     }
 
 
     [Test]
     public void TestBadFlagUsageGroupInfo1()
     {
-        Type enumType = typeof(SzFlag);
-        try
+        this.PerformTest(() =>
         {
-            SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
-                SzFlagUsageGroup.SzModifyFlags,
-                ListOf(new SzFlagInfo(
-                    enumType.GetField(
-                        nameof(SzFlag.SzEntityIncludeEntityName)))));
-            Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
 
-        }
-        catch (ArgumentException)
-        {
-            // expected
-        }
+            Type enumType = typeof(SzFlag);
+            try
+            {
+                SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
+                    SzFlagUsageGroup.SzModifyFlags,
+                    ListOf(new SzFlagInfo(
+                        enumType.GetField(
+                            nameof(SzFlag.SzEntityIncludeEntityName)))));
+                Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
+
+            }
+            catch (ArgumentException)
+            {
+                // expected
+            }
+        });
     }
 
     [Test]
     public void TestBadFlagUsageGroupInfo2()
     {
-        Type enumType = typeof(SzFlag);
-        try
+        this.PerformTest(() =>
         {
-            SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
-                SzFlagUsageGroup.SzExportFlags,
-                ListOf(new SzFlagInfo(
-                        enumType.GetField(
-                            nameof(SzFlag.SzExportIncludePossiblyRelated))),
-                    new SzFlagInfo(
-                        enumType.GetField(
-                            nameof(SzFlag.SzExportIncludePossiblyRelated)))));
-            
-            Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
+            Type enumType = typeof(SzFlag);
+            try
+            {
+                SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
+                    SzFlagUsageGroup.SzExportFlags,
+                    ListOf(new SzFlagInfo(
+                            enumType.GetField(
+                                nameof(SzFlag.SzExportIncludePossiblyRelated))),
+                        new SzFlagInfo(
+                            enumType.GetField(
+                                nameof(SzFlag.SzExportIncludePossiblyRelated)))));
 
-        }
-        catch (ArgumentException)
-        {
-            // expected
-        }
+                Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
+
+            }
+            catch (ArgumentException)
+            {
+                // expected
+            }
+        });
     }
 }

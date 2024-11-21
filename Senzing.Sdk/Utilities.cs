@@ -232,18 +232,9 @@ namespace Senzing.Sdk
 
             // determine the length of the array (look for null terminator)
             int len = 0;
-            try
+            while (Marshal.ReadByte(byteArrayPointer, len) != 0)
             {
-                while (Marshal.ReadByte(byteArrayPointer, len) != 0)
-                {
-                    ++len;
-                }
-            }
-            catch (Exception)
-            {
-                Console.Error.WriteLine("INITIAL POINTER VALUE: " + byteArrayPointer);
-                Console.Error.WriteLine("LENGTH: " + len);
-                throw;
+                ++len;
             }
 
             // allocate a buffer

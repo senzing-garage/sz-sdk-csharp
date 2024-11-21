@@ -366,6 +366,28 @@ internal class SzCoreDiagnosticTest : AbstractTest
         });
     }
 
+    [Test, Order(40)]
+    public void TestGetBadFeature()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzDiagnostic diagnostic = this.Env.GetDiagnostic();
+
+                diagnostic.GetFeature(100000000L);
+
+                Assert.Fail("GetFeature() unexpected succeeded with bad "
+                            + "feature ID");
+
+            }
+            catch (SzException)
+            {
+                /// expected
+            }
+        });
+    }
+
     [Test, Order(100)]
     public void TestPurgeRepository()
     {
