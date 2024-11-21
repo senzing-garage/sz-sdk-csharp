@@ -452,93 +452,6 @@ internal class SzCoreEngineHowTest : AbstractTest
     }
 
     [Test, TestCaseSource(nameof(GetVirtualEntityParameters))]
-    public void TestGetVirtualEntityDefaults(
-        ISet<(string dataSourceCode, string recordID)> recordKeys,
-        SzFlag? flags,
-        int expectedRecordCount,
-        IDictionary<string, int> expectedFeatureCounts,
-        IDictionary<string, ISet<string>> primaryFeatureValues,
-        Type? exceptionType)
-    {
-        string testData = "recordKeys=[ " + recordKeys.ToDebugString()
-            + " ],  expectedRecordCount=[ " + expectedRecordCount
-            + " ], expectedException=[ " + exceptionType + " ]";
-
-        this.PerformTest(() =>
-        {
-            try
-            {
-                SzEngine engine = this.Env.GetEngine();
-
-                string result1 = engine.GetVirtualEntity(
-                    recordKeys, SzVirtualEntityDefaultFlags);
-
-                if (exceptionType != null)
-                {
-                    Fail("Unexpectedly succeeded getVirtualEntity() call: "
-                         + testData);
-                }
-
-                string result2 = engine.GetVirtualEntity(recordKeys);
-
-                if (exceptionType != null)
-                {
-                    Fail("Unexpectedly succeeded getVirtualEntity() call: "
-                         + testData);
-                }
-
-                Assert.That(result1, Is.EqualTo(result2),
-                    "Results differ depending on default flags: " + testData);
-
-                this.ValidateVirtualEntity(result1,
-                                           testData,
-                                           recordKeys,
-                                           SzVirtualEntityDefaultFlags,
-                                           expectedRecordCount,
-                                           null,
-                                           null);
-
-                this.ValidateVirtualEntity(result2,
-                                           testData,
-                                           recordKeys,
-                                           SzEntityDefaultFlags,
-                                           expectedRecordCount,
-                                           null,
-                                           null);
-
-            }
-            catch (Exception e)
-            {
-                string description = "";
-                if (e is SzException)
-                {
-                    SzException sze = (SzException)e;
-                    description = "errorCode=[ " + sze.ErrorCode
-                        + " ], exception=[ " + e.ToString() + " ]";
-                }
-                else
-                {
-                    description = "exception=[ " + e.ToString() + " ]";
-                }
-
-                if (exceptionType == null)
-                {
-                    Fail("Unexpectedly failed getVirtualEntity(): "
-                         + testData + ", " + description, e);
-
-                }
-                else if (exceptionType != e.GetType())
-                {
-                    Assert.IsInstanceOf(
-                        exceptionType, e,
-                        "whyEntities() failed with an unexpected exception type: "
-                        + testData + ", " + description);
-                }
-            }
-        });
-    }
-
-    [Test, TestCaseSource(nameof(GetVirtualEntityParameters))]
     public void TestGetVirtualEntity(
         ISet<(string, string)> recordKeys,
         SzFlag? flags,
@@ -605,6 +518,64 @@ internal class SzCoreEngineHowTest : AbstractTest
                         "whyEntities() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
+            }
+        });
+    }
+
+    private static List<object?[]> GetVirtualEntityDefaultParameters()
+    {
+        List<object?[]> argsList = GetVirtualEntityParameters();
+
+        List<object?[]> result = new List<object?[]>(argsList.Count);
+
+        for (int index = 0; index < argsList.Count; index++)
+        {
+            object?[] args = argsList[index];
+
+            // skip the ones that expect an exception
+            if (args[args.Length - 1] != null) continue;
+            result.Add(new object?[] { args[0] });
+        }
+        return result;
+    }
+
+    [Test, TestCaseSource(nameof(GetVirtualEntityDefaultParameters))]
+    public void TestVirtualEntityDefaults(ISet<(string, string)> recordKeys)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string defaultResult = engine.GetVirtualEntity(recordKeys);
+
+                string explicitResult = engine.GetVirtualEntity(
+                    recordKeys, SzVirtualEntityDefaultFlags);
+
+                string encodedRecordKeys = SzCoreEngine.EncodeRecordKeys(recordKeys);
+
+                long returnCode = engine.GetNativeApi().GetVirtualEntityByRecordID(
+                    encodedRecordKeys, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
             }
         });
     }
@@ -873,6 +844,49 @@ internal class SzCoreEngineHowTest : AbstractTest
             }
         });
     }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestHowEntityDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long entityID = GetEntityID(recordKey);
+
+                string defaultResult = engine.HowEntity(entityID);
+
+                string explicitResult = engine.HowEntity(
+                    entityID, SzHowEntityDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().HowEntityByEntityID(
+                    entityID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 
     public virtual void ValidateHowEntityResult(
         string result,

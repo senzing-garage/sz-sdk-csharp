@@ -834,6 +834,64 @@ internal class SzCoreEngineWhyTest : AbstractTest
         });
     }
 
+    private static List<object?[]> GetRecordCombinations()
+    {
+        List<object?[]> result = new List<object?[]>(RecordKeys.Count * RecordKeys.Count);
+        foreach ((string, string) key1 in RecordKeys)
+        {
+            foreach ((string, string) key2 in RecordKeys)
+            {
+                if (key1.Equals(key2)) continue;
+                result.Add(new object?[] { key1, key2 });
+            }
+        }
+        return result;
+    }
+
+    [Test, TestCaseSource(nameof(GetRecordCombinations))]
+    public void TestWhyEntitiesByRecordIDDefaults(
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long entityID1 = GetEntityID(recordKey1);
+                long entityID2 = GetEntityID(recordKey2);
+
+                string defaultResult = engine.WhyEntities(entityID1, entityID2);
+
+                string explicitResult = engine.WhyEntities(
+                    entityID1, entityID2, SzWhyEntitiesDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyEntities(
+                    entityID1, entityID2, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
     public static List<object?[]> GetWhyRecordInEntityParameters()
     {
         List<object?[]> result = new List<object?[]>();
@@ -1038,6 +1096,50 @@ internal class SzCoreEngineWhyTest : AbstractTest
             }
         });
     }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestWhyRecordInEntityDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode = recordKey.dataSourceCode;
+                string recordID = recordKey.recordID;
+
+                string defaultResult = engine.WhyRecordInEntity(dataSourceCode, recordID);
+
+                string explicitResult = engine.WhyRecordInEntity(
+                    dataSourceCode, recordID, SzWhyRecordInEntityDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyRecordInEntity(
+                    dataSourceCode, recordID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 
     public static List<object?[]> GetWhyRecordsParameters()
     {
@@ -1333,4 +1435,62 @@ internal class SzCoreEngineWhyTest : AbstractTest
         });
 
     }
+
+    [Test, TestCaseSource(nameof(GetRecordCombinations))]
+    public void TestWhyRecordsDefaults(
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode1 = recordKey1.dataSourceCode;
+                string recordID1 = recordKey1.recordID;
+
+                string dataSourceCode2 = recordKey2.dataSourceCode;
+                string recordID2 = recordKey2.recordID;
+
+                string defaultResult = engine.WhyRecords(dataSourceCode1,
+                                                         recordID1,
+                                                         dataSourceCode2,
+                                                         recordID2);
+
+                string explicitResult = engine.WhyRecords(dataSourceCode1,
+                                                          recordID1,
+                                                          dataSourceCode2,
+                                                          recordID2,
+                                                          SzWhyRecordsDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyRecords(
+                    dataSourceCode1,
+                    recordID1,
+                    dataSourceCode2,
+                    recordID2,
+                    out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 }

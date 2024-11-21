@@ -5,7 +5,7 @@ namespace Senzing.Sdk.Core
     /// <summary>
     /// Defines the C# interface to the Senzing engine functions.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// The Senzing engine functions primarily provide means of working
     /// with identity data records, entities and their relationships.
@@ -16,15 +16,15 @@ namespace Senzing.Sdk.Core
         /// Initializes the Senzing engine API with the specified module name,
         /// init parameters and flag indicating verbose logging.
         /// </summary>
-        /// 
+        ///
         /// <param name="moduleName">
         /// A short name given to this instance of the engine API.
         /// </param>
-        /// 
+        ///
         /// <param name="iniParams">
         /// A JSON string containing configuration parameters.
         /// </param>
-        /// 
+        ///
         /// <param name="verboseLogging">
         /// Enable diagnostic logging which will print a massive amount of
         /// information to stdout.
@@ -66,7 +66,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Reinitializes with the specified configuration ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="initConfigID">
         /// The configuration ID with which to reinitialize.
         /// </param>
@@ -79,7 +79,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Uninitializes the Senzing engine API.
         /// </summary>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long Destroy();
 
@@ -87,7 +87,7 @@ namespace Senzing.Sdk.Core
         /// May optionally be called to pre-initialize some of the heavier weight
         /// internal resources of the Senzing engine.
         /// </summary>
-        /// 
+        ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
@@ -96,7 +96,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Returns the current internal engine workload statistics for the process.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The counters are reset after each call.
         /// </remarks>
@@ -107,11 +107,11 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Returns an identifier for the loaded Senzing engine configuration.
         /// </summary>
-        /// 
+        ///
         /// <param name="configID">
         /// The out parameter that will be set to the value of the config ID.
         /// </param>
-        /// 
+        ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
@@ -120,7 +120,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Loads the JSON record with the specified data source code and record ID.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The specified JSON data may contain the <c>DATA_SOURCE</c> and
         /// <c>RECORD_ID</c> elements, but, if so, they must match the specified
@@ -128,9 +128,9 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="dataSourceCode">The data source for the record.</param>
-        /// 
+        ///
         /// <param name="recordID">The ID for the record</param>
-        /// 
+        ///
         /// <param name="jsonData">
         /// A JSON document containing the attribute information for the record.
         /// </param>
@@ -147,23 +147,23 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="dataSourceCode">The data source for the record.</param>
-        /// 
+        ///
         /// <param name="recordID">The ID for the record.</param>
-        /// 
+        ///
         /// <param name="jsonData">
         /// A JSON document containing the attribute information for the record.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically the
         /// content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the JSON
         /// document describing how the repository was modified.
         /// </param>
-        /// 
+        ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
@@ -178,11 +178,11 @@ namespace Senzing.Sdk.Core
         /// actually loading the record responding with a JSON document describing
         /// how the record would be loaded and how the repository would be changed.
         /// </summary>
-        /// 
+        ///
         /// <param name="jsonData">
         /// A JSON document containing the attribute information for the record.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
@@ -202,7 +202,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Delete the record that has already been loaded.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">The data source for the record.</param>
         /// <param name="recordID">The ID for the record.</param>
         ///
@@ -213,21 +213,21 @@ namespace Senzing.Sdk.Core
         /// Delete the record that has already been loaded, responding with
         /// a JSON document describing how the repository was changed.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">The data source for the record.</param>
-        /// 
+        ///
         /// <param name="recordID">The ID for the record</param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically the
         /// content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the JSON
         /// document describing how the repository was modified.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long DeleteRecordWithInfo(string dataSourceCode,
                                   string recordID,
@@ -237,7 +237,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Reevaluate a record that has already been loaded.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">The data source for the record.</param>
         /// <param name="recordID">The ID for the record.</param>
         /// <param name="flags">
@@ -255,12 +255,12 @@ namespace Senzing.Sdk.Core
         ///
         /// <param name="dataSourceCode">The data source for the record.</param>
         /// <param name="recordID">The ID for the record.</param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and
         /// specifically the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out string response parameter that will be set to the JSON
         /// response document.
@@ -275,11 +275,11 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Reevaluate a resolved entity identified by the specified entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">
         /// The ID of the resolved entity to reevaluate
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed.
         /// </param>
@@ -291,16 +291,16 @@ namespace Senzing.Sdk.Core
         /// Reevaluate a resolved entity, responding with a JSON document
         /// describing how the repository was changed.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">
         /// The ID of the resolved entity to reevaluate.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the JSON response document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document.
@@ -315,12 +315,12 @@ namespace Senzing.Sdk.Core
         /// Searches for entities that contain attribute information that are
         /// relevant to a set of input search attributes.
         /// </summary>
-        /// 
+        ///
         /// <param name="jsonData">
         /// A JSON document containing the attribute information definining
         /// the criteria for the search.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the search results.
@@ -333,22 +333,22 @@ namespace Senzing.Sdk.Core
         /// Searches for entities that contain attribute information that
         /// are relevant to a set of input search attributes.
         /// </summary>
-        /// 
+        ///
         /// <param name="jsonData">
         /// A JSON document containing the attribute information definining
         /// the criteria for the search.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the JSON
         /// response document describing the search results.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long SearchByAttributes(string jsonData, long flags, out string response);
 
@@ -362,17 +362,17 @@ namespace Senzing.Sdk.Core
         /// A JSON document containing the attribute information definining
         /// the criteria for the search.
         /// </param>
-        /// 
+        ///
         /// <param name="searchProfile">
         /// The search-profile identifier identifying the search profile to use
         /// for the search operation.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the JSON
         /// response document describing the search results.
@@ -388,16 +388,16 @@ namespace Senzing.Sdk.Core
         /// Retrieves information about a specific resolved entity identified
         /// by its entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">
         /// The entity ID of the resolved entity to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the entity.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetEntityByEntityID(long entityID, out string response);
 
@@ -405,21 +405,21 @@ namespace Senzing.Sdk.Core
         /// Retrieves information about a specific resolved entity identified
         /// by its entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">
         /// The entity ID of the resolved entity to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the entity.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetEntityByEntityID(long entityID,
                                  long flags,
@@ -430,20 +430,20 @@ namespace Senzing.Sdk.Core
         /// Retrieves information about a specific resolved entity identified by
         /// the data source code and record ID of one of its constituent records.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source code of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the entity.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetEntityByRecordID(string dataSourceCode,
                                  string recordID,
@@ -453,25 +453,25 @@ namespace Senzing.Sdk.Core
         /// Retrieves information about a specific resolved entity identified by
         /// the data source code and record ID of one of its constituent records.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source code of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the entity.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetEntityByRecordID(string dataSourceCode,
                                  string recordID,
@@ -482,16 +482,16 @@ namespace Senzing.Sdk.Core
         /// Finds interesting entities close to a specific resolved entity
         /// identified by its entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">
         /// The resolved entity to search around.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the interesting entities.
@@ -507,20 +507,20 @@ namespace Senzing.Sdk.Core
         /// identified by the data source code and record ID of one of its
         /// constituent records.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source code of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID of the constituent record.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The <c>string</c> response out parameter that will be set to the
         /// JSON response document describing the interesting entities.
@@ -536,7 +536,7 @@ namespace Senzing.Sdk.Core
         /// Finds a relationship path between entities that are identified
         /// by entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -546,7 +546,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityID(long entityID1,
                                 long entityID2,
@@ -557,7 +557,7 @@ namespace Senzing.Sdk.Core
         /// Finds a relationship path between entities that are identified
         /// by entity ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -571,7 +571,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityID(long entityID1,
                                 long entityID2,
@@ -583,7 +583,7 @@ namespace Senzing.Sdk.Core
         /// Finds a relationship path between entities that are identified
         /// by the data soure and record ID pairs of their constituent records.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -603,7 +603,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordID(string dataSourceCode1,
                                 string recordID1,
@@ -616,7 +616,7 @@ namespace Senzing.Sdk.Core
         /// Finds a relationship path between entities that are identified
         /// by the data soure and record ID pairs of their constituent records.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -640,7 +640,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordID(string dataSourceCode1,
                                string recordID1,
@@ -655,7 +655,7 @@ namespace Senzing.Sdk.Core
         /// by entity ID with the avoidance (preferred or strict) of specific
         /// entities (also identified by their entity ID's).
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by their entity ID's in a JSON
         /// document with the following format:
@@ -670,7 +670,7 @@ namespace Senzing.Sdk.Core
         ///   }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -683,7 +683,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityIDWithAvoids(long entityID1,
                                           long entityID2,
@@ -696,7 +696,7 @@ namespace Senzing.Sdk.Core
         /// by entity ID with the avoidance (preferred or strict) of specific
         /// entities (also identified by their entity ID's).
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by their entity ID's in a JSON
         /// document with the following format:
@@ -711,7 +711,7 @@ namespace Senzing.Sdk.Core
         ///   }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -728,7 +728,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityIDWithAvoids(long entityID1,
                                          long entityID2,
@@ -744,7 +744,7 @@ namespace Senzing.Sdk.Core
         /// (also identified by the data source code and record ID pairs of
         /// their constituent records).
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by the data source codes and
         /// record ID's pairs of their constituent records in a JSON document
@@ -769,7 +769,7 @@ namespace Senzing.Sdk.Core
         ///   }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -793,7 +793,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordIDWithAvoids(string dataSourceCode1,
                                           string recordID1,
@@ -810,7 +810,7 @@ namespace Senzing.Sdk.Core
         /// (also identified by the data source code and record ID pairs of
         /// their constituent records).
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by the data source codes and
         /// record ID's pairs of their constituent records in a JSON document
@@ -835,7 +835,7 @@ namespace Senzing.Sdk.Core
         ///   }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -863,7 +863,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordIDWithAvoids(string dataSourceCode1,
                                           string recordID1,
@@ -880,7 +880,7 @@ namespace Senzing.Sdk.Core
         /// entities (also identified by their entity ID's) and the requirement
         /// <b>at least one</b> of one or more specified data sources in the path.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by their entity ID's in a JSON
         /// document with the following format:
@@ -907,7 +907,7 @@ namespace Senzing.Sdk.Core
         ///    }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -924,7 +924,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityIDIncludingSource(long entityID1,
                                                long entityID2,
@@ -939,7 +939,7 @@ namespace Senzing.Sdk.Core
         /// entities (also identified by their entity ID's) and the requirement
         /// <b>at least one</b> of one or more specified data sources in the path.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by their entity ID's in a JSON
         /// document with the following format:
@@ -966,7 +966,7 @@ namespace Senzing.Sdk.Core
         ///    }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
         /// <param name="maxDegrees">
@@ -987,7 +987,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByEntityIDIncludingSource(long entityID1,
                                                long entityID2,
@@ -1006,7 +1006,7 @@ namespace Senzing.Sdk.Core
         /// one or more specified data sources in the path.
         /// </summary>
         ///
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by the data source codes and
         /// record ID's pairs of their constituent records in a JSON document
@@ -1043,7 +1043,7 @@ namespace Senzing.Sdk.Core
         ///    }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -1071,7 +1071,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordIDIncludingSource(string dataSourceCode1,
                                                string recordID1,
@@ -1091,7 +1091,7 @@ namespace Senzing.Sdk.Core
         /// one or more specified data sources in the path.
         /// </summary>
         ///
-        /// 
+        ///
         /// <remarks>
         /// The avoided entities are identified by the data source codes and
         /// record ID's pairs of their constituent records in a JSON document
@@ -1128,7 +1128,7 @@ namespace Senzing.Sdk.Core
         ///    }
         /// </code>
         /// </remarks>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the consituent record of the first entity.
         /// </param>
@@ -1160,7 +1160,7 @@ namespace Senzing.Sdk.Core
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindPathByRecordIDIncludingSource(string dataSourceCode1,
                                                string recordID1,
@@ -1195,26 +1195,26 @@ namespace Senzing.Sdk.Core
         /// <param name="entityList">
         /// The JSON document specififying the entity ID's of the desired entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
         /// entities.
         /// </param>
-        /// 
+        ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the
         /// found entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxEntities">
         /// The maximum number of entities to build out to.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindNetworkByEntityID(string entityList,
                                    int maxDegrees,
@@ -1245,31 +1245,31 @@ namespace Senzing.Sdk.Core
         /// <param name="entityList">
         /// The JSON document specififying the entity ID's of the desired entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
         /// entities.
         /// </param>
-        /// 
+        ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the
         /// found entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxEntities">
         /// The maximum number of entities to build out to.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindNetworkByEntityID(string entityList,
                                    int maxDegrees,
@@ -1313,26 +1313,26 @@ namespace Senzing.Sdk.Core
         /// The JSON document containing the data source code and record ID pairs
         /// for the constituent records of the desired entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
         /// entities.
         /// </param>
-        /// 
+        ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the
         /// found entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxEntities">
         /// The maximum number of entities to build out to.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindNetworkByRecordID(string recordList,
                                    int maxDegrees,
@@ -1375,31 +1375,31 @@ namespace Senzing.Sdk.Core
         /// The JSON document containing the data source code and record ID pairs
         /// for the constituent records of the desired entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
         /// entities.
         /// </param>
-        /// 
+        ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the
         /// found entities.
         /// </param>
-        /// 
+        ///
         /// <param name="maxEntities">
         /// The maximum number of entities to build out to.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FindNetworkByRecordID(string recordList,
                                    int maxDegrees,
@@ -1411,20 +1411,20 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Determines why a particular record is included in its resolved entity.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source code for the composite record of the subject entity.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID for the composite record of the subject entity.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyRecordInEntity(string dataSourceCode,
                                string recordID,
@@ -1433,25 +1433,25 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Determines why a particular record is included in its resolved entity.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source code for the composite record of the subject entity.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID for the composite record of the subject entity.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyRecordInEntity(string dataSourceCode,
                                string recordID,
@@ -1462,24 +1462,24 @@ namespace Senzing.Sdk.Core
         /// Determines how two records (identified by their data source code and
         /// record ID pairs) are related to each other.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the first record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID1">The record ID for the first record.</param>
-        /// 
+        ///
         /// <param name="dataSourceCode2">
         /// The data source code for the second record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID2">The record ID for the second record.</param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyRecords(string dataSourceCode1,
                         string recordID1,
@@ -1491,29 +1491,29 @@ namespace Senzing.Sdk.Core
         /// Determines how two records (identified by their data source code and
         /// record ID pairs) are related to each other.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode1">
         /// The data source code for the first record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID1">The record ID for the first record.</param>
-        /// 
+        ///
         /// <param name="dataSourceCode2">
         /// The data source code for the second record.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID2">The record ID for the second record.</param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyRecords(string dataSourceCode1,
                         string recordID1,
@@ -1526,15 +1526,15 @@ namespace Senzing.Sdk.Core
         /// Determines how two entities (identified by their entity ID's) are
         /// related to each other.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyEntities(long entityID1, long entityID2, out string response);
 
@@ -1542,20 +1542,20 @@ namespace Senzing.Sdk.Core
         /// Determines how two entities (identified by their entity ID's) are
         /// related to each other.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         /// <param name="entityID2">The entity ID of the second entity.</param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long WhyEntities(long entityID1,
                          long entityID2,
@@ -1566,14 +1566,14 @@ namespace Senzing.Sdk.Core
         /// Determines how an entity (identified by its entity ID) was
         /// constructed from its base records.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">The entity ID identifying the entity</entity>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long HowEntityByEntityID(long entityID, out string response);
 
@@ -1581,56 +1581,56 @@ namespace Senzing.Sdk.Core
         /// Determines how an entity (identified by its entity ID) was
         /// constructed from its base records.
         /// </summary>
-        /// 
+        ///
         /// <param name="entityID">The entity ID identifying the entity</entity>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long HowEntityByEntityID(long entityID, long flags, out string response);
 
         /// <summary>
         /// Retrieves a hypothetical entity composed of the specified records.
         /// </summary>
-        /// 
+        ///
         /// <param name="recordList">
         /// The list of records used to build the virtual entity.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetVirtualEntityByRecordID(string recordList, out string response);
 
         /// <summary>
         /// Retrieves a hypothetical entity composed of the specified records.
         /// </summary>
-        /// 
+        ///
         /// <param name="recordList">
         /// The list of records used to build the virtual entity.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetVirtualEntityByRecordID(string recordList,
                                         long flags,
@@ -1640,45 +1640,45 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Retrieves a record that is identified by its data source code and record ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source of the record to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID of the record to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetRecord(string dataSourceCode, string recordID, out string response);
 
         /// <summary>
         /// Retrieves a record that is identified by its data source code and record ID.
         /// </summary>
-        /// 
+        ///
         /// <param name="dataSourceCode">
         /// The data source of the record to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="recordID">
         /// The record ID of the record to retrieve.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long GetRecord(string dataSourceCode,
                        string recordID,
@@ -1690,23 +1690,23 @@ namespace Senzing.Sdk.Core
         /// export-handle that can be used to fetch the data in single-entity
         /// chunks in JSON format.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The exported data is read via the <see cref="fetchNext"/> function
         /// and should be closed via the <see cref="closeExport"/> function when
         /// the export is complete.
         /// </remarks>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="exportHandle">
         /// The out <c>IntPtr</c> parameter that is set to the value of the 
         /// export handle.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long ExportJSONEntityReport(long flags, out IntPtr exportHandle);
 
@@ -1731,17 +1731,17 @@ namespace Senzing.Sdk.Core
         /// indicate the "standard columns", otherwise specify a comma-sepatated
         /// list of column names.
         /// </param>
-        /// 
+        ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
         /// the content of the response JSON document.
         /// </param>
-        /// 
+        ///
         /// <param name="exportHandle">
         /// The out <c>IntPtr</c> parameter that is set to the value of the 
         /// export handle.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long ExportCSVEntityReport(string csvColumnList,
                                    long flags,
@@ -1753,30 +1753,30 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="exportHandle">The export handle for the export.</param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long FetchNext(IntPtr exportHandle, out string response);
 
         /// <summary>
         /// This function closes an export handle, to clean up system resources.
         /// </summary>
-        /// 
+        ///
         /// <param name="exportHandle">The export handle for the export.</param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long CloseExport(IntPtr exportHandle);
 
         /// <summary>
         /// Processes a redo record.
         /// </summary>
-        /// 
+        ///
         /// <param name="redoRecord">The record to be processed.</param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long ProcessRedoRecord(string redoRecord);
 
@@ -1785,12 +1785,12 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="redoRecord">The record to be processed.</param>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// response document.
         /// </param>
-        /// 
+        ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         long ProcessRedoRecordWithInfo(string redoRecord,
                                        out string response);
@@ -1799,7 +1799,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Retrieves a pending redo record from the reevaluation queue.
         /// </summary>
-        /// 
+        ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
         /// redo record.

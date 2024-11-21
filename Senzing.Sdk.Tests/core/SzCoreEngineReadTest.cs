@@ -534,6 +534,19 @@ internal class SzCoreEngineReadTest : AbstractTest
         return result;
     }
 
+    private static string ReadExportFullyAndClose(SzEngine engine, IntPtr exportHandle)
+    {
+        StringBuilder sb = new StringBuilder();
+        for (string? data = engine.FetchNext(exportHandle);
+             data != null;
+             data = engine.FetchNext(exportHandle))
+        {
+            sb.AppendLine(data);
+        }
+        engine.CloseExport(exportHandle);
+        return sb.ToString();
+    }
+
     [Test, TestCaseSource(nameof(GetExportCsvParameters))]
     public void TestExportCsvEntityReport(string columnList,
                                          SzFlag? flags,
@@ -694,6 +707,39 @@ internal class SzCoreEngineReadTest : AbstractTest
         });
     }
 
+    [Test]
+    [TestCase("")]
+    [TestCase("*")]
+    [TestCase("RESOLVED_ENTITY_ID,RESOLVED_ENTITY_NAME,RELATED_ENTITY_ID")]
+    public void TestExportCsvDefaults(string columnList)
+    {
+        this.PerformTest(() =>
+        {
+            IntPtr exportHandle = IntPtr.Zero;
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                exportHandle = engine.ExportCsvEntityReport(columnList);
+                string defaultResult = ReadExportFullyAndClose(engine, exportHandle);
+                exportHandle = IntPtr.Zero;
+
+                exportHandle = engine.ExportCsvEntityReport(columnList, SzExportDefaultFlags);
+                string explicitResult = ReadExportFullyAndClose(engine, exportHandle);
+                exportHandle = IntPtr.Zero;
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+
     [Test, TestCaseSource(nameof(GetExportJsonParameters))]
     public void TestExportJsonEntityReport(SzFlag? flags,
                                            Type? expectedException)
@@ -829,8 +875,81 @@ internal class SzCoreEngineReadTest : AbstractTest
         });
     }
 
+    [Test]
+    public void TestExportJsonDefaults()
+    {
+        this.PerformTest(() =>
+        {
+            IntPtr exportHandle = IntPtr.Zero;
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                exportHandle = engine.ExportJsonEntityReport();
+                string defaultResult = ReadExportFullyAndClose(engine, exportHandle);
+                exportHandle = IntPtr.Zero;
+
+                exportHandle = engine.ExportJsonEntityReport(SzExportDefaultFlags);
+                string explicitResult = ReadExportFullyAndClose(engine, exportHandle);
+                exportHandle = IntPtr.Zero;
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestGetEntityByRecordIDDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode = recordKey.dataSourceCode;
+                string recordID = recordKey.recordID;
+
+                string defaultResult = engine.GetEntity(dataSourceCode, recordID);
+
+                string explicitResult = engine.GetEntity(
+                    dataSourceCode, recordID, SzEntityDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().GetEntityByRecordID(
+                    dataSourceCode, recordID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+
     [Test, TestCaseSource(nameof(GetGetEntityParameters))]
-    public void TestGetEntityByRecordId(
+    public void TestGetEntityByRecordID(
         string testDescription,
         (string dataSourceCode, string recordID) recordKey,
         Func<SzCoreEngineReadTest, long> entityIDFunc,
@@ -1013,6 +1132,48 @@ internal class SzCoreEngineReadTest : AbstractTest
         });
     }
 
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestGetEntityByEntityIDDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long entityID = GetEntityID(recordKey);
+
+                string defaultResult = engine.GetEntity(entityID);
+
+                string explicitResult = engine.GetEntity(
+                    entityID, SzEntityDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().GetEntityByEntityID(
+                    entityID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
     private static List<object?[]> GetGetRecordParameters()
     {
         List<object?[]> result = new List<object?[]>();
@@ -1139,6 +1300,49 @@ internal class SzCoreEngineReadTest : AbstractTest
                         "get-record failed with an unexpected exception type: "
                         + description);
                 }
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestGetRecordDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode = recordKey.dataSourceCode;
+                string recordID = recordKey.recordID;
+
+                string defaultResult = engine.GetRecord(dataSourceCode, recordID);
+
+                string explicitResult = engine.GetRecord(
+                    dataSourceCode, recordID, SzRecordDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().GetRecord(
+                    dataSourceCode, recordID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
             }
         });
     }
@@ -1327,6 +1531,25 @@ internal class SzCoreEngineReadTest : AbstractTest
         return result;
     }
 
+    public static List<object?[]> GetSearchDefaultParameters()
+    {
+        List<object?[]> searchParams = GetSearchParameters();
+
+        List<object?[]> defaultParams = new List<object?[]>(searchParams.Count);
+
+        for (int index = 0; index < searchParams.Count; index++)
+        {
+            object?[] args = searchParams[index];
+
+            // skip parameters that expect exceptions
+            if (args[args.Length - 1] == null) continue;
+
+            defaultParams.Add(new object?[] { args[0] });
+        }
+
+        return defaultParams;
+    }
+
     private static string CriteriaToJson(IDictionary<string, ISet<string>> criteria)
     {
         StringBuilder sb = new StringBuilder();
@@ -1457,6 +1680,45 @@ internal class SzCoreEngineReadTest : AbstractTest
             }
         });
 
+    }
+
+    [Test, TestCaseSource(nameof(GetSearchDefaultParameters))]
+    public void TestSearchByAttributesdDefaults(string attributes)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string defaultResult = engine.SearchByAttributes(attributes);
+
+                string explicitResult = engine.SearchByAttributes(
+                    attributes, SzSearchByAttributesDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().SearchByAttributes(
+                    attributes, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
     }
 
 }

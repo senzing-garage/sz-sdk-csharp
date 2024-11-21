@@ -802,6 +802,24 @@ internal class SzCoreEngineGraphTest : AbstractTest
         return result;
     }
 
+    public static List<object?[]> GetEntityPathDefaultParameters()
+    {
+        List<object?[]> argsList = GetEntityPathParameters();
+
+        List<object?[]> result = new List<object?[]>(argsList.Count);
+
+        for (int index = 0; index < argsList.Count; index++)
+        {
+            object?[] args = argsList[index];
+            // skip the ones that expect an exception
+            if (args[args.Length - 3] != null) continue;
+            if (args[args.Length - 4] != null) continue;
+            result.Add(new object?[] {
+                args[1], args[3], args[5], args[6], args[7], args[8] });
+        }
+        return result;
+    }
+
     [Test, TestCaseSource(nameof(GetEntityPathParameters))]
     public void TestFindPathByRecordID(
         string testDescription,
@@ -1018,6 +1036,213 @@ internal class SzCoreEngineGraphTest : AbstractTest
             }
         });
     }
+
+    [Test, TestCaseSource(nameof(GetEntityPathDefaultParameters))]
+    public void TestFindPathByRecordIDDefaults(
+        (string dataSourceCode, string recordID) startRecordKey,
+        (string dataSourceCode, string recordID) endRecordKey,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string startDataSourceCode = startRecordKey.dataSourceCode;
+                string startRecordID = startRecordKey.recordID;
+
+                string endDataSourceCode = endRecordKey.dataSourceCode;
+                string endRecordID = endRecordKey.recordID;
+
+                string defaultResult = engine.FindPath(startDataSourceCode,
+                                                       startRecordID,
+                                                       endDataSourceCode,
+                                                       endRecordID,
+                                                       maxDegrees,
+                                                       avoidances,
+                                                       requiredSources);
+
+                string explicitResult = engine.FindPath(startDataSourceCode,
+                                                        startRecordID,
+                                                        endDataSourceCode,
+                                                        endRecordID,
+                                                        maxDegrees,
+                                                        avoidances,
+                                                        requiredSources,
+                                                        SzFindPathDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string avoidanceJson = SzCoreEngine.EncodeRecordKeys(avoidances);
+
+                string sourcesJson = SzCoreEngine.EncodeDataSources(requiredSources);
+
+                string nativeResult;
+                long returnCode;
+                if (avoidances == null && requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByRecordID(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        out nativeResult);
+                }
+                else if (requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByRecordIDWithAvoids(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        avoidanceJson,
+                        out nativeResult);
+                }
+                else
+                {
+                    returnCode = nativeEngine.FindPathByRecordIDIncludingSource(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        avoidanceJson,
+                        sourcesJson,
+                        out nativeResult);
+                }
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed to find path.  startRecord=[ "
+                     + startRecordKey + " ], endRecordKey=[ " + endRecordKey
+                     + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
+                     + (avoidances == null ? null : avoidances.ToDebugString())
+                     + " ], requiredSources=[ "
+                     + (requiredSources == null ? null : requiredSources.ToDebugString())
+                     + " ]", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetEntityPathDefaultParameters))]
+    public void TestFindPathByEntityIDDefaults(
+        (string dataSourceCode, string recordID) startRecordKey,
+        (string dataSourceCode, string recordID) endRecordKey,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long startEntityID = GetEntityID(startRecordKey);
+                long endEntityID = GetEntityID(endRecordKey);
+
+                ISet<long>? avoidanceIDs = avoidanceIDsFunc != null
+                    ? avoidanceIDsFunc(this) : null;
+
+                string defaultResult = engine.FindPath(startEntityID,
+                                                       endEntityID,
+                                                       maxDegrees,
+                                                       avoidanceIDs,
+                                                       requiredSources);
+
+                string explicitResult = engine.FindPath(startEntityID,
+                                                        endEntityID,
+                                                        maxDegrees,
+                                                        avoidanceIDs,
+                                                        requiredSources,
+                                                        SzFindPathDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string avoidanceJson = SzCoreEngine.EncodeEntityIDs(avoidanceIDs);
+
+                string sourcesJson = SzCoreEngine.EncodeDataSources(requiredSources);
+
+                string nativeResult;
+                long returnCode;
+                if (avoidances == null && requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByEntityID(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        out nativeResult);
+                }
+                else if (requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByEntityIDWithAvoids(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        avoidanceJson,
+                        out nativeResult);
+                }
+                else
+                {
+                    returnCode = nativeEngine.FindPathByEntityIDIncludingSource(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        avoidanceJson,
+                        sourcesJson,
+                        out nativeResult);
+                }
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed to find path.  startRecord=[ "
+                     + startRecordKey + " ], endRecordKey=[ " + endRecordKey
+                     + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
+                     + (avoidances == null ? null : avoidances.ToDebugString())
+                     + " ], requiredSources=[ "
+                     + (requiredSources == null ? null : requiredSources.ToDebugString())
+                     + " ]", e);
+            }
+        });
+    }
+
     public static List<object?[]> GetEntityNetworkParameters()
     {
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(FindNetworkFlagSet);
@@ -1116,6 +1341,23 @@ internal class SzCoreEngineGraphTest : AbstractTest
         return result;
     }
 
+    public static List<object?[]> GetEntityNetworkDefaultParameters()
+    {
+        List<object?[]> argsList = GetEntityNetworkParameters();
+
+        List<object?[]> result = new List<object?[]>(argsList.Count);
+
+        for (int index = 0; index < argsList.Count; index++)
+        {
+            object?[] args = argsList[index];
+
+            // skip the ones that expect an exception
+            if (args[args.Length - 4] != null) continue;
+            if (args[args.Length - 5] != null) continue;
+            result.Add(new object?[] { args[1], args[3], args[4], args[5] });
+        }
+        return result;
+    }
 
     public void ValidateNetwork(string networkJson,
                                 string testData,
@@ -1579,4 +1821,119 @@ internal class SzCoreEngineGraphTest : AbstractTest
             }
         });
     }
+
+    [Test, TestCaseSource(nameof(GetEntityNetworkDefaultParameters))]
+    public void TestFindNetworkByRecordIDDefaults(
+        ISet<(string, string)> recordKeys,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string defaultResult = engine.FindNetwork(recordKeys,
+                                                          maxDegrees,
+                                                          buildOutDegrees,
+                                                          buildOutMaxEntities);
+
+                string explicitResult = engine.FindNetwork(recordKeys,
+                                                           maxDegrees,
+                                                           buildOutDegrees,
+                                                           buildOutMaxEntities,
+                                                           SzFindNetworkDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string recordsJson = SzCoreEngine.EncodeRecordKeys(recordKeys);
+
+                long returnCode = nativeEngine.FindNetworkByRecordID(recordsJson,
+                                                                     maxDegrees,
+                                                                     buildOutDegrees,
+                                                                     buildOutMaxEntities,
+                                                                     out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetEntityNetworkDefaultParameters))]
+    public void TestFindNetworkByEntityIDDefaults(
+        ISet<(string, string)> recordKeys,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                ISet<long> entityIDs = new SortedSet<long>(GetEntityIDs(recordKeys));
+
+                string defaultResult = engine.FindNetwork(entityIDs,
+                                                          maxDegrees,
+                                                          buildOutDegrees,
+                                                          buildOutMaxEntities);
+
+                string explicitResult = engine.FindNetwork(entityIDs,
+                                                           maxDegrees,
+                                                           buildOutDegrees,
+                                                           buildOutMaxEntities,
+                                                           SzFindNetworkDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string entitiesJson = SzCoreEngine.EncodeEntityIDs(entityIDs);
+
+                long returnCode = nativeEngine.FindNetworkByEntityID(entitiesJson,
+                                                                     maxDegrees,
+                                                                     buildOutDegrees,
+                                                                     buildOutMaxEntities,
+                                                                     out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 }

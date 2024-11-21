@@ -1700,7 +1700,8 @@ internal abstract class AbstractTest
     /// </returns>
     protected static JsonObject ParseJsonObject(string text)
     {
-        try {
+        try
+        {
             JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
             {
                 CommentHandling = JsonCommentHandling.Skip
@@ -1713,7 +1714,7 @@ internal abstract class AbstractTest
             return ((JsonNode)node).AsObject();
 
         }
-        catch (JsonException e) 
+        catch (JsonException e)
         {
             throw new JsonException(
                 "Failed to parse text as JSON: " + text, e);

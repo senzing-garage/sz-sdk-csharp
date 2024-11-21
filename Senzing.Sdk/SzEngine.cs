@@ -87,7 +87,7 @@ namespace Senzing.Sdk
         /// <exception cref="SzUnknownDataSourceException">
         /// If an unrecognized data source code is specified.
         /// </exception>
-        /// 
+        ///
         /// <exception cref="SzBadInputException">
         /// If the specified record definition has a data source or record ID value
         /// that conflicts with the specified data source code and/or record ID
@@ -130,14 +130,14 @@ namespace Senzing.Sdk
         /// <see cref="SzFlags.SzRecordDefaultFlags"/>.  Specifying <c>null</c>
         /// is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
         /// </param>
-        /// 
+        ///
         /// <returns>
         /// The JSON <c>string</c> result produced by preprocessing the record
         /// (depending on the specified flags).
         /// </returns>
-        /// 
+        ///
         /// <exception cref="SzException">If a failure occurs.</exception>
-        /// 
+        ///
         /// <seealso cref="SzFlag.SzEntityIncludeInternalFeatures"/>
         /// <seealso cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/>
         /// <seealso cref="SzFlag.SzEntityIncludeRecordFeatureStats"/>
