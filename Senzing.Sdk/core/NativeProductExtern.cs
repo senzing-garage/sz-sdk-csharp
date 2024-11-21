@@ -8,7 +8,7 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class NativeProductExtern : NativeProduct
     {
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int SzProduct_init(byte[] moduleName, byte[] iniParams, long verboseLogging);
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Senzing.Sdk.Core
                                   (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzProduct_destroy();
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Senzing.Sdk.Core
             return SzProduct_destroy();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern IntPtr SzProduct_license();
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Senzing.Sdk.Core
             return Utilities.UTF8BytesToString(SzProduct_license());
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern IntPtr SzProduct_version();
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Senzing.Sdk.Core
             return Utilities.UTF8BytesToString(SzProduct_version());
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzProduct_getLastException([MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Senzing.Sdk.Core
             return System.Text.Encoding.UTF8.GetString(buf, 0, (int)(length - 1));
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzProduct_getLastExceptionCode();
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Senzing.Sdk.Core
             return SzProduct_getLastExceptionCode();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern void SzProduct_clearLastException();
 
         /// <summary>

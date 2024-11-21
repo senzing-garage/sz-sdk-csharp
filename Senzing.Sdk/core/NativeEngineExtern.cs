@@ -10,7 +10,7 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class NativeEngineExtern : NativeEngine
     {
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int Sz_init(
             byte[] moduleName, byte[] iniParams, long verboseLogging);
 
@@ -25,7 +25,7 @@ namespace Senzing.Sdk.Core
                            (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int Sz_initWithConfigID(
             byte[] moduleName, byte[] iniParams, long initConfigID, long verboseLogging);
 
@@ -45,7 +45,7 @@ namespace Senzing.Sdk.Core
                 (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int Sz_reinit(long initConfigID);
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Senzing.Sdk.Core
             return Sz_reinit(initConfigID);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_destroy();
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Senzing.Sdk.Core
             return Sz_destroy();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_getLastException(
             [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
 
@@ -94,7 +94,7 @@ namespace Senzing.Sdk.Core
             return System.Text.Encoding.UTF8.GetString(buf, 0, (int)(length - 1));
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_getLastExceptionCode();
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Senzing.Sdk.Core
             return Sz_getLastExceptionCode();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern void Sz_clearLastException();
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Senzing.Sdk.Core
             public long returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_primeEngine();
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Senzing.Sdk.Core
             return Sz_primeEngine();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_stats_helper();
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzLongResult Sz_getActiveConfigID_helper();
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Senzing.Sdk.Core
             return result.returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_addRecord(
             byte[] dataSourceCode, byte[] recordID, byte[] jsonData);
 
@@ -238,7 +238,7 @@ namespace Senzing.Sdk.Core
             return Sz_addRecord(codeBytes, idBytes, jsonBytes);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_addRecordWithInfo_helper(
             byte[] dataSourceCode, byte[] recordID, byte[] jsonData, long flags);
 
@@ -278,7 +278,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_preprocessRecord_helper(
             byte[] jsonData, long flags);
 
@@ -311,7 +311,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_deleteRecord(
             byte[] dataSourceCode, byte[] recordID);
 
@@ -329,7 +329,7 @@ namespace Senzing.Sdk.Core
             return Sz_deleteRecord(codeBytes, idBytes);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_deleteRecordWithInfo_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -366,7 +366,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_reevaluateRecord(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -386,7 +386,7 @@ namespace Senzing.Sdk.Core
             return Sz_reevaluateRecord(codeBytes, idBytes, flags);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_reevaluateRecordWithInfo_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -423,7 +423,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_reevaluateEntity(long entityID, long flags);
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Senzing.Sdk.Core
             return Sz_reevaluateEntity(entityID, flags);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_reevaluateEntityWithInfo_helper(
             long entityID, long flags);
 
@@ -468,7 +468,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_searchByAttributes_helper(byte[] jsonData);
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_searchByAttributes_V2_helper(
             byte[] jsonData, long flags);
 
@@ -529,7 +529,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_searchByAttributes_V3_helper(
             byte[] jsonData, byte[] searchProfile, long flags);
 
@@ -564,7 +564,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getEntityByEntityID_helper(long entityID);
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getEntityByEntityID_V2_helper(
             long entityID, long flags);
 
@@ -623,7 +623,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getEntityByRecordID_helper(
             byte[] dataSourceCode, byte[] recordID);
 
@@ -657,7 +657,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getEntityByRecordID_V2_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -694,7 +694,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findInterestingEntitiesByEntityID_helper(
             long entityID, long flags);
 
@@ -726,7 +726,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findInterestingEntitiesByRecordID_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -763,7 +763,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityID_helper(
             long entityID1, long entityID2, long maxDegrees);
 
@@ -797,7 +797,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityID_V2_helper(
             long entityID1, long entityID2, long maxDegrees, long flags);
 
@@ -833,7 +833,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordID_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -880,7 +880,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordID_V2_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -930,7 +930,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityIDWithAvoids_helper(
             long entityID1, long entityID2, long maxDegrees, byte[] avoidedEntities);
 
@@ -968,7 +968,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityIDWithAvoids_V2_helper(
             long entityID1,
             long entityID2,
@@ -1012,7 +1012,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordIDWithAvoids_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1063,7 +1063,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordIDWithAvoids_V2_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1117,7 +1117,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityIDIncludingSource_helper(
             long entityID1,
             long entityID2,
@@ -1162,7 +1162,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByEntityIDIncludingSource_V2_helper(
             long entityID1,
             long entityID2,
@@ -1210,7 +1210,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordIDIncludingSource_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1265,7 +1265,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findPathByRecordIDIncludingSource_V2_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1323,7 +1323,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findNetworkByEntityID_helper(
             byte[] entityList,
             long maxDegrees,
@@ -1364,7 +1364,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findNetworkByEntityID_V2_helper(
             byte[] entityList,
             long maxDegrees,
@@ -1408,7 +1408,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findNetworkByRecordID_helper(
             byte[] recordList,
             long maxDegrees,
@@ -1449,7 +1449,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_findNetworkByRecordID_V2_helper(
             byte[] recordList,
             long maxDegrees,
@@ -1493,7 +1493,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyRecordInEntity_helper(
             byte[] dataSourceCode, byte[] recordID);
 
@@ -1527,7 +1527,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyRecordInEntity_V2_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -1562,7 +1562,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyRecords_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1606,7 +1606,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyRecords_V2_helper(
             byte[] dataSourceCode1,
             byte[] recordID1,
@@ -1653,7 +1653,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyEntities_helper(
             long entityID1, long entityID2);
 
@@ -1684,7 +1684,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_whyEntities_V2_helper(
             long entityID1, long entityID2, long flags);
 
@@ -1716,7 +1716,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_howEntityByEntityID_helper(long entityID);
 
         /// <summary>
@@ -1744,7 +1744,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_howEntityByEntityID_V2_helper(
             long entityID, long flags);
 
@@ -1776,7 +1776,7 @@ namespace Senzing.Sdk.Core
 
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getVirtualEntityByRecordID_helper(
             byte[] recordList);
 
@@ -1808,7 +1808,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getVirtualEntityByRecordID_V2_helper(
             byte[] recordList, long flags);
 
@@ -1841,7 +1841,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getRecord_helper(
             byte[] dataSourceCode, byte[] recordID);
 
@@ -1875,7 +1875,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getRecord_V2_helper(
             byte[] dataSourceCode, byte[] recordID, long flags);
 
@@ -1910,7 +1910,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_exportJSONEntityReport_helper(long flags);
 
         /// <summary>
@@ -1932,7 +1932,7 @@ namespace Senzing.Sdk.Core
             return result.returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_exportCSVEntityReport_helper(
             byte[] csvColumnList, long flags);
 
@@ -1966,7 +1966,7 @@ namespace Senzing.Sdk.Core
 
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_fetchNext_helper(IntPtr exportHandle);
 
         /// <summary>
@@ -1994,7 +1994,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_closeExport_helper(IntPtr exportHandle);
 
         /// <summary>
@@ -2010,7 +2010,7 @@ namespace Senzing.Sdk.Core
             return Sz_closeExport_helper(exportHandle);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_processRedoRecord(byte[] redoRecord);
 
         /// <summary>
@@ -2026,7 +2026,7 @@ namespace Senzing.Sdk.Core
             return Sz_processRedoRecord(redoBytes);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_processRedoRecordWithInfo_helper(
             byte[] redoReord);
 
@@ -2058,7 +2058,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getRedoRecord_helper();
 
         /// <summary>
@@ -2086,7 +2086,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long Sz_countRedoRecords();
 
         /// <summary>

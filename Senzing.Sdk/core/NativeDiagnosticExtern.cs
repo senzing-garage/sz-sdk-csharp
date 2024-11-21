@@ -9,7 +9,7 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class NativeDiagnosticExtern : NativeDiagnostic
     {
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int SzDiagnostic_init(
             byte[] moduleName, byte[] iniParams, long verboseLogging);
 
@@ -24,7 +24,7 @@ namespace Senzing.Sdk.Core
                                      (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int SzDiagnostic_initWithConfigID(
             byte[] moduleName, byte[] iniParams, long initConfigID, long verboseLogging);
 
@@ -44,7 +44,7 @@ namespace Senzing.Sdk.Core
                 (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int SzDiagnostic_reinit(long initConfigID);
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Senzing.Sdk.Core
             return SzDiagnostic_reinit(initConfigID);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzDiagnostic_destroy();
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Senzing.Sdk.Core
             return SzDiagnostic_destroy();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzDiagnostic_getLastException(
             [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
 
@@ -93,7 +93,7 @@ namespace Senzing.Sdk.Core
             return System.Text.Encoding.UTF8.GetString(buf, 0, (int)(length - 1));
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzDiagnostic_getLastExceptionCode();
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Senzing.Sdk.Core
             return SzDiagnostic_getLastExceptionCode();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern void SzDiagnostic_clearLastException();
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Senzing.Sdk.Core
         }
 
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult SzDiagnostic_getDatastoreInfo_helper();
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult SzDiagnostic_checkDatastorePerformance_helper(
             long secondsToRun);
 
@@ -196,7 +196,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzDiagnostic_purgeRepository();
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Senzing.Sdk.Core
             return SzDiagnostic_purgeRepository();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult SzDiagnostic_getFeature_helper(long libFeatID);
 
         /// <summary>

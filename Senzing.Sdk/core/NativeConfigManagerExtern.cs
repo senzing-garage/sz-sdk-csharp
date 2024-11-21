@@ -9,7 +9,7 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class NativeConfigManagerExtern : NativeConfigManager
     {
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern int SzConfigMgr_init(
             byte[] moduleName, byte[] iniParams, long verboseLogging);
 
@@ -23,7 +23,7 @@ namespace Senzing.Sdk.Core
                                     (verboseLogging) ? 1 : 0);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzConfigMgr_destroy();
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Senzing.Sdk.Core
             return SzConfigMgr_destroy();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzConfigMgr_getLastException(
             [MarshalAs(UnmanagedType.LPArray)] byte[] buf, long length);
 
@@ -60,7 +60,7 @@ namespace Senzing.Sdk.Core
             return System.Text.Encoding.UTF8.GetString(buf, 0, (int)(length - 1));
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzConfigMgr_getLastExceptionCode();
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Senzing.Sdk.Core
             return SzConfigMgr_getLastExceptionCode();
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern void SzConfigMgr_clearLastException();
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Senzing.Sdk.Core
             public long returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzLongResult SzConfigMgr_addConfig_helper(
             byte[] config, byte[] comments);
 
@@ -139,7 +139,7 @@ namespace Senzing.Sdk.Core
             return result.returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult SzConfigMgr_getConfig_helper(long configID);
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzPointerResult SzConfigMgr_getConfigList_helper();
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Senzing.Sdk.Core
             }
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzConfigMgr_setDefaultConfigID(long configID);
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Senzing.Sdk.Core
             return SzConfigMgr_setDefaultConfigID(configID);
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern SzLongResult SzConfigMgr_getDefaultConfigID_helper();
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Senzing.Sdk.Core
             return result.returnCode;
         }
 
-        [DllImport("libSz")]
+        [DllImport("Sz")]
         private static extern long SzConfigMgr_replaceDefaultConfigID(
             long oldConfigID, long newConfigID);
 
