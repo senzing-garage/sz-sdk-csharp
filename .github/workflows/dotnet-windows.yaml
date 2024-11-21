@@ -42,7 +42,7 @@ jobs:
 
       - name: Add to "Path" environment variable
         run: |
-          echo 'C:\Program Files\Senzing\er\lib' >> "$GITHUB_PATH"
+          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
 
       - name: Run DotNet tests
         env:
