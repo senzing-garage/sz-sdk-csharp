@@ -151,7 +151,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             try
             {
                 SzCoreConfigManager configMgr
-                    = (SzCoreConfigManager)this.Env.GetConfigManager();
+                    = (SzCoreConfigManager) this.Env.GetConfigManager();
 
                 Assert.IsNotNull(configMgr.GetNativeApi(),
                                  "Underlying native API is unexpectedly null");
@@ -467,5 +467,43 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
         });
 
+    }
+
+
+    [Test]
+    public void TestExceptionFunctions()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreConfigManager configManager = (SzCoreConfigManager)
+                    this.Env.GetConfigManager();
+
+                NativeConfigManager nativeApi = configManager.GetNativeApi();
+
+                nativeApi.ClearLastException();
+
+                long configID = configManager.GetDefaultConfigID();
+
+                string message = nativeApi.GetLastException();
+                long errorCode = nativeApi.GetLastExceptionCode();
+
+                Assert.That(message, Is.EqualTo(""),
+                            "Unexpected exception message: " + message);
+
+                Assert.That(errorCode, Is.EqualTo(0),
+                            "Unexpeted error code: " + errorCode);
+            }
+            catch (AssertionException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                Fail("Failed test configManager exception handling", e);
+                throw;
+            }
+        });
     }
 }

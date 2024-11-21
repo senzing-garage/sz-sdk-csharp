@@ -573,4 +573,40 @@ internal class SzCoreConfigTest : AbstractTest
             }
         });
     }
+
+    [Test]
+    public void TestExceptionFunctions()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreConfig config = (SzCoreConfig)this.Env.GetConfig();
+
+                NativeConfig nativeApi = config.GetNativeApi();
+
+                nativeApi.ClearLastException();
+
+                config.CloseConfig(config.CreateConfig());
+
+                string message = nativeApi.GetLastException();
+                long errorCode = nativeApi.GetLastExceptionCode();
+
+                Assert.That(message, Is.EqualTo(""),
+                            "Unexpected exception message: " + message);
+
+                Assert.That(errorCode, Is.EqualTo(0),
+                            "Unexpeted error code: " + errorCode);
+            }
+            catch (AssertionException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                Fail("Failed test config exception handling", e);
+                throw;
+            }
+        });
+    }
 }

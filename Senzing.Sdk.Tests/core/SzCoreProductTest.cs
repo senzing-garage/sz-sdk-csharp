@@ -151,4 +151,40 @@ internal class SzCoreProductTest : AbstractTest
             }
         });
     }
+
+    [Test]
+    public void TestExceptionFunctions()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreProduct product = (SzCoreProduct)this.Env.GetProduct();
+
+                NativeProduct nativeApi = product.GetNativeApi();
+
+                nativeApi.ClearLastException();
+
+                string version = product.GetVersion();
+
+                string message = nativeApi.GetLastException();
+                long errorCode = nativeApi.GetLastExceptionCode();
+
+                Assert.That(message, Is.EqualTo(""),
+                            "Unexpected exception message: " + message);
+
+                Assert.That(errorCode, Is.EqualTo(0),
+                            "Unexpeted error code: " + errorCode);
+            }
+            catch (AssertionException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                Fail("Failed testGetVersion test with exception", e);
+                throw;
+            }
+        });
+    }
 }
