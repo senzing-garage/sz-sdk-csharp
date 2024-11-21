@@ -42,6 +42,7 @@ jobs:
 
       - name: Run DotNet tests
         env:
+          PATH: 'C:\Program Files\Senzing\er\lib;%PATH%'
           LD_LIBRARY_PATH: 'C:\Program Files\Senzing\er\lib'
           SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
