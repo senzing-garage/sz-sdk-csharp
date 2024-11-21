@@ -107,9 +107,6 @@ namespace Senzing.Sdk
                         + flagInfo.groups + " ]");
                 }
                 aggregateFlags |= flagInfo.value;
-                namedFlags.Add(flagInfo.name, flagInfo.value);
-                flagNames.Add(flagInfo.value, flagInfo.name);
-                this.infoByName.Add(flagInfo.name, flagInfo);
                 if (this.infoByFlag.ContainsKey(flagInfo.value))
                 {
                     throw new ArgumentException(
@@ -117,6 +114,9 @@ namespace Senzing.Sdk
                             + "group=[ " + this.group + " ], flag=[ " + flagInfo
                             + " ], existing=[ " + this.infoByFlag[flagInfo.value] + " ]");
                 }
+                namedFlags.Add(flagInfo.name, flagInfo.value);
+                flagNames.Add(flagInfo.value, flagInfo.name);
+                this.infoByName.Add(flagInfo.name, flagInfo);
                 this.infoByFlag.Add(flagInfo.value, flagInfo);
             }
 

@@ -991,7 +991,7 @@ internal class SzFlagsTest : AbstractTest
 
 
     [Test]
-    public void TestBadFlagUsageGroupInfo()
+    public void TestBadFlagUsageGroupInfo1()
     {
         Type enumType = typeof(SzFlag);
         try
@@ -1001,6 +1001,30 @@ internal class SzFlagsTest : AbstractTest
                 ListOf(new SzFlagInfo(
                     enumType.GetField(
                         nameof(SzFlag.SzEntityIncludeEntityName)))));
+            Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
+
+        }
+        catch (ArgumentException)
+        {
+            // expected
+        }
+    }
+
+    [Test]
+    public void TestBadFlagUsageGroupInfo2()
+    {
+        Type enumType = typeof(SzFlag);
+        try
+        {
+            SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
+                SzFlagUsageGroup.SzExportFlags,
+                ListOf(new SzFlagInfo(
+                        enumType.GetField(
+                            nameof(SzFlag.SzExportIncludePossiblyRelated))),
+                    new SzFlagInfo(
+                        enumType.GetField(
+                            nameof(SzFlag.SzExportIncludePossiblyRelated)))));
+            
             Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
 
         }
