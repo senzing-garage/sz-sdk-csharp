@@ -369,6 +369,9 @@ internal class SzFlagsTest : AbstractTest
             flags.Add(flag);
             allFlags |= flag;
         }
+        unchecked { 
+            flags.Add((SzFlag) (1L << 45));
+        }
         flags.Sort();
         int start = 0;
         for (int loop = 0; loop < 3; loop++)
