@@ -10,7 +10,7 @@ public class TestException : Exception
 {
     /// <summary>Default constructor.</summary>
     public TestException()
-        : base() 
+        : base()
     {
 
     }

@@ -7,7 +7,7 @@ using Senzing.Sdk.Tests.Util;
 /// <summary>
 /// Provides an abstraction for creating instances of the raw Senzing API.
 /// </summary>
-/// 
+///
 /// <remarks>
 /// This abstraction allows for alternate implementations to be used especially
 /// during auto tests.
