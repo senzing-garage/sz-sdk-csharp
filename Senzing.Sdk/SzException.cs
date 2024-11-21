@@ -55,8 +55,8 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Constructs with the {@link Throwable} that is the underlying cause
-        /// for the exception.
+        /// Constructs with the <see cref="System.Exception"/> that is the
+        /// underlying cause for the exception.
         /// </summary>
         /// 
         /// <param name="cause">The underlying cause for the exception.</param>

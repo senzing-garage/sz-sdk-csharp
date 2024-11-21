@@ -2,42 +2,61 @@ using Senzing.Sdk.Core;
 
 namespace Senzing.Sdk.Tests.Core
 {
-internal interface NativeApiProvider
-{
-    /**
-        * Provides a new instance of {@link NativeEngine} to use.
-        *
-        * @return A new instance of {@link NativeEngine} to use.
-        */
-    NativeEngine CreateEngineApi();
+    internal interface NativeApiProvider
+    {
+        /// <summary>
+        /// Provides a new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeEngine"/> to use.
+        /// </summary>
+        ///
+        /// <returns>
+        /// A new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeEngine"/> to use.
+        /// </returns>
+        NativeEngine CreateEngineApi();
 
-    /**
-        * Provides a new instance of {@link NativeConfig} to use.
-        *
-        * @return A new instance of {@link NativeConfig} to use.
-        */
-    NativeConfig CreateConfigApi();
+        /// <summary>
+        /// Provides a new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeConfig"/> to use.
+        /// </summary>
+        ///
+        /// <returns>
+        /// A new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeConfig"/> to use.
+        /// </returns>
+        NativeConfig CreateConfigApi();
 
-    /**
-        * Provides a new instance of {@link NativeProduct} to use.
-        *
-        * @return A new instance of {@link NativeProduct} to use.
-        */
-    NativeProduct CreateProductApi();
+        /// <summary>
+        /// Provides a new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
+        /// </summary>
+        ///
+        /// <returns>
+        /// A new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
+        /// </returns>
+        NativeProduct CreateProductApi();
 
-    /**
-        * Provides a new instance of {@link NativeConfigManager} to use.
-        *
-        * @return A new instance of {@link NativeConfigManager} to use.
-        *
-        */
-    NativeConfigManager CreateConfigMgrApi();
+        /// <summary>
+        /// Provides a new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeConfigManager"/> to use.
+        /// </summary>
+        ///
+        /// <returns>
+        /// A new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeConfigManager"/> to use.
+        /// </returns>
+        NativeConfigManager CreateConfigMgrApi();
 
-    /**
-        * Provides a new instance of {@link NativeDiagnostic} to use.
-        *
-        * @return A new instance of {@link NativeDiagnostic} to use.
-        */
-    NativeDiagnostic CreateDiagnosticApi();
-}
+        /// <summary>
+        /// Provides a new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeDiagnostic"/> to use.
+        /// </summary>
+        ///
+        /// <returns>
+        /// A new instance of
+        /// <see cref="Senzing.Sdk.Core.NativeDiagnostic"/> to use.
+        /// </returns>
+        NativeDiagnostic CreateDiagnosticApi();
+    }
 }

@@ -1,31 +1,33 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
+using System.Collections.Immutable;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
-using System.Collections.Immutable;
 
-using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlagUsageGroup;
-using NUnit.Framework.Internal;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreEngineHowTest : AbstractTest {
-    private const string UNKNOWN_DATA_SOURCE    = "UNKNOWN";
-    private const string Passengers             = "PASSENGERS";
-    private const string Employees              = "EMPLOYEES";
-    private const string Vips                   = "VIPS";
-    private const string DualIdentities         = "DUAL_IDENTITIES";
-  
+internal class SzCoreEngineHowTest : AbstractTest
+{
+    private const string UNKNOWN_DATA_SOURCE = "UNKNOWN";
+    private const string Passengers = "PASSENGERS";
+    private const string Employees = "EMPLOYEES";
+    private const string Vips = "VIPS";
+    private const string DualIdentities = "DUAL_IDENTITIES";
+
     private static readonly (string dataSourceCode, string recordID) ABC123
-        = (Passengers,"ABC123");
+        = (Passengers, "ABC123");
     private static readonly (string dataSourceCode, string recordID) DEF456
         = (Passengers, "DEF456");
     private static readonly (string dataSourceCode, string recordID) GHI789
@@ -48,7 +50,7 @@ internal class SzCoreEngineHowTest : AbstractTest {
         = (Employees, "ZYX321");
     private static readonly (string dataSourceCode, string recordID) CBA654
         = (Employees, "CBA654");
-  
+
     private static readonly (string dataSourceCode, string recordID) BCD123
         = (DualIdentities, "BCD123");
     private static readonly (string dataSourceCode, string recordID) CDE456
@@ -57,23 +59,24 @@ internal class SzCoreEngineHowTest : AbstractTest {
         = (DualIdentities, "EFG789");
     private static readonly (string dataSourceCode, string recordID) FGH012
         = (DualIdentities, "FGH012");
-  
-    private const SzFlag FeatureFlags 
+
+    private const SzFlag FeatureFlags
         = SzEntityIncludeAllFeatures
         | SzEntityIncludeRepresentativeFeatures
         | SzEntityIncludeInternalFeatures;
-        
+
     private const SzFlag RecordFlags
-        = SzEntityIncludeRecordData 
+        = SzEntityIncludeRecordData
         | SzEntityIncludeRecordFeatures
         | SzEntityIncludeRecordFeatureDetails
         | SzEntityIncludeRecordFeatureStats;
-    
+
     private static readonly IList<SzFlag?> VirtualEntityFlagSets;
 
     private static readonly IList<SzFlag?> HowFlagSets;
 
-    static SzCoreEngineHowTest() {
+    static SzCoreEngineHowTest()
+    {
         List<SzFlag?> list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzNoFlags);
@@ -89,7 +92,7 @@ internal class SzCoreEngineHowTest : AbstractTest {
         list.Add(SzEntityIncludeRecordFeatures
             | SzEntityIncludeRepresentativeFeatures
             | SzEntityIncludeInternalFeatures
-            | SzIncludeMatchKeyDetails 
+            | SzIncludeMatchKeyDetails
             | SzEntityIncludeRecordMatchingInfo);
         VirtualEntityFlagSets = list.AsReadOnly();
 
@@ -104,38 +107,48 @@ internal class SzCoreEngineHowTest : AbstractTest {
         HowFlagSets = list.AsReadOnly();
     }
 
-    private IDictionary<(string,string), long> LoadedRecordMap
-        = new Dictionary<(string,string),long>();
+    private readonly Dictionary<(string, string), long> LoadedRecordMap
+        = new Dictionary<(string, string), long>();
 
-    private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
-        = new Dictionary<long,ISet<(string,string)>>();
+    private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
+        = new Dictionary<long, ISet<(string, string)>>();
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
-    private SzCoreEnvironment Env {
-       get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
         }
     }
 
-    public long GetEntityID(string dataSourceCode, string recordID) {
+    public long GetEntityID(string dataSourceCode, string recordID)
+    {
         return GetEntityID((dataSourceCode, recordID));
     }
 
-    public long GetEntityID((string dataSourceCode, string recordID) key) {
-        if (LoadedRecordMap.ContainsKey(key)) {
+    public long GetEntityID((string dataSourceCode, string recordID) key)
+    {
+        if (LoadedRecordMap.ContainsKey(key))
+        {
             return LoadedRecordMap[key];
-        } else {
+        }
+        else
+        {
             throw new ArgumentException("Record ID not found: " + key);
         }
     }
 
-    private static readonly IList<(string,string)> RecordKeys
+    private static readonly IList<(string, string)> RecordKeys
         = ListOf(ABC123,
                  DEF456,
                  GHI789,
@@ -154,43 +167,51 @@ internal class SzCoreEngineHowTest : AbstractTest {
                  FGH012).AsReadOnly();
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
 
         string settings = this.GetRepoSettings();
-        
+
         string instanceName = this.GetType().Name;
-        
+
         // now we just need the entity ID's for the loaded records to use later
         NativeEngine nativeEngine = new NativeEngineExtern();
-        try {
+        try
+        {
             long returnCode = nativeEngine.Init(instanceName, settings, false);
-            if (returnCode != 0) {
-                throw new Exception(nativeEngine.GetLastException());
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeEngine.GetLastException());
             }
 
             // get the loaded records and entity ID's
-            foreach ((string dataSourceCode, string recordID) key in RecordKeys) {
+            foreach ((string dataSourceCode, string recordID) key in RecordKeys)
+            {
                 returnCode = nativeEngine.GetEntityByRecordID(
                     key.dataSourceCode, key.recordID, out string result);
-                if (returnCode != 0) {
-                    throw new Exception(nativeEngine.GetLastException());
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
                 }
                 // parse the JSON 
-                JsonObject?  jsonObj    = JsonNode.Parse(result)?.AsObject();
-                JsonObject?  entity     = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
-                long         entityID   = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
+                JsonObject? entity = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                long entityID = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
                 LoadedRecordMap.Add(key, entityID);
-                if (!LoadedEntityMap.ContainsKey(entityID)) {
-                    LoadedEntityMap.Add(entityID, new HashSet<(string,string)>());
+                if (!LoadedEntityMap.ContainsKey(entityID))
+                {
+                    LoadedEntityMap.Add(entityID, new HashSet<(string, string)>());
                 }
-                ISet<(string dataSourceCode, string recordID)> recordKeySet 
+                ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             };
 
-        } finally {
+        }
+        finally
+        {
             nativeEngine.Destroy();
         }
 
@@ -204,7 +225,8 @@ internal class SzCoreEngineHowTest : AbstractTest {
     /**
      * Overridden to configure some data sources.
      */
-    override protected void PrepareRepository() {
+    override protected void PrepareRepository()
+    {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
         ISet<string> dataSources = SortedSetOf(Passengers,
@@ -212,9 +234,9 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                                Vips,
                                                DualIdentities);
 
-        FileInfo passengerFile      = this.PreparePassengerFile();
-        FileInfo employeeFile       = this.PrepareEmployeeFile();
-        FileInfo vipFile            = this.PrepareVipFile();
+        FileInfo passengerFile = this.PreparePassengerFile();
+        FileInfo employeeFile = this.PrepareEmployeeFile();
+        FileInfo vipFile = this.PrepareVipFile();
         FileInfo dualIdentitiesFile = this.PrepareDualIdentitiesFile();
 
         RepositoryManager.ConfigSources(repoDirectory,
@@ -242,11 +264,12 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                    true);
     }
 
-    private FileInfo PreparePassengerFile() {
+    private FileInfo PreparePassengerFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH"};
-    
+
         string[][] passengers = {
             new string[] {ABC123.recordID, "Joe", "Schmoe", "702-555-1212",
                 "101 Main Street, Las Vegas, NV 89101", "1981-01-12"},
@@ -259,12 +282,13 @@ internal class SzCoreEngineHowTest : AbstractTest {
         };
         return this.PrepareCSVFile("test-passengers-", headers, passengers);
     }
-    
-    private FileInfo PrepareEmployeeFile() {
+
+    private FileInfo PrepareEmployeeFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH","MOTHERS_MAIDEN_NAME", "SSN_NUMBER"};
-    
+
         string[][] employees = {
             new string[] {MNO345.recordID, "Joseph", "Schmoe", "702-555-1212",
                 "101 Main Street, Las Vegas, NV 89101", "1981-01-12", "WILSON",
@@ -279,15 +303,16 @@ internal class SzCoreEngineHowTest : AbstractTest {
                 "2121 Roscoe Blvd, Los Angeles, CA 90232", "1980-09-09", "BROOKS",
                 "827-27-4829"}
         };
-    
+
         return this.PrepareJsonArrayFile("test-employees-", headers, employees);
     }
-    
-    private FileInfo PrepareVipFile() {
+
+    private FileInfo PrepareVipFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH","MOTHERS_MAIDEN_NAME"};
-    
+
         string[][] vips = {
             new string[] {STU901.recordID, "Joe", "Schmoe", "702-555-1212",
                 "101 Main Street, Las Vegas, NV 89101", "1981-12-01", "WILSON"},
@@ -300,15 +325,16 @@ internal class SzCoreEngineHowTest : AbstractTest {
                 "100 Main Street Suite A, Los Angeles, CA 90012", "1979-02-05",
                 "JENKINS" }
         };
-    
+
         return this.PrepareJsonFile("test-vips-", headers, vips);
     }
-    
-    private FileInfo PrepareDualIdentitiesFile() {
+
+    private FileInfo PrepareDualIdentitiesFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FULL", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH", "GENDER" };
-    
+
         string[][] spouses = {
             new string[] {BCD123.recordID, "Bruce Wayne", "201-765-3451",
                 "101 Wayne Court; Gotham City, NJ 07017", "1974-06-05", "M" },
@@ -319,33 +345,39 @@ internal class SzCoreEngineHowTest : AbstractTest {
             new string[] {FGH012.recordID, "Joker", "201-832-2321",
                 "101 Arkham Road; Gotham City, NJ 07018", "1965-05-14", "M" }
         };
-    
+
         return this.PrepareJsonFile("test-marriages-", headers, spouses);
     }
-        
+
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.Env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
-    private static List<object?> BatmanVirtualEntityArgs() {
+    private static List<object?> BatmanVirtualEntityArgs()
+    {
         IDictionary<string, ISet<string>> primaryFeatureValues
-            = new Dictionary<string,ISet<string>>();
+            = new Dictionary<string, ISet<string>>();
 
         primaryFeatureValues.Add("NAME", SetOf("Bruce Wayne", "Batman"));
 
         int expectedRecordCount = 2;
 
         IDictionary<string, int> expectedFeatureCounts
-            = new Dictionary<string,int>();
+            = new Dictionary<string, int>();
         expectedFeatureCounts.Add("NAME", 2);
         expectedFeatureCounts.Add("DOB", 1);
         expectedFeatureCounts.Add("ADDRESS", 2);
@@ -359,37 +391,41 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                null);                  // expected exception
     }
 
-  private static List<object?> JokerVirtualEntityArgs() {
-    IDictionary<string, ISet<string>> primaryFeatureValues
-        = new Dictionary<string, ISet<string>>();
+    private static List<object?> JokerVirtualEntityArgs()
+    {
+        IDictionary<string, ISet<string>> primaryFeatureValues
+            = new Dictionary<string, ISet<string>>();
 
-    primaryFeatureValues.Add("NAME", SetOf("Jack Napier", "Joker"));
+        primaryFeatureValues.Add("NAME", SetOf("Jack Napier", "Joker"));
 
-    int expectedRecordCount = 2;
+        int expectedRecordCount = 2;
 
-    IDictionary<string, int> expectedFeatureCounts
-        = new Dictionary<string,int>();
-    expectedFeatureCounts.Add("NAME", 2);
-    expectedFeatureCounts.Add("DOB", 1);
-    expectedFeatureCounts.Add("ADDRESS", 2);
-    expectedFeatureCounts.Add("PHONE", 2);
+        IDictionary<string, int> expectedFeatureCounts
+            = new Dictionary<string, int>();
+        expectedFeatureCounts.Add("NAME", 2);
+        expectedFeatureCounts.Add("DOB", 1);
+        expectedFeatureCounts.Add("ADDRESS", 2);
+        expectedFeatureCounts.Add("PHONE", 2);
 
-    return ListOf<object?>(SortedSetOf(CDE456, FGH012),
-                           null,
-                           expectedRecordCount,
-                           expectedFeatureCounts,
-                           primaryFeatureValues,
-                           null);
-  }
+        return ListOf<object?>(SortedSetOf(CDE456, FGH012),
+                               null,
+                               expectedRecordCount,
+                               expectedFeatureCounts,
+                               primaryFeatureValues,
+                               null);
+    }
 
-    private static List<object?[]> GetVirtualEntityParameters() {
+    private static List<object?[]> GetVirtualEntityParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
         List<List<object?>> templateArgs = ListOf(
             BatmanVirtualEntityArgs(), JokerVirtualEntityArgs());
 
-        foreach (List<object?> args in templateArgs) {
-            foreach (SzFlag? flags in VirtualEntityFlagSets) {
+        foreach (List<object?> args in templateArgs)
+        {
+            foreach (SzFlag? flags in VirtualEntityFlagSets)
+            {
                 object?[] argsArray = args.ToArray();
                 argsArray[1] = flags;
                 result.Add(argsArray);
@@ -411,45 +447,49 @@ internal class SzCoreEngineHowTest : AbstractTest {
             null,
             null,
             typeof(SzNotFoundException)});
-            
+
         return result;
     }
 
     [Test, TestCaseSource(nameof(GetVirtualEntityParameters))]
     public void TestGetVirtualEntityDefaults(
-        ISet<(string dataSourceCode, string recordID)>  recordKeys,
-        SzFlag?                                         flags,
-        int                                             expectedRecordCount,
-        IDictionary<string,int>                         expectedFeatureCounts,
-        IDictionary<string,ISet<string>>                primaryFeatureValues,
-        Type?                                           exceptionType)
+        ISet<(string dataSourceCode, string recordID)> recordKeys,
+        SzFlag? flags,
+        int expectedRecordCount,
+        IDictionary<string, int> expectedFeatureCounts,
+        IDictionary<string, ISet<string>> primaryFeatureValues,
+        Type? exceptionType)
     {
         string testData = "recordKeys=[ " + recordKeys.ToDebugString()
             + " ],  expectedRecordCount=[ " + expectedRecordCount
             + " ], expectedException=[ " + exceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result1 = engine.GetVirtualEntity(
                     recordKeys, SzVirtualEntityDefaultFlags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded getVirtualEntity() call: "
                          + testData);
                 }
 
                 string result2 = engine.GetVirtualEntity(recordKeys);
-                    
-                if (exceptionType != null) {
+
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded getVirtualEntity() call: "
                          + testData);
                 }
 
                 Assert.That(result1, Is.EqualTo(result2),
                     "Results differ depending on default flags: " + testData);
-                
+
                 this.ValidateVirtualEntity(result1,
                                            testData,
                                            recordKeys,
@@ -466,23 +506,31 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                            null,
                                            null);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed getVirtualEntity(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "whyEntities() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -492,28 +540,31 @@ internal class SzCoreEngineHowTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetVirtualEntityParameters))]
     public void TestGetVirtualEntity(
-        ISet<(string, string)>              recordKeys,
-        SzFlag?                             flags,
-        int                                 expectedRecordCount,
-        IDictionary<string,int>?            expectedFeatureCounts,
-        IDictionary<string,ISet<string>>?   primaryFeatureValues,
-        Type?                               exceptionType)
+        ISet<(string, string)> recordKeys,
+        SzFlag? flags,
+        int expectedRecordCount,
+        IDictionary<string, int>? expectedFeatureCounts,
+        IDictionary<string, ISet<string>>? primaryFeatureValues,
+        Type? exceptionType)
     {
         string testData = "recordKeys=[ " + recordKeys + " ], flags=[ "
             + SzVirtualEntityFlags.FlagsToString(flags)
             + " ], expectedRecordCount=[ " + expectedRecordCount
             + " ], expectedFeatureCounts=[ " + expectedFeatureCounts
-            + " ], primaryFeatureValues=[ " 
+            + " ], primaryFeatureValues=[ "
             + (primaryFeatureValues == null ? null : primaryFeatureValues.ToDebugString())
             + " ], expectedException=[ " + exceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.GetVirtualEntity(recordKeys, flags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded getVirtualEntity() call: "
                          + testData);
                 }
@@ -526,23 +577,31 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                            expectedFeatureCounts,
                                            primaryFeatureValues);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed getVirtualEntity(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "whyEntities() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -550,70 +609,81 @@ internal class SzCoreEngineHowTest : AbstractTest {
         });
     }
 
-    public void ValidateVirtualEntity(
-        string                              result,
-        string                              testData,
-        ISet<(string, string)>              recordKeys,
-        SzFlag?                             flags,
-        int                                 expectedRecordCount,
-        IDictionary<string,int>?            expectedFeatureCounts,
-        IDictionary<string,ISet<string>>?   primaryFeatureValues)
+    public virtual void ValidateVirtualEntity(
+        string result,
+        string testData,
+        ISet<(string, string)> recordKeys,
+        SzFlag? flags,
+        int expectedRecordCount,
+        IDictionary<string, int>? expectedFeatureCounts,
+        IDictionary<string, ISet<string>>? primaryFeatureValues)
     {
         JsonObject? jsonObject = null;
-        try {
+        try
+        {
             jsonObject = JsonNode.Parse(result)?.AsObject();
 
-            if (jsonObject == null) {
+            if (jsonObject == null)
+            {
                 throw new JsonException("Not parsed as object");
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Fail("Virtual entity result did not parse as JSON: "
                  + testData, e);
         }
 
         JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
         Assert.IsNotNull(entity,
-                    "The RESOLVED_ENTITY property is missing or null: " 
+                    "The RESOLVED_ENTITY property is missing or null: "
                       + testData + ", result=[ " + result + " ]");
-        
+
         long? jsonID = entity?["ENTITY_ID"]?.GetValue<long>();
-        Assert.IsNotNull(jsonID, "The ENTITY_ID property is missing or null: " 
+        Assert.IsNotNull(jsonID, "The ENTITY_ID property is missing or null: "
                       + testData + ", result=[ " + result + " ]");
-        
+
         long entityID = (jsonID ?? 0L); // cannot be null
 
         string? name = entity?["ENTITY_NAME"]?.GetValue<string>();
-        if (flags != null && ((flags & SzEntityIncludeEntityName) != SzNoFlags)) {
+        if (flags != null && ((flags & SzEntityIncludeEntityName) != SzNoFlags))
+        {
             Assert.IsNotNull(name, "The ENTITY_NAME property is missing or null: "
                              + testData + ", entity=[ " + entity + " ]");
-        } else {
-            Assert.IsNull(name, 
+        }
+        else
+        {
+            Assert.IsNull(name,
                           "The ENTITY_NAME property was provided despite flags: "
                           + testData + " ], name=[ " + name + " ]");
         }
 
         JsonObject? features = entity?["FEATURES"]?.AsObject();
-        if (flags != null && (flags & FeatureFlags) != SzNoFlags) {
+        if (flags != null && (flags & FeatureFlags) != SzNoFlags)
+        {
             Assert.IsNotNull(features, "The FEATURES property is missing or null: "
                              + testData + ", entity=[ " + entity + " ]");
 
-            IDictionary<string,ISet<string>> actualFeatures = new Dictionary<string,ISet<string>>();
-            IDictionary<string,JsonNode?> featuresDictionary 
-                = ((IDictionary<string,JsonNode?>?) features) ?? new Dictionary<string,JsonNode?>();
+            IDictionary<string, ISet<string>> actualFeatures = new Dictionary<string, ISet<string>>();
+            IDictionary<string, JsonNode?> featuresDictionary
+                = ((IDictionary<string, JsonNode?>?)features) ?? new Dictionary<string, JsonNode?>();
 
-            foreach (KeyValuePair<string,JsonNode?> pair in featuresDictionary) {
+            foreach (KeyValuePair<string, JsonNode?> pair in featuresDictionary)
+            {
                 string key = pair.Key;
                 JsonNode? value = pair.Value;
 
                 JsonArray? valuesArray = value?.AsArray();
-                if (!actualFeatures.ContainsKey(key)) {
+                if (!actualFeatures.ContainsKey(key))
+                {
                     actualFeatures.Add(key, new SortedSet<string>());
                 }
                 ISet<string> valueSet = actualFeatures[key];
 
                 int featureCount = valuesArray?.Count ?? 0;
-                for (int index = 0; index < featureCount; index++) {
+                for (int index = 0; index < featureCount; index++)
+                {
                     JsonObject? feature = valuesArray?[index]?.AsObject();
                     string primaryValue = feature?["FEAT_DESC"]?.GetValue<string>() ?? "";
                     valueSet.Add(primaryValue);
@@ -621,10 +691,12 @@ internal class SzCoreEngineHowTest : AbstractTest {
             };
 
             // verify the feature counts
-            if (expectedFeatureCounts != null) {
-                foreach (KeyValuePair<string, int> pair in expectedFeatureCounts) {
+            if (expectedFeatureCounts != null)
+            {
+                foreach (KeyValuePair<string, int> pair in expectedFeatureCounts)
+                {
                     string key = pair.Key;
-                    int    count = pair.Value;
+                    int count = pair.Value;
 
                     Assert.IsTrue(actualFeatures.ContainsKey(key),
                         "No features found for expected type (" + key + "): "
@@ -633,14 +705,16 @@ internal class SzCoreEngineHowTest : AbstractTest {
                     ISet<string> actuals = actualFeatures[key];
 
                     Assert.That(actuals.Count, Is.EqualTo(count),
-                        "Unexpected number of values for feature (" + key 
+                        "Unexpected number of values for feature (" + key
                         + "): values=[ " + actuals + " ], " + testData);
                 }
             }
 
             // verify the features
-            if (primaryFeatureValues != null) {
-                foreach (KeyValuePair<string,ISet<string>> pair in primaryFeatureValues) {
+            if (primaryFeatureValues != null)
+            {
+                foreach (KeyValuePair<string, ISet<string>> pair in primaryFeatureValues)
+                {
                     string key = pair.Key;
                     ISet<string> values = pair.Value;
 
@@ -651,46 +725,54 @@ internal class SzCoreEngineHowTest : AbstractTest {
                     ISet<string> actuals = actualFeatures[key];
 
                     Assert.IsTrue(actuals.SetEquals(values),
-                        "Unexpected primary values for feature (" + key 
+                        "Unexpected primary values for feature (" + key
                         + "): " + testData);
                 }
             }
-        } else {
-            Assert.IsNull(features, 
+        }
+        else
+        {
+            Assert.IsNull(features,
                        "The FEATURES property was provided despite flags: "
                        + testData + " ], features=[ " + features + " ]");
         }
-        
+
         JsonArray? records = entity?["RECORDS"]?.AsArray();
-        if (flags != null && (flags & RecordFlags) != SzNoFlags) {
+        if (flags != null && (flags & RecordFlags) != SzNoFlags)
+        {
             Assert.IsNotNull(records, "The RECORDS property is missing or null: "
                           + testData + ", entity=[ " + entity + " ]");
 
             Assert.That(records?.Count, Is.EqualTo(expectedRecordCount),
                 "Unexpected number of records: " + testData
                 + " ], records=[ " + records + " ]");
-        
-        } else {
-            Assert.IsNull(records, 
+
+        }
+        else
+        {
+            Assert.IsNull(records,
                         "The RECORDS property was provided despite flags: "
                         + testData + " ], records=[ " + records + " ]");
         }
-        
+
     }
 
-    private static List<object?[]> GetHowEntityParameters() {
+    private static List<object?[]> GetHowEntityParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
-        List<ISet<(string,string)>> recordSets = ListOf<ISet<(string,string)>>(
+        List<ISet<(string, string)>> recordSets = ListOf<ISet<(string, string)>>(
             SortedSetOf(ABC123, MNO345, STU901),  // Joe Schmoe
             SortedSetOf(DEF456, PQR678, XYZ234),  // Joanne Smith
             SortedSetOf(GHI789, STU234),          // John Doe
             SortedSetOf(JKL012, XYZ456));         // Jane Doe
-    
+
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(HowFlagSets);
 
-        foreach (ISet<(string, string)> set in recordSets) {
-            foreach ((string, string) recordKey in set) {
+        foreach (ISet<(string, string)> set in recordSets)
+        {
+            foreach ((string, string) recordKey in set)
+            {
                 result.Add(new object?[] {
                     recordKey,
                     (SzCoreEngineHowTest t) => t.GetEntityID(recordKey),
@@ -716,35 +798,38 @@ internal class SzCoreEngineHowTest : AbstractTest {
             0,
             ImmutableHashSet<(string,string)>.Empty,
             typeof(SzNotFoundException)});
-    
+
         return result;
     }
 
-    [Test,TestCaseSource(nameof(GetHowEntityParameters))]
+    [Test, TestCaseSource(nameof(GetHowEntityParameters))]
     public void TestHowEntity(
-        (string dataSourceCode, string recordID)    recordKey,
-        Func<SzCoreEngineHowTest,long>              entityIDFunc,
-        SzFlag?                                     flags,
-        int?                                        expectedRecordCount,
-        ISet<(string, string)>                      expectedRecordKeys,
-        Type?                                       exceptionType)
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineHowTest, long> entityIDFunc,
+        SzFlag? flags,
+        int? expectedRecordCount,
+        ISet<(string, string)> expectedRecordKeys,
+        Type? exceptionType)
     {
         long entityID = entityIDFunc(this);
 
-        string testData = "recordKey=[ " + recordKey 
+        string testData = "recordKey=[ " + recordKey
             + " ], entityID=[ " + entityID + " ], flags=[ "
             + SzHowFlags.FlagsToString(flags)
             + " ], expectedRecordCount=[ " + expectedRecordCount
             + " ], expectedRecordKeys=[ " + expectedRecordKeys.ToDebugString()
             + " ], expectedException=[ " + exceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.HowEntity(entityID, flags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded howEntity() call: "
                          + testData);
                 }
@@ -757,23 +842,31 @@ internal class SzCoreEngineHowTest : AbstractTest {
                                              expectedRecordCount,
                                              expectedRecordKeys);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed howEntity(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "howEntity() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -781,30 +874,34 @@ internal class SzCoreEngineHowTest : AbstractTest {
         });
     }
 
-    public void ValidateHowEntityResult(
-        string                                      result,
-        string                                      testData,
-        (string dataSourceCode, string recordID)    recordKey,
-        long                                        entityID,
-        SzFlag?                                     flags,
-        int?                                        expectedRecordCount,
-        ISet<(string, string)>                      expectedRecordKeys)
+    public virtual void ValidateHowEntityResult(
+        string result,
+        string testData,
+        (string dataSourceCode, string recordID) recordKey,
+        long entityID,
+        SzFlag? flags,
+        int? expectedRecordCount,
+        ISet<(string, string)> expectedRecordKeys)
     {
         JsonObject? jsonObject = null;
-        try {
+        try
+        {
             jsonObject = JsonNode.Parse(result)?.AsObject();
 
-            if (jsonObject == null) {
+            if (jsonObject == null)
+            {
                 throw new JsonException("Did not parse as JsonObject");
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Fail("How entity result did not parse as JSON: "
                  + testData, e);
         }
 
         JsonObject? how = jsonObject?["HOW_RESULTS"]?.AsObject();
-        Assert.IsNotNull(how, 
+        Assert.IsNotNull(how,
                          "The HOW_RESULTS property is missing: "
                          + testData + ", result=[ " + result + " ]");
 
@@ -814,29 +911,37 @@ internal class SzCoreEngineHowTest : AbstractTest {
 
         SzFlag stepFlags = SzIncludeFeatureScores | SzIncludeMatchKeyDetails;
 
-        if (flags != null && (flags & stepFlags) != SzNoFlags) {
+        if (flags != null && (flags & stepFlags) != SzNoFlags)
+        {
             int stepCount = steps?.Count ?? 0;
-            for (int index = 0; index < stepCount; index++) {
+            for (int index = 0; index < stepCount; index++)
+            {
                 JsonObject? step = steps?[index]?.AsObject();
                 JsonObject? matchInfo = step?["MATCH_INFO"]?.AsObject();
                 Assert.IsNotNull(matchInfo, "The MATCH_INFO property is missing: "
                     + testData + ", step=[ " + step + " ]");
 
                 JsonObject? scores = matchInfo?["FEATURE_SCORES"]?.AsObject();
-                if (flags != null && (flags & SzIncludeFeatureScores) != SzNoFlags) {
+                if (flags != null && (flags & SzIncludeFeatureScores) != SzNoFlags)
+                {
                     Assert.IsNotNull(scores, "The FEATURE_SCORES property is missing: "
                         + testData + ", matchInfo=[ " + matchInfo + " ]");
 
-                } else {
+                }
+                else
+                {
                     Assert.IsNull(scores, "The FEATURE_SCORES are present, despite flags: "
                         + testData + ", matchInfo=[ " + matchInfo + " ]");
                 }
 
                 JsonObject? details = matchInfo?["MATCH_KEY_DETAILS"]?.AsObject();
-                if ((flags & SzIncludeMatchKeyDetails) != SzNoFlags) {
+                if ((flags & SzIncludeMatchKeyDetails) != SzNoFlags)
+                {
                     Assert.IsNotNull(details, "The MATCH_KEY_DETAILS property is missing: "
                         + testData + ", matchInfo=[ " + matchInfo + " ]");
-                } else {
+                }
+                else
+                {
                     Assert.IsNull(details, "The MATCH_KEY_DETAILS are present, despite "
                         + "flags: " + testData + ", matchInfo=[ " + matchInfo + " ]");
                 }
@@ -850,27 +955,30 @@ internal class SzCoreEngineHowTest : AbstractTest {
         Assert.IsNotNull(virtualEntities, "The VIRTUAL_ENTITIES property is missing: "
                          + testData + ", finalState=[ " + finalState + " ]");
 
-        ISet<(string, string)> actualRecords = new HashSet<(string,string)>();
+        ISet<(string, string)> actualRecords = new HashSet<(string, string)>();
         int virtualCount = virtualEntities?.Count ?? 0; // cannot be null
-        for (int index = 0; index < virtualCount; index++) {
+        for (int index = 0; index < virtualCount; index++)
+        {
             JsonObject? virtualEntity = virtualEntities?[index]?.AsObject();
             JsonArray? memberRecords = virtualEntity?["MEMBER_RECORDS"]?.AsArray();
 
             Assert.IsNotNull(memberRecords, "The MEMBER_RECORDS property is missing: "
                 + testData + ", virtualEntity=[ " + virtualEntity + " ]");
-            
+
             int memberCount = memberRecords?.Count ?? 0;
 
-            for (int index2 = 0; index2 < memberCount; index2++) {
+            for (int index2 = 0; index2 < memberCount; index2++)
+            {
                 JsonObject? memberRecord = memberRecords?[index2]?.AsObject();
                 JsonArray? records = memberRecord?["RECORDS"]?.AsArray();
 
                 Assert.IsNotNull(records, "The RECORDS property is missing: "
                     + testData + ", memberRecord=[ " + memberRecord + " ]");
-                
+
                 int recordCount = records?.Count ?? 0; // cannot be null
 
-                for (int index3 = 0; index3 < recordCount; index3++) {
+                for (int index3 = 0; index3 < recordCount; index3++)
+                {
                     JsonObject? record = records?[index3]?.AsObject();
                     string? dataSourceCode = record?["DATA_SOURCE"]?.GetValue<string>();
                     Assert.IsNotNull(dataSourceCode, "The DATA_SOURCE property is missing: "
@@ -886,13 +994,15 @@ internal class SzCoreEngineHowTest : AbstractTest {
             }
         }
 
-        if (expectedRecordKeys != null) {
+        if (expectedRecordKeys != null)
+        {
             Assert.IsTrue(actualRecords.SetEquals(expectedRecordKeys),
-                "The records (" + actualRecords.ToDebugString() 
+                "The records (" + actualRecords.ToDebugString()
                 + ") were not as expected: " + testData);
         }
 
-        if (expectedRecordCount != null) {
+        if (expectedRecordCount != null)
+        {
             Assert.That(actualRecords.Count, Is.EqualTo(expectedRecordCount),
                 "The number of records were not as expected: " + testData);
         }

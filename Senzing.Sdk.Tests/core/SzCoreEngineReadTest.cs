@@ -1,31 +1,36 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+
+
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
-using System.Collections.Immutable;
 
-using static Senzing.Sdk.SzFlags;
+using static System.StringComparison;
+
 using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlagUsageGroup;
-using NUnit.Framework.Internal;
 using static Senzing.Sdk.Tests.Util.TextUtilities;
 using static Senzing.Sdk.Utilities;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreEngineReadTest : AbstractTest {
-    private const string PassengersDataSource   = "PASSENGERS";
-    private const string EmployeesDataSource    = "EMPLOYEES";
-    private const string VipsDataSource         = "VIPS";
-    private const string MarriagesDataSource    = "MARRIAGES";
-    private const string UnknownDataSource      = "UNKNOWN";
-  
+internal class SzCoreEngineReadTest : AbstractTest
+{
+    private const string PassengersDataSource = "PASSENGERS";
+    private const string EmployeesDataSource = "EMPLOYEES";
+    private const string VipsDataSource = "VIPS";
+    private const string MarriagesDataSource = "MARRIAGES";
+    private const string UnknownDataSource = "UNKNOWN";
+
     private static readonly (string dataSourceCode, string recordID) ABC123
         = (PassengersDataSource, "ABC123");
     private static readonly (string dataSourceCode, string recordID) DEF456
@@ -46,7 +51,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
         = (EmployeesDataSource, "ZYX321");
     private static readonly (string dataSourceCode, string recordID) CBA654
         = (EmployeesDataSource, "CBA654");
-  
+
     private static readonly (string dataSourceCode, string recordID) BCD123
         = (MarriagesDataSource, "BCD123");
     private static readonly (string dataSourceCode, string recordID) CDE456
@@ -55,7 +60,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
         = (MarriagesDataSource, "EFG789");
     private static readonly (string dataSourceCode, string recordID) FGH012
         = (MarriagesDataSource, "FGH012");
-  
+
     private static readonly IList<SzFlag?> EntityFlagSets;
     private static readonly IList<SzFlag?> RecordFlagSets;
     private static readonly IList<SzFlag> SearchIncludeFlags
@@ -75,7 +80,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
     private static readonly IList<SzFlag?> ExportFlagSets;
 
-    static SzCoreEngineReadTest() {
+    static SzCoreEngineReadTest()
+    {
         List<SzFlag?> list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzNoFlags);
@@ -87,7 +93,7 @@ internal class SzCoreEngineReadTest : AbstractTest {
                  | SzEntityIncludeRecordMatchingInfo);
         list.Add(SzEntityIncludeEntityName);
         EntityFlagSets = list.AsReadOnly();
-        
+
         list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzNoFlags);
@@ -111,22 +117,27 @@ internal class SzCoreEngineReadTest : AbstractTest {
                  | SzEntityIncludeRecordData
                  | SzSearchIncludeAllEntities);
 
-        ISet<SzFlag> includeSets    = new HashSet<SzFlag>();
-        ISet<SzFlag> prevSets       = SetOf(SzEntityDefaultFlags);
-        for (int index = 0; index < SearchIncludeFlags.Count; index++) {
+        ISet<SzFlag> includeSets = new HashSet<SzFlag>();
+        ISet<SzFlag> prevSets = SetOf(SzEntityDefaultFlags);
+        for (int index = 0; index < SearchIncludeFlags.Count; index++)
+        {
             ISet<SzFlag> currentSets = new HashSet<SzFlag>();
-            foreach (SzFlag prevFlags in prevSets) {
-                foreach (SzFlag flag in SearchIncludeFlags) {
+            foreach (SzFlag prevFlags in prevSets)
+            {
+                foreach (SzFlag flag in SearchIncludeFlags)
+                {
                     currentSets.Add(prevFlags | flag);
                 }
             }
             prevSets = currentSets;
-            foreach (SzFlag flags in currentSets) {
+            foreach (SzFlag flags in currentSets)
+            {
                 includeSets.Add(flags);
             }
             currentSets = new HashSet<SzFlag>();
         }
-        foreach (SzFlag flags in includeSets) {
+        foreach (SzFlag flags in includeSets)
+        {
             list.Add(flags);
         }
         SearchFlagSets = list.AsReadOnly();
@@ -145,33 +156,38 @@ internal class SzCoreEngineReadTest : AbstractTest {
                  | SzExportIncludeAllEntities);
 
         includeSets = new HashSet<SzFlag>();
-        prevSets    = SetOf(SzEntityDefaultFlags);
-        for (int index = 0; index < ExportIncludeFlags.Count; index++) {
+        prevSets = SetOf(SzEntityDefaultFlags);
+        for (int index = 0; index < ExportIncludeFlags.Count; index++)
+        {
             ISet<SzFlag> currentSets = new HashSet<SzFlag>();
-            foreach (SzFlag prevFlags in prevSets) {
-                foreach (SzFlag flag in ExportIncludeFlags) {
+            foreach (SzFlag prevFlags in prevSets)
+            {
+                foreach (SzFlag flag in ExportIncludeFlags)
+                {
                     currentSets.Add(prevFlags | flag);
                 }
             }
             prevSets = currentSets;
-            foreach (SzFlag flags in currentSets) {
+            foreach (SzFlag flags in currentSets)
+            {
                 includeSets.Add(flags);
             }
             currentSets = new HashSet<SzFlag>();
         }
-        foreach (SzFlag flags in includeSets) {
+        foreach (SzFlag flags in includeSets)
+        {
             list.Add(flags);
         }
         ExportFlagSets = list.AsReadOnly();
     }
 
-    private IDictionary<(string,string), long> LoadedRecordMap
-        = new Dictionary<(string,string), long>();
+    private readonly Dictionary<(string, string), long> LoadedRecordMap
+        = new Dictionary<(string, string), long>();
 
-    private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
-        = new Dictionary<long, ISet<(string,string)>>();
-    
-    private static readonly IList<(string,string)> RecordKeys
+    private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
+        = new Dictionary<long, ISet<(string, string)>>();
+
+    private static readonly IList<(string, string)> RecordKeys
         = ListOf(ABC123,
                  DEF456,
                  GHI789,
@@ -186,14 +202,19 @@ internal class SzCoreEngineReadTest : AbstractTest {
                  CDE456,
                  EFG789,
                  FGH012).AsReadOnly();
-    
+
     private SzCoreEnvironment? env;
 
-    private SzCoreEnvironment Env {
-       get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
@@ -201,44 +222,52 @@ internal class SzCoreEngineReadTest : AbstractTest {
     }
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
         string settings = this.GetRepoSettings();
-        
+
         string instanceName = this.GetType().Name;
-        
+
         // now we just need the entity ID's for the loaded records to use later
         NativeEngine nativeEngine = new NativeEngineExtern();
-        try {
+        try
+        {
             long returnCode = nativeEngine.Init(instanceName, settings, false);
-            if (returnCode != 0) {
-                throw new Exception(nativeEngine.GetLastException());
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeEngine.GetLastException());
             }
 
             // get the loaded records and entity ID's
-            foreach ((string dataSourceCode, string recordID) key in RecordKeys) {
+            foreach ((string dataSourceCode, string recordID) key in RecordKeys)
+            {
                 // clear the buffer
                 returnCode = nativeEngine.GetEntityByRecordID(
                     key.dataSourceCode, key.recordID, out string result);
-                if (returnCode != 0) {
-                    throw new Exception(nativeEngine.GetLastException());
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
                 }
 
                 // parse the JSON 
-                JsonObject? jsonObj     = JsonNode.Parse(result)?.AsObject();
-                JsonObject? entity      = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
-                long         entityID   = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
+                JsonObject? entity = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                long entityID = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
                 LoadedRecordMap.Add(key, entityID);
-                if (!LoadedEntityMap.ContainsKey(entityID)) {
-                    LoadedEntityMap.Add(entityID, new HashSet<(string,string)>());
+                if (!LoadedEntityMap.ContainsKey(entityID))
+                {
+                    LoadedEntityMap.Add(entityID, new HashSet<(string, string)>());
                 }
-                ISet<(string dataSourceCode, string recordID)> recordKeySet 
+                ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             };
 
-        } finally {
+        }
+        finally
+        {
             nativeEngine.Destroy();
         }
 
@@ -249,14 +278,19 @@ internal class SzCoreEngineReadTest : AbstractTest {
                                     .Build();
     }
 
-    public long GetEntityID(string dataSourceCode, string recordID) {
+    public long GetEntityID(string dataSourceCode, string recordID)
+    {
         return GetEntityID((dataSourceCode, recordID));
     }
 
-    public long GetEntityID((string dataSourceCode, string recordID) key) {
-        if (LoadedRecordMap.ContainsKey(key)) {
+    public long GetEntityID((string dataSourceCode, string recordID) key)
+    {
+        if (LoadedRecordMap.ContainsKey(key))
+        {
             return LoadedRecordMap[key];
-        } else {
+        }
+        else
+        {
             throw new ArgumentException("Record ID not found: " + key);
         }
     }
@@ -264,7 +298,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
     /**
      * Overridden to configure some data sources.
      */
-    override protected void PrepareRepository() {
+    override protected void PrepareRepository()
+    {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
         ISet<string> dataSources = SortedSetOf(PassengersDataSource,
@@ -272,10 +307,10 @@ internal class SzCoreEngineReadTest : AbstractTest {
                                                VipsDataSource,
                                                MarriagesDataSource);
 
-        FileInfo passengerFile  = this.PreparePassengerFile();
-        FileInfo employeeFile   = this.PrepareEmployeeFile();
-        FileInfo vipFile        = this.PrepareVipFile();
-        FileInfo marriagesFile  = this.PrepareMarriagesDataSourceFile();
+        FileInfo passengerFile = this.PreparePassengerFile();
+        FileInfo employeeFile = this.PrepareEmployeeFile();
+        FileInfo vipFile = this.PrepareVipFile();
+        FileInfo marriagesFile = this.PrepareMarriagesDataSourceFile();
 
         RepositoryManager.ConfigSources(repoDirectory,
                                         dataSources,
@@ -302,19 +337,23 @@ internal class SzCoreEngineReadTest : AbstractTest {
                                    true);
     }
 
-    private static string RelationshipKey((string,string) recordKey1,
-                                          (string,string) recordKey2) 
+    private static string RelationshipKey((string, string) recordKey1,
+                                          (string, string) recordKey2)
     {
         string rec1 = recordKey1.ToString();
         string rec2 = recordKey2.ToString();
-        if (rec1.CompareTo(rec2) <= 0) {
+        if (string.Compare(rec1, rec2, Ordinal) <= 0)
+        {
             return rec1 + "|" + rec2;
-        } else {
+        }
+        else
+        {
             return rec2 + "|" + rec1;
         }
     }
 
-    private FileInfo PreparePassengerFile() {
+    private FileInfo PreparePassengerFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH"};
@@ -332,7 +371,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
         return this.PrepareCSVFile("test-passengers-", headers, passengers);
     }
 
-    private FileInfo PrepareEmployeeFile() {
+    private FileInfo PrepareEmployeeFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH","MOTHERS_MAIDEN_NAME", "SSN_NUMBER"};
@@ -353,9 +393,10 @@ internal class SzCoreEngineReadTest : AbstractTest {
         };
 
         return this.PrepareJsonArrayFile("test-employees-", headers, employees);
-  }
+    }
 
-    private FileInfo PrepareVipFile() {
+    private FileInfo PrepareVipFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "PHONE_NUMBER", "ADDR_FULL",
             "DATE_OF_BIRTH","MOTHERS_MAIDEN_NAME"};
@@ -370,7 +411,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
         return this.PrepareJsonFile("test-vips-", headers, vips);
     }
 
-    private FileInfo PrepareMarriagesDataSourceFile() {
+    private FileInfo PrepareMarriagesDataSourceFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FULL", "AKA_NAME_FULL", "PHONE_NUMBER", "ADDR_FULL",
             "MARRIAGE_DATE", "DATE_OF_BIRTH", "GENDER", "RELATIONSHIP_TYPE",
@@ -397,34 +439,41 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
         return this.PrepareJsonFile("test-marriages-", headers, spouses);
     }
-    
+
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.Env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
-    private static List<object?[]> GetGetEntityParameters() {
-        List<object?[]>     result      = new List<object?[]>();
-        Iterator<SzFlag?>   flagSetIter = GetCircularIterator(EntityFlagSets);
+    private static List<object?[]> GetGetEntityParameters()
+    {
+        List<object?[]> result = new List<object?[]>();
+        Iterator<SzFlag?> flagSetIter = GetCircularIterator(EntityFlagSets);
 
 
-        Type UnknownSource  = typeof(SzUnknownDataSourceException);
-        Type NotFound       = typeof(SzNotFoundException);
+        Type UnknownSource = typeof(SzUnknownDataSourceException);
+        Type NotFound = typeof(SzNotFoundException);
 
-        foreach ((string,string) recordKey in RecordKeys) {
+        foreach ((string, string) recordKey in RecordKeys)
+        {
             result.Add(new object?[] {
                 "Get entity for " + recordKey + " test",
                 recordKey,
                 (SzCoreEngineReadTest t) => t.GetEntityID(recordKey),
-                flagSetIter.Next(), 
+                flagSetIter.Next(),
                 null,
                 null});
         }
@@ -448,7 +497,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
         return result;
     }
 
-    public static List<object?[]> GetExportCsvParameters() {
+    public static List<object?[]> GetExportCsvParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
         List<string> columnLists = ListOf(
@@ -456,80 +506,97 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
         Iterator<String> columnListIter = GetCircularIterator(columnLists);
 
-        foreach (SzFlag? flags in ExportFlagSets) {
-            result.Add(new object?[] { columnListIter.Next(), flags, null});        
+        foreach (SzFlag? flags in ExportFlagSets)
+        {
+            result.Add(new object?[] { columnListIter.Next(), flags, null });
         }
 
         IEnumerator<SzFlag?> enumerator = ExportFlagSets.GetEnumerator();
         enumerator.MoveNext();
         SzFlag? flagSet = enumerator.Current;
         result.Add(new object?[] {
-            "RESOLVED_ENTITY_ID,BAD_COLUMN_NAME", 
-            enumerator.Current, 
+            "RESOLVED_ENTITY_ID,BAD_COLUMN_NAME",
+            enumerator.Current,
             typeof(SzBadInputException)});
-        
+
         return result;
     }
 
-    public static List<object?[]> GetExportJsonParameters() {
+    public static List<object?[]> GetExportJsonParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
-        foreach (SzFlag? flagSet in ExportFlagSets) {
-            result.Add(new object?[] {flagSet, null});
+        foreach (SzFlag? flagSet in ExportFlagSets)
+        {
+            result.Add(new object?[] { flagSet, null });
         }
-        
+
         return result;
     }
 
     [Test, TestCaseSource(nameof(GetExportCsvParameters))]
-    public void TestExportCsvEntityReport(string     columnList,
-                                         SzFlag?    flags,
-                                         Type?      expectedException)
+    public void TestExportCsvEntityReport(string columnList,
+                                         SzFlag? flags,
+                                         Type? expectedException)
     {
         string testData = "columnList=[ " + columnList + " ], flags=[ "
             + SzExportFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedException + " ]";
 
-        this.PerformTest(() => {
-            IntPtr      handle = IntPtr.Zero;
-            SzEngine    engine = this.Env.GetEngine();
-            try {
+        this.PerformTest(() =>
+        {
+            IntPtr handle = IntPtr.Zero;
+            SzEngine engine = this.Env.GetEngine();
+            try
+            {
                 handle = engine.ExportCsvEntityReport(columnList, flags);
-                
-                if (expectedException != null) {
-                    Fail("Export unexpectedly succeeded when exception expected: " 
+
+                if (expectedException != null)
+                {
+                    Fail("Export unexpectedly succeeded when exception expected: "
                          + testData);
                 }
 
                 StringBuilder sb = new StringBuilder();
-                for (string? data = engine.FetchNext(handle); 
-                     data != null; 
-                     data = engine.FetchNext(handle)) 
+                for (string? data = engine.FetchNext(handle);
+                     data != null;
+                     data = engine.FetchNext(handle))
                 {
                     sb.AppendLine(data);
                 }
 
                 IntPtr invalidHandle = handle;
-                try {
+                try
+                {
                     engine.CloseExport(handle);
-                } finally {
+                }
+                finally
+                {
                     handle = IntPtr.Zero;
                 }
-                try {
+                try
+                {
                     // try fetching with an invalid handle
                     engine.FetchNext(invalidHandle);
                     Fail("Succeeded in fetching with an invalid export handle");
-                    
-                } catch (SzException) { // TODO(bcaceres): change this to SzBadInputException??
+
+                }
+                catch (SzException)
+                { // TODO(bcaceres): change this to SzBadInputException??
                     // expected
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Fail("Fetching with invalid handle failed with unexpected exception.", e);
                 }
-                try {
+                try
+                {
                     // try closing the handle twice (should succeed)
                     engine.CloseExport(invalidHandle);
 
-                } catch (Exception) {
+                }
+                catch (Exception)
+                {
                     // TODO(bcaceres): This should have succeeded but currently fails
                     // Fail("Failed to close an export handle more than once.", e);
                 }
@@ -539,33 +606,39 @@ internal class SzCoreEngineReadTest : AbstractTest {
                 StringReader sr = new StringReader(fullExport);
                 string? headerLine = sr.ReadLine();
                 IList<string> headerTokens = ParseCSVLine(headerLine ?? "");
-                IDictionary<string, int> headerMap = new Dictionary<string,int>();
+                IDictionary<string, int> headerMap = new Dictionary<string, int>();
                 IList<string> headers = new List<string>(headerTokens.Count);
 
-                for (int index = 0; index < headerTokens.Count; index++) {
-                    string header = headerTokens[index].Trim().ToUpper();
+                for (int index = 0; index < headerTokens.Count; index++)
+                {
+                    string header = headerTokens[index].Trim().ToUpperInvariant();
                     headerMap.Add(header, index);
                     headers.Add(header);
                 }
 
-                if (columnList.Equals("*") || columnList.Length == 0) {
+                if (columnList.Equals("*", Ordinal) || columnList.Length == 0)
+                {
                     Assert.IsTrue(headers.Contains("RESOLVED_ENTITY_ID"),
                         "Default columns exported, but RESOLVED_ENTITY_ID not found "
-                        + "in headers (" + headerLine + " / " +  headers.ToDebugString()
+                        + "in headers (" + headerLine + " / " + headers.ToDebugString()
                         + "): " + testData);
-                    
-                } else {
+
+                }
+                else
+                {
                     string[] columns = columnList.Split(",");
-                    foreach (string col in columns) {
-                        string column = col.Trim().ToUpper();
-                        Assert.IsTrue(headers.Contains(column), 
+                    foreach (string col in columns)
+                    {
+                        string column = col.Trim().ToUpperInvariant();
+                        Assert.IsTrue(headers.Contains(column),
                             "Specified column (" + column + ") was not found "
                             + "in columns (" + headerLine + " / " + headers.ToDebugString()
                             + "): " + testData);
                     }
                 }
 
-                for (string? line = sr.ReadLine(); line != null; line = sr.ReadLine()) {
+                for (string? line = sr.ReadLine(); line != null; line = sr.ReadLine())
+                {
                     if (line.Length == 0) continue;
                     IList<string> lineTokens = ParseCSVLine(line);
                     Assert.That(lineTokens.Count, Is.EqualTo(headers.Count),
@@ -573,88 +646,116 @@ internal class SzCoreEngineReadTest : AbstractTest {
                         + headers.ToDebugString() + " ], line=[ " + line + " ]");
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedException == null) {
+                if (expectedException == null)
+                {
                     Fail("Unexpectedly failed exporting CSV entities: "
                          + description, e);
 
-                } else {
+                }
+                else
+                {
                     Assert.IsInstanceOf(
-                        expectedException, e, 
+                        expectedException, e,
                         "Export CSV failed with an unexpected exception type: "
                         + description);
                 }
 
 
-            } finally {
-                if (handle != IntPtr.Zero && engine != null) {
-                    try {
+            }
+            finally
+            {
+                if (handle != IntPtr.Zero && engine != null)
+                {
+                    try
+                    {
                         engine.CloseExport(handle);
-                    } catch (SzException e) {
+                    }
+                    catch (SzException e)
+                    {
                         Console.Error.WriteLine(e);
                     }
                 }
             }
         });
-    }   
+    }
 
     [Test, TestCaseSource(nameof(GetExportJsonParameters))]
-    public void TestExportJsonEntityReport(SzFlag?  flags,
-                                           Type?    expectedException)
+    public void TestExportJsonEntityReport(SzFlag? flags,
+                                           Type? expectedException)
     {
-        string testData = "flags=[ " + SzExportFlags.FlagsToString(flags) 
+        string testData = "flags=[ " + SzExportFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedException + " ]";
 
-        this.PerformTest(() => {
-            IntPtr      handle = IntPtr.Zero;
-            SzEngine    engine = this.Env.GetEngine();
-            try {
+        this.PerformTest(() =>
+        {
+            IntPtr handle = IntPtr.Zero;
+            SzEngine engine = this.Env.GetEngine();
+            try
+            {
                 handle = engine.ExportJsonEntityReport(flags);
-                
-                if (expectedException != null) {
-                    Fail("Export unexpectedly succeeded when exception expected: " 
+
+                if (expectedException != null)
+                {
+                    Fail("Export unexpectedly succeeded when exception expected: "
                         + testData);
                 }
 
                 StringBuilder sb = new StringBuilder();
-                for (string? data = engine.FetchNext(handle); 
-                     data != null; 
-                     data = engine.FetchNext(handle)) 
+                for (string? data = engine.FetchNext(handle);
+                     data != null;
+                     data = engine.FetchNext(handle))
                 {
                     sb.AppendLine(data);
                 }
 
                 IntPtr invalidHandle = handle;
-                try {
+                try
+                {
                     engine.CloseExport(handle);
-                } finally {
+                }
+                finally
+                {
                     handle = IntPtr.Zero;
                 }
-                try {
+                try
+                {
                     // try fetching with an invalid handle
                     engine.FetchNext(invalidHandle);
                     Fail("Succeeded in fetching with an invalid export handle");
 
-                } catch (SzException) { // TODO(bcaceres): change this to SzBadInputException??
+                }
+                catch (SzException)
+                { // TODO(bcaceres): change this to SzBadInputException??
                     // expected
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     Fail("Fetching with invalid handle failed with unexpected exception.", e);
                 }
 
-                try {
+                try
+                {
                     // try closing the handle twice (should succeed)
                     engine.CloseExport(invalidHandle);
 
-                } catch (Exception) {
+                }
+                catch (Exception)
+                {
                     // TODO(bcaceres): This should have succeeded but currently fails
                     // Fail("Failed to close an export handle more than once.", e);
                 }
@@ -663,11 +764,13 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
                 // ensure we can parse the JSON
                 StringReader sr = new StringReader(fullExport);
-                for (string? line = sr.ReadLine(); 
-                     line != null; 
-                     line = sr.ReadLine()) {
+                for (string? line = sr.ReadLine();
+                     line != null;
+                     line = sr.ReadLine())
+                {
 
-                    if (line.Trim().Length == 0) {
+                    if (line.Trim().Length == 0)
+                    {
                         continue;
                     }
 
@@ -677,49 +780,63 @@ internal class SzCoreEngineReadTest : AbstractTest {
                         + ", line=[ " + line + " ]");
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedException == null) {
+                if (expectedException == null)
+                {
                     Fail("Unexpectedly failed exporting JSON entities: "
                          + description, e);
 
-                } else {
+                }
+                else
+                {
                     Assert.IsInstanceOf(
-                        expectedException, e, 
+                        expectedException, e,
                         "Export JSON failed with an unexpected exception type: "
                         + description);
                 }
 
 
-            } finally {
-                if (handle != IntPtr.Zero && engine != null) {
-                    try {
+            }
+            finally
+            {
+                if (handle != IntPtr.Zero && engine != null)
+                {
+                    try
+                    {
                         engine.CloseExport(handle);
 
-                    } catch (SzException e) {
+                    }
+                    catch (SzException e)
+                    {
                         Console.Error.WriteLine(e);
                     }
                 }
             }
         });
-    }   
+    }
 
     [Test, TestCaseSource(nameof(GetGetEntityParameters))]
     public void TestGetEntityByRecordId(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey,
-        Func<SzCoreEngineReadTest,long>             entityIDFunc,
-        SzFlag?                                     flags,
-        Type?                                       recordExceptionType,
-        Type?                                       entityExceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineReadTest, long> entityIDFunc,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType)
     {
         long entityID = entityIDFunc(this);
 
@@ -728,35 +845,42 @@ internal class SzCoreEngineReadTest : AbstractTest {
             + entityID + " ], flags=[ " + SzEntityFlags.FlagsToString(flags)
             + " ], expectedExceptionType=[ " + recordExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.GetEntity(
                     recordKey.dataSourceCode, recordKey.recordID, flags);
 
-                if (recordExceptionType != null) {
+                if (recordExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in getting an entity: " + testData);
                 }
-                
+
                 // parse the result
                 JsonObject? jsonObject = null;
-                try {
+                try
+                {
                     jsonObject = JsonNode.Parse(result)?.AsObject();
 
-                    if (jsonObject == null) {
+                    if (jsonObject == null)
+                    {
                         throw new JsonException("Failed to parse as JsonObject");
                     }
-                } catch (Exception e) {
-                    Fail("Failed to parse entity result JSON: " + testData 
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse entity result JSON: " + testData
                          + ", result=[ " + result + " ]", e);
                 }
 
                 // get the entity
                 JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
 
-                Assert.IsNotNull(entity, 
-                    "No RESOLVED_ENTITY property in entity JSON: " 
+                Assert.IsNotNull(entity,
+                    "No RESOLVED_ENTITY property in entity JSON: "
                     + testData + ", result=[ " + result + " ]");
 
                 // get the entity ID
@@ -768,23 +892,31 @@ internal class SzCoreEngineReadTest : AbstractTest {
                 Assert.That(actualEntityID, Is.EqualTo(entityID),
                              "Unexpected entity ID: " + testData);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (recordExceptionType == null) {
+                if (recordExceptionType == null)
+                {
                     Fail("Unexpectedly failed getting entity by record: "
                          + description, e);
 
-                } else {
+                }
+                else
+                {
                     Assert.IsInstanceOf(
-                        recordExceptionType, e, 
+                        recordExceptionType, e,
                         "get-entity-by-record failed with an unexpected "
                         + "exception type: " + description);
                 }
@@ -794,12 +926,12 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetGetEntityParameters))]
     public void TestGetEntityByEntityID(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey,
-        Func<SzCoreEngineReadTest,long>             entityIDFunc,
-        SzFlag?                                     flags,
-        Type?                                       recordExceptionType,
-        Type?                                       entityExceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineReadTest, long> entityIDFunc,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType)
     {
         long entityID = entityIDFunc(this);
 
@@ -808,30 +940,36 @@ internal class SzCoreEngineReadTest : AbstractTest {
             + entityID + " ], flags=[ " + SzEntityFlags.FlagsToString(flags)
             + " ], expectedExceptionType=[ " + entityExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.GetEntity(entityID, flags);
 
-                if (entityExceptionType != null) {
+                if (entityExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in getting an entity: " + testData);
                 }
-                
+
                 // parse the result
                 JsonObject? jsonObject = null;
-                try {
+                try
+                {
                     jsonObject = JsonNode.Parse(result)?.AsObject();
 
-                } catch (Exception e) {
-                    Fail("Failed to parse entity result JSON: " + testData 
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse entity result JSON: " + testData
                          + ", result=[ " + result + " ]", e);
                 }
 
                 // get the entity
                 JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
 
-                Assert.IsNotNull(entity, "No RESOLVED_ENTITY property in entity JSON: " 
+                Assert.IsNotNull(entity, "No RESOLVED_ENTITY property in entity JSON: "
                               + testData + ", result=[ " + result + " ]");
 
                 // get the entity ID
@@ -843,23 +981,31 @@ internal class SzCoreEngineReadTest : AbstractTest {
                 Assert.That(actualEntityID, Is.EqualTo(entityID),
                              "Unexpected entity ID: " + testData);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (entityExceptionType == null) {
+                if (entityExceptionType == null)
+                {
                     Fail("Unexpectedly failed getting entity by record: "
                          + description, e);
 
-                } else {
+                }
+                else
+                {
                     Assert.IsInstanceOf(
-                        entityExceptionType, e, 
+                        entityExceptionType, e,
                         "get-entity-by-id failed with an unexpected exception type: "
                         + description);
                 }
@@ -867,18 +1013,20 @@ internal class SzCoreEngineReadTest : AbstractTest {
         });
     }
 
-    private static List<object?[]> GetGetRecordParameters() {
-        List<object?[]>     result      = new List<object?[]>();
-        Iterator<SzFlag?>   flagSetIter = GetCircularIterator(RecordFlagSets);
+    private static List<object?[]> GetGetRecordParameters()
+    {
+        List<object?[]> result = new List<object?[]>();
+        Iterator<SzFlag?> flagSetIter = GetCircularIterator(RecordFlagSets);
 
         Type UnknownSource = typeof(SzUnknownDataSourceException);
         Type NotFound = typeof(SzNotFoundException);
 
-        foreach ((string,string) recordKey in RecordKeys) {
+        foreach ((string, string) recordKey in RecordKeys)
+        {
             result.Add(new object?[] {
                 "Get record for " + recordKey + " test",
                 recordKey,
-                flagSetIter.Next(), 
+                flagSetIter.Next(),
                 null});
         }
 
@@ -899,39 +1047,46 @@ internal class SzCoreEngineReadTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetGetRecordParameters))]
     public void TestGetRecord(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey,
-        SzFlag?                                     flags,
-        Type?                                       expectedExceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        SzFlag? flags,
+        Type? expectedExceptionType)
     {
-        string testData = "description=[ " + testDescription 
+        string testData = "description=[ " + testDescription
             + " ], recordKey=[ " + recordKey + " ], flags=[ "
             + SzRecordFlags.FlagsToString(flags)
             + " ], expectedExceptionType=[ "
             + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.GetRecord(recordKey.dataSourceCode,
                                                  recordKey.recordID,
                                                  flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in getting a record: " + testData);
                 }
-                
+
                 // parse the result
                 JsonObject? jsonObject = null;
-                try {
+                try
+                {
                     jsonObject = JsonNode.Parse(result)?.AsObject();
 
-                    if (jsonObject == null) {
+                    if (jsonObject == null)
+                    {
                         throw new JsonException("Failed to parse as JSON object");
                     }
-                } catch (Exception e) {
-                    Fail("Failed to parse record result JSON: " + testData 
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse record result JSON: " + testData
                          + ", result=[ " + result + " ]", e);
                 }
 
@@ -940,39 +1095,47 @@ internal class SzCoreEngineReadTest : AbstractTest {
                     = jsonObject?["DATA_SOURCE"]?.GetValue<string>();
 
                 Assert.IsNotNull(dataSourceCode,
-                    "No DATA_SOURCE property in record JSON: " 
+                    "No DATA_SOURCE property in record JSON: "
                     + testData + ", result=[ " + result + " ]");
 
                 // get the record ID
                 string? recordID = jsonObject?["RECORD_ID"]?.GetValue<string>();
 
-                Assert.IsNotNull(recordID, "No RECORD_ID property in record JSON: " 
+                Assert.IsNotNull(recordID, "No RECORD_ID property in record JSON: "
                     + testData + ", result=[ " + result + " ]");
 
-                (string,string) actualRecordKey = (dataSourceCode ?? "", 
+                (string, string) actualRecordKey = (dataSourceCode ?? "",
                                                    recordID ?? "");
 
                 Assert.That(actualRecordKey, Is.EqualTo(recordKey),
                     "The data source code and/or record ID are not as expected: "
                     + testData + ", result=[ " + result + " ]");
-                
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed getting entity by record: "
                          + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "get-record failed with an unexpected exception type: "
                         + description);
                 }
@@ -980,43 +1143,52 @@ internal class SzCoreEngineReadTest : AbstractTest {
         });
     }
 
-    private class Criterion {
+    private class Criterion
+    {
         internal string key;
         internal ISet<string> values;
 
-        internal Criterion(string key, params string[] values) {
+        internal Criterion(string key, params string[] values)
+        {
             this.key = key;
             this.values = new SortedSet<string>();
-            foreach (string value in values) {
+            foreach (string value in values)
+            {
                 this.values.Add(value);
             }
         }
     }
 
-    private static Criterion CriterionOf(string key, params string[] values) {
+    private static Criterion CriterionOf(string key, params string[] values)
+    {
         return new Criterion(key, values);
     }
 
     private static IDictionary<string, ISet<string>> CriteriaOf(
-        string key, params string[] values) 
+        string key, params string[] values)
     {
         Criterion criterion = CriterionOf(key, values);
         return CriteriaOf(criterion);
     }
 
     private static IDictionary<string, ISet<string>> CriteriaOf(
-        params Criterion[] criteria) 
+        params Criterion[] criteria)
     {
         IDictionary<string, ISet<string>> result
-            = new Dictionary<string,ISet<string>>();
+            = new Dictionary<string, ISet<string>>();
 
-        foreach (Criterion criterion in criteria) {
+        foreach (Criterion criterion in criteria)
+        {
             ISet<String>? values = (result.ContainsKey(criterion.key))
                 ? result[criterion.key] : null;
-            if (values == null) {
+            if (values == null)
+            {
                 result.Add(criterion.key, criterion.values);
-            } else {
-                foreach (string value in criterion.values) {
+            }
+            else
+            {
+                foreach (string value in criterion.values)
+                {
                     values?.Add(value);
                 }
             }
@@ -1024,7 +1196,8 @@ internal class SzCoreEngineReadTest : AbstractTest {
         return result;
     }
 
-    public static List<object?[]> GetSearchParameters() {
+    public static List<object?[]> GetSearchParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
         IDictionary<IDictionary<string, ISet<string>>, IDictionary<SzFlag, int>>
@@ -1089,17 +1262,20 @@ internal class SzCoreEngineReadTest : AbstractTest {
             SortedMapOf((SzSearchIncludeResolved, 1),
                         (SzSearchIncludePossiblySame, 1)));
 
-        foreach (SzFlag? flagSet in SearchFlagSets) {
+        foreach (SzFlag? flagSet in SearchFlagSets)
+        {
             foreach (KeyValuePair<IDictionary<string, ISet<string>>, IDictionary<SzFlag, int>> pair
                      in searchCountMap)
             {
-                IDictionary<string, ISet<string>>   criteria    = pair.Key;
-                IDictionary<SzFlag, int>            countsMap   = pair.Value;
-                int expectedCount   = 0;
-                int totalCount      = 0;
-                int flagCount       = 0;
-                foreach (SzFlag flag in SearchIncludeFlags) {
-                    if (countsMap.ContainsKey(flag)) {
+                IDictionary<string, ISet<string>> criteria = pair.Key;
+                IDictionary<SzFlag, int> countsMap = pair.Value;
+                int expectedCount = 0;
+                int totalCount = 0;
+                int flagCount = 0;
+                foreach (SzFlag flag in SearchIncludeFlags)
+                {
+                    if (countsMap.ContainsKey(flag))
+                    {
                         totalCount += countsMap[flag];
                     }
                     if (flagSet == null || ((flagSet & flag) == SzNoFlags)) continue;
@@ -1107,13 +1283,15 @@ internal class SzCoreEngineReadTest : AbstractTest {
                     if (!countsMap.ContainsKey(flag)) continue;
                     expectedCount += countsMap[flag];
                 }
-                if (flagCount == 0) {
+                if (flagCount == 0)
+                {
                     expectedCount = totalCount;
                 }
-                
+
                 string attributes = CriteriaToJson(criteria);
 
-                if (result.Count == 0) {
+                if (result.Count == 0)
+                {
                     result.Add(new object?[] {
                         attributes,
                         "BAD_SEARCH_PROFILE",
@@ -1149,109 +1327,130 @@ internal class SzCoreEngineReadTest : AbstractTest {
         return result;
     }
 
-    private static string CriteriaToJson(IDictionary<string, ISet<string>> criteria) {
+    private static string CriteriaToJson(IDictionary<string, ISet<string>> criteria)
+    {
         StringBuilder sb = new StringBuilder();
-        sb.Append("{");
+        sb.Append('{');
         string prefix1 = "";
-        foreach (KeyValuePair<string,ISet<String>> pair in criteria) {
-            string          key     = pair.Key.ToUpper();
-            ISet<string>    values  = pair.Value;
+        foreach (KeyValuePair<string, ISet<String>> pair in criteria)
+        {
+            string key = pair.Key.ToUpperInvariant();
+            ISet<string> values = pair.Value;
             if (values.Count == 0) continue;
-            if (values.Count == 1) {
+            if (values.Count == 1)
+            {
                 sb.Append(prefix1);
-                sb.Append(JsonEscape(key)).Append(":");
+                sb.Append(JsonEscape(key)).Append(':');
                 IEnumerator<string> ienum = values.GetEnumerator();
                 ienum.MoveNext();
                 sb.Append(JsonEscape(ienum.Current));
                 prefix1 = ",";
                 continue;
             }
-            string pluralKey = (key.EndsWith("S")) 
+            string pluralKey = (key.EndsWith('S'))
                 ? (key + "ES") : (key + "S");
             sb.Append(prefix1);
             sb.Append(JsonEscape(pluralKey)).Append(": [");
             string prefix2 = "";
-            foreach (string value in values) {
+            foreach (string value in values)
+            {
                 sb.Append(prefix2);
-                sb.Append("{").Append(JsonEscape(key));
-                sb.Append(":").Append(JsonEscape(value)).Append("}");
+                sb.Append('{').Append(JsonEscape(key));
+                sb.Append(':').Append(JsonEscape(value)).Append('}');
                 prefix2 = ",";
             }
-            sb.Append("]");
+            sb.Append(']');
             prefix1 = ",";
         }
-        sb.Append("}");
+        sb.Append('}');
         return sb.ToString();
     }
 
     [Test, TestCaseSource(nameof(GetSearchParameters))]
-    public void TestSearchByAttributes(string   attributes,
-                                       string   searchProfile,
-                                       SzFlag?  flags,
-                                       int      expectedCount,
-                                       Type?    expectedExceptionType)
+    public void TestSearchByAttributes(string attributes,
+                                       string searchProfile,
+                                       SzFlag? flags,
+                                       int expectedCount,
+                                       Type? expectedExceptionType)
     {
         string testData = "description=[ " + attributes
             + " ], searchProfile=[ " + searchProfile
             + " ], flags=[ " + SzSearchFlags.FlagsToString(flags)
             + " ], expectedCount=[ " + expectedCount + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string? result = null;
-                if (searchProfile == null) {
+                if (searchProfile == null)
+                {
                     result = engine.SearchByAttributes(attributes, flags);
-                } else {
+                }
+                else
+                {
                     result = engine.SearchByAttributes(attributes,
                                                        searchProfile,
                                                        flags);
                 }
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in searching: " + testData);
                 }
 
                 Assert.IsNotNull(result, "Search result is null: " + testData);
                 Assert.That(result.Trim(), Is.Not.EqualTo(""),
                     "Search result is empty: " + testData);
-                
+
                 // parse the result
                 JsonObject? jsonObject = null;
-                try {
+                try
+                {
                     jsonObject = JsonNode.Parse(result ?? "")?.AsObject();
 
-                } catch (Exception e) {
-                    Fail("Failed to parse search result JSON: " + testData 
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse search result JSON: " + testData
                          + ", result=[ " + result + " ]", e);
                 }
 
                 JsonArray? entities = jsonObject?["RESOLVED_ENTITIES"]?.AsArray();
                 Assert.IsNotNull(entities, "The RESOLVED_ENTITIES property was not found "
                     + "in the result.  " + testData + ", result=[ " + result + " ]");
-                
+
                 int actualCount = entities?.Count ?? 0;
                 Assert.That(actualCount, Is.EqualTo(expectedCount),
                     "Unexpected number of search results.  " + testData
                     + ", entities=[ " + entities + " ]");
-                
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed search: " + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "search failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }

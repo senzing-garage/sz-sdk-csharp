@@ -1,9 +1,10 @@
-namespace Senzing.Sdk.Tests.Core
-{
+namespace Senzing.Sdk.Tests.Core;
+
 /// <summary>
 /// Provides a simple wrapper for optional handling "out parameters" of any type.
 /// </summary>
-public class Result<T> {
+public class Result<T>
+{
     /// <summary>
     /// The underlying value.
     /// </summary>
@@ -12,7 +13,8 @@ public class Result<T> {
     /// <summary>
     /// Default constructor.  This will construct with a <code>null</code> value.
     /// </summary>
-    Result() {
+    Result()
+    {
         // do nothing
     }
 
@@ -23,7 +25,8 @@ public class Result<T> {
     /// <param name="value">
     /// The value with which to construct.
     /// </param>
-    Result(T value) {
+    Result(T value)
+    {
         this.value = value;
     }
 
@@ -32,7 +35,8 @@ public class Result<T> {
     /// </summary>
     /// 
     /// <param name="value">The value to be set.</param>
-    public void SetValue(T? value) {
+    public void SetValue(T? value)
+    {
         this.value = value;
     }
 
@@ -41,8 +45,12 @@ public class Result<T> {
     /// </summary>
     /// 
     /// <returns>The underlying value.</returns>
-    public T? GetValue() {
-        return this.value;
+    public T? Value
+    {
+        get
+        {
+            return this.value;
+        }
     }
 }
-}
+

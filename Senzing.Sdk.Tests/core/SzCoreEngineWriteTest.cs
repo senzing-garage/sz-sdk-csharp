@@ -1,42 +1,40 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
-using System.Collections.Immutable;
-using System.Collections;
 
-using static Senzing.Sdk.SzFlags;
+using static System.StringComparison;
+
 using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlagUsageGroup;
-using NUnit.Framework.Internal;
-using static Senzing.Sdk.Tests.Util.TextUtilities;
-using static Senzing.Sdk.Utilities;
 using static Senzing.Sdk.Tests.Core.SzRecord;
-using System.Numerics;
-using System.Runtime.InteropServices;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreEngineWriteTest : AbstractTest {
-    private const string CustomersDataSource   = "CUSTOMERS";
-    private const string WatchlistDataSource   = "WATCHLIST";
-    private const string EmployeesDataSource   = "EMPLOYEES";
-    private const string PassengersDataSource  = "PASSENGERS";
-    private const string VipsDataSource        = "VIPS";
-    private const string UnknownDataSource     = "UNKNOWN";
-    
+internal class SzCoreEngineWriteTest : AbstractTest
+{
+    private const string CustomersDataSource = "CUSTOMERS";
+    private const string WatchlistDataSource = "WATCHLIST";
+    private const string EmployeesDataSource = "EMPLOYEES";
+    private const string PassengersDataSource = "PASSENGERS";
+    private const string VipsDataSource = "VIPS";
+    private const string UnknownDataSource = "UNKNOWN";
+
     private static readonly SzRecord RecordJoeSchmoe
         = new SzRecord(
             SzFullName.Of("Joe Schmoe"),
             SzPhoneNumber.Of("725-555-1313"),
             SzFullAddress.Of("101 Main Street, Las Vegas, NV 89101"));
-    
+
     private static readonly SzRecord RecordJaneSmith
         = new SzRecord(
             SzFullName.Of("Jane Smith"),
@@ -66,14 +64,14 @@ internal class SzCoreEngineWriteTest : AbstractTest {
             SzFullName.Of("Dr. John H. Watson"),
             SzPhoneNumber.Of("44-163-555-1414"),
             SzFullAddress.Of("221b Baker Street, London, NW1 6XE, England"));
-    
+
     private static readonly SzRecord RecordJoannSmith
         = new SzRecord(
             SzFullName.Of("Joann Smith"),
             SzPhoneNumber.Of("725-888-3939"),
             SzFullAddress.Of("101 Fifth Ave, Las Vegas, NV 89118"),
             SzDateOfBirth.Of("15-MAY-1983"));
-        
+
     private static readonly SzRecord RecordBillWright
         = new SzRecord(
             SzNameByParts.Of("Bill", "Wright", "AKA"),
@@ -88,7 +86,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
             SzPhoneNumber.Of("725-888-3940"),
             SzFullAddress.Of("101 Fifth Ave, Las Vegas, NV 89118"),
             SzDateOfBirth.Of("12-JUN-1981"));
-                
+
     private static readonly SzRecord RecordKimLong
         = new SzRecord(
             SzFullName.Of("Kim Long"),
@@ -102,7 +100,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
             SzPhoneNumber.Of("725-111-2222"),
             SzFullAddress.Of("707 Seventh Ave, Las Vegas, NV 89143"),
             SzDateOfBirth.Of("24-OCT-1976"));
-    
+
     private static readonly List<SzRecord> NewRecords
         = ListOf(RecordBillWright,
                  RecordCraigSmith,
@@ -116,7 +114,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                  RecordKimLong,
                  RecordSherlockHolmes);
 
-    private static readonly List<(string,string)> NewRecordKeys
+    private static readonly List<(string, string)> NewRecordKeys
         = ListOf(
             (CustomersDataSource, "ABC123"),
             (WatchlistDataSource, "DEF456"),
@@ -216,16 +214,17 @@ internal class SzCoreEngineWriteTest : AbstractTest {
             SzSocialSecurity.Of("888-88-8888")));
 
     private static readonly IList<SzFlag?> WriteFlagSets;
-    
+
     private static readonly IList<SzFlag?> RecordFlagSets;
 
-    static SzCoreEngineWriteTest() {
+    static SzCoreEngineWriteTest()
+    {
         List<SzFlag?> list = new List<SzFlag?>(4);
         list.Add(null);
         list.Add(SzNoFlags);
         list.Add(SzWithInfo);
         WriteFlagSets = list.AsReadOnly();
-    
+
         list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzNoFlags);
@@ -243,19 +242,19 @@ internal class SzCoreEngineWriteTest : AbstractTest {
         RecordFlagSets = list.AsReadOnly();
     }
 
-    private IDictionary<(string,string), long> LoadedRecordMap
-        = new Dictionary<(string,string), long>();
+    private readonly Dictionary<(string, string), long> LoadedRecordMap
+        = new Dictionary<(string, string), long>();
 
-    private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
-        = new Dictionary<long, ISet<(string,string)>>();
+    private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
+        = new Dictionary<long, ISet<(string, string)>>();
 
     private static readonly (string dataSourceCode, string recordID) PassengerABC123
         = (PassengersDataSource, "ABC123");
-    
+
     private static readonly (string dataSourceCode, string recordID) PassengerDEF456
         = (PassengersDataSource, "DEF456");
 
-    private static readonly (string dataSourceCode, string recordID) PassengerGHI789 
+    private static readonly (string dataSourceCode, string recordID) PassengerGHI789
         = (PassengersDataSource, "GHI789");
 
     private static readonly (string dataSourceCode, string recordID) PassengerJKL012
@@ -269,7 +268,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
     private static readonly (string dataSourceCode, string recordID) EmployeeABC567
         = (EmployeesDataSource, "ABC567");
-        
+
     private static readonly (string dataSourceCode, string recordID) EmployeeDEF890
         = (EmployeesDataSource, "DEF890");
 
@@ -284,8 +283,8 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
     private static readonly (string dataSourceCode, string recordID) VipJKL456
         = (VipsDataSource, "JKL456");
-    
-    private static readonly IList<(string,string)> ExistingRecordKeys
+
+    private static readonly IList<(string, string)> ExistingRecordKeys
         = ListOf(PassengerABC123,
                  PassengerDEF456,
                  PassengerGHI789,
@@ -301,11 +300,16 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
     private SzCoreEnvironment? env;
 
-    private SzCoreEnvironment Env {
-       get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
@@ -313,44 +317,52 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
         String settings = this.GetRepoSettings();
-        
+
         String instanceName = this.GetType().Name;
-        
+
         // now we just need the entity ID's for the loaded records to use later
         NativeEngine nativeEngine = new NativeEngineExtern();
-        try {
+        try
+        {
             long returnCode = nativeEngine.Init(instanceName, settings, false);
-            if (returnCode != 0) {
-                throw new Exception(nativeEngine.GetLastException());
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeEngine.GetLastException());
             }
 
             // get the loaded records and entity ID's
-            foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys) {
+            foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys)
+            {
                 // clear the buffer
                 returnCode = nativeEngine.GetEntityByRecordID(
                     key.dataSourceCode, key.recordID, out string result);
-                if (returnCode != 0) {
-                    throw new Exception(nativeEngine.GetLastException());
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
                 }
 
                 // parse the JSON 
-                JsonObject? jsonObj     = JsonNode.Parse(result)?.AsObject();
-                JsonObject? entity      = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
-                long         entityID   = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
+                JsonObject? entity = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                long entityID = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
                 LoadedRecordMap.Add(key, entityID);
-                if (!LoadedEntityMap.ContainsKey(entityID)) {
-                    LoadedEntityMap.Add(entityID, new HashSet<(string,string)>());
+                if (!LoadedEntityMap.ContainsKey(entityID))
+                {
+                    LoadedEntityMap.Add(entityID, new HashSet<(string, string)>());
                 }
-                ISet<(string dataSourceCode, string recordID)> recordKeySet 
+                ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             };
 
-        } finally {
+        }
+        finally
+        {
             nativeEngine.Destroy();
         }
 
@@ -361,14 +373,19 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                                     .Build();
     }
 
-    public long GetEntityID(string dataSourceCode, string recordID) {
+    public long GetEntityID(string dataSourceCode, string recordID)
+    {
         return GetEntityID((dataSourceCode, recordID));
     }
 
-    public long GetEntityID((string dataSourceCode, string recordID) key) {
-        if (LoadedRecordMap.ContainsKey(key)) {
+    public long GetEntityID((string dataSourceCode, string recordID) key)
+    {
+        if (LoadedRecordMap.ContainsKey(key))
+        {
             return LoadedRecordMap[key];
-        } else {
+        }
+        else
+        {
             return (key.GetHashCode() % 2) == 0 ? 1000000L : -20L;
         }
     }
@@ -376,7 +393,8 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     /**
      * Overridden to configure some data sources.
      */
-    protected override void PrepareRepository() {
+    protected override void PrepareRepository()
+    {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
         ISet<string> dataSources = SortedSetOf(CustomersDataSource,
@@ -409,7 +427,8 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                                    true);
     }
 
-    private FileInfo PreparePassengerFile() {
+    private FileInfo PreparePassengerFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -427,7 +446,8 @@ internal class SzCoreEngineWriteTest : AbstractTest {
         return this.PrepareCSVFile("test-passengers-", headers, passengers);
     }
 
-    private FileInfo PrepareEmployeeFile() {
+    private FileInfo PrepareEmployeeFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -446,7 +466,8 @@ internal class SzCoreEngineWriteTest : AbstractTest {
         return this.PrepareJsonArrayFile("test-employees-", headers, employees);
     }
 
-    private FileInfo PrepareVipFile() {
+    private FileInfo PrepareVipFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -464,38 +485,45 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
         return this.PrepareJsonFile("test-vips-", headers, vips);
     }
-    
+
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.Env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
-    public static List<object?[]> GetPreprocessRecordArguments() {
+    public static List<object?[]> GetPreprocessRecordArguments()
+    {
         List<object?[]> result = new List<object?[]>();
         int count = Math.Min(NewRecordKeys.Count, NewRecords.Count);
-        IEnumerator<(string,string)>    keyIter     = NewRecordKeys.GetEnumerator();
-        IEnumerator<SzRecord>           recordIter  = NewRecords.GetEnumerator();
+        IEnumerator<(string, string)> keyIter = NewRecordKeys.GetEnumerator();
+        IEnumerator<SzRecord> recordIter = NewRecords.GetEnumerator();
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(RecordFlagSets);
 
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             keyIter.MoveNext();
             recordIter.MoveNext();
-            (string, string)    key             = keyIter.Current;
-            SzRecord            record          = recordIter.Current;
-            Type?               exceptionType   = null;
-            SzFlag?             flagSet         = flagSetIter.Next();
+            (string, string) key = keyIter.Current;
+            SzRecord record = recordIter.Current;
+            Type? exceptionType = null;
+            SzFlag? flagSet = flagSetIter.Next();
 
             record = new SzRecord(key, record);
-            
+
             result.Add(new object?[] { record, flagSet, exceptionType });
         }
 
@@ -503,73 +531,90 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
     [Test, TestCaseSource(nameof(GetPreprocessRecordArguments)), Order(5)]
-    public void TestPreprocessRecord(SzRecord   record,
-                                     SzFlag?    flags,
-                                     Type?      expectedExceptionType)
+    public void TestPreprocessRecord(SzRecord record,
+                                     SzFlag? flags,
+                                     Type? expectedExceptionType)
     {
-        String testData = "record=[ " + record + " ], withFlags=[ " 
+        String testData = "record=[ " + record + " ], withFlags=[ "
             + SzRecordFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String result = engine.PreprocessRecord(record.ToString(),
                                                         flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in adding record: " + testData);
                 }
 
                 // parse the result as JSON and check that it parses
                 JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
 
-                if (flags == null || flags == SzNoFlags) {
+                if (flags == null || flags == SzNoFlags)
+                {
                     Assert.That(jsonObject?.Count, Is.EqualTo(0),
                                 "Unexpected return properties on preprocess: "
                                 + testData + ", " + result);
-                } else {
-                    if ((flags & SzEntityIncludeRecordUnmappedData) != SzNoFlags) {
+                }
+                else
+                {
+                    if ((flags & SzEntityIncludeRecordUnmappedData) != SzNoFlags)
+                    {
                         JsonNode? node = jsonObject?["UNMAPPED_DATA"];
-                        Assert.IsNotNull(node, 
+                        Assert.IsNotNull(node,
                             "Did not get UNMAPPED_DATA property with "
-                            + "SzEntityIncludeRecordUnmappedData: " 
+                            + "SzEntityIncludeRecordUnmappedData: "
                             + testData + ", " + result);
                     }
-                    if ((flags & SzEntityIncludeRecordJsonData) != SzNoFlags) {
+                    if ((flags & SzEntityIncludeRecordJsonData) != SzNoFlags)
+                    {
                         JsonNode? node = jsonObject?["JSON_DATA"];
-                        Assert.IsNotNull(node, 
+                        Assert.IsNotNull(node,
                             "Did not get JSON_DATA property with "
-                            + "SzEntityIncludeRecordJsonData: " 
+                            + "SzEntityIncludeRecordJsonData: "
                             + testData + ", " + result);
                     }
-                    if ((flags & SzEntityIncludeRecordFeatureDetails) != SzNoFlags) {
+                    if ((flags & SzEntityIncludeRecordFeatureDetails) != SzNoFlags)
+                    {
                         JsonNode? node = jsonObject?["FEATURES"];
-                        Assert.IsNotNull(node, 
+                        Assert.IsNotNull(node,
                             "Did not get FEATURES property with "
-                            + "SzEntityIncludeRecordFeatureDetails: " 
+                            + "SzEntityIncludeRecordFeatureDetails: "
                             + testData + ", " + result);
                     }
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 String description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed preprocessing a record: "
                          + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "preprocessRecord() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -577,62 +622,66 @@ internal class SzCoreEngineWriteTest : AbstractTest {
         });
     }
 
-    public static List<object?[]> GetAddRecordArguments() {
+    public static List<object?[]> GetAddRecordArguments()
+    {
         List<object?[]> result = new List<object?[]>();
         int count = Math.Min(NewRecordKeys.Count, NewRecords.Count);
-        IEnumerator<(string,string)>    keyIter     = NewRecordKeys.GetEnumerator();
-        IEnumerator<SzRecord>           recordIter  = NewRecords.GetEnumerator();
+        IEnumerator<(string, string)> keyIter = NewRecordKeys.GetEnumerator();
+        IEnumerator<SzRecord> recordIter = NewRecords.GetEnumerator();
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WriteFlagSets);
 
         int errorCase = 0;
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             keyIter.MoveNext();
             recordIter.MoveNext();
-            (string dataSourceCode, string recordID)    key             = keyIter.Current;
-            SzRecord                                    record          = recordIter.Current;
-            Type?                                       exceptionType   = null;
-            SzFlag?                                     flagSet         = flagSetIter.Next();
+            (string dataSourceCode, string recordID) key = keyIter.Current;
+            SzRecord record = recordIter.Current;
+            Type? exceptionType = null;
+            SzFlag? flagSet = flagSetIter.Next();
 
-            switch (errorCase) {
+            switch (errorCase)
+            {
                 case 1:
-                {
-                    String dataSource 
-                        = (CustomersDataSource.Equals(key.dataSourceCode))
-                        ? WatchlistDataSource
-                        : CustomersDataSource;
+                    {
+                        String dataSource
+                            = (CustomersDataSource.Equals(key.dataSourceCode, Ordinal))
+                            ? WatchlistDataSource
+                            : CustomersDataSource;
 
-                    (string,string) wrongKey 
-                        = (dataSource, key.recordID);
+                        (string, string) wrongKey
+                            = (dataSource, key.recordID);
 
-                    record = new SzRecord(wrongKey, record);
+                        record = new SzRecord(wrongKey, record);
 
-                    exceptionType = typeof(SzBadInputException);
-                    errorCase++;
-                }
-                break;
-                case 2:
-                {
-                    (string,string) wrongKey = (key.dataSourceCode, "WRONG_ID");
-
-                    record = new SzRecord(wrongKey, record);
-
-                    exceptionType = typeof(SzBadInputException);
-
-                    errorCase++;
-                }
-                break;
-                default:
-                {
-                    record = new SzRecord(key, record);
-                    if (key.dataSourceCode.Equals(UnknownDataSource)) {
+                        exceptionType = typeof(SzBadInputException);
                         errorCase++;
-                        exceptionType = typeof(SzUnknownDataSourceException);
-                    }        
-                }
-                break;
+                    }
+                    break;
+                case 2:
+                    {
+                        (string, string) wrongKey = (key.dataSourceCode, "WRONG_ID");
+
+                        record = new SzRecord(wrongKey, record);
+
+                        exceptionType = typeof(SzBadInputException);
+
+                        errorCase++;
+                    }
+                    break;
+                default:
+                    {
+                        record = new SzRecord(key, record);
+                        if (key.dataSourceCode.Equals(UnknownDataSource, Ordinal))
+                        {
+                            errorCase++;
+                            exceptionType = typeof(SzUnknownDataSourceException);
+                        }
+                    }
+                    break;
             }
-            
+
             result.Add(new object?[] { key, record, flagSet, exceptionType });
         }
 
@@ -641,18 +690,20 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetAddRecordArguments)), Order(10)]
     public void TestAddRecord(
-        (string dataSourceCode, string recordID)    recordKey, 
-        SzRecord                                    record,
-        SzFlag?                                     flags,
-        Type?                                       expectedExceptionType)
+        (string dataSourceCode, string recordID) recordKey,
+        SzRecord record,
+        SzFlag? flags,
+        Type? expectedExceptionType)
     {
-        String testData = "recordKey=[ " + recordKey 
-            + " ], record=[ " + record + " ], withFlags=[ " 
+        String testData = "recordKey=[ " + recordKey
+            + " ], record=[ " + record + " ], withFlags=[ "
             + SzModifyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String result = engine.AddRecord(recordKey.dataSourceCode,
@@ -660,12 +711,14 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                                                  record.ToString(),
                                                  flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in adding record: " + testData);
                 }
 
                 // check if we are expecting info
-                if (flags != null && ((flags & SzWithInfo) != SzNoFlags)) {
+                if (flags != null && ((flags & SzWithInfo) != SzNoFlags))
+                {
                     // parse the result as JSON and check that it parses
                     JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
 
@@ -674,35 +727,45 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                                      + testData);
 
                     node = jsonObject?["RECORD_ID"];
-                    Assert.IsNotNull(node, "Info message lacking RECORD_ID key: " 
+                    Assert.IsNotNull(node, "Info message lacking RECORD_ID key: "
                                       + testData);
-                                      
+
                     node = jsonObject?["AFFECTED_ENTITIES"];
                     Assert.IsNotNull(node, "Info message lacking AFFECTED_ENTITIES key: "
                                      + testData);
-                } else {
+                }
+                else
+                {
                     Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
                                 "No INFO requested, but non-empty response received: "
                                 + testData);
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 String description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed adding a record: "
                          + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "addRecord() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -711,24 +774,32 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
     [Test, Order(20)]
-    public void TestGetStats() {
-        this.PerformTest(() => {
-            try {
+    public void TestGetStats()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String stats = engine.GetStats();
 
                 Assert.IsNotNull(stats, "Stats was unexpectedly null");
-                
-                try {
+
+                try
+                {
                     JsonObject? jsonObj = JsonNode.Parse(stats)?.AsObject();
                     if (jsonObj == null) throw new JsonException();
 
-                } catch (Exception) {
+                }
+                catch (Exception)
+                {
                     Fail("Stats were not parseable as JSON: " + stats);
                 }
 
-            } catch (SzException e) {
+            }
+            catch (SzException e)
+            {
                 Fail("Getting stats failed with an exception", e);
             }
 
@@ -736,89 +807,97 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
 
-    public static List<object?[]> GetReevaluateRecordArguments() {
+    public static List<object?[]> GetReevaluateRecordArguments()
+    {
         List<object?[]> result = new List<object?[]>();
         int errorCase = 0;
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WriteFlagSets);
 
-        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys) {
-            Type?           exceptionType   = null;
-            SzFlag?         flagSet         = flagSetIter.Next();
-            (string,string) paramKey        = key;
+        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys)
+        {
+            Type? exceptionType = null;
+            SzFlag? flagSet = flagSetIter.Next();
+            (string, string) paramKey = key;
 
-            switch (errorCase) {
+            switch (errorCase)
+            {
                 case 0:
-                // do a bad data source
-                paramKey = (UnknownDataSource, key.recordID);
-                exceptionType = typeof(SzUnknownDataSourceException);
+                    // do a bad data source
+                    paramKey = (UnknownDataSource, key.recordID);
+                    exceptionType = typeof(SzUnknownDataSourceException);
 
-                break;
+                    break;
                 case 1:
-                // do a good data source with a bad record ID
-                paramKey = (key.dataSourceCode, key.recordID + "-UNKNOWN");
+                    // do a good data source with a bad record ID
+                    paramKey = (key.dataSourceCode, key.recordID + "-UNKNOWN");
 
-                // Per decision, reevaluate record silently does nothing if record ID not found
-                // exceptionType = SzNotFoundException.class;
+                    // Per decision, reevaluate record silently does nothing if record ID not found
+                    // exceptionType = SzNotFoundException.class;
 
-                break;
+                    break;
                 default:
-                // do nothing
-                break;
+                    // do nothing
+                    break;
             }
             errorCase++;
             result.Add(new object?[] { paramKey, flagSet, exceptionType });
         };
 
         result.Add(new object?[] {
-            (PassengersDataSource, "XXX000"), 
+            (PassengersDataSource, "XXX000"),
             SzNoFlags,
             null});
 
         result.Add(new object?[] {
-            (PassengersDataSource, "XXX000"), 
+            (PassengersDataSource, "XXX000"),
             SzWithInfo,
             null});
-                
+
         return result;
     }
 
     [Test, TestCaseSource(nameof(GetReevaluateRecordArguments)), Order(40)]
     public void TestReevaluateRecord(
-        (string dataSourceCode, string recordID)    recordKey,
-        SzFlag?                                     flags,
-        Type?                                       expectedExceptionType)
+        (string dataSourceCode, string recordID) recordKey,
+        SzFlag? flags,
+        Type? expectedExceptionType)
     {
-        String testData = "recordKey=[ " + recordKey 
-            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags) 
+        String testData = "recordKey=[ " + recordKey
+            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String result = engine.ReevaluateRecord(
                     recordKey.dataSourceCode, recordKey.recordID, flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in reevaluating record: "
                          + testData);
                 }
 
                 // check if we are expecting info
-                if (flags != null && ((flags & SzWithInfo) != SzNoFlags)) {
+                if (flags != null && ((flags & SzWithInfo) != SzNoFlags))
+                {
                     // parse the result as JSON and check that it parses
                     JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
-                    
+
                     Assert.IsNotNull(jsonObject,
                                     "Failed to parse reevaluate INFO as JSON object: "
                                     + "result=[ " + result + " ], " + testData);
-                    
-                    IDictionary<string,JsonNode?> dict = (jsonObject == null) 
-                        ? MapOf<string,JsonNode?>()
-                        : (IDictionary<string,JsonNode?>) jsonObject;
-                    
-                    if (dict.Count > 0) {
+
+                    IDictionary<string, JsonNode?> dict = (jsonObject == null)
+                        ? MapOf<string, JsonNode?>()
+                        : (IDictionary<string, JsonNode?>)jsonObject;
+
+                    if (dict.Count > 0)
+                    {
                         Assert.IsTrue(dict.ContainsKey("DATA_SOURCE"),
                                       "Info message lacking DATA_SOURCE key: " + testData);
                         Assert.IsTrue(dict.ContainsKey("RECORD_ID"),
@@ -826,28 +905,38 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                         Assert.IsTrue(dict.ContainsKey("AFFECTED_ENTITIES"),
                                       "Info message lacking AFFECTED_ENTITIES key: " + testData);
                     }
-                } else {
+                }
+                else
+                {
                     Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
                                 "No INFO requested, but non-empty response received");
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 String description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed reevaluating a record: "
                          + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "Reevaluating record failed with an "
                         + "unexpected exception type: " + testData
                         + ", " + description);
@@ -856,38 +945,41 @@ internal class SzCoreEngineWriteTest : AbstractTest {
         });
     }
 
-    public static List<object?[]> GetReevaluateEntityArguments() {
+    public static List<object?[]> GetReevaluateEntityArguments()
+    {
         List<object?[]> result = new List<object?[]>();
         int errorCase = 0;
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WriteFlagSets);
 
-        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys) {
-            Type?           exceptionType         = null;
-            SzFlag?         flagSet               = flagSetIter.Next();
-            (string,string) paramKey              = key;
-            Func<SzCoreEngineWriteTest,long> func = (SzCoreEngineWriteTest t) => t.GetEntityID(paramKey);
+        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys)
+        {
+            Type? exceptionType = null;
+            SzFlag? flagSet = flagSetIter.Next();
+            (string, string) paramKey = key;
+            Func<SzCoreEngineWriteTest, long> func = (SzCoreEngineWriteTest t) => t.GetEntityID(paramKey);
 
-            switch (errorCase) {
+            switch (errorCase)
+            {
                 case 0:
-                // do a negative entity ID
-                func = (SzCoreEngineWriteTest t) => -1 & Math.Abs(paramKey.GetHashCode());
+                    // do a negative entity ID
+                    func = (SzCoreEngineWriteTest t) => -1 & Math.Abs(paramKey.GetHashCode());
 
-                // Per decision, reevaluate entity silently does nothing if enitty ID not found
-                // exceptionType = SzNotFoundException.class;
+                    // Per decision, reevaluate entity silently does nothing if enitty ID not found
+                    // exceptionType = SzNotFoundException.class;
 
-                break;
+                    break;
                 case 1:
-                // do a large entity that does not exist
-                func = (SzCoreEngineWriteTest t) => 1000000000L;
+                    // do a large entity that does not exist
+                    func = (SzCoreEngineWriteTest t) => 1000000000L;
 
-                // Per decision, reevaluate entity silently does nothing if enitty ID not found
-                // exceptionType = SzNotFoundException.class;
+                    // Per decision, reevaluate entity silently does nothing if enitty ID not found
+                    // exceptionType = SzNotFoundException.class;
 
-                break;
+                    break;
                 default:
-                // do nothing
-                break;
+                    // do nothing
+                    break;
             }
             errorCase++;
             result.Add(new object?[] { func, flagSet, exceptionType });
@@ -898,49 +990,54 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
         result.Add(new object?[] {
             (SzCoreEngineWriteTest t) => 100000000L, SzWithInfo, null});
-        
+
         return result;
     }
 
     [Test, TestCaseSource(nameof(GetReevaluateEntityArguments)), Order(50)]
     public void TestReevaluateEntity(
-        Func<SzCoreEngineWriteTest,long>    entityIDFunc,
-        SzFlag?                             flags,
-        Type?                               expectedExceptionType) 
+        Func<SzCoreEngineWriteTest, long> entityIDFunc,
+        SzFlag? flags,
+        Type? expectedExceptionType)
     {
         long entityID = entityIDFunc(this);
-        ISet<(string,string)> recordKeys = (LoadedEntityMap.ContainsKey(entityID))
-            ? LoadedEntityMap[entityID] : SortedSetOf<(string,string)>();
+        ISet<(string, string)> recordKeys = (LoadedEntityMap.ContainsKey(entityID))
+            ? LoadedEntityMap[entityID] : SortedSetOf<(string, string)>();
 
         String testData = "entityID=[ " + entityID + " ], havingRecords=[ "
-            + recordKeys + " ], withFlags=[ " 
+            + recordKeys + " ], withFlags=[ "
             + SzModifyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String result = engine.ReevaluateEntity(entityID, flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in reevaluating entity: " + testData);
                 }
 
                 // check if we are expecting info
-                if (flags != null && ((flags & SzWithInfo) != SzNoFlags)) {
+                if (flags != null && ((flags & SzWithInfo) != SzNoFlags))
+                {
                     // parse the result as JSON and check that it parses
                     JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
-                    
+
                     Assert.IsNotNull(jsonObject,
                                     "Failed to parse INFO as JSON object: "
                                     + "result=[ " + result + " ], " + testData);
-                    
-                    IDictionary<string,JsonNode?> dict = (jsonObject == null) 
-                        ? MapOf<string,JsonNode?>()
-                        : (IDictionary<string,JsonNode?>) jsonObject;
-                    
-                    if (dict.Count > 0) {
+
+                    IDictionary<string, JsonNode?> dict = (jsonObject == null)
+                        ? MapOf<string, JsonNode?>()
+                        : (IDictionary<string, JsonNode?>)jsonObject;
+
+                    if (dict.Count > 0)
+                    {
                         Assert.IsTrue(dict.ContainsKey("DATA_SOURCE"),
                                       "Info message lacking DATA_SOURCE key: " + testData);
                         Assert.IsTrue(dict.ContainsKey("RECORD_ID"),
@@ -948,30 +1045,40 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                         Assert.IsTrue(dict.ContainsKey("AFFECTED_ENTITIES"),
                                       "Info message lacking AFFECTED_ENTITIES key: " + testData);
                     }
-                } else {
+                }
+                else
+                {
                     Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
                                  "No INFO requested, but non-empty response received: "
                                  + testData);
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 String description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                
-                } else {
+
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed reevaluating an entity: "
                          + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "Reevaluating entity failed with an "
                         + "unexpected exception type: " + testData
                         + ", " + description);
@@ -981,78 +1088,86 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
 
-    public static List<object?[]> GetDeleteRecordArguments() {
+    public static List<object?[]> GetDeleteRecordArguments()
+    {
         List<object?[]> result = new List<object?[]>();
         int errorCase = 0;
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WriteFlagSets);
 
-        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys) {
-            Type?                                       exceptionType   = null;
-            SzFlag?                                     flagSet         = flagSetIter.Next();
-            (string dataSourceCode, string recordID)    paramKey        = key;
-            
-            switch (errorCase) {
+        foreach ((string dataSourceCode, string recordID) key in ExistingRecordKeys)
+        {
+            Type? exceptionType = null;
+            SzFlag? flagSet = flagSetIter.Next();
+            (string dataSourceCode, string recordID) paramKey = key;
+
+            switch (errorCase)
+            {
                 case 0:
-                // do a bad data source
-                paramKey = (UnknownDataSource, key.recordID);
-                exceptionType = typeof(SzUnknownDataSourceException);
-                break;
+                    // do a bad data source
+                    paramKey = (UnknownDataSource, key.recordID);
+                    exceptionType = typeof(SzUnknownDataSourceException);
+                    break;
 
                 case 1:
-                // do a good data source with a bad record ID
-                paramKey = (key.dataSourceCode, key.recordID + "-UNKNOWN");
-                
-                // NOTE: we expect no exception on deleting non-existent record
+                    // do a good data source with a bad record ID
+                    paramKey = (key.dataSourceCode, key.recordID + "-UNKNOWN");
 
-                break;
+                    // NOTE: we expect no exception on deleting non-existent record
+
+                    break;
                 default:
-                // do nothing
-                break;
+                    // do nothing
+                    break;
             }
             errorCase++;
             result.Add(new object?[] { paramKey, flagSet, exceptionType });
         };
-        
+
         return result;
     }
 
     [Test, TestCaseSource(nameof(GetDeleteRecordArguments)), Order(100)]
     public void TestDeleteRecord(
-        (string dataSourceCode, string recordID)    recordKey, 
-        SzFlag?                                     flags,
-        Type?                                       expectedExceptionType)
+        (string dataSourceCode, string recordID) recordKey,
+        SzFlag? flags,
+        Type? expectedExceptionType)
     {
-        String testData = "recordKey=[ " + recordKey 
-            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags) 
+        String testData = "recordKey=[ " + recordKey
+            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String result = engine.DeleteRecord(
                     recordKey.dataSourceCode, recordKey.recordID, flags);
 
-                if (expectedExceptionType != null) {
+                if (expectedExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in deleting record: "
-                         + testData);                    
+                         + testData);
                 }
-                
+
                 // check if we are expecting info
-                if (flags != null && ((flags & SzWithInfo) != SzNoFlags)) {
+                if (flags != null && ((flags & SzWithInfo) != SzNoFlags))
+                {
                     // parse the result as JSON and check that it parses
                     JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
-                    
+
                     Assert.IsNotNull(jsonObject,
                                     "Failed to parse INFO as JSON object: "
                                     + "result=[ " + result + " ], " + testData);
-                    
-                    IDictionary<string,JsonNode?> dict = (jsonObject == null) 
-                        ? MapOf<string,JsonNode?>()
-                        : (IDictionary<string,JsonNode?>) jsonObject;
-                    
-                    if (dict.Count > 0) {
+
+                    IDictionary<string, JsonNode?> dict = (jsonObject == null)
+                        ? MapOf<string, JsonNode?>()
+                        : (IDictionary<string, JsonNode?>)jsonObject;
+
+                    if (dict.Count > 0)
+                    {
                         Assert.IsTrue(dict.ContainsKey("DATA_SOURCE"),
                                       "Info message lacking DATA_SOURCE key: " + testData);
                         Assert.IsTrue(dict.ContainsKey("RECORD_ID"),
@@ -1060,30 +1175,40 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                         Assert.IsTrue(dict.ContainsKey("AFFECTED_ENTITIES"),
                                       "Info message lacking AFFECTED_ENTITIES key: " + testData);
                     }
-                } else {
+                }
+                else
+                {
                     Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
                                  "No INFO requested, but non-empty response received: "
                                  + testData);
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 String description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                
-                } else {
+
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (expectedExceptionType == null) {
+                if (expectedExceptionType == null)
+                {
                     Fail("Unexpectedly failed deleting a record: "
                          + testData + ", " + description, e);
 
-                } else if (expectedExceptionType != e.GetType()) {
+                }
+                else if (expectedExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        expectedExceptionType, e, 
+                        expectedExceptionType, e,
                         "deleteRecord() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -1092,70 +1217,90 @@ internal class SzCoreEngineWriteTest : AbstractTest {
     }
 
     [Test, Order(200)]
-    public void TestCountRedoRecordsZero() {
-        this.PerformTest(() => {
-            try {
+    public void TestCountRedoRecordsZero()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 long count = engine.CountRedoRecords();
 
                 Assert.That(count, Is.EqualTo(0), "Unexpected redo record count");
 
-            } catch (SzException e) {
+            }
+            catch (SzException e)
+            {
                 Fail("Failed to count records when none present", e);
             }
         });
     }
 
     [Test, Order(210)]
-    public void TestGetRedoRecordZero() {
-        this.PerformTest(() => {
-            try {
+    public void TestGetRedoRecordZero()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 String redoRecord = engine.GetRedoRecord();
 
                 Assert.IsNull(redoRecord, "Unexpected non-null redo record: " + redoRecord);
-                
-            } catch (SzException e) {
+
+            }
+            catch (SzException e)
+            {
                 Fail("Failed to get redo record when none present", e);
             }
         });
     }
 
     [Test, Order(220)]
-    public void TestCountRedoRecordsNonZero() {
-        this.PerformTest(() => {
-            try {
+    public void TestCountRedoRecordsNonZero()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
-                foreach (SzRecord record in CountRedoTriggerRecords) {
+                foreach (SzRecord record in CountRedoTriggerRecords)
+                {
                     (string dataSourceCode, string recordID)? recordKey = record.GetRecordKey();
                     engine.AddRecord(recordKey?.dataSourceCode,
                                      recordKey?.recordID,
                                      record.ToString(),
-                                     null); 
+                                     null);
                 }
 
                 long count = engine.CountRedoRecords();
 
                 Assert.That(count, Is.Not.EqualTo(0), "Redo record count unexpectedly zero");
-                
-            } catch (SzException e) {
+
+            }
+            catch (SzException e)
+            {
                 Fail("Failed to get redo record when none present", e);
             }
         });
     }
 
     [Test, Order(230)]
-    public void TestProcessRedoRecords() {
-        this.PerformTest(() => {
-            try {
+    public void TestProcessRedoRecords()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
-                foreach (SzRecord record in ProcessRedoTriggerRecords) {
+                foreach (SzRecord record in ProcessRedoTriggerRecords)
+                {
                     (string dataSourceCode, string recordID)? recordKey = record.GetRecordKey();
-                    engine.AddRecord(recordKey?.dataSourceCode, 
+                    engine.AddRecord(recordKey?.dataSourceCode,
                                      recordKey?.recordID,
                                      record.ToString(),
                                      null);
@@ -1170,7 +1315,7 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                 long actualCount = 0;
                 for (string redoRecord = engine.GetRedoRecord();
                      (redoRecord != null);
-                     redoRecord = engine.GetRedoRecord()) 
+                     redoRecord = engine.GetRedoRecord())
                 {
                     actualCount++;
                     SzFlag? flags = flagSetIter.Next();
@@ -1178,19 +1323,21 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                     String result = engine.ProcessRedoRecord(redoRecord, flags);
 
                     // check if we are expecting info
-                    if (flags != null && ((flags & SzWithInfo) != SzNoFlags)) {
+                    if (flags != null && ((flags & SzWithInfo) != SzNoFlags))
+                    {
                         // parse the result as JSON and check that it parses
                         JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
-                        
+
                         Assert.IsNotNull(jsonObject,
                                         "Failed to parse INFO as JSON object: "
                                         + "result=[ " + result + " ], " + result);
-                        
-                        IDictionary<string,JsonNode?> dict = (jsonObject == null) 
-                            ? MapOf<string,JsonNode?>()
-                            : (IDictionary<string,JsonNode?>) jsonObject;
-                        
-                        if (dict.Count > 0) {
+
+                        IDictionary<string, JsonNode?> dict = (jsonObject == null)
+                            ? MapOf<string, JsonNode?>()
+                            : (IDictionary<string, JsonNode?>)jsonObject;
+
+                        if (dict.Count > 0)
+                        {
                             Assert.IsTrue(dict.ContainsKey("DATA_SOURCE"),
                                         "Info message lacking DATA_SOURCE key: " + result);
                             Assert.IsTrue(dict.ContainsKey("RECORD_ID"),
@@ -1198,7 +1345,9 @@ internal class SzCoreEngineWriteTest : AbstractTest {
                             Assert.IsTrue(dict.ContainsKey("AFFECTED_ENTITIES"),
                                         "Info message lacking AFFECTED_ENTITIES key: " + result);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
                                     "No INFO requested, but non-empty response received: "
                                     + result);
@@ -1207,8 +1356,10 @@ internal class SzCoreEngineWriteTest : AbstractTest {
 
                 Assert.That(actualCount, Is.EqualTo(redoCount),
                             "Not all redo records were processed");
-                
-            } catch (SzException e) {
+
+            }
+            catch (SzException e)
+            {
                 Fail("Failed to get redo record when none present", e);
             }
         });

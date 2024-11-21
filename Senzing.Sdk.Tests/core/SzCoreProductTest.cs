@@ -1,23 +1,29 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
-using Senzing.Sdk.Tests;
-using Senzing.Sdk.Core;
-using System.Text.Json;
 using System.Text.Json.Nodes;
+
+using NUnit.Framework;
+
+using Senzing.Sdk.Core;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreProductTest : AbstractTest {
+internal class SzCoreProductTest : AbstractTest
+{
     private SzCoreEnvironment? env;
 
 
-    private SzCoreEnvironment Env {
-        get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
@@ -25,11 +31,12 @@ internal class SzCoreProductTest : AbstractTest {
     }
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
         string settings = this.GetRepoSettings();
-        
+
         string instanceName = this.GetType().Name;
 
         this.env = SzCoreEnvironment.NewBuilder()
@@ -40,63 +47,87 @@ internal class SzCoreProductTest : AbstractTest {
     }
 
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
     [Test]
-    public void TestGetNativeApi() {
-        this.PerformTest(() => {
-            try {
-                SzCoreProduct product = (SzCoreProduct) this.Env.GetProduct();
+    public void TestGetNativeApi()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreProduct product = (SzCoreProduct)this.Env.GetProduct();
 
                 Assert.IsNotNull(product.GetNativeApi(),
                         "Underlying native API is unexpectedly null");
-                
-            } catch (AssertionException) {
+
+            }
+            catch (AssertionException)
+            {
                 throw;
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Fail("Failed testGetNativeApi test with exception", e);
+                throw;
             }
         });
     }
 
     [Test]
-    public void TestGetLicense() {
-        this.PerformTest(() => {
-            try {
+    public void TestGetLicense()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzProduct product = this.Env.GetProduct();
 
                 string license = product.GetLicense();
 
                 JsonObject jsonData = ParseJsonObject(license);
-                
+
                 ValidateJsonDataMap(
                     jsonData,
                     "customer", "contract", "issueDate", "licenseType",
                     "licenseLevel", "billing", "expireDate", "recordLimit");
 
-            } catch (AssertionException) {
+            }
+            catch (AssertionException)
+            {
                 throw;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Fail("Failed testGetLicense test with exception", e);
+                throw;
             }
         });
     }
 
     [Test]
-    public void TestGetVersion() {
-        this.PerformTest(() => {
-            try {
+    public void TestGetVersion()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzProduct product = this.Env.GetProduct();
 
                 string version = product.GetVersion();
@@ -107,11 +138,16 @@ internal class SzCoreProductTest : AbstractTest {
                     jsonData,
                     false,
                     "VERSION", "BUILD_NUMBER", "BUILD_DATE", "COMPATIBILITY_VERSION");
-          
-            } catch (AssertionException) {
+
+            }
+            catch (AssertionException)
+            {
                 throw;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Fail("Failed testGetVersion test with exception", e);
+                throw;
             }
         });
     }

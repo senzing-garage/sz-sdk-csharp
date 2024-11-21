@@ -1,12 +1,15 @@
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading;
-using System.Text;
-using Senzing.Sdk.Core;
-using System.Runtime.CompilerServices;
+namespace Senzing.Sdk.Tests.Core;
 
-namespace Senzing.Sdk.Tests.Core
-{
+using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+using Senzing.Sdk.Core;
+
+using static System.StringComparison;
+
 /// <summary>
 /// Provides logging utilities.
 /// </summary>
@@ -15,22 +18,22 @@ public static class LoggingUtilities
     /// <summary>
     /// Used for good measure to avoid interlacing of out debug output.
     /// </summary>
-    private static readonly object STDOUT_MONITOR = new object();
+    private static readonly object StdOutMonitor = new object();
 
     /// <summary>
     /// Used for good measure to avoid interlacing of out debug output.
     /// </summary>
-    private static readonly object STDERR_MONITOR = new object();
+    private static readonly object StdErrMonitor = new object();
+
+    /// <summary>
+    ///  The data-time format info provider.
+    /// </summary>
+    private static readonly DateTimeFormatInfo DateTimeFormatting = new DateTimeFormatInfo();
 
     /// <summary>
     /// The date-time pattern for the build number.
     /// </summary>
-    private const string LOG_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
-
-    /// <summary>
-    /// The time zone used for the time component of the build number.
-    /// </summary>
-    private static readonly TimeZoneInfo LOG_DATE_ZONE = TimeZoneInfo.Utc;
+    private const string LogDatePattern = "yyyy-MM-dd HH:mm:ss,SSS";
 
     /// <summary>
     /// The base product ID to log with if the calling package is not overidden.
@@ -76,7 +79,7 @@ public static class LoggingUtilities
     /// </param>
     public static void LogError(params object[] lines)
     {
-        Log(Console.Error, STDERR_MONITOR, "ERROR", lines, null);
+        Log(Console.Error, StdErrMonitor, "ERROR", lines, null);
     }
 
     /// <summary>
@@ -95,7 +98,7 @@ public static class LoggingUtilities
     /// </param>
     public static void LogError(Exception exception, params object[] lines)
     {
-        Log(Console.Error, STDERR_MONITOR, "ERROR", lines, exception);
+        Log(Console.Error, StdErrMonitor, "ERROR", lines, exception);
     }
 
     /// <summary>
@@ -109,7 +112,7 @@ public static class LoggingUtilities
     /// </param>
     public static void LogWarning(params object[] lines)
     {
-        Log(Console.Error, STDERR_MONITOR, "WARNING", lines, null);
+        Log(Console.Error, StdErrMonitor, "WARNING", lines, null);
     }
 
     /// <summary>
@@ -128,7 +131,7 @@ public static class LoggingUtilities
     /// </param>
     public static void LogWarning(Exception exception, params object[] lines)
     {
-        Log(Console.Error, STDERR_MONITOR, "WARNING", lines, exception);
+        Log(Console.Error, StdErrMonitor, "WARNING", lines, exception);
     }
 
     /// <summary>
@@ -142,7 +145,7 @@ public static class LoggingUtilities
     /// </param>
     public static void LogInfo(params object[] lines)
     {
-        Log(Console.Error, STDOUT_MONITOR, "INFO", lines, null);
+        Log(Console.Error, StdOutMonitor, "INFO", lines, null);
     }
 
     /// <summary>
@@ -153,24 +156,25 @@ public static class LoggingUtilities
     /// <param name="namespaceName">The namespace name</param>
     ///
     /// <returns>The product ID with which to log</returns>
-    public static String GetProductIdForNamespace(string namespaceName)
+    public static string GetProductIdForNamespace(string namespaceName)
     {
+        ArgumentNullException.ThrowIfNull(namespaceName, nameof(namespaceName));
         lock (ProductIDMap)
         {
             do
             {
                 // check if we have a product ID for the package
-                if (ProductIDMap.ContainsKey(namespaceName))
+                if (ProductIDMap.TryGetValue(namespaceName, out string? found))
                 {
-                    return ProductIDMap[namespaceName];
+                    return found;
                 }
 
                 // check if the package name begins with com.senzing and get next part
                 int prefixLength = "Senzing.".Length;
-                if (namespaceName.StartsWith("Senzing.")
+                if (namespaceName.StartsWith("Senzing.", Ordinal)
                     && namespaceName.Length > prefixLength)
                 {
-                    int idx = namespaceName.IndexOf(".", prefixLength);
+                    int idx = namespaceName.IndexOf('.', prefixLength);
                     if (idx < 0) idx = namespaceName.Length;
                     return namespaceName.Substring(prefixLength, idx);
                 }
@@ -181,7 +185,7 @@ public static class LoggingUtilities
                 if (index == (namespaceName.Length - 1)) break;
                 namespaceName = namespaceName.Substring(0, index);
 
-            } while (namespaceName.Length > 0 && !namespaceName.Equals("Senzing"));
+            } while (namespaceName.Length > 0 && !namespaceName.Equals("Senzing", Ordinal));
 
             // return the base product ID if we get here
             return BaseProductID;
@@ -215,11 +219,11 @@ public static class LoggingUtilities
     /// <param name="exception">
     /// The <see cref="System.Exception"/> whose stack trace should be logged.
     /// </param>
-    private static void Log(TextWriter  textWriter,
-                            object      monitor,
-                            string      logType,
-                            object[]    lines,
-                            Exception?  exception)
+    private static void Log(TextWriter textWriter,
+                            object monitor,
+                            string logType,
+                            object[] lines,
+                            Exception? exception)
     {
         StackTrace stackTrace = new StackTrace(3, true);
         StackFrame? caller = stackTrace.GetFrame(0);
@@ -228,7 +232,7 @@ public static class LoggingUtilities
         string? typeName = (callingType == null) ? "" : callingType.FullName;
         string callerClass = (typeName == null) ? "" : typeName;
 
-        int index = callerClass.LastIndexOf(".");
+        int index = callerClass.LastIndexOf('.');
 
         string namespaceName = callerClass.Substring(0, index);
         callerClass = callerClass.Substring(index + 1);
@@ -237,13 +241,13 @@ public static class LoggingUtilities
 
         StringBuilder sb = new StringBuilder();
         DateTime now = DateTime.UtcNow;
-        string timestamp = now.ToString(LOG_DATE_PATTERN);
+        string timestamp = now.ToString(LogDatePattern, DateTimeFormatting);
 
         sb.Append(timestamp).Append(" senzing-").Append(productId)
-            .Append(" (").Append(logType).Append(")")
+            .Append(" (").Append(logType).Append(')')
             .Append(" [").Append(Thread.CurrentThread.Name)
-            .Append("|").Append(callerClass).Append(".")
-            .Append(caller?.GetMethod()?.Name).Append(":")
+            .Append('|').Append(callerClass).Append('.')
+            .Append(caller?.GetMethod()?.Name).Append(':')
             .Append(caller?.GetFileLineNumber()).Append("] ")
             .Append(MultilineFormat(lines));
 
@@ -272,6 +276,7 @@ public static class LoggingUtilities
     /// <returns>The formatted multiline <c>string</c></returns>
     public static string MultilineFormat(params object[] lines)
     {
+        ArgumentNullException.ThrowIfNull(lines, nameof(lines));
         StringBuilder sb = new StringBuilder();
         foreach (object line in lines)
         {
@@ -326,9 +331,9 @@ public static class LoggingUtilities
     /// </param>
     /// 
     /// <returns>The multi-line formatted log message.</returns>
-    internal static string FormatError(string       operation,
-                                       NativeApi    fallible,
-                                       bool         includeDetails)
+    internal static string FormatError(string operation,
+                                       NativeApi fallible,
+                                       bool includeDetails)
     {
         long errorCode = fallible.GetLastExceptionCode();
         StringBuilder sb = new StringBuilder();
@@ -360,7 +365,8 @@ public static class LoggingUtilities
     /// The <see cref="Senzing.Sdk.Core.NativeApi"/> from which to extract the
     /// error message.
     /// </param>
-    internal static void LogError(string operation, NativeApi fallible) {
+    internal static void LogError(string operation, NativeApi fallible)
+    {
         LogError(operation, fallible, true);
     }
 
@@ -385,9 +391,9 @@ public static class LoggingUtilities
     /// resultant message, and <c>false</c> to exclude them (usually to
     /// avoid logging sensitive information).
     /// </param>
-    internal static void LogError(string    operation,
+    internal static void LogError(string operation,
                                   NativeApi fallible,
-                                  bool      includeDetails)
+                                  bool includeDetails)
     {
         string message = FormatError(operation, fallible, includeDetails);
         Console.Error.WriteLine(message);
@@ -403,14 +409,15 @@ public static class LoggingUtilities
     /// <returns>
     /// The long hash representation to identify the throwable instance.
     /// </returns>
-    private static long? ExceptionToLong(Exception? e) {
+    private static long? ExceptionToLong(Exception? e)
+    {
         if (e == null) return null;
         long hash1 = (long)RuntimeHelpers.GetHashCode(e);
 
         StringBuilder sb = new StringBuilder();
         sb.AppendLine(e.ToString());
 
-        long hash2 = (long)sb.ToString().GetHashCode();
+        long hash2 = (long)sb.ToString().GetHashCode(Ordinal);
         return ((hash1 << 32) | hash2);
     }
 
@@ -429,7 +436,8 @@ public static class LoggingUtilities
     /// <returns>
     /// <c>true</c> if it is the last logged exception, otherwise <c>false</c>.
     /// </returns>
-    public static bool IsLastLoggedException(Exception e) {
+    public static bool IsLastLoggedException(Exception e)
+    {
         if (e == null) return false;
         if (LastLoggedException.Value == null) return false;
         long? value = ExceptionToLong(e);
@@ -448,7 +456,8 @@ public static class LoggingUtilities
     /// <param name="e">
     /// The <see cref="System.Exception"/> to set as the last logged exception.
     /// </param>
-    public static void SetLastLoggedException(Exception e) {
+    public static void SetLastLoggedException(Exception e)
+    {
         LastLoggedException.Value = ExceptionToLong(e);
     }
 
@@ -459,7 +468,8 @@ public static class LoggingUtilities
     /// <param name="e">
     /// The <see cref="System.Exception"/> to set as the last logged exception.
     /// </param>
-    public static void SetLastLoggedAndThrow(Exception e) {
+    public static void SetLastLoggedAndThrow(Exception e)
+    {
         SetLastLoggedException(e);
         throw e;
     }
@@ -476,21 +486,25 @@ public static class LoggingUtilities
     /// <returns>
     /// Never returns anything since it always throws.
     /// </returns>
-    public static Exception LogOnceAndThrow(Exception e) {
+    public static Exception LogOnceAndThrow(Exception e)
+    {
         if (!IsLastLoggedException(e))
         {
             Console.Error.WriteLine(e);
         }
         SetLastLoggedAndThrow(e);
-        return new Exception(); // we never get here
+        return new TestException(); // we never get here
     }
 
     /// <summary>
     /// Formats the specified excpeption as a <c>string</c>.
     /// </summary>
-    public static string FormatException(string? msg, Exception e) {
+    public static string FormatException(string? msg, Exception e)
+    {
+        ArgumentNullException.ThrowIfNull(e, nameof(e));
         StringBuilder sb = new StringBuilder();
-        if (msg != null) {
+        if (msg != null)
+        {
             sb.AppendLine(msg);
             sb.AppendLine("-----------------------------------------");
         }
@@ -498,5 +512,4 @@ public static class LoggingUtilities
         sb.AppendLine(e.StackTrace);
         return sb.ToString();
     }
-}
 }

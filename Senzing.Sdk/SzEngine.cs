@@ -5,7 +5,6 @@ using static Senzing.Sdk.SzFlags;
 
 namespace Senzing.Sdk
 {
-
     /// <summary>
     /// Defines the interface to the Senzing engine functions.
     /// </summary>
