@@ -1,5 +1,9 @@
 name: dotnet windows
 
+defaults:
+  run:
+    shell: pwsh
+
 on:
   pull_request:
     # branches: [main]
@@ -42,7 +46,7 @@ jobs:
 
       - name: Add to "Path" environment variable
         run: |
-          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
+          Add-Content $env:GITHUB_PATH "C:\Program Files\Senzing\er\lib"
 
       - name: Run DotNet tests
         env:
