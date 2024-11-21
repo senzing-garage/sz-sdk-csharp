@@ -363,9 +363,11 @@ internal class SzFlagsTest : AbstractTest
         }
 
         List<SzFlag> flags = new List<SzFlag>();
+        SzFlag allFlags = SzFlags.SzNoFlags;
         foreach (SzFlag flag in Enum.GetValues(typeof(SzFlag)))
         {
             flags.Add(flag);
+            allFlags |= flag;
         }
         flags.Sort();
         int start = 0;
@@ -410,6 +412,10 @@ internal class SzFlagsTest : AbstractTest
                         }
                         sb.Append(" }");
 
+                    }
+                    else if ((flag & allFlags) == SzFlags.SzNoFlags)
+                    {
+                        sb.Append(Utilities.HexFormat((long)flag));
                     }
                     else
                     {
@@ -938,6 +944,15 @@ internal class SzFlagsTest : AbstractTest
             Assert.IsTrue(flagInfo1.CompareTo(null) > 0,
                 "SzFlagInfo.CompareTo(null) expectedly returned non-positive: " + fieldInfo.Name);
 
+            try
+            {
+                int compareResult = flagInfo1.CompareTo("Hello");
+                Assert.Fail("Compared SzFlagInfo to string without an exception: " + fieldInfo.Name);
+            }
+            catch (ArgumentException)
+            {
+                // expected
+            }
             if (previous != null)
             {
                 Assert.That(flagInfo1, Is.Not.EqualTo(previous),
@@ -968,6 +983,27 @@ internal class SzFlagsTest : AbstractTest
                     + " unexpectedly equal to forward comparison");
             }
             previous = flagInfo1;
+        }
+    }
+
+
+    [Test]
+    public void TestBadFlagUsageGroupInfo()
+    {
+        Type enumType = typeof(SzFlag);
+        try
+        {
+            SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
+                SzFlagUsageGroup.SzModifyFlags,
+                ListOf(new SzFlagInfo(
+                    enumType.GetField(
+                        nameof(SzFlag.SzEntityIncludeEntityName)))));
+            Assert.Fail("Successfully constructed errant SzFlagUsageGroupInfo");
+
+        }
+        catch (ArgumentException)
+        {
+            // expected
         }
     }
 }
