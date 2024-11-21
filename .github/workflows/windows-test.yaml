@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: pwsh
+
 jobs:
   windows-echo:
     runs-on: windows-latest
@@ -32,3 +36,5 @@ jobs:
       - name: Print path
         run: |
           $env:path
+
+# Add-Content $env:GITHUB_PATH "C:\directory\to\add\to\path"
