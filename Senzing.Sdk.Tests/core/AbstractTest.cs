@@ -1,7 +1,6 @@
 namespace Senzing.Sdk.Tests.Core;
 
 using System.Collections;
-using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -1701,17 +1700,24 @@ internal abstract class AbstractTest
     /// </returns>
     protected static JsonObject ParseJsonObject(string text)
     {
-        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
-        {
-            CommentHandling = JsonCommentHandling.Skip
-        });
-        if (node == null)
+        try {
+            JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
+            {
+                CommentHandling = JsonCommentHandling.Skip
+            });
+            if (node == null)
+            {
+                throw new JsonException(
+                        "Failed to parse text as JSON: " + text);
+            }
+            return ((JsonNode)node).AsObject();
+
+        }
+        catch (JsonException e) 
         {
             throw new JsonException(
-                    "Failed to parse text as JSON: " + text);
+                "Failed to parse text as JSON: " + text, e);
         }
-
-        return ((JsonNode)node).AsObject();
     }
 
     /// <summary>
