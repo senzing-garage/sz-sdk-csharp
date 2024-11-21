@@ -151,7 +151,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             try
             {
                 SzCoreConfigManager configMgr
-                    = (SzCoreConfigManager) this.Env.GetConfigManager();
+                    = (SzCoreConfigManager)this.Env.GetConfigManager();
 
                 Assert.IsNotNull(configMgr.GetNativeApi(),
                                  "Underlying native API is unexpectedly null");
