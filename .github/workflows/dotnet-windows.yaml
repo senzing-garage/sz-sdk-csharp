@@ -40,14 +40,12 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.Tests
 
-      - name: Update Path
+      - name: Add to "Path" environment variable
         run: |
-          echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
+          printf "C:\Program Files\Senzing\er\lib" | Out-File -FilePath "$env:GITHUB_PATH" -Encoding utf8 -Append
 
       - name: Run DotNet tests
         env:
-          # Path: 'C:\"Program Files"\Senzing\er\lib;%Path%'
-          LD_LIBRARY_PATH: 'C:\Program Files\Senzing\er\lib'
           SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
           $env:path
