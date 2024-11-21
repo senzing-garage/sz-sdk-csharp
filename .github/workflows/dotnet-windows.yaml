@@ -47,7 +47,7 @@ jobs:
           SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
           dir C:\"Program Files"\Senzing\er\lib
-          echo "Path: $Path"
+          set
           echo "C:\Program Files\Senzing\er\lib" >> "$GITHUB_PATH"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
