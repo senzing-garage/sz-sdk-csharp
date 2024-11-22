@@ -1,33 +1,37 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
-using System.Collections.Immutable;
 
-using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlagUsageGroup;
-using NUnit.Framework.Internal;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreEngineGraphTest : AbstractTest {
-    private const string EmployeesDataSource   = "EMPLOYEES";
-    private const string PassengersDataSource  = "PASSENGERS";
-    private const string VipsDataSource        = "VIPS";
-    private const string UnknownDataSource     = "UNKNOWN";
-    
+internal class SzCoreEngineGraphTest : AbstractTest
+{
+    private const string EmployeesDataSource = "EMPLOYEES";
+    private const string PassengersDataSource = "PASSENGERS";
+    private const string VipsDataSource = "VIPS";
+    private const string UnknownDataSource = "UNKNOWN";
+
     private static readonly IList<SzFlag?> FindPathFlagSet;
 
     private static readonly IList<SzFlag?> FindNetworkFlagSet;
 
-    static SzCoreEngineGraphTest() {
+    static SzCoreEngineGraphTest()
+    {
         List<SzFlag?> list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzFlags.SzNoFlags);
@@ -57,11 +61,11 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
     private static readonly (string dataSourceCode, string recordID) PassengerABC123
         = (PassengersDataSource, "ABC123");
-    
+
     private static readonly (string dataSourceCode, string recordID) PassengerDEF456
         = (PassengersDataSource, "DEF456");
 
-    private static readonly (string dataSourceCode, string recordID) PassengerGHI789 
+    private static readonly (string dataSourceCode, string recordID) PassengerGHI789
         = (PassengersDataSource, "GHI789");
 
     private static readonly (string dataSourceCode, string recordID) PassengerJKL012
@@ -75,7 +79,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
     private static readonly (string dataSourceCode, string recordID) EmployeeABC567
         = (EmployeesDataSource, "ABC567");
-        
+
     private static readonly (string dataSourceCode, string recordID) EmployeeDEF890
         = (EmployeesDataSource, "DEF890");
 
@@ -90,9 +94,9 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
     private static readonly (string dataSourceCode, string recordID) VipJKL456
         = (VipsDataSource, "JKL456");
-    
 
-    private static readonly List<(string,string)> GraphRecordKeys
+
+    private static readonly List<(string, string)> GraphRecordKeys
         = ListOf(PassengerABC123,
                  PassengerDEF456,
                  PassengerGHI789,
@@ -106,19 +110,24 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                  VipGHI123,
                  VipJKL456);
 
-    private IDictionary<(string,string), long> LoadedRecordMap
-        = new Dictionary<(string,string),long>();
+    private readonly Dictionary<(string, string), long> LoadedRecordMap
+        = new Dictionary<(string, string), long>();
 
-    private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
-        = new Dictionary<long,ISet<(string,string)>>();
+    private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
+        = new Dictionary<long, ISet<(string, string)>>();
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
-    private SzCoreEnvironment Env {
-       get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
@@ -126,43 +135,51 @@ internal class SzCoreEngineGraphTest : AbstractTest {
     }
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
         string settings = this.GetRepoSettings();
-        
+
         string instanceName = this.GetType().Name;
-        
+
         // now we just need the entity ID's for the loaded records to use later
         NativeEngine nativeEngine = new NativeEngineExtern();
-        try {
+        try
+        {
             long returnCode = nativeEngine.Init(instanceName, settings, false);
-            if (returnCode != 0) {
-                throw new Exception(nativeEngine.GetLastException());
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeEngine.GetLastException());
             }
 
             //Get the loaded records and entity ID's
-            foreach ((string dataSourceCode, string recordID) key in GraphRecordKeys) {
+            foreach ((string dataSourceCode, string recordID) key in GraphRecordKeys)
+            {
                 // clear the buffer
                 returnCode = nativeEngine.GetEntityByRecordID(
                     key.dataSourceCode, key.recordID, out string result);
-                if (returnCode != 0) {
-                    throw new Exception(nativeEngine.GetLastException());
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
                 }
                 // parse the JSON 
-                JsonObject? jsonObj     = JsonNode.Parse(result)?.AsObject();
-                JsonObject? entity      = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
-                long        entityID    = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
+                JsonObject? entity = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                long entityID = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
 
                 LoadedRecordMap.Add(key, entityID);
-                if (!LoadedEntityMap.ContainsKey(entityID)) {
-                    LoadedEntityMap.Add(entityID, new SortedSet<(string,string)>());
+                if (!LoadedEntityMap.ContainsKey(entityID))
+                {
+                    LoadedEntityMap.Add(entityID, new SortedSet<(string, string)>());
                 }
-                ISet<(string,string)> recordKeySet = LoadedEntityMap[entityID];
+                ISet<(string, string)> recordKeySet = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             };
 
-        } finally {
+        }
+        finally
+        {
             nativeEngine.Destroy();
         }
 
@@ -176,7 +193,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
     /**
      * Overridden to configure some data sources.
      */
-    override protected void PrepareRepository() {
+    override protected void PrepareRepository()
+    {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
         SortedSet<string> dataSources = SortedSetOf(PassengersDataSource,
@@ -207,7 +225,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                                     true);
     }
 
-    private FileInfo PreparePassengerFile() {
+    private FileInfo PreparePassengerFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -225,7 +244,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         return this.PrepareCSVFile("test-passengers-", headers, passengers);
     }
 
-    private FileInfo PrepareEmployeeFile() {
+    private FileInfo PrepareEmployeeFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -244,7 +264,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         return this.PrepareJsonArrayFile("test-employees-", headers, employees);
     }
 
-    private FileInfo PrepareVipFile() {
+    private FileInfo PrepareVipFile()
+    {
         string[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -262,113 +283,138 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         return this.PrepareJsonFile("test-vips-", headers, vips);
     }
-    
+
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
-    public long GetEntityID(string dataSourceCode, string recordID) {
+    public long GetEntityID(string dataSourceCode, string recordID)
+    {
         return GetEntityID((dataSourceCode, recordID));
     }
-    
-    public long GetEntityID((string dataSourceCode, string recordID) key) {
-        if (LoadedRecordMap.ContainsKey(key)) {
+
+    public long GetEntityID((string dataSourceCode, string recordID) key)
+    {
+        if (LoadedRecordMap.ContainsKey(key))
+        {
             return LoadedRecordMap[key];
-        } else {
+        }
+        else
+        {
             throw new ArgumentException("Record ID not found: " + key);
         }
     }
 
-    public List<long>? GetEntityIDsNull(ICollection<(string,string)?>? recordKeys) {
+    public List<long>? GetEntityIDsNull(ICollection<(string, string)?>? recordKeys)
+    {
         if (recordKeys == null) return null;
         List<long> result = new List<long>(recordKeys.Count);
-        foreach ((string dataSourceCode, string recordID)? recordKey in recordKeys) {
-            if (recordKey != null) {
-                result.Add(this.GetEntityID(recordKey ?? ("A","B")));
+        foreach ((string dataSourceCode, string recordID)? recordKey in recordKeys)
+        {
+            if (recordKey != null)
+            {
+                result.Add(this.GetEntityID(recordKey ?? ("A", "B")));
             }
         }
         return result;
     }
 
-    public List<long>? GetEntityIDsNull(ICollection<(string,string)>? recordKeys) {
+    public List<long>? GetEntityIDsNull(ICollection<(string, string)>? recordKeys)
+    {
         if (recordKeys == null) return null;
         List<long> result = new List<long>(recordKeys.Count);
-        foreach ((string dataSourceCode, string recordID) recordKey in recordKeys) {
+        foreach ((string dataSourceCode, string recordID) recordKey in recordKeys)
+        {
             result.Add(this.GetEntityID(recordKey));
         }
         return result;
     }
 
-    public List<long> GetEntityIDs(ICollection<(string,string)> recordKeys) {
+    public List<long> GetEntityIDs(ICollection<(string, string)> recordKeys)
+    {
         List<long> result = new List<long>(recordKeys.Count);
-        foreach ((string dataSourceCode, string recordID) recordKey in recordKeys) {
+        foreach ((string dataSourceCode, string recordID) recordKey in recordKeys)
+        {
             result.Add(this.GetEntityID(recordKey));
         }
         return result;
 
     }
-    public List<long> GetEntityIDs(ICollection<(string,string)?> recordKeys) {
+    public List<long> GetEntityIDs(ICollection<(string, string)?> recordKeys)
+    {
         List<long> result = new List<long>(recordKeys.Count);
-        foreach ((string dataSourceCode, string recordID)? recordKey in recordKeys) {
-            if (recordKey != null) {
-                result.Add(this.GetEntityID(recordKey ?? ("A","B")));
+        foreach ((string dataSourceCode, string recordID)? recordKey in recordKeys)
+        {
+            if (recordKey != null)
+            {
+                result.Add(this.GetEntityID(recordKey ?? ("A", "B")));
             }
         }
         return result;
     }
 
-    public SortedSet<long> EntityIDSet(ISet<(string,string)> recordKeys) {
+    public SortedSet<long> EntityIDSet(ISet<(string, string)> recordKeys)
+    {
         SortedSet<long> result = new SortedSet<long>();
-        foreach ((string dataSourceCode, string recordID) key in recordKeys) {
+        foreach ((string dataSourceCode, string recordID) key in recordKeys)
+        {
             result.Add(this.GetEntityID(key));
         }
         return result;
     }
 
-    public void ValidatePath(string                  pathJson,
-                             string                  testData,
-                             (string,string)         startRecordKey,
-                             (string,string)         endRecordKey,
-                             int                     maxDegrees,
-                             ISet<(string,string)>?  avoidances,
-                             ISet<long>?             avoidanceIDs,
-                             ISet<string>?           requiredSources,
-                             SzFlag?                 flags,
-                             int                     expectedPathLength,
-                             IList<(string,string)>  expectedPath)
+    public void ValidatePath(string pathJson,
+                             string testData,
+                             (string, string) startRecordKey,
+                             (string, string) endRecordKey,
+                             int maxDegrees,
+                             ISet<(string, string)>? avoidances,
+                             ISet<long>? avoidanceIDs,
+                             ISet<string>? requiredSources,
+                             SzFlag? flags,
+                             int expectedPathLength,
+                             IList<(string, string)> expectedPath)
     {
         JsonObject? jsonObject = null;
-        try {
+        try
+        {
             jsonObject = JsonNode.Parse(pathJson)?.AsObject();
             if (jsonObject == null) throw new JsonException();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Fail("Unable to parse find-path result as JSON: " + pathJson, e);
         }
 
         JsonArray? entityPaths = jsonObject?["ENTITY_PATHS"]?.AsArray();
-                
+
         Assert.IsNotNull(entityPaths, "Entity path is missing: path=[ "
                         + pathJson + " ], " + testData);
 
         Assert.That(entityPaths.Count, Is.EqualTo(1),
                      "Paths array has unexpected length: paths=[ "
                      + entityPaths + " ], " + testData);
-        
+
         JsonObject? path0 = entityPaths?[0]?.AsObject();
-        
+
         Assert.IsNotNull(path0, "Entity path was null: paths=[ " + entityPaths
                          + " ], " + testData);
-        
+
         JsonArray? entityIDs = path0?["ENTITIES"]?.AsArray();
 
         JsonArray? pathLinks = jsonObject?["ENTITY_PATH_LINKS"]?.AsArray();
@@ -378,7 +424,9 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         {
             Assert.IsNotNull(pathLinks, "Entity path links missing or null: "
                              + "pathLinks=[ " + pathLinks + " ], " + testData);
-        } else {
+        }
+        else
+        {
             Assert.IsNull(pathLinks, "Entity path links present when not requested.  "
                            + "pathLinks=[ " + pathLinks + " ], " + testData);
         }
@@ -390,34 +438,36 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         // validate the path length
         Assert.That(entityIDs?.Count, Is.EqualTo(expectedPathLength),
-                     "Path is not of expected length: pathJson=[ " 
+                     "Path is not of expected length: pathJson=[ "
                      + pathJson + " ], path=[ "
                      + entityIDs + "], " + testData);
-        
-        long        startEntityID   = this.GetEntityID(startRecordKey);
-        long        endEntityID     = this.GetEntityID(endRecordKey);
-        List<long>? expectedIDs     = this.GetEntityIDs(expectedPath);
-        List<long>  actualPathIDs   = new List<long>(entityIDs?.Count ?? 10);
+
+        long startEntityID = this.GetEntityID(startRecordKey);
+        long endEntityID = this.GetEntityID(endRecordKey);
+        List<long>? expectedIDs = this.GetEntityIDs(expectedPath);
+        List<long> actualPathIDs = new List<long>(entityIDs?.Count ?? 10);
 
         long? prevID = null;
         int entityIDCount = entityIDs?.Count ?? 0;
-        for (int index = 0; index < entityIDCount; index++) {
-            
+        for (int index = 0; index < entityIDCount; index++)
+        {
+
             long? jsonID = entityIDs?[index]?.GetValue<long>();
 
-            Assert.IsNotNull(jsonID, "The entity ID was null.  entityIDs=[ " 
-                             + entityIDs + " ], " + testData);             
- 
+            Assert.IsNotNull(jsonID, "The entity ID was null.  entityIDs=[ "
+                             + entityIDs + " ], " + testData);
+
             Assert.That(jsonID, Is.Not.EqualTo(0L),
-                        "The entity ID was zero.  entityIDs=[ " 
+                        "The entity ID was zero.  entityIDs=[ "
                         + entityIDs + " ], " + testData);
 
             long entityID = (jsonID ?? 0L); // cannot be null or zero
 
-            if (prevID == null) {
+            if (prevID == null)
+            {
                 Assert.That(entityID, Is.EqualTo(startEntityID),
                              "The starting entity ID in the path is not as expected: "
-                            + "entityIDs=[ " + entityIDs + " ], " + testData);             
+                            + "entityIDs=[ " + entityIDs + " ], " + testData);
 
             }
 
@@ -426,8 +476,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             {
                 Assert.IsFalse(avoidanceIDs?.Contains(entityID) ?? false,
                                "Strictly avoided entity ID (" + entityID + ") found "
-                               + "in path: entityIDs=[ " + entityIDs 
-                               + " ], recordKeys=[ " +  LoadedEntityMap[entityID]
+                               + "in path: entityIDs=[ " + entityIDs
+                               + " ], recordKeys=[ " + LoadedEntityMap[entityID]
                                + " ], " + testData);
             }
 
@@ -437,7 +487,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         }
 
         // assert the end of the path is as expected
-        if (prevID != null) {
+        if (prevID != null)
+        {
             Assert.That(prevID, Is.EqualTo(endEntityID),
                          "The ending entity ID (" + prevID
                          + ") in the path is not as expected: " + testData);
@@ -447,7 +498,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         Assert.IsTrue(actualPathIDs.SequenceEqual(expectedIDs),
                       "Entity path is not as expected: path=[ " + entityPaths
                       + " ], " + testData);
-        
+
         // add the start and end entity ID to the ID set
         actualPathIDs.Add(startEntityID);
         actualPathIDs.Add(endEntityID);
@@ -456,7 +507,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         ISet<long> detailEntityIDs = new HashSet<long>();
         int entitiesCount = entities?.Count ?? 0; // cannot be null
 
-        for (int index = 0; index < entitiesCount; index++) {
+        for (int index = 0; index < entitiesCount; index++)
+        {
             JsonObject? entity = entities?[index]?.AsObject();
 
             Assert.IsNotNull(entity, "Entity from path was null: "
@@ -466,7 +518,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
             Assert.IsNotNull(entity, "Resolved entity from path was null: "
                              + entities + ", " + testData);
-            
+
             //Get the entity ID
             long? jsonID = entity?["ENTITY_ID"]?.GetValue<long>();
 
@@ -480,81 +532,95 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                           "Entity (" + id + ") returned that is not in "
                           + "the path: entity=[ " + entity + " ], pathIds=[ "
                           + actualPathIDs + " ], " + testData);
-            
+
             // add to the ID set
             detailEntityIDs.Add(id);
         }
 
         // check that all the path ID's have details
-        foreach (long id in actualPathIDs) {
+        foreach (long id in actualPathIDs)
+        {
             Assert.IsTrue(
                 detailEntityIDs.Contains(id),
                  "A path entity (" + id + ") was missing from entity "
-                 + "details: entities=[ " + entities + " ], " 
+                 + "details: entities=[ " + entities + " ], "
                  + testData);
         }
 
         // validate the required data sources
-        if (requiredSources != null && requiredSources.Count > 0) {
+        if (requiredSources != null && requiredSources.Count > 0)
+        {
             bool sourcesSatisified = false;
-            foreach (long entityID in actualPathIDs) {
+            foreach (long entityID in actualPathIDs)
+            {
                 if (entityID == startEntityID) continue;
                 if (entityID == endEntityID) continue;
-                ISet<(string,string)> keys = LoadedEntityMap[entityID];
-                foreach ((string dataSourceCode,string recordID) key in keys) {
-                    if (requiredSources.Contains(key.dataSourceCode)) {
+                ISet<(string, string)> keys = LoadedEntityMap[entityID];
+                foreach ((string dataSourceCode, string recordID) key in keys)
+                {
+                    if (requiredSources.Contains(key.dataSourceCode))
+                    {
                         sourcesSatisified = true;
                         break;
                     }
                 }
                 if (sourcesSatisified) break;
             }
-            if (!sourcesSatisified) {
+            if (!sourcesSatisified)
+            {
                 Fail("Entity path does not contain required data sources: "
                      + "entityPath=[ " + actualPathIDs + " ], " + testData);
             }
         }
     }
 
-    public static SzFlag? FlagsWith(SzFlag? baseFlags, params SzFlag[] otherFlags) {
+    public static SzFlag? FlagsWith(SzFlag? baseFlags, params SzFlag[] otherFlags)
+    {
         SzFlag result = SzNoFlags;
-        if (baseFlags != null) {
+        if (baseFlags != null)
+        {
             result = (baseFlags ?? SzNoFlags);
         }
-        foreach (SzFlag flag in otherFlags) {
+        foreach (SzFlag flag in otherFlags)
+        {
             result |= flag;
         }
         if (result == SzNoFlags && baseFlags == null) return null;
         return result;
     }
 
-    public static SzFlag? FlagsWithout(SzFlag? baseFlags, params SzFlag[] otherFlags) {
+    public static SzFlag? FlagsWithout(SzFlag? baseFlags, params SzFlag[] otherFlags)
+    {
         if (baseFlags == null) return null;
         SzFlag result = (baseFlags ?? SzNoFlags);
-        foreach (SzFlag flag in otherFlags) {
+        foreach (SzFlag flag in otherFlags)
+        {
             result &= (~flag);
         }
         return result;
     }
 
-    public static SzFlag? FlagsWithStrictAvoid(SzFlag? baseFlags) {
+    public static SzFlag? FlagsWithStrictAvoid(SzFlag? baseFlags)
+    {
         return FlagsWith(baseFlags, SzFindPathStrictAvoid);
     }
 
-    public static SzFlag? FlagsWithDefaultAvoid(SzFlag? baseFlags) {
+    public static SzFlag? FlagsWithDefaultAvoid(SzFlag? baseFlags)
+    {
         return FlagsWithout(baseFlags, SzFindPathStrictAvoid);
     }
 
-    public static List<object?[]> GetEntityPathParameters() {
+    public static List<object?[]> GetEntityPathParameters()
+    {
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(FindPathFlagSet);
 
         List<object?[]> result = new List<object?[]>();
-        
-        IList<(string,string)> EmptyPath
-            = ListOf<(string,string)>().AsReadOnly();
-        
-        Type UnknownSource  = typeof(SzUnknownDataSourceException);
-        Type NotFound       = typeof(SzNotFoundException);
+
+        IList<(string, string)> EmptyPath
+            = ListOf<(string, string)>().AsReadOnly();
+
+        Type UnknownSource = typeof(SzUnknownDataSourceException);
+        Type NotFound = typeof(SzNotFoundException);
 
         result.Add(new object?[] {
             "Basic path find at 2 degrees",
@@ -564,7 +630,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             (SzCoreEngineGraphTest t) => t.GetEntityID(EmployeeDEF890),
             2, null, null, null, flagSetIter.Next(), null, null, 3,
             ListOf(PassengerABC123, EmployeeMNO345, EmployeeDEF890)});
-        
+
         result.Add(new object?[] {
             "Basic path found at 3 degrees",
             PassengerABC123,
@@ -580,9 +646,9 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             VipJKL456,
             (SzCoreEngineGraphTest t) => t.GetEntityID(VipJKL456),
-            2, null, null, null, 
+            2, null, null, null,
             flagSetIter.Next(), null, null, 0, EmptyPath});
-        
+
         result.Add(new object?[] {
             "Diverted path found with avoidance",
             PassengerABC123,
@@ -600,23 +666,23 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             VipJKL456,
             (SzCoreEngineGraphTest t) => t.GetEntityID(VipJKL456),
-            3, SortedSetOf(EmployeeDEF890), 
+            3, SortedSetOf(EmployeeDEF890),
             (SzCoreEngineGraphTest t) => SortedSetOf(t.GetEntityID(EmployeeDEF890)),
             null, FlagsWithStrictAvoid(flagSetIter.Next()), null, null, 0,
             EmptyPath});
-        
+
         result.Add(new object?[] {
             "Diverted path at 5 degrees with strict avoidance",
             PassengerABC123,
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             VipJKL456,
             (SzCoreEngineGraphTest t) => t.GetEntityID(VipJKL456),
-            10, SortedSetOf(EmployeeDEF890), 
+            10, SortedSetOf(EmployeeDEF890),
             (SzCoreEngineGraphTest t) => SortedSetOf(t.GetEntityID(EmployeeDEF890)),
             null, FlagsWithStrictAvoid(flagSetIter.Next()),  null, null, 6,
             ListOf(PassengerABC123, PassengerDEF456, PassengerGHI789,
                    PassengerJKL012, VipXYZ234, VipJKL456)});
-        
+
         result.Add(new object?[] {
             "Diverted path at 5 degrees due to required EMPLOYEES source",
             PassengerABC123,
@@ -627,25 +693,25 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             FlagsWithDefaultAvoid(flagSetIter.Next()), null, null, 6,
             ListOf(PassengerABC123, EmployeeMNO345, EmployeeDEF890,
                     VipJKL456, VipXYZ234, PassengerJKL012)});
-        
+
         result.Add(new object?[] {
             "Diverted path at 5 degrees due to required VIP source",
             PassengerABC123,
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             PassengerJKL012,
-            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012), 
+            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012),
             10, null, null, SortedSetOf(VipsDataSource),
             FlagsWithDefaultAvoid(flagSetIter.Next()), null, null, 6,
             ListOf(PassengerABC123, EmployeeMNO345, EmployeeDEF890,
                     VipJKL456, VipXYZ234, PassengerJKL012)});
-        
+
         result.Add(new object?[] {
             "Diverted path at 5 degrees due to 2 required sources",
-            PassengerABC123, 
+            PassengerABC123,
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
-            PassengerJKL012, 
-            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012), 
-            10, null, null, 
+            PassengerJKL012,
+            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012),
+            10, null, null,
             SortedSetOf(EmployeesDataSource, VipsDataSource),
             FlagsWithDefaultAvoid(flagSetIter.Next()), null, null, 6,
             ListOf(PassengerABC123, EmployeeMNO345, EmployeeDEF890,
@@ -653,11 +719,11 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         result.Add(new object?[] {
             "Diverted path with required sources and avoidance",
-            PassengerABC123, 
+            PassengerABC123,
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             PassengerJKL012,
-            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012), 
-            10, SortedSetOf(VipSTU901), 
+            (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012),
+            10, SortedSetOf(VipSTU901),
             (SzCoreEngineGraphTest t) => SortedSetOf(t.GetEntityID(VipSTU901)),
             SortedSetOf(EmployeesDataSource, VipsDataSource),
             FlagsWithDefaultAvoid(flagSetIter.Next()), null, null, 6,
@@ -670,9 +736,9 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
             EmployeeDEF890,
             (SzCoreEngineGraphTest t) => t.GetEntityID(EmployeeDEF890),
-            10, null, null, SortedSetOf(UnknownDataSource), flagSetIter.Next(), 
+            10, null, null, SortedSetOf(UnknownDataSource), flagSetIter.Next(),
             UnknownSource, UnknownSource, 0, EmptyPath});
-        
+
         result.Add(new object?[] {
             "Unknown source for avoidance record",
             PassengerABC123,
@@ -680,7 +746,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             VipJKL456,
             (SzCoreEngineGraphTest t) => t.GetEntityID(VipJKL456), 4,
             SortedSetOf((UnknownDataSource, "DEF890")),
-            (SzCoreEngineGraphTest t) => SortedSetOf(-300L), 
+            (SzCoreEngineGraphTest t) => SortedSetOf(-300L),
             null, FlagsWithDefaultAvoid(flagSetIter.Next()),
             UnknownSource, null, 4, ListOf(PassengerABC123, EmployeeMNO345,
                                           EmployeeDEF890, VipJKL456)});
@@ -696,32 +762,32 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             null, FlagsWithDefaultAvoid(flagSetIter.Next()),
             null, null, 4, ListOf(PassengerABC123, EmployeeMNO345,
                                   EmployeeDEF890, VipJKL456)});
-                
+
         result.Add(new object?[] {
                 "Unknown start data source in find path via key",
-                (UnknownDataSource, "ABC123"), 
+                (UnknownDataSource, "ABC123"),
                 (SzCoreEngineGraphTest t) => -100L,
                 PassengerJKL012,
                 (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012),
-                10, null, null, null, flagSetIter.Next(), 
+                10, null, null, null, flagSetIter.Next(),
                 UnknownSource, NotFound, 0, EmptyPath});
-                
+
         result.Add(new object?[] {
                 "Unknown end data source in find path via key",
                 PassengerABC123,
                 (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
-                (UnknownDataSource, "JKL012"), 
+                (UnknownDataSource, "JKL012"),
                 (SzCoreEngineGraphTest t) => -200L,
-                10, null, null, null, flagSetIter.Next(), 
+                10, null, null, null, flagSetIter.Next(),
                 UnknownSource, NotFound, 0, EmptyPath});
-        
+
         result.Add(new object?[] {
                 "Unknown start record ID in find path via key",
                 (PassengersDataSource, "XXX000"),
                 (SzCoreEngineGraphTest t) => 100000000L,
-                PassengerJKL012, 
+                PassengerJKL012,
                 (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerJKL012),
-                10, null, null, null, flagSetIter.Next(), 
+                10, null, null, null, flagSetIter.Next(),
                 NotFound, NotFound, 0, EmptyPath});
 
         result.Add(new object?[] {
@@ -730,28 +796,46 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                 (SzCoreEngineGraphTest t) => t.GetEntityID(PassengerABC123),
                 (PassengersDataSource, "XXX000"),
                 (SzCoreEngineGraphTest t) => 200000000L,
-                10, null, null, null, flagSetIter.Next(), 
+                10, null, null, null, flagSetIter.Next(),
                 NotFound, NotFound, 0, EmptyPath});
-        
+
         return result;
     }
 
-    [Test,TestCaseSource(nameof(GetEntityPathParameters))]
+    public static List<object?[]> GetEntityPathDefaultParameters()
+    {
+        List<object?[]> argsList = GetEntityPathParameters();
+
+        List<object?[]> result = new List<object?[]>(argsList.Count);
+
+        for (int index = 0; index < argsList.Count; index++)
+        {
+            object?[] args = argsList[index];
+            // skip the ones that expect an exception
+            if (args[args.Length - 3] != null) continue;
+            if (args[args.Length - 4] != null) continue;
+            result.Add(new object?[] {
+                args[1], args[3], args[5], args[6], args[7], args[8] });
+        }
+        return result;
+    }
+
+    [Test, TestCaseSource(nameof(GetEntityPathParameters))]
     public void TestFindPathByRecordID(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    startRecordKey,
-        Func<SzCoreEngineGraphTest,long>            startEntityIDFunc,
-        (string dataSourceCode, string recordID)    endRecordKey,
-        Func<SzCoreEngineGraphTest,long>            endEntityIDFunc,
-        int                                         maxDegrees,
-        ISet<(string,string)>?                      avoidances,
-        Func<SzCoreEngineGraphTest,ISet<long>?>?    avoidanceIDsFunc,
-        ISet<string>?                               requiredSources,
-        SzFlag?                                     flags,
-        Type?                                       recordExceptionType,
-        Type?                                       entityExceptionType,
-        int                                         expectedPathLength,
-        IList<(string,string)>                      expectedPath) 
+        string testDescription,
+        (string dataSourceCode, string recordID) startRecordKey,
+        Func<SzCoreEngineGraphTest, long> startEntityIDFunc,
+        (string dataSourceCode, string recordID) endRecordKey,
+        Func<SzCoreEngineGraphTest, long> endEntityIDFunc,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType,
+        int expectedPathLength,
+        IList<(string, string)> expectedPath)
     {
         long startEntityID = startEntityIDFunc(this);
         long endEntityID = endEntityIDFunc(this);
@@ -759,32 +843,35 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], startRecordKey=[ "
-            + startRecordKey + " ], startRecordId=[ " + startEntityID 
+            + startRecordKey + " ], startRecordId=[ " + startEntityID
             + " ] endRecordKey=[ " + endRecordKey + " ], endRecordId=[ "
             + endEntityID + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
-            + avoidances + " ], avoidanceIDs=[ " + avoidanceIDs 
+            + avoidances + " ], avoidanceIDs=[ " + avoidanceIDs
             + " ] requiredSources=[ " + requiredSources + " ], flags=[ "
             + SzFindPathFlags.FlagsToString(flags) + " ], expectedException=[ "
             + recordExceptionType + " ], expectedPathLength=[ "
             + expectedPathLength + " ], expectedPath=[ ");
 
         string prefix = "";
-        foreach ((string dataSourceCode, string recordID) key in expectedPath) {
+        foreach ((string dataSourceCode, string recordID) key in expectedPath)
+        {
             sb.Append(prefix).Append(key).Append(" {");
-            sb.Append(this.GetEntityID(key)).Append("}");
+            sb.Append(this.GetEntityID(key)).Append('}');
             prefix = ", ";
         }
         sb.Append(" ], recordMap=[ ");
         sb.Append(LoadedRecordMap.ToDebugString()).Append(" ]");
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.FindPath(
-                        startRecordKey.dataSourceCode, 
-                        startRecordKey.recordID, 
+                        startRecordKey.dataSourceCode,
+                        startRecordKey.recordID,
                         endRecordKey.dataSourceCode,
                         endRecordKey.recordID,
                         maxDegrees,
@@ -792,11 +879,12 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                         requiredSources,
                         flags);
 
-                if (recordExceptionType != null) {
+                if (recordExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in finding a path: " + testData);
                 }
 
-                this.ValidatePath(result, 
+                this.ValidatePath(result,
                                   testData,
                                   startRecordKey,
                                   endRecordKey,
@@ -809,23 +897,31 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                                   expectedPath);
 
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (recordExceptionType == null) {
+                if (recordExceptionType == null)
+                {
                     Fail("Unexpectedly failed finding an entity path: "
                          + testData + ", " + description, e);
 
-                } else if (recordExceptionType != e.GetType()) {
+                }
+                else if (recordExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        recordExceptionType, e, 
+                        recordExceptionType, e,
                         "FindPath() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -836,20 +932,20 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetEntityPathParameters))]
     public void TestFindPathByEntityID(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    startRecordKey,
-        Func<SzCoreEngineGraphTest,long>            startEntityIDFunc,
-        (string dataSourceCode, string recordID)    endRecordKey,
-        Func<SzCoreEngineGraphTest,long>            endEntityIDFunc,
-        int                                         maxDegrees,
-        ISet<(string,string)>?                      avoidances,
-        Func<SzCoreEngineGraphTest,ISet<long>?>?    avoidanceIDsFunc,
-        ISet<string>?                               requiredSources,
-        SzFlag?                                     flags,
-        Type?                                       recordExceptionType,
-        Type?                                       entityExceptionType,
-        int                                         expectedPathLength,
-        IList<(string,string)>                      expectedPath) 
+        string testDescription,
+        (string dataSourceCode, string recordID) startRecordKey,
+        Func<SzCoreEngineGraphTest, long> startEntityIDFunc,
+        (string dataSourceCode, string recordID) endRecordKey,
+        Func<SzCoreEngineGraphTest, long> endEntityIDFunc,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType,
+        int expectedPathLength,
+        IList<(string, string)> expectedPath)
     {
         long startEntityID = startEntityIDFunc(this);
         long endEntityID = endEntityIDFunc(this);
@@ -857,42 +953,46 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], startRecordKey=[ "
-            + startRecordKey + " ], startRecordId=[ " + startEntityID 
+            + startRecordKey + " ], startRecordId=[ " + startEntityID
             + " ] endRecordKey=[ " + endRecordKey + " ], endRecordId=[ "
             + endEntityID + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
-            + avoidances + " ], avoidanceIDs=[ " + avoidanceIDs 
+            + avoidances + " ], avoidanceIDs=[ " + avoidanceIDs
             + " ] requiredSources=[ " + requiredSources + " ], flags=[ "
             + SzFindPathFlags.FlagsToString(flags) + " ], expectedException=[ "
             + entityExceptionType + " ], expectedPathLength=[ "
             + expectedPathLength + " ], expectedPath=[ ");
 
         string prefix = "";
-        foreach ((string,string) key in expectedPath) {
+        foreach ((string, string) key in expectedPath)
+        {
             sb.Append(prefix).Append(key).Append(" {");
-            sb.Append(this.GetEntityID(key)).Append("}");
+            sb.Append(this.GetEntityID(key)).Append('}');
             prefix = ", ";
         }
         sb.Append(" ], recordMap=[ ");
         sb.Append(LoadedRecordMap.ToDebugString()).Append(" ]");
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.FindPath(
-                        startEntityID, 
-                        endEntityID, 
+                        startEntityID,
+                        endEntityID,
                         maxDegrees,
                         avoidanceIDs,
                         requiredSources,
                         flags);
 
-                if (entityExceptionType != null) {
+                if (entityExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in finding a path: " + testData);
                 }
 
-                ValidatePath(result, 
+                ValidatePath(result,
                              testData,
                              startRecordKey,
                              endRecordKey,
@@ -905,40 +1005,256 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                              expectedPath);
 
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (entityExceptionType == null) {
+                if (entityExceptionType == null)
+                {
                     Fail("Unexpectedly failed finding an entity path: "
                          + testData + ", " + description, e);
 
-                } else if (recordExceptionType != e.GetType()) {
+                }
+                else if (recordExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        entityExceptionType, e, 
+                        entityExceptionType, e,
                         "FindPath() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
             }
         });
     }
-    public static List<object?[]> GetEntityNetworkParameters() {
+
+    [Test, TestCaseSource(nameof(GetEntityPathDefaultParameters))]
+    public void TestFindPathByRecordIDDefaults(
+        (string dataSourceCode, string recordID) startRecordKey,
+        (string dataSourceCode, string recordID) endRecordKey,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string startDataSourceCode = startRecordKey.dataSourceCode;
+                string startRecordID = startRecordKey.recordID;
+
+                string endDataSourceCode = endRecordKey.dataSourceCode;
+                string endRecordID = endRecordKey.recordID;
+
+                string defaultResult = engine.FindPath(startDataSourceCode,
+                                                       startRecordID,
+                                                       endDataSourceCode,
+                                                       endRecordID,
+                                                       maxDegrees,
+                                                       avoidances,
+                                                       requiredSources);
+
+                string explicitResult = engine.FindPath(startDataSourceCode,
+                                                        startRecordID,
+                                                        endDataSourceCode,
+                                                        endRecordID,
+                                                        maxDegrees,
+                                                        avoidances,
+                                                        requiredSources,
+                                                        SzFindPathDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string avoidanceJson = SzCoreEngine.EncodeRecordKeys(avoidances);
+
+                string sourcesJson = SzCoreEngine.EncodeDataSources(requiredSources);
+
+                string nativeResult;
+                long returnCode;
+                if (avoidances == null && requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByRecordID(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        out nativeResult);
+                }
+                else if (requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByRecordIDWithAvoids(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        avoidanceJson,
+                        out nativeResult);
+                }
+                else
+                {
+                    returnCode = nativeEngine.FindPathByRecordIDIncludingSource(
+                        startDataSourceCode,
+                        startRecordID,
+                        endDataSourceCode,
+                        endRecordID,
+                        maxDegrees,
+                        avoidanceJson,
+                        sourcesJson,
+                        out nativeResult);
+                }
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed to find path.  startRecord=[ "
+                     + startRecordKey + " ], endRecordKey=[ " + endRecordKey
+                     + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
+                     + (avoidances == null ? null : avoidances.ToDebugString())
+                     + " ], requiredSources=[ "
+                     + (requiredSources == null ? null : requiredSources.ToDebugString())
+                     + " ]", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetEntityPathDefaultParameters))]
+    public void TestFindPathByEntityIDDefaults(
+        (string dataSourceCode, string recordID) startRecordKey,
+        (string dataSourceCode, string recordID) endRecordKey,
+        int maxDegrees,
+        ISet<(string, string)>? avoidances,
+        Func<SzCoreEngineGraphTest, ISet<long>?>? avoidanceIDsFunc,
+        ISet<string>? requiredSources)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long startEntityID = GetEntityID(startRecordKey);
+                long endEntityID = GetEntityID(endRecordKey);
+
+                ISet<long>? avoidanceIDs = avoidanceIDsFunc != null
+                    ? avoidanceIDsFunc(this) : null;
+
+                string defaultResult = engine.FindPath(startEntityID,
+                                                       endEntityID,
+                                                       maxDegrees,
+                                                       avoidanceIDs,
+                                                       requiredSources);
+
+                string explicitResult = engine.FindPath(startEntityID,
+                                                        endEntityID,
+                                                        maxDegrees,
+                                                        avoidanceIDs,
+                                                        requiredSources,
+                                                        SzFindPathDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string avoidanceJson = SzCoreEngine.EncodeEntityIDs(avoidanceIDs);
+
+                string sourcesJson = SzCoreEngine.EncodeDataSources(requiredSources);
+
+                string nativeResult;
+                long returnCode;
+                if (avoidances == null && requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByEntityID(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        out nativeResult);
+                }
+                else if (requiredSources == null)
+                {
+                    returnCode = nativeEngine.FindPathByEntityIDWithAvoids(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        avoidanceJson,
+                        out nativeResult);
+                }
+                else
+                {
+                    returnCode = nativeEngine.FindPathByEntityIDIncludingSource(
+                        startEntityID,
+                        endEntityID,
+                        maxDegrees,
+                        avoidanceJson,
+                        sourcesJson,
+                        out nativeResult);
+                }
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed to find path.  startRecord=[ "
+                     + startRecordKey + " ], endRecordKey=[ " + endRecordKey
+                     + " ], maxDegrees=[ " + maxDegrees + " ], avoidances=[ "
+                     + (avoidances == null ? null : avoidances.ToDebugString())
+                     + " ], requiredSources=[ "
+                     + (requiredSources == null ? null : requiredSources.ToDebugString())
+                     + " ]", e);
+            }
+        });
+    }
+
+    public static List<object?[]> GetEntityNetworkParameters()
+    {
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(FindNetworkFlagSet);
 
         List<object?[]> result = new List<object?[]>();
-        
-        IList<IList<(string,string)?>> NoPaths 
-            = ListOf<IList<(string,string)?>>().AsReadOnly();
 
-        ISet<(string,string)> NoEntities 
-            = ImmutableHashSet<(string,string)>.Empty;
-        
+        IList<IList<(string, string)?>> NoPaths
+            = ListOf<IList<(string, string)?>>().AsReadOnly();
+
+        ISet<(string, string)> NoEntities
+            = ImmutableHashSet<(string, string)>.Empty;
+
         Type UnknownSource = typeof(SzUnknownDataSourceException);
         Type NotFound = typeof(SzNotFoundException);
 
@@ -951,27 +1267,27 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         result.Add(new object?[] {
             "Single entity with one-degree build-out",
-            SortedSetOf(PassengerABC123), 
+            SortedSetOf(PassengerABC123),
             (SzCoreEngineGraphTest t) => t.EntityIDSet(SortedSetOf(PassengerABC123)),
-            1, 1, 1000, flagSetIter.Next(), null, null, 0, 
+            1, 1, 1000, flagSetIter.Next(), null, null, 0,
             NoPaths, SortedSetOf(PassengerABC123, PassengerDEF456, EmployeeMNO345)});
 
         result.Add(new object?[] {
             "Two entities with no path",
-            SortedSetOf(PassengerABC123,VipJKL456), 
+            SortedSetOf(PassengerABC123,VipJKL456),
             (SzCoreEngineGraphTest t) => t.EntityIDSet(SortedSetOf(PassengerABC123,VipJKL456)),
-            1, 0, 10, flagSetIter.Next(), null, null, 1, 
+            1, 0, 10, flagSetIter.Next(), null, null, 1,
             ListOf<IList<(string,string)?>>(
-                ListOf<(string,string)?>(null, PassengerABC123, VipJKL456)), 
+                ListOf<(string,string)?>(null, PassengerABC123, VipJKL456)),
             SortedSetOf(PassengerABC123, VipJKL456)});
-            
+
         result.Add(new object?[] {
             "Two entities at three degrees",
-            SortedSetOf(PassengerABC123,VipJKL456), 
+            SortedSetOf(PassengerABC123,VipJKL456),
             (SzCoreEngineGraphTest t) => t.EntityIDSet(SortedSetOf(PassengerABC123,VipJKL456)),
-            3, 0, 10, flagSetIter.Next(), null, null, 1, 
+            3, 0, 10, flagSetIter.Next(), null, null, 1,
             ListOf<IList<(string,string)?>>(
-                ListOf<(string,string)?>(PassengerABC123, EmployeeMNO345, EmployeeDEF890, VipJKL456)), 
+                ListOf<(string,string)?>(PassengerABC123, EmployeeMNO345, EmployeeDEF890, VipJKL456)),
             SortedSetOf(PassengerABC123, EmployeeMNO345, EmployeeDEF890, VipJKL456)});
 
         result.Add(new object?[] {
@@ -985,7 +1301,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                 ListOf<(string,string)?>(null, EmployeeABC567, VipJKL456)),
             SortedSetOf(PassengerABC123,EmployeeMNO345,EmployeeDEF890,VipJKL456,
                 PassengerDEF456,EmployeePQR678,EmployeeABC567)});
-        
+
         result.Add(new object?[] {
             "Three entities at zero degrees with single buid-out",
             SortedSetOf(EmployeeABC567,VipGHI123,EmployeeMNO345),
@@ -997,7 +1313,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                  ListOf<(string,string)?>(null, VipGHI123, EmployeeMNO345)),
             SortedSetOf(EmployeeABC567,VipGHI123,EmployeeMNO345,EmployeePQR678,
                 VipXYZ234,VipSTU901,PassengerABC123,EmployeeDEF890)});
-        
+
         result.Add(new object?[] {
             "Two entities at zero degrees with single build-out",
             SortedSetOf(PassengerABC123, PassengerDEF456),
@@ -1007,7 +1323,7 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                 ListOf<(string,string)?>(null, PassengerABC123, PassengerDEF456)),
             SortedSetOf(PassengerABC123,PassengerDEF456,EmployeeMNO345,
                 PassengerGHI789,EmployeePQR678)});
-        
+
         result.Add(new object?[] {
             "Unknown data source for network entity",
             SortedSetOf((UnknownDataSource,"ABC123"), VipXYZ234),
@@ -1021,71 +1337,93 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             (SzCoreEngineGraphTest t) => SortedSetOf(t.GetEntityID(VipXYZ234), -100L),
             3, 0, 10, flagSetIter.Next(),
             NotFound, NotFound, 0, NoPaths, NoEntities});
-    
+
         return result;
     }
 
+    public static List<object?[]> GetEntityNetworkDefaultParameters()
+    {
+        List<object?[]> argsList = GetEntityNetworkParameters();
 
-    public void ValidateNetwork(string                          networkJson,
-                                string                          testData,
-                                ISet<(string,string)>           recordKeys,
-                                int                             maxDegrees,
-                                int                             buildOutDegrees,
-                                int                             buildOutMaxEntities,
-                                SzFlag?                         flags,
-                                int                             expectedPathCount,
-                                IList<IList<(string,string)?>>  expectedPaths)
+        List<object?[]> result = new List<object?[]>(argsList.Count);
+
+        for (int index = 0; index < argsList.Count; index++)
+        {
+            object?[] args = argsList[index];
+
+            // skip the ones that expect an exception
+            if (args[args.Length - 4] != null) continue;
+            if (args[args.Length - 5] != null) continue;
+            result.Add(new object?[] { args[1], args[3], args[4], args[5] });
+        }
+        return result;
+    }
+
+    public void ValidateNetwork(string networkJson,
+                                string testData,
+                                ISet<(string, string)> recordKeys,
+                                int maxDegrees,
+                                int buildOutDegrees,
+                                int buildOutMaxEntities,
+                                SzFlag? flags,
+                                int expectedPathCount,
+                                IList<IList<(string, string)?>> expectedPaths)
     {
         JsonObject? jsonObject = null;
-        try {
+        try
+        {
             jsonObject = JsonNode.Parse(networkJson)?.AsObject();
             if (jsonObject == null) throw new JsonException();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Fail("Unable to parse find-network result as JSON: " + networkJson, e);
         }
-        
+
         JsonArray? entityPaths = jsonObject?["ENTITY_PATHS"]?.AsArray();
-                
+
         Assert.IsNotNull(entityPaths, "Entity paths are missing: " + testData);
 
-        Assert.IsNotNull(entityPaths, "Entity paths is missing: path=[ " 
+        Assert.IsNotNull(entityPaths, "Entity paths is missing: path=[ "
                          + networkJson + " ], " + testData);
 
         Assert.That(entityPaths.Count, Is.EqualTo(expectedPathCount),
-                     "Paths array has unexpected length: paths=[ " + entityPaths 
+                     "Paths array has unexpected length: paths=[ " + entityPaths
                      + " ], " + testData);
-        
+
         ISet<long> allEntityIDs = new SortedSet<long>();
 
-        IDictionary<string, List<long>> actualPaths = new Dictionary<string,List<long>>();
+        IDictionary<string, List<long>> actualPaths = new Dictionary<string, List<long>>();
         int entityPathCount = entityPaths?.Count ?? 0;
 
-        for (int index = 0; index < entityPathCount; index++) {
+        for (int index = 0; index < entityPathCount; index++)
+        {
             JsonObject? path = entityPaths?[index]?.AsObject();
 
             Assert.IsNotNull(path, "Entity path was null: paths=[ "
                              + entityPaths + " ], " + testData);
-        
+
             long? jsonID = path?["START_ENTITY_ID"]?.GetValue<long>();
 
-            Assert.IsNotNull(jsonID, 
+            Assert.IsNotNull(jsonID,
                              "Starting entity ID on path should not be null."
                              + "  path=[ " + path + " ], " + testData);
 
             long startEntityID = jsonID ?? 0L; // cannot be null
-            
+
             jsonID = path?["END_ENTITY_ID"]?.GetValue<long>();
             Assert.IsNotNull(jsonID,
                              "Ending entity ID on path should not be null."
                             + "  path=[ " + path + " ], " + testData);
-            
+
             long endEntityID = jsonID ?? 0L; // cannot be null
 
             JsonArray? entityIDs = path?["ENTITIES"]?.AsArray();
             int entityIDCount = entityIDs?.Count ?? 0;
             List<long> pathIDs = new List<long>(entityIDCount);
-            for (int index2 = 0; index2 < entityIDCount; index2++) {
+            for (int index2 = 0; index2 < entityIDCount; index2++)
+            {
                 long? entityID = entityIDs?[index2]?.GetValue<long>();
 
                 Assert.IsNotNull(entityID, "The discovered entity ID was null.  "
@@ -1096,7 +1434,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
             long minEntityID = Math.Min(startEntityID, endEntityID);
             long maxEntityID = Math.Max(startEntityID, endEntityID);
-            if (minEntityID != startEntityID) {
+            if (minEntityID != startEntityID)
+            {
                 pathIDs.Reverse();
             }
             string key = minEntityID + ":" + maxEntityID;
@@ -1104,10 +1443,13 @@ internal class SzCoreEngineGraphTest : AbstractTest {
         }
 
         JsonArray? pathLinks = jsonObject?["ENTITY_NETWORK_LINKS"]?.AsArray();
-        if (flags != null && ((flags & SzFindNetworkIncludeMatchingInfo) != SzNoFlags)) {
+        if (flags != null && ((flags & SzFindNetworkIncludeMatchingInfo) != SzNoFlags))
+        {
             Assert.IsNotNull(pathLinks, "Entity path links missing or null: "
                              + "pathLinks=[ " + pathLinks + " ], " + testData);
-        } else {
+        }
+        else
+        {
             Assert.IsNull(pathLinks, "Entity path links present when not requested.  "
                           + "pathLinks=[ " + pathLinks + " ], " + testData);
         }
@@ -1130,20 +1472,22 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                       "Too many entity details provided -- expected at most "
                       + maxEntityCount + ", but got " + entitiesCount
                       + ": " + testData);
-                
+
 
         // handle the expected paths
         IDictionary<string, List<long>> expectedPathMap = new Dictionary<string, List<long>>();
-        IDictionary<IList<(string,string)?>, string> expectedLookup
-            = new Dictionary<IList<(string,string)?>, string>(ReferenceEqualityComparer.Instance);
+        IDictionary<IList<(string, string)?>, string> expectedLookup
+            = new Dictionary<IList<(string, string)?>, string>(ReferenceEqualityComparer.Instance);
 
         ISet<long> expectedEntityIDs = new HashSet<long>();
-        foreach (IList<(string,string)?> expectedPath in expectedPaths) {
-            if (expectedPath[0] == null) {
-                (string code, string id) startKey   = expectedPath[1] ?? ("A","B");
-                (string code, string id) endKey     = expectedPath[2] ?? ("C","D");
-                long        startId                 = this.GetEntityID(startKey);
-                long        endId                   = this.GetEntityID(endKey);
+        foreach (IList<(string, string)?> expectedPath in expectedPaths)
+        {
+            if (expectedPath[0] == null)
+            {
+                (string code, string id) startKey = expectedPath[1] ?? ("A", "B");
+                (string code, string id) endKey = expectedPath[2] ?? ("C", "D");
+                long startId = this.GetEntityID(startKey);
+                long endId = this.GetEntityID(endKey);
 
                 long minId = Math.Min(startId, endId);
                 long maxId = Math.Max(startId, endId);
@@ -1155,48 +1499,54 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                 expectedEntityIDs.Add(startId);
                 expectedEntityIDs.Add(endId);
 
-            } else {
-                List<long>  entityIDs   = this.GetEntityIDs(expectedPath);
-                long        startID     = entityIDs[0];
-                long        endID       = entityIDs[entityIDs.Count - 1];
-                long        minID       = Math.Min(startID, endID);
-                long        maxID       = Math.Max(startID, endID);
+            }
+            else
+            {
+                List<long> entityIDs = this.GetEntityIDs(expectedPath);
+                long startID = entityIDs[0];
+                long endID = entityIDs[entityIDs.Count - 1];
+                long minID = Math.Min(startID, endID);
+                long maxID = Math.Max(startID, endID);
 
-                if (minID != startID) {
+                if (minID != startID)
+                {
                     entityIDs.Reverse();
                 }
 
                 string key = minID + ":" + maxID;
                 expectedPathMap.Add(key, entityIDs);
                 expectedLookup.Add(expectedPath, key);
-                foreach (long entityID in entityIDs) {
+                foreach (long entityID in entityIDs)
+                {
                     expectedEntityIDs.Add(entityID);
                 }
             }
         }
 
-        foreach (KeyValuePair<IList<(string,string)?>,string> pair in expectedLookup) {
-            IList<(string,string)?> expectedPath = pair.Key;
+        foreach (KeyValuePair<IList<(string, string)?>, string> pair in expectedLookup)
+        {
+            IList<(string, string)?> expectedPath = pair.Key;
             string key = pair.Value;
 
-            List<long> expectedIDs  = expectedPathMap[key];
-            List<long> actualIDs    = actualPaths[key];
-            
-            Assert.IsNotNull(actualIDs, 
+            List<long> expectedIDs = expectedPathMap[key];
+            List<long> actualIDs = actualPaths[key];
+
+            Assert.IsNotNull(actualIDs,
                              "Did not find actual path for expected path.  "
-                             + "expected=[ " + expectedPath + " ], key=[ " 
+                             + "expected=[ " + expectedPath + " ], key=[ "
                              + key + " ], expectedEntityIDs=[ "
                              + expectedIDs + " ]");
-            
+
             Assert.That(actualIDs, Is.EqualTo(expectedIDs),
                         "Path between entities is not as expected.  expected=[ "
                         + expectedPath + " ], key=[ " + key + " ], actualPaths=[ "
                         + actualPaths + " ], " + testData);
         }
 
-        foreach (KeyValuePair<string,List<long>> pair in actualPaths) {
-            string      key         = pair.Key;
-            List<long>  actualIDs   = pair.Value;
+        foreach (KeyValuePair<string, List<long>> pair in actualPaths)
+        {
+            string key = pair.Key;
+            List<long> actualIDs = pair.Value;
 
             Assert.IsTrue(expectedPathMap.ContainsKey(key),
                           "Actual path provided that was not expected."
@@ -1205,7 +1555,8 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
         // check that the entities we found are on the path
         ISet<long> detailEntityIDs = new HashSet<long>();
-        for (int index = 0; index < entitiesCount; index++) {
+        for (int index = 0; index < entitiesCount; index++)
+        {
             JsonObject? entity = entities?[index]?.AsObject();
 
             Assert.IsNotNull(entity, "Entity detail from network was null: "
@@ -1215,47 +1566,48 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
             Assert.IsNotNull(entity, "Resolved entity from network was null: "
                              + entities + ", " + testData);
-            
+
             // Get the entity ID
             long? id = entity?["ENTITY_ID"]?.GetValue<long>();
 
             Assert.IsNotNull(
                 id, "The entity detail from path was missing or "
                 + "null ENTITY_ID: " + entity + ", " + testData);
-            
+
             // add to the ID set
             detailEntityIDs.Add(id ?? 0L); // id cannot be null
         }
 
-        foreach (long entityID in expectedEntityIDs) {
+        foreach (long entityID in expectedEntityIDs)
+        {
             Assert.IsTrue(detailEntityIDs.Contains(entityID),
                 "Entity ID from network not found in entity details.  "
                 + "entityID=[ " + entityID + " ], " + testData);
         }
     }
-    
+
     [Test, TestCaseSource(nameof(GetEntityNetworkParameters))]
     public void TestFindNetworkByEntityID(
-        string                                  testDescription,
-        ISet<(string,string)>                   recordKeys,
-        Func<SzCoreEngineGraphTest,ISet<long>>  entityIDsFunc,
-        int                                     maxDegrees,
-        int                                     buildOutDegrees,
-        int                                     buildOutMaxEntities,
-        SzFlag?                                 flags,
-        Type?                                   recordExceptionType,
-        Type?                                   entityExceptionType,
-        int                                     expectedPathCount,
-        IList<IList<(string,string)?>>          expectedPaths,
-        ISet<(string,string)>                   expectedEntities)
+        string testDescription,
+        ISet<(string, string)> recordKeys,
+        Func<SzCoreEngineGraphTest, ISet<long>> entityIDsFunc,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType,
+        int expectedPathCount,
+        IList<IList<(string, string)?>> expectedPaths,
+        ISet<(string, string)> expectedEntities)
     {
         ISet<long> entityIDs = entityIDsFunc(this);
 
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKeys=[ "
-            + recordKeys + " ], entityIDs=[ " + entityIDs 
+            + recordKeys + " ], entityIDs=[ " + entityIDs
             + " ], maxDegrees=[ " + maxDegrees + " ], buildOutDegrees=[ "
-            + buildOutDegrees + " ], buildOutMaxEntities=[ " 
+            + buildOutDegrees + " ], buildOutMaxEntities=[ "
             + buildOutMaxEntities + " ], flags=[ "
             + SzFindNetworkFlags.FlagsToString(flags)
             + " ], expectedException=[ " + entityExceptionType
@@ -1263,42 +1615,50 @@ internal class SzCoreEngineGraphTest : AbstractTest {
             + " ], expectedPaths=[ ");
 
         string prefix1 = "";
-        foreach (IList<(string,string)?> expectedPath in expectedPaths) {
+        foreach (IList<(string, string)?> expectedPath in expectedPaths)
+        {
             sb.Append(prefix1);
-            if (expectedPath[0] == null) {
-                (string code,string id) startKey    = expectedPath[1] ?? ("A","B");
-                (string code,string id) endKey      = expectedPath[2] ?? ("C","D");
+            if (expectedPath[0] == null)
+            {
+                (string code, string id) startKey = expectedPath[1] ?? ("A", "B");
+                (string code, string id) endKey = expectedPath[2] ?? ("C", "D");
                 sb.Append("{ NO PATH BETWEEN ").Append(startKey).Append(" (");
                 sb.Append(this.GetEntityID(startKey)).Append(") AND ");
                 sb.Append(endKey).Append(" (").Append(this.GetEntityID(endKey)).Append(") }");
-            } else {
+            }
+            else
+            {
                 string prefix2 = "";
                 sb.Append("{ ");
-                foreach ((string code, string id)? key in expectedPath) {
+                foreach ((string code, string id)? key in expectedPath)
+                {
                     sb.Append(prefix2).Append(key).Append(" (");
-                    sb.Append(key == null ? null : this.GetEntityID(key ?? ("A","B")));
-                    sb.Append(")");
+                    sb.Append(key == null ? null : this.GetEntityID(key ?? ("A", "B")));
+                    sb.Append(')');
                     prefix2 = ", ";
                 }
-                sb.Append("}");
+                sb.Append('}');
             }
             prefix1 = ", ";
         }
         sb.Append(" ], recordMap=[ ").Append(LoadedRecordMap.ToDebugString()).Append(" ]");
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.FindNetwork(
-                    entityIDs, 
+                    entityIDs,
                     maxDegrees,
                     buildOutDegrees,
                     buildOutMaxEntities,
                     flags);
 
-                if (entityExceptionType != null) {
+                if (entityExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in finding a path: " + testData);
                 }
 
@@ -1312,23 +1672,31 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                                      expectedPathCount,
                                      expectedPaths);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (entityExceptionType == null) {
+                if (entityExceptionType == null)
+                {
                     Fail("Unexpectedly failed finding an entity network: "
                          + testData + ", " + description, e);
 
-                } else if (recordExceptionType != e.GetType()) {
+                }
+                else if (recordExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        entityExceptionType, e, 
+                        entityExceptionType, e,
                         "FindNetwork() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -1338,69 +1706,77 @@ internal class SzCoreEngineGraphTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetEntityNetworkParameters))]
     public void TestFindNetworkByRecordId(
-        string                                  testDescription,
-        ISet<(string,string)>                   recordKeys,
-        Func<SzCoreEngineGraphTest,ISet<long>>  entityIDsFunc,
-        int                                     maxDegrees,
-        int                                     buildOutDegrees,
-        int                                     buildOutMaxEntities,
-        SzFlag?                                 flags,
-        Type?                                   recordExceptionType,
-        Type?                                   entityExceptionType,
-        int                                     expectedPathCount,
-        IList<IList<(string,string)?>>          expectedPaths,
-        ISet<(string,string)>                   expectedEntities)
+        string testDescription,
+        ISet<(string, string)> recordKeys,
+        Func<SzCoreEngineGraphTest, ISet<long>> entityIDsFunc,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType,
+        int expectedPathCount,
+        IList<IList<(string, string)?>> expectedPaths,
+        ISet<(string, string)> expectedEntities)
     {
         ISet<long> entityIDs = entityIDsFunc(this);
 
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKeys=[ "
-            + recordKeys + " ], entityIDs=[ " + entityIDs 
+            + recordKeys + " ], entityIDs=[ " + entityIDs
             + " ], maxDegrees=[ " + maxDegrees + " ], buildOutDegrees=[ "
-            + buildOutDegrees + " ], buildOutMaxEntities=[ " 
-            + buildOutMaxEntities + " ], flags=[ " 
+            + buildOutDegrees + " ], buildOutMaxEntities=[ "
+            + buildOutMaxEntities + " ], flags=[ "
             + SzFindNetworkFlags.FlagsToString(flags)
             + " ], expectedException=[ " + recordExceptionType
             + " ], expectedPathCount=[ " + expectedPathCount
             + " ], expectedPaths=[ ");
 
         string prefix1 = "";
-        foreach (IList<(string,string)?> expectedPath in expectedPaths) {
+        foreach (IList<(string, string)?> expectedPath in expectedPaths)
+        {
             sb.Append(prefix1);
-            if (expectedPath[0] == null) {
-                (string code, string id) startKey = expectedPath[1] ?? ("A","B");
-                (string code, string id) endKey = expectedPath[2] ?? ("C","D");
+            if (expectedPath[0] == null)
+            {
+                (string code, string id) startKey = expectedPath[1] ?? ("A", "B");
+                (string code, string id) endKey = expectedPath[2] ?? ("C", "D");
                 sb.Append("{ NO PATH BETWEEN ").Append(startKey).Append(" (");
                 sb.Append(this.GetEntityID(startKey)).Append(") AND ");
                 sb.Append(endKey).Append(" (").Append(this.GetEntityID(endKey)).Append(") }");
-            } else {
+            }
+            else
+            {
                 string prefix2 = "";
                 sb.Append("{ ");
-                foreach ((string code, string id)? key in expectedPath) {
+                foreach ((string code, string id)? key in expectedPath)
+                {
                     sb.Append(prefix2).Append(key).Append(" (");
-                    sb.Append(key == null ? 0L : this.GetEntityID(key ?? ("A","B")));
-                    sb.Append(")");
+                    sb.Append(key == null ? 0L : this.GetEntityID(key ?? ("A", "B")));
+                    sb.Append(')');
                     prefix2 = ", ";
                 }
-                sb.Append("}");
+                sb.Append('}');
             }
             prefix1 = ", ";
         }
         sb.Append(" ], recordMap=[ ").Append(LoadedRecordMap).Append(" ]");
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.FindNetwork(
-                    recordKeys, 
+                    recordKeys,
                     maxDegrees,
                     buildOutDegrees,
                     buildOutMaxEntities,
                     flags);
 
-                if (recordExceptionType != null) {
+                if (recordExceptionType != null)
+                {
                     Fail("Unexpectedly succeeded in finding a path: " + testData);
                 }
 
@@ -1414,27 +1790,150 @@ internal class SzCoreEngineGraphTest : AbstractTest {
                                      expectedPathCount,
                                      expectedPaths);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (entityExceptionType == null) {
+                if (entityExceptionType == null)
+                {
                     Fail("Unexpectedly failed finding an entity network: "
                          + testData + ", " + description, e);
 
-                } else if (recordExceptionType != e.GetType()) {
+                }
+                else if (recordExceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        entityExceptionType, e, 
+                        entityExceptionType, e,
                         "FindNetwork() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
             }
         });
     }
+
+    [Test, TestCaseSource(nameof(GetEntityNetworkDefaultParameters))]
+    public void TestFindNetworkByRecordIDDefaults(
+        ISet<(string, string)> recordKeys,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string defaultResult = engine.FindNetwork(recordKeys,
+                                                          maxDegrees,
+                                                          buildOutDegrees,
+                                                          buildOutMaxEntities);
+
+                string explicitResult = engine.FindNetwork(recordKeys,
+                                                           maxDegrees,
+                                                           buildOutDegrees,
+                                                           buildOutMaxEntities,
+                                                           SzFindNetworkDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string recordsJson = SzCoreEngine.EncodeRecordKeys(recordKeys);
+
+                long returnCode = nativeEngine.FindNetworkByRecordID(recordsJson,
+                                                                     maxDegrees,
+                                                                     buildOutDegrees,
+                                                                     buildOutMaxEntities,
+                                                                     out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetEntityNetworkDefaultParameters))]
+    public void TestFindNetworkByEntityIDDefaults(
+        ISet<(string, string)> recordKeys,
+        int maxDegrees,
+        int buildOutDegrees,
+        int buildOutMaxEntities)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                ISet<long> entityIDs = new SortedSet<long>(GetEntityIDs(recordKeys));
+
+                string defaultResult = engine.FindNetwork(entityIDs,
+                                                          maxDegrees,
+                                                          buildOutDegrees,
+                                                          buildOutMaxEntities);
+
+                string explicitResult = engine.FindNetwork(entityIDs,
+                                                           maxDegrees,
+                                                           buildOutDegrees,
+                                                           buildOutMaxEntities,
+                                                           SzFindNetworkDefaultFlags);
+
+                NativeEngine nativeEngine = engine.GetNativeApi();
+
+                string entitiesJson = SzCoreEngine.EncodeEntityIDs(entityIDs);
+
+                long returnCode = nativeEngine.FindNetworkByEntityID(entitiesJson,
+                                                                     maxDegrees,
+                                                                     buildOutDegrees,
+                                                                     buildOutMaxEntities,
+                                                                     out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 }

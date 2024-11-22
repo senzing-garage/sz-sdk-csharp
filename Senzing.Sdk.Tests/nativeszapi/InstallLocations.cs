@@ -1,9 +1,11 @@
+namespace Senzing.Sdk.Tests.NativeSzApi;
+
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace Senzing.Sdk.Tests.NativeSzApi
-{
+using static System.StringComparison;
+
 /// <summary>
 /// Describes the directories on disk used to find the Senzing product
 /// installation and the support directories.
@@ -43,7 +45,7 @@ public class InstallLocations
     /// <summary>
     /// Indicates if the installation direction is from a development build.
     /// </summary>
-    private bool devBuild = false;
+    private bool devBuild;
 
     /// <summary>
     /// Default constructor.
@@ -63,9 +65,12 @@ public class InstallLocations
     /// </summary>
     /// 
     /// <returns>The primary installation directory.</returns>
-    public DirectoryInfo? GetInstallDirectory()
+    public DirectoryInfo? InstallDirectory
     {
-        return this.installDir;
+        get
+        {
+            return this.installDir;
+        }
     }
 
     /// <summary>
@@ -73,9 +78,12 @@ public class InstallLocations
     /// </summary>
     /// 
     /// <returns>The configuration directory.</returns>
-    public DirectoryInfo? GetConfigDirectory()
+    public DirectoryInfo? ConfigDirectory
     {
-        return this.configDir;
+        get
+        {
+            return this.configDir;
+        }
     }
 
     /// <summary>
@@ -83,9 +91,12 @@ public class InstallLocations
     /// </summary>
     /// 
     /// <returns>The resource directory.</returns>
-    public DirectoryInfo? GetResourceDirectory()
+    public DirectoryInfo? ResourceDirectory
     {
-        return this.resourceDir;
+        get
+        {
+            return this.resourceDir;
+        }
     }
 
     /// <summary>
@@ -93,9 +104,12 @@ public class InstallLocations
     /// </summary>
     /// 
     /// <returns>The support directory.</returns>
-    public DirectoryInfo? GetSupportDirectory()
+    public DirectoryInfo? SupportDirectory
     {
-        return this.supportDir;
+        get
+        {
+            return this.supportDir;
+        }
     }
 
     /// <summary>
@@ -103,9 +117,12 @@ public class InstallLocations
     /// </summary>
     /// 
     /// <returns>The templates directory.</returns>
-    public DirectoryInfo? GetTemplatesDirectory()
+    public DirectoryInfo? TemplatesDirectory
     {
-        return this.templatesDir;
+        get
+        {
+            return this.templatesDir;
+        }
     }
 
     /// <summary>
@@ -116,9 +133,12 @@ public class InstallLocations
     /// <c>true</c> if this installation represents a development
     /// build, otherwise <c>false</c>.
     /// </returns>
-    public bool IsDevelopmentBuild()
+    public bool IsDevelopmentBuild
     {
-        return this.devBuild;
+        get
+        {
+            return this.devBuild;
+        }
     }
 
     /// <summary>
@@ -129,15 +149,15 @@ public class InstallLocations
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.AppendLine();
         sb.AppendLine("--------------------------------------------------");
-        sb.AppendLine("installDirectory   : " + this.GetInstallDirectory());
-        sb.AppendLine("configDirectory    : " + this.GetConfigDirectory());
-        sb.AppendLine("supportDirectory   : " + this.GetSupportDirectory());
-        sb.AppendLine("resourceDirectory  : " + this.GetResourceDirectory());
-        sb.AppendLine("templatesDirectory : " + this.GetTemplatesDirectory());
-        sb.AppendLine("developmentBuild   : " + this.IsDevelopmentBuild());
+        sb.AppendLine("installDirectory   : " + this.InstallDirectory);
+        sb.AppendLine("configDirectory    : " + this.ConfigDirectory);
+        sb.AppendLine("supportDirectory   : " + this.SupportDirectory);
+        sb.AppendLine("resourceDirectory  : " + this.ResourceDirectory);
+        sb.AppendLine("templatesDirectory : " + this.TemplatesDirectory);
+        sb.AppendLine("developmentBuild   : " + this.IsDevelopmentBuild);
 
         return sb.ToString();
     }
@@ -147,7 +167,8 @@ public class InstallLocations
     /// </summary>
     /// <param name="path">The path to check</param>
     /// <returns><c>true</c> if it is a directory, otherwise <c>false</c></returns>
-    private static bool IsDirectory(string path) {
+    private static bool IsDirectory(string path)
+    {
         FileAttributes attrs = File.GetAttributes(path);
         return (attrs & FileAttributes.Directory) == FileAttributes.Directory;
     }
@@ -161,10 +182,10 @@ public class InstallLocations
     /// </summary>
     public static InstallLocations? FindLocations()
     {
-        DirectoryInfo? installDir   = null;
-        DirectoryInfo? configDir    = null;
-        DirectoryInfo? resourceDir  = null;
-        DirectoryInfo? supportDir   = null;
+        DirectoryInfo? installDir = null;
+        DirectoryInfo? configDir = null;
+        DirectoryInfo? resourceDir = null;
+        DirectoryInfo? supportDir = null;
         DirectoryInfo? templatesDir = null;
 
         string defaultInstallPath;
@@ -172,13 +193,13 @@ public class InstallLocations
 
         // check if we are building within the dev structure
         string[] directoryStructure = ["sz-sdk-java", "java", "g2", "apps", "dev"];
-        DirectoryInfo?  workingDir  = new DirectoryInfo(Environment.CurrentDirectory);
-        DirectoryInfo?  previousDir = null;
+        DirectoryInfo? workingDir = new DirectoryInfo(Environment.CurrentDirectory);
+        DirectoryInfo? previousDir = null;
         bool devStructure = true;
         foreach (var dirName in directoryStructure)
         {
             if (workingDir == null) break;
-            if (!workingDir.Name.Equals(dirName.ToLower()))
+            if (!workingDir.Name.Equals(dirName, OrdinalIgnoreCase))
             {
                 devStructure = false;
                 break;
@@ -269,23 +290,27 @@ public class InstallLocations
         // normalize the senzing directory
         string installDirName = installDir.Name;
         if (installDir.Exists && IsDirectory(installDir.FullName)
-            && !installDirName.ToLower().Equals("er")
-            && installDirName.ToLower().Equals("senzing"))
+            && !installDirName.Equals("er", OrdinalIgnoreCase)
+            && installDirName.Equals("senzing", OrdinalIgnoreCase))
         {
             // for windows or linux allow the "Senzing" dir as well
             installDir = new DirectoryInfo(Path.Combine(installDir.FullName, "er"));
         }
 
-        if (!IsDirectory(installDir.FullName)) {
+        if (!IsDirectory(installDir.FullName))
+        {
             Console.Error.WriteLine("Senzing installation directory appears invalid:");
             Console.Error.WriteLine("     " + installDir);
             Console.Error.WriteLine();
-            if (installPath != null) {
-            Console.Error.WriteLine(
-                "Check the SENZING_DIR environment variable.");
-            } else {
-            Console.Error.WriteLine(
-                "Use the SENZING_DIR environment variable to specify a path");
+            if (installPath != null)
+            {
+                Console.Error.WriteLine(
+                    "Check the SENZING_DIR environment variable.");
+            }
+            else
+            {
+                Console.Error.WriteLine(
+                    "Use the SENZING_DIR environment variable to specify a path");
             }
 
             return null;
@@ -298,27 +323,27 @@ public class InstallLocations
             DirectoryInfo? dataRoot = (installParent != null)
                 ? new DirectoryInfo(Path.Combine(installParent.FullName, "data"))
                 : null;
-            
+
             if (dataRoot != null && dataRoot.Exists && IsDirectory(dataRoot.FullName))
             {
                 DirectoryInfo? versionFile
                     = new DirectoryInfo(
                         Path.Combine(installDir.FullName, "szBuildVersion.json"));
-                
+
                 string? dataVersion = null;
                 if (versionFile != null && versionFile.Exists)
                 {
 
                     String text = File.ReadAllText(versionFile.FullName, UTF8);
-                    JsonDocument    jsonDoc     = JsonDocument.Parse(text);
-                    JsonElement     rootElem    = jsonDoc.RootElement;
-                    JsonElement     dataVerElem = rootElem.GetProperty("DATA_VERSION");
+                    JsonDocument jsonDoc = JsonDocument.Parse(text);
+                    JsonElement rootElem = jsonDoc.RootElement;
+                    JsonElement dataVerElem = rootElem.GetProperty("DATA_VERSION");
                     dataVersion = dataVerElem.GetString();
                 }
 
                 // try the data version directory
                 supportDir = (dataVersion == null)
-                    ? null 
+                    ? null
                     : new DirectoryInfo(
                         Path.Combine(dataRoot.FullName, dataVersion.Trim()));
 
@@ -330,7 +355,8 @@ public class InstallLocations
                     string[] dirs = Directory.GetDirectories(dataRoot.FullName);
                     List<DirectoryInfo> versionDirs
                         = new List<DirectoryInfo>();
-                    foreach (string dir in dirs) {
+                    foreach (string dir in dirs)
+                    {
                         DirectoryInfo versionDir = new DirectoryInfo(dir);
                         if (!regex.IsMatch(versionDir.Name)) continue;
                         versionDirs.Add(versionDir);
@@ -364,12 +390,14 @@ public class InstallLocations
                         // the actual support directory (mapped in a docker image)
                         string[] files = Directory.GetFiles(dataRoot.FullName);
                         List<FileInfo> ibmFiles = new List<FileInfo>();
-                        foreach (string file in files) {
-                            if (file.ToLower().EndsWith(".ibm")) {
+                        foreach (string file in files)
+                        {
+                            if (file.EndsWith(".ibm", OrdinalIgnoreCase))
+                            {
                                 ibmFiles.Add(new FileInfo(file));
                             }
                         }
-                        DirectoryInfo? libPostalDir  = new DirectoryInfo(
+                        DirectoryInfo? libPostalDir = new DirectoryInfo(
                             Path.Combine(dataRoot.FullName, "libpostal"));
 
                         // require the .ibm files and libpostal to exist
@@ -414,15 +442,19 @@ public class InstallLocations
                 "The support directory does not exist: " + supportDir);
         }
 
-        if (!IsDirectory(supportDir.FullName)) {
+        if (!IsDirectory(supportDir.FullName))
+        {
             Console.Error.WriteLine("The support directory is invalid:");
             Console.Error.WriteLine("         " + supportDir);
-            if (supportPath != null) {
-            Console.Error.WriteLine(
-                "Check the SENZING_DATA_DIR environment variable.");
-            } else {
-            Console.Error.WriteLine(
-                "Use the SENZING_DATA_DIR environment variable to specify a path");
+            if (supportPath != null)
+            {
+                Console.Error.WriteLine(
+                    "Check the SENZING_DATA_DIR environment variable.");
+            }
+            else
+            {
+                Console.Error.WriteLine(
+                    "Use the SENZING_DATA_DIR environment variable to specify a path");
             }
             throw new InvalidInstallationException(
                 "The support directory is invalid: " + supportDir);
@@ -436,7 +468,7 @@ public class InstallLocations
         }
 
         // check for a dev build installation
-        if (configDir == null && installDir != null && "dist".Equals(installDir.Name))
+        if (configDir == null && installDir != null && "dist".Equals(installDir.Name, OrdinalIgnoreCase))
         {
             configDir = new DirectoryInfo(Path.Combine(installDir.FullName, "data"));
         }
@@ -556,10 +588,9 @@ public class InstallLocations
         result.supportDir = supportDir;
         result.resourceDir = resourceDir;
         result.templatesDir = templatesDir;
-        result.devBuild = (installDir != null) && ("dist".Equals(installDir.Name));
+        result.devBuild = (installDir != null) && ("dist".Equals(installDir.Name, OrdinalIgnoreCase));
 
         // return the result
         return result;
     }
-}
 }

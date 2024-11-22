@@ -1,65 +1,72 @@
+namespace Senzing.Sdk.Tests.IO;
+
 using System.Collections.Frozen;
 using System.Collections.Immutable;
-using System.Diagnostics.Contracts;
-using System.Text.Json.Nodes;
+using System.Globalization;
 using System.Text.Json;
-using System.Text;
-using NUnit.Framework.Internal.Commands;
-using System.IO;
+using System.Text.Json.Nodes;
 
-namespace Senzing.Sdk.Tests.IO {
+using static Senzing.Sdk.Tests.Util.TextUtilities;
 
 /// <summary>
 /// Represents the supported format for the records.
 /// </summary>
-public enum RecordFormat {
+public enum RecordFormat
+{
     Json,
     JsonLines,
     CSV
 }
 
-file class RecordFormatInfo {
-    public RecordFormat Format { get; }   
+file class RecordFormatInfo
+{
+    public RecordFormat Format { get; }
     public string MediaType { get; }
     public string SimpleName { get; }
 
-    private static readonly IDictionary<RecordFormat, RecordFormatInfo> FormatLookup 
-        = new Dictionary<RecordFormat,RecordFormatInfo>();
+    private static readonly Dictionary<RecordFormat, RecordFormatInfo> FormatLookup
+        = new Dictionary<RecordFormat, RecordFormatInfo>();
 
-    private static readonly IDictionary<string, RecordFormatInfo> MediaTypeLookup 
-        = new Dictionary<string,RecordFormatInfo>();
+    private static readonly Dictionary<string, RecordFormatInfo> MediaTypeLookup
+        = new Dictionary<string, RecordFormatInfo>();
 
-    private RecordFormatInfo(RecordFormat format, string mediaType, string simpleName) {
+    private RecordFormatInfo(RecordFormat format, string mediaType, string simpleName)
+    {
         this.Format = format;
         this.MediaType = mediaType;
         this.SimpleName = simpleName;
         FormatLookup.Add(this.Format, this);
-        MediaTypeLookup.Add(this.MediaType, this);
+        MediaTypeLookup.Add(this.MediaType.ToUpperInvariant(), this);
     }
 
-    public static readonly RecordFormatInfo JsonInfo 
+    public static readonly RecordFormatInfo JsonInfo
         = new RecordFormatInfo(RecordFormat.Json, "application/json", "JSON");
     public static readonly RecordFormatInfo JsonLinesInfo
         = new RecordFormatInfo(RecordFormat.JsonLines, "application/x-jsonlines", "JSON Lines");
-    public static readonly RecordFormatInfo CSVInfo 
+    public static readonly RecordFormatInfo CSVInfo
         = new RecordFormatInfo(RecordFormat.CSV, "text/csv", "CSV");
 
-    public static RecordFormatInfo lookup(RecordFormat format) {
+    public static RecordFormatInfo lookup(RecordFormat format)
+    {
         return FormatLookup[format];
     }
-    public static RecordFormatInfo lookup(string mediaType) {
+    public static RecordFormatInfo lookup(string mediaType)
+    {
         return MediaTypeLookup[mediaType];
     }
 }
 
-public static class FormatExtensions {
+public static class FormatExtensions
+{
     /// <summary>
     /// Returns the associated media type.
     ///
     /// @return The associated media type.
     /// </summary>
-    public static string GetMediaType(RecordFormat format) {
-        switch (format) {
+    public static string GetMediaType(RecordFormat format)
+    {
+        switch (format)
+        {
             case RecordFormat.Json:
                 return RecordFormatInfo.JsonInfo.MediaType;
             case RecordFormat.JsonLines:
@@ -76,8 +83,10 @@ public static class FormatExtensions {
     ///
     /// @return The simple name for the format.
     /// </summary>
-    public static String GetSimpleName(RecordFormat format) {
-        switch (format) {
+    public static String GetSimpleName(RecordFormat format)
+    {
+        switch (format)
+        {
             case RecordFormat.Json:
                 return RecordFormatInfo.JsonInfo.SimpleName;
             case RecordFormat.JsonLines:
@@ -94,7 +103,8 @@ public static class FormatExtensions {
 /// Provides a reader over records that are formatted as JSON,
 /// JSON-Lines or CSV.
 /// </summary>
-public class RecordReader {
+public class RecordReader
+{
     /// <summary>
     /// Returns the <see cref="Senzing.Sdk.Tests.IO.RecordFormat"/> for the
     /// specified media type or <c>null</c> if no format is associated
@@ -116,9 +126,11 @@ public class RecordReader {
     /// media type, or <c>null</c> if there is none or if the specified
     /// parameter is <c>null</c>
     /// </returns>
-    public static RecordFormat? GetFormatFromMediaType(string mediaType) {
+    public static RecordFormat? GetFormatFromMediaType(string mediaType)
+    {
         if (mediaType == null) return null;
-        RecordFormatInfo info = RecordFormatInfo.lookup(mediaType.Trim().ToLower());
+        RecordFormatInfo info = RecordFormatInfo.lookup(
+            mediaType.Trim().ToUpperInvariant());
         if (info == null) return null;
         return info.Format;
     }
@@ -126,32 +138,33 @@ public class RecordReader {
     /// <summary>
     /// The format for the records.
     /// </summary>
-    private RecordFormat format;
+    private readonly RecordFormat format;
 
     /// <summary>
     /// The backing character reader.
     /// </summary>
-    private StreamReader reader;
+    private readonly StreamReader reader;
 
     /// <summary>
     /// The mapping for the data sources.
     /// </summary>
-    private IDictionary<string, string> dataSourceMap;
+    private readonly IDictionary<string, string> dataSourceMap;
 
     /// <summary>
     /// The source ID to assign to the records.
     /// </summary>
-    private string? sourceID;
+    private readonly string? sourceID;
 
     /// <summary>
     /// The backing <see cref="RecordProvider"/>.
     /// </summary>
-    private RecordProvider recordProvider;
+    private readonly RecordProvider recordProvider;
 
     /// <summary>
     /// A interface for providing records.
     /// </summary>
-    private interface RecordProvider {
+    private interface RecordProvider
+    {
         /// <summary>
         /// Gets the next record as a <see cref="System.Text.Json.Nodes.JsonObject"/>.
         /// </summary>
@@ -209,33 +222,41 @@ public class RecordReader {
     /// <param name="sourceID">The source ID to assign to each record.</param>
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
-    public RecordReader(RecordFormat?                 format,
-                        StreamReader                  reader,
-                        IDictionary<string, string>?  dataSourceMap,
-                        string?                       sourceID)
+    public RecordReader(RecordFormat? format,
+                        StreamReader reader,
+                        IDictionary<string, string>? dataSourceMap,
+                        string? sourceID)
     {
+        ArgumentNullException.ThrowIfNull(reader, nameof(reader));
         // set the format
         this.reader = reader;
-        if (this.reader == null) {
+        if (this.reader == null)
+        {
             throw new ArgumentException("The specified reader cannot be null");
         }
 
-        if (format != null) {
-            this.format = (RecordFormat) format;
-        } else {
+        if (format != null)
+        {
+            this.format = (RecordFormat)format;
+        }
+        else
+        {
             // read characters until the format is set or we hit EOF
-            while (format == null) {
+            while (format == null)
+            {
                 // peek at the next character
                 int nextChar = reader.Peek();
-                
+
                 // check for EOF
-                if (nextChar < 0) {
+                if (nextChar < 0)
+                {
                     format = RecordFormat.JsonLines;
                     break;
                 }
 
                 // if whitespace then skip it
-                if (Char.IsWhiteSpace((char) nextChar)) {
+                if (Char.IsWhiteSpace((char)nextChar))
+                {
                     // read the charater if it is whitespace since we need to 
                     // read the next character on the next iteration of the loop
                     nextChar = reader.Read();
@@ -243,7 +264,8 @@ public class RecordReader {
                 }
 
                 // switch on the character to determine the format
-                switch ((char) nextChar) {
+                switch ((char)nextChar)
+                {
                     case '[':
                         format = RecordFormat.Json;
                         break;
@@ -255,22 +277,23 @@ public class RecordReader {
                         break;
                 }
             }
-            this.format = (RecordFormat) format;
+            this.format = (RecordFormat)format;
         }
 
         // default to JSON format if EOF detected
-        switch (this.format) {
+        switch (this.format)
+        {
             case RecordFormat.Json:
-                this.recordProvider 
-                    = new JsonArrayRecordProvider(this, (StreamReader) this.reader);
+                this.recordProvider
+                    = new JsonArrayRecordProvider(this, (StreamReader)this.reader);
                 break;
             case RecordFormat.JsonLines:
                 this.recordProvider
-                    = new JsonLinesRecordProvider(this, (StreamReader) this.reader);
+                    = new JsonLinesRecordProvider(this, (StreamReader)this.reader);
                 break;
             case RecordFormat.CSV:
                 this.recordProvider
-                    = new CsvRecordProvider(this, (StreamReader) this.reader);
+                    = new CsvRecordProvider(this, (StreamReader)this.reader);
                 break;
             default:
                 throw new ArgumentException(
@@ -278,24 +301,28 @@ public class RecordReader {
         }
 
         // initialize the data source map with upper-case keys
-        this.dataSourceMap = (dataSourceMap == null) 
-            ? ImmutableDictionary<string,string>.Empty
-            : new Dictionary<string,string>();
+        this.dataSourceMap = (dataSourceMap == null)
+            ? ImmutableDictionary<string, string>.Empty
+            : new Dictionary<string, string>();
 
-        if (dataSourceMap != null) {
-            foreach (KeyValuePair<string,string> entry in dataSourceMap) {
-                string key = entry.Key.Trim().ToUpper();
-                string value = entry.Value.Trim().ToUpper();
+        if (dataSourceMap != null)
+        {
+            foreach (KeyValuePair<string, string> entry in dataSourceMap)
+            {
+                string key = entry.Key.Trim().ToUpperInvariant();
+                string value = entry.Value.Trim().ToUpperInvariant();
                 this.dataSourceMap.Add(key, value);
             }
 
-            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string,string>();
+            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string, string>();
         }
 
         this.sourceID = sourceID;
-        if (this.sourceID != null) {
+        if (this.sourceID != null)
+        {
             this.sourceID = this.sourceID.Trim();
-            if (this.sourceID.Length == 0) {
+            if (this.sourceID.Length == 0)
+            {
                 this.sourceID = null;
             }
         }
@@ -319,7 +346,7 @@ public class RecordReader {
     /// If an I/O failure occurs.
     /// </exception>
     public RecordReader(StreamReader reader)
-        : this(null, reader, ImmutableDictionary<string,string>.Empty, null) 
+        : this(null, reader, ImmutableDictionary<string, string>.Empty, null)
     {
         // do nothing more
     }
@@ -344,7 +371,7 @@ public class RecordReader {
     /// If an I/O failure occurs.
     /// </exception>
     public RecordReader(RecordFormat? format, StreamReader reader)
-        : this(format, reader, ImmutableDictionary<string,string>.Empty, null) 
+        : this(format, reader, ImmutableDictionary<string, string>.Empty, null)
     {
         // do nothing more
     }
@@ -370,12 +397,13 @@ public class RecordReader {
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
     public RecordReader(StreamReader reader, string? dataSource)
-        : this(null, reader, (IDictionary<string,string>?) null, null) 
+        : this(null, reader, (IDictionary<string, string>?)null, null)
     {
-        if (dataSource != null) {
-            this.dataSourceMap = new Dictionary<string,string>();
+        if (dataSource != null)
+        {
+            this.dataSourceMap = new Dictionary<string, string>();
             this.dataSourceMap.Add("*", dataSource);
-            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string,string>();
+            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string, string>();
         }
     }
 
@@ -401,12 +429,13 @@ public class RecordReader {
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
     public RecordReader(RecordFormat? format, StreamReader reader, string? dataSource)
-        : this(format, reader, (IDictionary<string,string>?) null, null) 
+        : this(format, reader, (IDictionary<string, string>?)null, null)
     {
-        if (dataSource != null) {
-            this.dataSourceMap = new Dictionary<string,string>();
+        if (dataSource != null)
+        {
+            this.dataSourceMap = new Dictionary<string, string>();
             this.dataSourceMap.Add("*", dataSource);
-            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string,string>();
+            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string, string>();
         }
     }
 
@@ -432,12 +461,13 @@ public class RecordReader {
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
     public RecordReader(StreamReader reader, string? dataSource, string sourceID)
-        : this(null, reader, (IDictionary<string,string>?) null, sourceID)
+        : this(null, reader, (IDictionary<string, string>?)null, sourceID)
     {
-        if (dataSource != null) {
-            this.dataSourceMap = new Dictionary<string,string>();
+        if (dataSource != null)
+        {
+            this.dataSourceMap = new Dictionary<string, string>();
             this.dataSourceMap.Add("*", dataSource);
-            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string,string>();
+            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string, string>();
         }
     }
 
@@ -464,15 +494,16 @@ public class RecordReader {
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
     public RecordReader(RecordFormat? format,
-                        StreamReader  reader,
-                        string?       dataSource,
-                        string        sourceID)
-        : this(format, reader, (IDictionary<string,string>?) null, sourceID)
+                        StreamReader reader,
+                        string? dataSource,
+                        string sourceID)
+        : this(format, reader, (IDictionary<string, string>?)null, sourceID)
     {
-        if (dataSource != null) {
-            this.dataSourceMap = new Dictionary<string,string>();
+        if (dataSource != null)
+        {
+            this.dataSourceMap = new Dictionary<string, string>();
             this.dataSourceMap.Add("*", dataSource);
-            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string,string>();
+            this.dataSourceMap = this.dataSourceMap.ToFrozenDictionary<string, string>();
         }
     }
 
@@ -499,9 +530,9 @@ public class RecordReader {
     /// </param>
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
-    public RecordReader(StreamReader                  reader,
-                        IDictionary<string, string>?  dataSourceMap)
-        : this(null, reader, dataSourceMap, null)     
+    public RecordReader(StreamReader reader,
+                        IDictionary<string, string>? dataSourceMap)
+        : this(null, reader, dataSourceMap, null)
     {
         // do nothing
     }
@@ -531,9 +562,9 @@ public class RecordReader {
     /// </param>
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
-    public RecordReader(RecordFormat?                 format,
-                        StreamReader                  reader,
-                        IDictionary<string, string>?  dataSourceMap)
+    public RecordReader(RecordFormat? format,
+                        StreamReader reader,
+                        IDictionary<string, string>? dataSourceMap)
         : this(format, reader, dataSourceMap, null)
     {
         // do nothing else
@@ -564,9 +595,9 @@ public class RecordReader {
     /// <param name="sourceID">The source ID to assign to each record.</param>
     ///
     /// <exception cref="System.IO.IOException">If an I/O failure occurs.</exception>
-    public RecordReader(StreamReader                  reader,
-                        IDictionary<string, string>?  dataSourceMap,
-                        string                        sourceID)
+    public RecordReader(StreamReader reader,
+                        IDictionary<string, string>? dataSourceMap,
+                        string sourceID)
         : this(null, reader, dataSourceMap, sourceID)
     {
         // do nothing
@@ -579,8 +610,12 @@ public class RecordReader {
     /// <returns>
     /// The <see cref="RecordFormat"/> of the records.
     /// </returns>
-    public RecordFormat GetFormat() {
-        return this.format;
+    public RecordFormat Format
+    {
+        get
+        {
+            return this.format;
+        }
     }
 
     /// <summary>
@@ -592,7 +627,8 @@ public class RecordReader {
     /// The next record as a <see cref="System.Text.Json.Nodes.JsonObject"/> and
     /// returns <c>null</c> if there are no more records.
     /// </records>
-    public JsonObject? ReadRecord() {
+    public JsonObject? ReadRecord()
+    {
         return this.recordProvider.GetNextRecord();
     }
 
@@ -610,8 +646,9 @@ public class RecordReader {
     /// The line number associated with the error on the last attempt to
     /// get a record, or <c>null</c> if there was no error.
     /// </returns>
-    public long? GetErrorLineNumber() {
-      return this.recordProvider.GetErrorLineNumber();
+    public long? GetErrorLineNumber()
+    {
+        return this.recordProvider.GetErrorLineNumber();
     }
 
     /// <summary>
@@ -630,23 +667,28 @@ public class RecordReader {
     {
         JsonObject localRecord = record;
         JsonNode? node = localRecord["DATA_SOURCE"];
-        string dsrc = (node == null) ? "" : node.GetValue<string>().ToUpper();
-        
+        string dsrc = (node == null) ? "" : node.GetValue<string>().ToUpperInvariant();
+
         // get the mapped data source
         string? dataSource = null;
-        if (this.dataSourceMap.ContainsKey(dsrc)) {
+        if (this.dataSourceMap.ContainsKey(dsrc))
+        {
             dataSource = this.dataSourceMap[dsrc];
         }
-        if (dataSource == null && this.dataSourceMap.ContainsKey("*")) {
+        if (dataSource == null && this.dataSourceMap.ContainsKey("*"))
+        {
             dataSource = this.dataSourceMap["*"];
         }
-        if (dataSource != null && dataSource.Trim().Length == 0) {
+        if (dataSource != null && dataSource.Trim().Length == 0)
+        {
             dataSource = null;
         }
 
         // remap the data source
-        if (dataSource != null) {
-            if (localRecord == record) {
+        if (dataSource != null)
+        {
+            if (localRecord == record)
+            {
                 localRecord = record.DeepClone().AsObject();
             }
             localRecord["DATA_SOURCE"] = JsonValue.Create(dataSource);
@@ -654,15 +696,17 @@ public class RecordReader {
         }
 
         // set the source ID
-        if (this.sourceID != null) {
-            if (localRecord == record) {
+        if (this.sourceID != null)
+        {
+            if (localRecord == record)
+            {
                 localRecord = record.DeepClone().AsObject();
             }
             localRecord["SOURCE_ID"] = JsonValue.Create(this.sourceID);
         }
 
         return localRecord;
-  }
+    }
 
     /// <summary>
     /// A <see cref="RecordProvider"/> implementation for records when
@@ -673,45 +717,52 @@ public class RecordReader {
         /// <summary>
         /// The owning <see cref="RecordReader"/>
         /// </summary>
-        private RecordReader owner;
-        
+        private readonly RecordReader owner;
+
         /// <summary>
         /// Iterator over <see cref="System.Text.Json.Nodes.JsonObject"/> records.
         /// </summary>
-        private IEnumerator<JsonNode?> recordEnum;
+        private readonly IEnumerator<JsonNode?> recordEnum;
 
         /// <summary>
         /// Indicates whether or not the JSON properly parses to avoid
         /// </summary>
-        private bool errant = false;
+        private bool errant;
 
         /// <summary>
         /// The line number for the last error.
         /// </summary>
-        private long? errorLineNumber = null;
+        private long? errorLineNumber;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public JsonArrayRecordProvider(RecordReader owner, StreamReader reader) {
+        public JsonArrayRecordProvider(RecordReader owner, StreamReader reader)
+        {
             this.owner = owner;
-            try {
+            try
+            {
                 string text = reader.ReadToEnd();
-                JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions() {
+                JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
+                {
                     CommentHandling = JsonCommentHandling.Skip
                 });
-                if (node == null) {
+                if (node == null)
+                {
                     throw new JsonException(
                             "Failed to parse text as JSON: " + text);
                 }
 
-                JsonArray jsonArr = ((JsonNode) node).AsArray();
+                JsonArray jsonArr = ((JsonNode)node).AsArray();
                 this.recordEnum = jsonArr.GetEnumerator();
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 this.recordEnum = (new List<JsonNode?>()).GetEnumerator();
-                if (e is JsonException) {
-                    JsonException je = (JsonException) e;
+                if (e is JsonException)
+                {
+                    JsonException je = (JsonException)e;
                     Console.Error.WriteLine("MESSAGE: " + je.Message);
                     Console.Error.WriteLine("LINE NUMBER: " + je.LineNumber);
                     this.errorLineNumber = je.LineNumber;
@@ -727,21 +778,28 @@ public class RecordReader {
         /// <returns>
         /// The next <see cref="System.Text.Json.Nodes.JsonObject"/> from the array.
         /// </returns>
-        public JsonObject? GetNextRecord() {
+        public JsonObject? GetNextRecord()
+        {
             JsonObject? result = null;
-            while (result == null) {
-                try {
+            while (result == null)
+            {
+                try
+                {
                     if (!recordEnum.MoveNext()) break;
                     result = this.recordEnum.Current?.AsObject();
-                    if (result != null) {
+                    if (result != null)
+                    {
                         result = owner.AugmentRecord(result);
                     }
                     this.errant = false; // clear the errant flag
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     if (this.errant) continue;
-                    if (e is JsonException) {
-                        JsonException je = (JsonException) e;
+                    if (e is JsonException)
+                    {
+                        JsonException je = (JsonException)e;
                         Console.Error.WriteLine("MESSAGE: " + je.Message);
                         Console.Error.WriteLine("LINE NUMBER: " + je.LineNumber);
                         this.errorLineNumber = je.LineNumber;
@@ -756,7 +814,8 @@ public class RecordReader {
         /// <summary>
         /// Overridden to return the errant line number or <c>null</c>.
         /// </summary>
-        public long? GetErrorLineNumber() {
+        public long? GetErrorLineNumber()
+        {
             return this.errorLineNumber;
         }
     }
@@ -765,11 +824,12 @@ public class RecordReader {
     /// A <see cref="RecordProvider"/> implementation for records when reading
     /// a files in a "JSON lines" format.
     /// </summary>
-    private class JsonLinesRecordProvider : RecordProvider {
+    private class JsonLinesRecordProvider : RecordProvider
+    {
         /// <summary>
         /// The owning <see cref="RecordReader"/>
         /// </summary>
-        private RecordReader owner;
+        private readonly RecordReader owner;
 
         /// <summary>
         /// The backing <see cref="System.IO.StreamReader"/> for reading the
@@ -780,18 +840,19 @@ public class RecordReader {
         /// <summary>
         /// The current line number.
         /// </summary>
-        private long lineNumber = 0;
+        private long lineNumber;
 
         /// <summary>
         /// The error line number if an error is found.
         /// </summary>
-        private long? errorLineNumber = null;
+        private long? errorLineNumber;
 
         /// <summary>
         /// Constructs with the specified parameters.
         /// </summary>
-        public JsonLinesRecordProvider(RecordReader owner, StreamReader reader) {
-            this.owner  = owner;
+        public JsonLinesRecordProvider(RecordReader owner, StreamReader reader)
+        {
+            this.owner = owner;
             this.reader = reader;
         }
 
@@ -803,13 +864,16 @@ public class RecordReader {
         /// <returns>
         /// The next <see cref="System.Text.Json.Nodes.JsonObject"/> record.
         /// </returns>
-        public JsonObject? GetNextRecord() {
+        public JsonObject? GetNextRecord()
+        {
             JsonObject? record = null;
 
-            while (this.reader != null && record == null) {
+            while (this.reader != null && record == null)
+            {
                 // read the next line and check for EOF
                 string? line = this.reader.ReadLine();
-                if (line == null) {
+                if (line == null)
+                {
                     this.reader.Close();
                     this.reader = null;
                     continue;
@@ -824,19 +888,23 @@ public class RecordReader {
                 if (line.Length == 0) continue;
 
                 // check if the line begins with a "#" for a comment lines
-                if (line.StartsWith("#")) continue;
+                if (line.StartsWith('#')) continue;
 
                 // check if the line does NOT start with "{"
-                if (!line.StartsWith("{")) {
+                if (!line.StartsWith('{'))
+                {
                     throw new JsonException(
                         "Line does not appear to be JSON record: " + line);
                 }
 
                 // parse the line
-                try {
+                try
+                {
                     record = JsonNode.Parse(line)?.AsObject();
-                    
-                } catch (JsonException) {
+
+                }
+                catch (JsonException)
+                {
                     this.errorLineNumber = this.lineNumber;
                     throw;
                 }
@@ -848,163 +916,114 @@ public class RecordReader {
         /// <summary>
         /// Overridden to return the errant line number or <c>null</c>.
         /// </summary>
-        public long? GetErrorLineNumber() {
-          return this.errorLineNumber;
+        public long? GetErrorLineNumber()
+        {
+            return this.errorLineNumber;
         }
     }
 
     /// <summary>
     /// Implements <see cref="RecordProvider"/> for a CSV file.
     /// </summary>
-    private class CsvRecordProvider : RecordProvider {
+    private class CsvRecordProvider : RecordProvider
+    {
         /// <summary>
         /// The owning <see cref="RecordReader"/>
         /// </summary>
-        private RecordReader owner;
+        private readonly RecordReader owner;
 
         /// <summary>
         /// The underlying <see cref="System.IO.StreamReader"/>
         /// </summary>
-        private StreamReader reader;
+        private readonly StreamReader reader;
 
         /// <summary>
         /// The list of header names.
         /// </summary>
-        private IList<string> headers;
+        private readonly IList<string> headers;
 
         /// <summary>
         /// The current line number.
         /// </summary>
-        private int lineNumber = 0;
+        private int lineNumber;
 
         /// <summary>
         /// The line number for the last error.
         /// </summary>
-        private long? errorLineNumber = null;
+        private long? errorLineNumber;
 
-        /// <summary>
-        /// Parses the CSV line.
-        /// </summary>
-        ///
-        /// <param name="line">
-        /// The line to parse.
-        /// </param>
-        ///
-        /// <param name="lineNumber">
-        /// The current line number in the CSV.
-        /// </param>
-        public static IList<string> ParseCSVLine(string line, int lineNumber) {
-            IList<string> fields = new List<string>();
-            line = line.Trim();
-            int index = 0;
-            int length = line.Length;
-
-            bool quoted   = false;
-            bool escaping = false;
-            StringBuilder field = new StringBuilder();
-            for (index = 0; index < length; index++) {
-                char c = line[index];
-                if (escaping) {
-                    field.Append(c);
-                    escaping = false;
-                } else if (c == '\\') {
-                    escaping = true;
-                    continue;
-                } else if (!quoted && field.Length == 0 && c == '"') {
-                    quoted = true;
-                    continue;
-                } else if (quoted && c == '"') {
-                    // advance past the separator or to the end
-                    for (index = index + 1; index < length; index++) {
-                        c = line[index];
-                        if (c == ',') break;
-                        if (!Char.IsWhiteSpace(c) && (c != ',')) {
-                            throw new FormatException(
-                                "Badly formatted CSV at line " + lineNumber
-                                + " at position " + index + ": " + line);
-                        }
-                    }
-
-                    quoted = false;
-                    fields.Add(field.ToString().Trim());
-                    field.Clear();
-
-                } else if (!quoted && c == ',') {
-                    fields.Add(field.ToString().Trim());
-                    field.Clear();
-
-                } else if (field.Length == 0 && Char.IsWhiteSpace(c)) {
-                    // skip leading whitespace
-                    continue;
-                } else {
-                    field.Append(c);
-                }
-            }
-
-            // return the fields
-            return fields;
-        }
-
-        public CsvRecordProvider(RecordReader owner, StreamReader reader) {
-            this.owner      = owner;
-            this.reader     = reader;
-            this.headers    = new List<string>();
+        public CsvRecordProvider(RecordReader owner, StreamReader reader)
+        {
+            this.owner = owner;
+            this.reader = reader;
+            this.headers = new List<string>();
             this.lineNumber = 0;
             char[] splitChars = [','];
             string? headerLine = null;
 
-            while (headerLine == null) {
+            while (headerLine == null)
+            {
                 string? line = reader.ReadLine();
                 if (line == null) break;
                 this.lineNumber++;
                 line = line.Trim();
                 if (line.Length == 0) continue;
-                if (line.StartsWith("#")) continue;
+                if (line.StartsWith('#')) continue;
                 headerLine = line;
             }
 
-            if (headerLine == null) {
+            if (headerLine == null)
+            {
                 this.errorLineNumber = this.lineNumber;
                 throw new FormatException("Could not find CSV header in file");
             }
 
-            try {
+            try
+            {
                 IList<string> tokens = ParseCSVLine(headerLine, this.lineNumber);
-                foreach (string token in tokens) {
-                    this.headers.Add(token.Trim().ToUpper());
+                foreach (string token in tokens)
+                {
+                    this.headers.Add(token.Trim().ToUpperInvariant());
                 }
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 this.errorLineNumber = this.lineNumber;
                 throw;
             }
         }
 
-        public JsonObject? GetNextRecord() {
+        public JsonObject? GetNextRecord()
+        {
             this.errorLineNumber = null;
-            try {
+            try
+            {
                 string? nextLine = null;
 
-                while (nextLine == null) {
+                while (nextLine == null)
+                {
                     string? line = reader.ReadLine();
-                    if (line == null) {
+                    if (line == null)
+                    {
                         return null;
                     };
                     this.lineNumber++;
                     line = line.Trim();
                     if (line.Length == 0) continue;
-                    if (line.StartsWith("#")) continue;
+                    if (line.StartsWith('#')) continue;
                     nextLine = line;
                 }
 
                 IList<string> fields = ParseCSVLine(nextLine, this.lineNumber);
 
-                IEnumerator<string> headerEnum  = this.headers.GetEnumerator();
-                IEnumerator<string> fieldEnum   = fields.GetEnumerator();
+                IEnumerator<string> headerEnum = this.headers.GetEnumerator();
+                IEnumerator<string> fieldEnum = fields.GetEnumerator();
 
                 JsonObject jsonObject = new JsonObject();
-                while (headerEnum.MoveNext() && fieldEnum.MoveNext()) {
+                while (headerEnum.MoveNext() && fieldEnum.MoveNext())
+                {
                     string header = headerEnum.Current;
-                    string field  = fieldEnum.Current;
+                    string field = fieldEnum.Current;
 
                     JsonValue value = JsonValue.Create(field);
                     jsonObject.Add(header, value);
@@ -1014,7 +1033,9 @@ public class RecordReader {
 
                 return jsonObject;
 
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 this.errorLineNumber = this.lineNumber;
                 throw;
             }
@@ -1023,9 +1044,9 @@ public class RecordReader {
         /// <summary>
         /// Overridden to return the errant line number or <c>null</c>.
         /// </summary>
-        public long? GetErrorLineNumber() {
+        public long? GetErrorLineNumber()
+        {
             return this.errorLineNumber;
         }
     }
-}
 }

@@ -1,36 +1,38 @@
-using Senzing.Sdk.Tests.Util;
+namespace Senzing.Sdk.Tests.Core;
+
 using Senzing.Sdk.Core;
 using Senzing.Sdk.Tests.NativeSzApi;
+using Senzing.Sdk.Tests.Util;
 
-namespace Senzing.Sdk.Tests.Core {
 /// <summary>
 /// Provides an abstraction for creating instances of the raw Senzing API.
 /// </summary>
-/// 
+///
 /// <remarks>
 /// This abstraction allows for alternate implementations to be used especially
 /// during auto tests.
 /// </remarks>
 ///
-internal class NativeApiFactory {
+internal class NativeApiFactory
+{
     /// <summary>
     /// The current <see cref="Senzing.Sdk.Tests.Util.AccessToken"/> required
     /// to authorize uninstalling the <see cref="NativeApiProvider"/>, or
     /// <c>null</c> if no provider is installed.
     /// </summary>
-    private static AccessToken? current_token = null;
+    private static AccessToken? current_token;
 
     /// <summary>
     /// The currently installed <see cref="NativeApiProvider"/>, or
     /// <c>null</c> if no provider is installed.
     /// </summary>
-    private static NativeApiProvider? api_provider = null;
+    private static NativeApiProvider? api_provider;
 
     /// <summary>
     /// The <see cref="Senzing.Sdk.Tests.NativeApi.InstallLocations"/>
     /// describing the installation directories.
     /// </summary>
-    private static InstallLocations? INSTALL_LOCATIONS = null;
+    private static InstallLocations? INSTALL_LOCATIONS;
 
     /// <summary>
     /// Internal object for instance-wide synchronized locking.
@@ -40,9 +42,12 @@ internal class NativeApiFactory {
     /// <summary>
     /// Gets the install locations.
     /// </summary>
-    private static InstallLocations? GetInstallLocations() {
-        lock (MONITOR) {
-            if (INSTALL_LOCATIONS == null) {
+    private static InstallLocations? GetInstallLocations()
+    {
+        lock (MONITOR)
+        {
+            if (INSTALL_LOCATIONS == null)
+            {
                 INSTALL_LOCATIONS = InstallLocations.FindLocations();
             }
             return INSTALL_LOCATIONS;
@@ -78,17 +83,19 @@ internal class NativeApiFactory {
     /// <exception cref="System.IllegalOperationException">
     /// If a provider is already installed and must first be uninstalled.
     /// </exception>
-    public static AccessToken InstallProvider(NativeApiProvider provider) {
-        lock(MONITOR) {
-            if (provider == null) {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (current_token != null) {
+    public static AccessToken InstallProvider(NativeApiProvider provider)
+    {
+        ArgumentNullException.ThrowIfNull(provider, nameof(provider));
+        lock (MONITOR)
+        {
+            ArgumentNullException.ThrowIfNull(provider, nameof(provider));
+            if (current_token != null)
+            {
                 throw new InvalidOperationException(
                     "A provider is already installed and must "
                     + "first be uninstalled.");
             }
-            api_provider  = provider;
+            api_provider = provider;
             current_token = new AccessToken();
             return current_token;
         }
@@ -103,8 +110,10 @@ internal class NativeApiFactory {
     /// <c>true</c> if a <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/>
     /// has been installed, otherwise <c>false</c>.
     /// </returns>
-    public static bool IsProviderInstalled() {
-        lock (MONITOR) {
+    public static bool IsProviderInstalled()
+    {
+        lock (MONITOR)
+        {
             return (current_token != null);
         }
     }
@@ -129,18 +138,22 @@ internal class NativeApiFactory {
     /// If the specified token does not match the token that was
     /// returned when the provider was installed.
     /// </exception>
-    private static void UninstallProvider(AccessToken token) {
-        lock (MONITOR) {
-            if (current_token == null) {
+    private static void UninstallProvider(AccessToken token)
+    {
+        lock (MONITOR)
+        {
+            if (current_token == null)
+            {
                 return;
             }
-            if (!current_token.Equals(token)) {
+            if (!current_token.Equals(token))
+            {
                 throw new InvalidOperationException(
                     "The specified access token is not the expected access "
                     + "token to authorize unintalling the provider.");
             }
             current_token = null;
-            api_provider  = null;
+            api_provider = null;
         }
     }
 
@@ -153,7 +166,8 @@ internal class NativeApiFactory {
     /// The currently installed provider, or <c>null</c> if no provider
     /// is currently installed.
     /// </returns>
-    private static NativeApiProvider? GetInstalledProvider() {
+    private static NativeApiProvider? GetInstalledProvider()
+    {
         return api_provider;
     }
 
@@ -172,16 +186,22 @@ internal class NativeApiFactory {
     /// <returns>
     /// A new instance of <see cref="Senzing.Sdk.Core.NativeEngine"/> to use.
     /// </returns>
-    public static NativeEngine CreateEngineApi() {
+    public static NativeEngine CreateEngineApi()
+    {
         NativeApiProvider? provider = GetInstalledProvider();
-        if (provider != null) {
+        if (provider != null)
+        {
             return provider.CreateEngineApi();
 
-        } else if (GetInstallLocations() == null) {
+        }
+        else if (GetInstallLocations() == null)
+        {
             throw new InvalidInstallationException(
                 "Unable to find Senzing native installation.");
 
-        } else {
+        }
+        else
+        {
             return new NativeEngineExtern();
         }
     }
@@ -197,16 +217,22 @@ internal class NativeApiFactory {
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeConfig"/> to use.
     ///
-    public static NativeConfig CreateConfigApi() {
+    public static NativeConfig CreateConfigApi()
+    {
         NativeApiProvider? provider = GetInstalledProvider();
-        if (provider != null) {
+        if (provider != null)
+        {
             return provider.CreateConfigApi();
 
-        } else if (GetInstallLocations() == null) {
+        }
+        else if (GetInstallLocations() == null)
+        {
             throw new InvalidInstallationException(
                 "Unable to find Senzing native installation.");
 
-        } else {
+        }
+        else
+        {
             return new NativeConfigExtern();
         }
     }
@@ -219,16 +245,22 @@ internal class NativeApiFactory {
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
     ///
-    public static NativeProduct CreateProductApi() {
+    public static NativeProduct CreateProductApi()
+    {
         NativeApiProvider? provider = GetInstalledProvider();
-        if (provider != null) {
+        if (provider != null)
+        {
             return provider.CreateProductApi();
 
-        } else if (GetInstallLocations() == null) {
+        }
+        else if (GetInstallLocations() == null)
+        {
             throw new InvalidInstallationException(
                 "Unable to find Senzing native installation.");
 
-        } else {
+        }
+        else
+        {
             return new NativeProductExtern();
         }
     }
@@ -249,16 +281,22 @@ internal class NativeApiFactory {
     /// A new instance of <see cref="Senzing.Sdk.Core.NativeConfigManager"/>
     /// to use.
     /// </returns>
-    public static NativeConfigManager CreateConfigMgrApi() {
+    public static NativeConfigManager CreateConfigMgrApi()
+    {
         NativeApiProvider? provider = GetInstalledProvider();
-        if (provider != null) {
+        if (provider != null)
+        {
             return provider.CreateConfigMgrApi();
 
-        } else if (GetInstallLocations() == null) {
+        }
+        else if (GetInstallLocations() == null)
+        {
             throw new InvalidInstallationException(
                 "Unable to find Senzing native installation.");
 
-        } else {
+        }
+        else
+        {
             return new NativeConfigManagerExtern();
         }
     }
@@ -272,18 +310,23 @@ internal class NativeApiFactory {
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeDiagnostic"/> to use.
     ///
     ///
-    public static NativeDiagnostic CreateDiagnosticApi() {
+    public static NativeDiagnostic CreateDiagnosticApi()
+    {
         NativeApiProvider? provider = GetInstalledProvider();
-        if (provider != null) {
+        if (provider != null)
+        {
             return provider.CreateDiagnosticApi();
 
-        } else if (GetInstallLocations() == null) {
+        }
+        else if (GetInstallLocations() == null)
+        {
             throw new InvalidInstallationException(
                 "Unable to find Senzing native installation.");
 
-        } else {
+        }
+        else
+        {
             return new NativeDiagnosticExtern();
         }
     }
-}
 }

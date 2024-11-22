@@ -1,8 +1,6 @@
-using System.Threading;
+namespace Senzing.Sdk.Tests.Util;
 using System.Runtime.CompilerServices;
 
-namespace Senzing.Sdk.Tests.Util
-{
 internal sealed class AccessToken : Object
 {
     /// <summary>
@@ -43,7 +41,7 @@ internal sealed class AccessToken : Object
     /// <remarks>
     /// The value stored is changed by calls to <see cref="ClaimThreadAccessToken"/>
     /// </remarks>
-    private static ThreadLocal<AccessToken> THREAD_ACCESS_TOKEN
+    private static readonly ThreadLocal<AccessToken> ThreadAccessToken
         = new ThreadLocal<AccessToken>();
 
     /// <summary>
@@ -62,11 +60,11 @@ internal sealed class AccessToken : Object
     /// </returns>
     public static AccessToken GetThreadAccessToken()
     {
-        AccessToken? token = THREAD_ACCESS_TOKEN.Value;
+        AccessToken? token = ThreadAccessToken.Value;
         if (token == null)
         {
             token = new AccessToken();
-            THREAD_ACCESS_TOKEN.Value = token;
+            ThreadAccessToken.Value = token;
         }
         return token;
     }
@@ -85,8 +83,7 @@ internal sealed class AccessToken : Object
     public static AccessToken ClaimThreadAccessToken()
     {
         AccessToken? token = AccessToken.GetThreadAccessToken();
-        THREAD_ACCESS_TOKEN.Value = new AccessToken();
+        ThreadAccessToken.Value = new AccessToken();
         return token;
     }
-}
 }

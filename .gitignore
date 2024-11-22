@@ -31,10 +31,10 @@
 *.out
 *.app
 
-
 # Generated files from dotnet builds
 Senzing.Sdk/bin/
 Senzing.Sdk/obj/
 Senzing.Sdk.Tests/bin/
 Senzing.Sdk.Tests/obj/
 target/
+coverage.cobertura.xml

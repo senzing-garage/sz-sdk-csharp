@@ -1,22 +1,24 @@
-using Senzing.Sdk.Core;
-using System.Threading;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Frozen;
-using System.Xml.Serialization;
-using System.IO;
+namespace Senzing.Sdk.Tests.Core;
+
 using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Senzing.Sdk.Tests.NativeSzApi;
-using Senzing.Sdk.Tests.IO;
-using System.Data.Common;
+using System.Threading;
+
 using Microsoft.Data.Sqlite;
 
-namespace Senzing.Sdk.Tests.Core
-{
-public class RepositoryManager
+using Senzing.Sdk.Core;
+using Senzing.Sdk.Tests.IO;
+using Senzing.Sdk.Tests.NativeSzApi;
+
+using static System.StringComparison;
+
+public static class RepositoryManager
 {
     /// <summary>
     /// UTF8 encoding constant.
@@ -26,23 +28,23 @@ public class RepositoryManager
     private const string SQLITE_SCHEMA_FILE_NAME
         = "szcore-schema-sqlite-create.sql";
 
-    private static readonly DirectoryInfo? INSTALL_DIR;
+    private static readonly DirectoryInfo? InstallDir;
 
-    private static readonly DirectoryInfo? RESOURCE_DIR;
+    private static readonly DirectoryInfo? ResourceDir;
 
-    private static readonly DirectoryInfo? SUPPORT_DIR;
+    private static readonly DirectoryInfo? SupportDir;
 
-    private static readonly DirectoryInfo? TEMPLATES_DIR;
+    private static readonly DirectoryInfo? TemplatesDir;
 
-    private static readonly NativeEngine ENGINE_API;
+    private static readonly NativeEngine EngineApi;
 
     private static readonly NativeDiagnostic DIAGNOSTIC_API;
 
-    private static readonly NativeConfig CONFIG_API;
+    private static readonly NativeConfig ConfigApi;
 
-    private static readonly NativeConfigManager CONFIG_MGR_API;
+    private static readonly NativeConfigManager ConfigManagerApi;
 
-    private static readonly FrozenSet<string> EXCLUDED_TEMPLATE_FILES;
+    private static readonly FrozenSet<string> ExcludedTemplateFiles;
 
     private static readonly InstallLocations? INSTALL_LOCATIONS;
 
@@ -51,65 +53,65 @@ public class RepositoryManager
 
     private static readonly object MONITOR = new object();
 
-    private static string? baseInitializedWith = null;
-    private static string? engineInitializedWith = null;
+    private static string? baseInitializedWith;
+    private static string? engineInitializedWith;
 
-    private static readonly IDictionary<FileInfo, FileInfo>
-        TEMPLATE_DATABASE_MAP = new Dictionary<FileInfo, FileInfo>();
+    private static readonly Dictionary<FileInfo, FileInfo>
+        TemplateDatabaseMap = new Dictionary<FileInfo, FileInfo>();
 
     static RepositoryManager()
     {
         try
         {
             ISet<string> set = new HashSet<string>();
-            set.Add("G2Module.ini".ToLower());
-            set.Add("G2Project.ini".ToLower());
-            set.Add("G2C.db".ToLower());
-            set.Add("g2config.json".ToLower());
-            EXCLUDED_TEMPLATE_FILES = set.ToFrozenSet();
+            set.Add("G2Module.ini".ToUpperInvariant());
+            set.Add("G2Project.ini".ToUpperInvariant());
+            set.Add("G2C.db".ToUpperInvariant());
+            set.Add("g2config.json".ToUpperInvariant());
+            ExcludedTemplateFiles = set.ToFrozenSet();
 
             INSTALL_LOCATIONS = InstallLocations.FindLocations();
 
 
             if (INSTALL_LOCATIONS != null)
             {
-                INSTALL_DIR = INSTALL_LOCATIONS.GetInstallDirectory();
-                SUPPORT_DIR = INSTALL_LOCATIONS.GetSupportDirectory();
-                RESOURCE_DIR = INSTALL_LOCATIONS.GetResourceDirectory();
-                TEMPLATES_DIR = INSTALL_LOCATIONS.GetTemplatesDirectory();
+                InstallDir = INSTALL_LOCATIONS.InstallDirectory;
+                SupportDir = INSTALL_LOCATIONS.SupportDirectory;
+                ResourceDir = INSTALL_LOCATIONS.ResourceDirectory;
+                TemplatesDir = INSTALL_LOCATIONS.TemplatesDirectory;
 
 
                 Console.Error.WriteLine();
                 Console.Error.WriteLine("--------------------------------------------");
-                Console.Error.WriteLine("Senzing Install Directory   : " + INSTALL_DIR);
-                Console.Error.WriteLine("Senzing Support Directory   : " + SUPPORT_DIR);
-                Console.Error.WriteLine("Senzing Resource Directory  : " + RESOURCE_DIR);
-                Console.Error.WriteLine("Senzing Templates Directory : " + TEMPLATES_DIR);
+                Console.Error.WriteLine("Senzing Install Directory   : " + InstallDir);
+                Console.Error.WriteLine("Senzing Support Directory   : " + SupportDir);
+                Console.Error.WriteLine("Senzing Resource Directory  : " + ResourceDir);
+                Console.Error.WriteLine("Senzing Templates Directory : " + TemplatesDir);
                 Console.Error.WriteLine();
 
             }
             else
             {
-                INSTALL_DIR = null;
-                SUPPORT_DIR = null;
-                RESOURCE_DIR = null;
-                TEMPLATES_DIR = null;
+                InstallDir = null;
+                SupportDir = null;
+                ResourceDir = null;
+                TemplatesDir = null;
             }
 
             try
             {
-                ENGINE_API = NativeApiFactory.CreateEngineApi();
+                EngineApi = NativeApiFactory.CreateEngineApi();
                 DIAGNOSTIC_API = NativeApiFactory.CreateDiagnosticApi();
-                CONFIG_API = NativeApiFactory.CreateConfigApi();
-                CONFIG_MGR_API = NativeApiFactory.CreateConfigMgrApi();
+                ConfigApi = NativeApiFactory.CreateConfigApi();
+                ConfigManagerApi = NativeApiFactory.CreateConfigMgrApi();
 
             }
             catch (Exception e)
             {
-                DirectoryInfo libPath = (INSTALL_DIR == null)
+                DirectoryInfo libPath = (InstallDir == null)
                     ? new DirectoryInfo("lib")
                     : new DirectoryInfo(
-                        Path.Combine(INSTALL_DIR.FullName, "lib"));
+                        Path.Combine(InstallDir.FullName, "lib"));
 
                 Console.Error.WriteLine(e);
                 Console.Error.WriteLine();
@@ -140,7 +142,8 @@ public class RepositoryManager
                 throw;
             }
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             throw;
         }
@@ -165,6 +168,7 @@ public class RepositoryManager
     public static void CopyConfigFiles(DirectoryInfo? templateDir,
                                         DirectoryInfo configDir)
     {
+        ArgumentNullException.ThrowIfNull(configDir, nameof(configDir));
         if (templateDir != null)
         {
             List<FileInfo> templateFiles = new List<FileInfo>();
@@ -172,8 +176,8 @@ public class RepositoryManager
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                if (!fileInfo.Name.EndsWith(".template")
-                    && !EXCLUDED_TEMPLATE_FILES.Contains(fileInfo.Name.ToLower()))
+                if (!fileInfo.Name.EndsWith(".template", Ordinal)
+                    && !ExcludedTemplateFiles.Contains(fileInfo.Name.ToUpperInvariant()))
                 {
                     templateFiles.Add(fileInfo);
                 }
@@ -198,24 +202,24 @@ public class RepositoryManager
     /// <summary>
     /// Describes a repository configuration.
     /// </summary>
-    public class Configuration
+    public class SzConfiguration
     {
-        private long configId;
-        private JsonObject configJson;
+        private readonly long configID;
+        private readonly JsonObject configJson;
 
         /// <summary>
         /// Constructs with the specified config ID and
         /// <see cref="System.Text.Json.Nodes.JsonObject"/>.
         /// </summary>
         /// 
-        /// <param name="configId">The config ID for the configuration.</param>
+        /// <param name="configID">The config ID for the configuration.</param>
         /// 
         /// <param name="configJson">
         /// The <see cref="System.Text.Json.Nodes.JsonObject"/> for the configuraiton.
         /// </param>
-        public Configuration(long configId, JsonObject configJson)
+        public SzConfiguration(long configID, JsonObject configJson)
         {
-            this.configId = configId;
+            this.configID = configID;
             this.configJson = configJson;
         }
 
@@ -224,8 +228,12 @@ public class RepositoryManager
         /// </summary>
         /// 
         /// <returns>The configuration ID.</returns>
-        public long GetConfigId() {
-            return this.configId;
+        public long ConfigID
+        {
+            get
+            {
+                return this.configID;
+            }
         }
 
         /// <summary>
@@ -237,8 +245,12 @@ public class RepositoryManager
         /// The <see cref="System.Text.Json.Nodes.JsonObject"/> describing
         /// the configuration.
         /// </summary>
-        public JsonObject GetConfigJson() {
-            return this.configJson;
+        public JsonObject ConfigJson
+        {
+            get
+            {
+                return this.configJson;
+            }
         }
     }
 
@@ -279,9 +291,9 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns>
-    /// The <see cref="Configuration"/> describing the initial configuration.
+    /// The <see cref="SzConfiguration"/> describing the initial configuration.
     /// </returns>
-    public static Configuration? CreateRepo(DirectoryInfo directory)
+    public static SzConfiguration? CreateRepo(DirectoryInfo directory)
     {
         return CreateRepo(directory, false);
     }
@@ -295,9 +307,9 @@ public class RepositoryManager
     /// </param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the initial configuration.
+    /// The <see cref="SzConfiguration"/> describing the initial configuration.
     /// </returns>
-    public static Configuration? CreateRepo(DirectoryInfo directory, bool silent)
+    public static SzConfiguration? CreateRepo(DirectoryInfo directory, bool silent)
     {
         return CreateRepo(directory, false, false);
     }
@@ -333,10 +345,11 @@ public class RepositoryManager
 
         // check if we already created the template database for the
         // specified schema file
-        lock (TEMPLATE_DATABASE_MAP)
+        lock (TemplateDatabaseMap)
         {
-            if (TEMPLATE_DATABASE_MAP.ContainsKey(schemaFile)) {
-                return TEMPLATE_DATABASE_MAP[schemaFile];
+            if (TemplateDatabaseMap.ContainsKey(schemaFile))
+            {
+                return TemplateDatabaseMap[schemaFile];
             }
         }
 
@@ -355,7 +368,9 @@ public class RepositoryManager
             foreach (string sql in sqlLines)
             {
                 if (sql.Trim().Length == 0) continue;
+#pragma warning disable CA2100
                 cmd.CommandText = sql.Trim();
+#pragma warning restore CA2100
                 cmd.ExecuteNonQuery();
             }
 
@@ -397,13 +412,14 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns>
-    /// The <see cref="Configuration"/> describing the initial configuration.
+    /// The <see cref="SzConfiguration"/> describing the initial configuration.
     /// </returns>
-    public static Configuration? CreateRepo(DirectoryInfo directory,
+    public static SzConfiguration? CreateRepo(DirectoryInfo directory,
                                             bool excludeConfig,
                                             bool silent)
     {
-        Configuration? result = null;
+        ArgumentNullException.ThrowIfNull(directory, nameof(directory));
+        SzConfiguration? result = null;
         if (directory.Exists)
         {
             if (!IsDirectory(directory.FullName))
@@ -424,13 +440,13 @@ public class RepositoryManager
             Directory.CreateDirectory(directory.FullName);
             DirectoryInfo repoConfigDir = new DirectoryInfo(
                 Path.Combine(directory.FullName, "etc"));
-            CopyConfigFiles(TEMPLATES_DIR, repoConfigDir);
+            CopyConfigFiles(TemplatesDir, repoConfigDir);
 
             // find the template DB file
             FileInfo? templateDB = null;
-            if (INSTALL_LOCATIONS != null && INSTALL_LOCATIONS.IsDevelopmentBuild())
+            if (INSTALL_LOCATIONS != null && INSTALL_LOCATIONS.IsDevelopmentBuild)
             {
-                DirectoryInfo? resourceDir = INSTALL_LOCATIONS.GetResourceDirectory();
+                DirectoryInfo? resourceDir = INSTALL_LOCATIONS.ResourceDirectory;
 
                 DirectoryInfo? schemaDir = (resourceDir == null)
                     ? null
@@ -450,19 +466,19 @@ public class RepositoryManager
             }
             else
             {
-                templateDB = (TEMPLATES_DIR != null)
-                    ? new FileInfo(Path.Combine(TEMPLATES_DIR.FullName, "G2C.db"))
+                templateDB = (TemplatesDir != null)
+                    ? new FileInfo(Path.Combine(TemplatesDir.FullName, "G2C.db"))
                     : new FileInfo(Path.Combine(
-                        ((SUPPORT_DIR == null) ? "" : SUPPORT_DIR.FullName), "G2C.db"));
+                        ((SupportDir == null) ? "" : SupportDir.FullName), "G2C.db"));
 
-                if (!templateDB.Exists && SUPPORT_DIR != null)
+                if (!templateDB.Exists && SupportDir != null)
                 {
                     templateDB = new FileInfo(
-                        Path.Combine(SUPPORT_DIR.FullName, "G2C.db"));
+                        Path.Combine(SupportDir.FullName, "G2C.db"));
                 }
                 if (!templateDB.Exists && INSTALL_LOCATIONS != null)
                 {
-                    DirectoryInfo? resourceDir = INSTALL_LOCATIONS.GetResourceDirectory();
+                    DirectoryInfo? resourceDir = INSTALL_LOCATIONS.ResourceDirectory;
 
                     DirectoryInfo? schemaDir = (resourceDir == null)
                         ? null
@@ -503,7 +519,7 @@ public class RepositoryManager
             // check if there is a license file in the installation
             if (INSTALL_LOCATIONS != null)
             {
-                DirectoryInfo? installDir = INSTALL_LOCATIONS.GetInstallDirectory();
+                DirectoryInfo? installDir = INSTALL_LOCATIONS.InstallDirectory;
 
                 DirectoryInfo? etcDir = (installDir == null)
                     ? null : new DirectoryInfo(Path.Combine(installDir.FullName, "etc"));
@@ -513,7 +529,8 @@ public class RepositoryManager
             }
 
             // if no existing license then set a license path in the repo directory
-            if (licensePath == null || !licensePath.Exists) {
+            if (licensePath == null || !licensePath.Exists)
+            {
                 licensePath = new FileInfo(Path.Combine(directory.FullName, "g2.lic"));
             }
 
@@ -529,13 +546,13 @@ public class RepositoryManager
             IDictionary<string, JsonNode?> objDict
                 = new Dictionary<string, JsonNode?>();
 
-            if (SUPPORT_DIR != null)
+            if (SupportDir != null)
             {
-                subDict.Add("SUPPORTPATH", JsonValue.Create(SUPPORT_DIR.FullName).Root);
+                subDict.Add("SUPPORTPATH", JsonValue.Create(SupportDir.FullName).Root);
             }
-            if (RESOURCE_DIR != null)
+            if (ResourceDir != null)
             {
-                subDict.Add("RESOURCEPATH", JsonValue.Create(RESOURCE_DIR.FullName).Root);
+                subDict.Add("RESOURCEPATH", JsonValue.Create(ResourceDir.FullName).Root);
             }
             subDict.Add("CONFIGPATH", JsonValue.Create(repoConfigDir.FullName).Root);
 
@@ -586,45 +603,46 @@ public class RepositoryManager
                 InitBaseApis(directory, false);
                 try
                 {
-                    long returnCode = CONFIG_API.Create(out IntPtr configHandle);
+                    long returnCode = ConfigApi.Create(out IntPtr configHandle);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfig.create()", CONFIG_API);
+                        String msg = LogError("NativeConfig.create()", ConfigApi);
                         throw new InvalidOperationException(msg);
                     }
-                    returnCode = CONFIG_API.Save(configHandle, out string configJsonText);
+                    returnCode = ConfigApi.Save(configHandle, out string configJsonText);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfig.save()", CONFIG_API);
+                        String msg = LogError("NativeConfig.save()", ConfigApi);
                         throw new InvalidOperationException(msg);
                     }
-                    CONFIG_API.Close(configHandle);
+                    ConfigApi.Close(configHandle);
 
                     JsonNode? node = JsonNode.Parse(configJsonText);
-                    if (node == null) {
+                    if (node == null)
+                    {
                         throw new JsonException("Failed to parse config JSON: " + configJsonText);
                     }
-                    JsonObject resultConfig = ((JsonNode) node).AsObject();
+                    JsonObject resultConfig = ((JsonNode)node).AsObject();
 
-                    returnCode = CONFIG_MGR_API.AddConfig(configJsonText,
+                    returnCode = ConfigManagerApi.AddConfig(configJsonText,
                                                           "Initial Config",
-                                                          out long resultConfigId);
+                                                          out long resultConfigID);
                     if (returnCode != 0)
                     {
                         String msg = LogError("NativeConfigManager.AddConfig()",
-                                                CONFIG_MGR_API);
+                                                ConfigManagerApi);
                         throw new InvalidOperationException(msg);
                     }
 
-                    returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfigId);
+                    returnCode = ConfigManagerApi.SetDefaultConfigID(resultConfigID);
                     if (returnCode != 0)
                     {
                         String msg = LogError("NativeConfigManager.SetDefaultConfigID()",
-                                                CONFIG_MGR_API);
+                                                ConfigManagerApi);
                         throw new InvalidOperationException(msg);
                     }
 
-                    result = new Configuration(resultConfigId, resultConfig);
+                    result = new SzConfiguration(resultConfigID, resultConfig);
 
                 }
                 finally
@@ -668,7 +686,7 @@ public class RepositoryManager
             if (moduleName == null) moduleName = "Sz Repository Manager";
             string initializer = verbose + ":" + repository.FullName;
             if (baseInitializedWith == null
-                || !baseInitializedWith.Equals(initializer))
+                || !baseInitializedWith.Equals(initializer, Ordinal))
             {
                 if (baseInitializedWith != null)
                 {
@@ -679,17 +697,17 @@ public class RepositoryManager
                                                     "sz-init.json");
 
                 String initJsonText = File.ReadAllText(iniJsonFile, UTF8);
-                long returnCode = CONFIG_API.Init(moduleName, initJsonText, verbose);
+                long returnCode = ConfigApi.Init(moduleName, initJsonText, verbose);
                 if (returnCode != 0L)
                 {
-                    LogError("NativeConfig.init()", CONFIG_API);
+                    LogError("NativeConfig.init()", ConfigApi);
                     throw new InvalidOperationException(initJsonText);
                 }
-                returnCode = CONFIG_MGR_API.Init(moduleName, initJsonText, verbose);
+                returnCode = ConfigManagerApi.Init(moduleName, initJsonText, verbose);
                 if (returnCode != 0)
                 {
-                    CONFIG_API.Destroy();
-                    string msg = LogError("NativeConfigManager.Init()", CONFIG_MGR_API);
+                    ConfigApi.Destroy();
+                    string msg = LogError("NativeConfigManager.Init()", ConfigManagerApi);
                     throw new InvalidOperationException(msg);
                 }
                 baseInitializedWith = initializer;
@@ -708,7 +726,7 @@ public class RepositoryManager
 
             String initializer = verbose + ":" + repository.FullName;
             if (engineInitializedWith == null
-                || !engineInitializedWith.Equals(initializer))
+                || !engineInitializedWith.Equals(initializer, Ordinal))
             {
                 if (engineInitializedWith != null)
                 {
@@ -717,11 +735,11 @@ public class RepositoryManager
 
                 string iniJsonFile = Path.Combine(repository.FullName, "sz-init.json");
                 String initJsonText = File.ReadAllText(iniJsonFile, UTF8);
-                long returnCode = ENGINE_API.Init(moduleName, initJsonText, verbose);
+                long returnCode = EngineApi.Init(moduleName, initJsonText, verbose);
                 if (returnCode != 0)
                 {
                     DestroyBaseApis();
-                    LogError("NativeEngine.init()", ENGINE_API);
+                    LogError("NativeEngine.init()", EngineApi);
                     throw new InvalidOperationException(initJsonText);
                 }
                 engineInitializedWith = initializer;
@@ -735,8 +753,8 @@ public class RepositoryManager
         {
             if (baseInitializedWith != null)
             {
-                CONFIG_API.Destroy();
-                CONFIG_MGR_API.Destroy();
+                ConfigApi.Destroy();
+                ConfigManagerApi.Destroy();
                 baseInitializedWith = null;
             }
         }
@@ -749,7 +767,7 @@ public class RepositoryManager
         {
             if (engineInitializedWith != null)
             {
-                ENGINE_API.Destroy();
+                EngineApi.Destroy();
                 engineInitializedWith = null;
             }
             DestroyBaseApis();
@@ -779,37 +797,41 @@ public class RepositoryManager
     private static ISet<string> GetDataSources()
     {
         IntPtr? configHandle = null;
-        try {
+        try
+        {
             ISet<string> set = GetDataSources(out IntPtr handle);
             configHandle = handle;
             return set;
 
-        } finally {
-            if (configHandle != null) {
-                CONFIG_API.Close((IntPtr) configHandle);
+        }
+        finally
+        {
+            if (configHandle != null)
+            {
+                ConfigApi.Close((IntPtr)configHandle);
             }
         }
     }
 
     private static IntPtr LoadActiveConfig()
     {
-        long returnCode = ENGINE_API.GetActiveConfigID(out long configId);
+        long returnCode = EngineApi.GetActiveConfigID(out long configID);
         if (returnCode != 0)
         {
-            LogError("NativeEngine.GetActiveConfig()", ENGINE_API);
-            throw new Exception("Failed engine operation");
+            LogError("NativeEngine.GetActiveConfig()", EngineApi);
+            throw new TestException("Failed engine operation");
         }
-        returnCode = CONFIG_MGR_API.GetConfig(configId, out string configJson);
+        returnCode = ConfigManagerApi.GetConfig(configID, out string configJson);
         if (returnCode != 0)
         {
-            LogError("NativeEngine.ExportConfig()", ENGINE_API);
-            throw new Exception("Failed engine operation");
+            LogError("NativeEngine.ExportConfig()", EngineApi);
+            throw new TestException("Failed engine operation");
         }
-        returnCode = CONFIG_API.Load(configJson, out IntPtr handle);
+        returnCode = ConfigApi.Load(configJson, out IntPtr handle);
         if (returnCode != 0L)
         {
-            LogError("NativeConfig.Load()", CONFIG_API);
-            throw new Exception("Failed engine operation");
+            LogError("NativeConfig.Load()", ConfigApi);
+            throw new TestException("Failed engine operation");
         }
         return handle;
     }
@@ -823,12 +845,12 @@ public class RepositoryManager
 
     private static ISet<string> DoGetDataSources(IntPtr configHandle)
     {
-        long returnCode = CONFIG_API.ListDataSources(
+        long returnCode = ConfigApi.ListDataSources(
             configHandle, out string resultJson);
         if (returnCode != 0)
         {
-            LogError("NativeConfig.listDataSources()", CONFIG_API);
-            throw new Exception("Failed NativeConfig.listDataSources()");
+            LogError("NativeConfig.listDataSources()", ConfigApi);
+            throw new TestException("Failed NativeConfig.listDataSources()");
         }
 
         ISet<string> existingSet = new HashSet<string>();
@@ -885,11 +907,15 @@ public class RepositoryManager
     /// </param>
     public static void PurgeRepo(DirectoryInfo repository, bool verbose, bool silent)
     {
+        ArgumentNullException.ThrowIfNull(repository, nameof(repository));
         InitApis(repository, verbose);
         long result = DIAGNOSTIC_API.PurgeRepository();
-        if (result != 0) {
-            LogError("NativeEngine.purgeRepository()", ENGINE_API);
-        } else if (!silent) {
+        if (result != 0)
+        {
+            LogError("NativeEngine.purgeRepository()", EngineApi);
+        }
+        else if (!silent)
+        {
             Console.Error.WriteLine();
             Console.Error.WriteLine("Repository purged: " + repository);
             Console.Error.WriteLine();
@@ -916,9 +942,9 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                FileInfo        sourceFile,
-                                string?         dataSource)
+    public static bool LoadFile(DirectoryInfo repository,
+                                FileInfo sourceFile,
+                                string? dataSource)
     {
         return LoadFile(repository,
                         false,
@@ -949,10 +975,10 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                bool            silent)
+    public static bool LoadFile(DirectoryInfo repository,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                bool silent)
     {
         return LoadFile(repository,
                         false,
@@ -986,11 +1012,11 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                Result<int?>    loadedCount,
-                                Result<int?>    failedCount)
+    public static bool LoadFile(DirectoryInfo repository,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                Result<int?> loadedCount,
+                                Result<int?> failedCount)
     {
         return LoadFile(repository,
                         false,
@@ -1028,12 +1054,12 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                Result<int?>    loadedCount,
-                                Result<int?>    failedCount,
-                                bool            silent)
+    public static bool LoadFile(DirectoryInfo repository,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                Result<int?> loadedCount,
+                                Result<int?> failedCount,
+                                bool silent)
     {
         return LoadFile(repository,
                         false,
@@ -1063,10 +1089,10 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                bool            verbose,
-                                FileInfo        sourceFile,
-                                string?         dataSource)
+    public static bool LoadFile(DirectoryInfo repository,
+                                bool verbose,
+                                FileInfo sourceFile,
+                                string? dataSource)
     {
         return LoadFile(repository,
                         verbose,
@@ -1101,11 +1127,11 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                bool            verbose,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                bool            silent)
+    public static bool LoadFile(DirectoryInfo repository,
+                                bool verbose,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                bool silent)
     {
         return LoadFile(repository,
                         verbose,
@@ -1143,12 +1169,12 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                bool            verbose,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                Result<int?>?   loadedCount,
-                                Result<int?>?   failedCount)
+    public static bool LoadFile(DirectoryInfo repository,
+                                bool verbose,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                Result<int?>? loadedCount,
+                                Result<int?>? failedCount)
     {
         return LoadFile(repository,
                         verbose,
@@ -1191,17 +1217,19 @@ public class RepositoryManager
     /// </param>
     /// 
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool LoadFile(DirectoryInfo   repository,
-                                bool            verbose,
-                                FileInfo        sourceFile,
-                                string?         dataSource,
-                                Result<int?>?   loadedCount,
-                                Result<int?>?   failedCount,
-                                bool            silent)
+    public static bool LoadFile(DirectoryInfo repository,
+                                bool verbose,
+                                FileInfo sourceFile,
+                                string? dataSource,
+                                Result<int?>? loadedCount,
+                                Result<int?>? failedCount,
+                                bool silent)
     {
-        string normalizedFileName = sourceFile.FullName.ToUpper();
-        if ((!normalizedFileName.EndsWith(".JSON"))
-            && (!normalizedFileName.EndsWith(".CSV")))
+        ArgumentNullException.ThrowIfNull(repository, nameof(repository));
+        ArgumentNullException.ThrowIfNull(sourceFile, nameof(sourceFile));
+        string normalizedFileName = sourceFile.FullName.ToUpper(CultureInfo.InvariantCulture);
+        if ((!normalizedFileName.EndsWith(".JSON", Ordinal))
+            && (!normalizedFileName.EndsWith(".CSV", Ordinal)))
         {
             throw new ArgumentException(
                 "File must be a CSV or JSON file: " + sourceFile);
@@ -1211,7 +1239,7 @@ public class RepositoryManager
 
         if (loadedCount != null) loadedCount.SetValue(0);
         if (failedCount != null) failedCount.SetValue(0);
-        if (dataSource != null) dataSource = dataSource.ToUpper();
+        if (dataSource != null) dataSource = dataSource.ToUpper(CultureInfo.InvariantCulture);
 
         ISet<string> dataSources = GetDataSources();
         // check if the data source is configured
@@ -1223,14 +1251,18 @@ public class RepositoryManager
 
         RecordReader? recordReader = null;
         // check the file type
-        if (normalizedFileName.EndsWith(".JSON")) {
+        if (normalizedFileName.EndsWith(".JSON", Ordinal))
+        {
             recordReader = ProvideJsonRecords(sourceFile, dataSource);
-            
-        } else if (normalizedFileName.EndsWith(".CSV")) {
+
+        }
+        else if (normalizedFileName.EndsWith(".CSV", Ordinal))
+        {
             recordReader = ProvideCsvRecords(sourceFile, dataSource);
         }
 
-        if (recordReader == null) {
+        if (recordReader == null)
+        {
             return false;
         }
 
@@ -1239,7 +1271,8 @@ public class RepositoryManager
         int loadedInterval = 100;
         int failedInterval = 100;
         TextWriter? textWriter = Console.Error;
-        try {
+        try
+        {
             for (JsonObject? record = recordReader.ReadRecord();
                  (record != null);
                  record = recordReader.ReadRecord())
@@ -1256,8 +1289,9 @@ public class RepositoryManager
 
                 string? recordSource = record.ContainsKey("DATA_SOURCE")
                     ? record["DATA_SOURCE"]?.GetValue<string>() : null;
-                
-                if (recordSource == null) {
+
+                if (recordSource == null)
+                {
                     Console.Error.WriteLine();
                     Console.Error.WriteLine(
                         "If records in the file do not have a DATA_SOURCE then a "
@@ -1265,25 +1299,29 @@ public class RepositoryManager
                     return false;
                 }
 
-                if (!dataSources.Contains(recordSource)) {
+                if (!dataSources.Contains(recordSource))
+                {
                     if (!AddDataSource(repository, recordSource, verbose)) return false;
                     dataSources.Add(recordSource);
                 }
 
                 string jsonRecord = record.ToJsonString();
-                
-                long returnCode = ENGINE_API.AddRecord(dataSource, recordID, jsonRecord);
 
-                if (returnCode == 0) {
+                long returnCode = EngineApi.AddRecord(dataSource, recordID, jsonRecord);
+
+                if (returnCode == 0)
+                {
                     loaded++;
                     loadedInterval = DoLoadFeedback(
                         "Loaded so far", loaded, loadedInterval, loaded, failed, silent);
 
-                } else {
+                }
+                else
+                {
                     failed++;
                     if (failed == 1 || ((failed % failedInterval) == 0))
                     {
-                        LogError("NativeEngine.AddRecord()", ENGINE_API);
+                        LogError("NativeEngine.AddRecord()", EngineApi);
                     }
                     failedInterval = DoLoadFeedback(
                         "Loaded so far", failed, failedInterval, loaded, failed, silent);
@@ -1295,14 +1333,19 @@ public class RepositoryManager
             textWriter = (silent) ? null : Console.Out;
 
             return true;
-        } finally {
-            if (loaded > 0 || failed > 0) {
-                if (textWriter != null) {
+        }
+        finally
+        {
+            if (loaded > 0 || failed > 0)
+            {
+                if (textWriter != null)
+                {
                     textWriter.WriteLine();
                     textWriter.WriteLine("Loaded records from file:");
                     textWriter.WriteLine("     Repository  : " + repository);
                     textWriter.WriteLine("     File        : " + sourceFile);
-                    if (dataSource != null) {
+                    if (dataSource != null)
+                    {
                         textWriter.WriteLine("     Data Source : " + dataSource);
                     }
                     textWriter.WriteLine("     Load Count  : " + loaded);
@@ -1316,7 +1359,8 @@ public class RepositoryManager
         }
     }
 
-    private static int ProcessRedos(bool silent) {
+    private static int ProcessRedos(bool silent)
+    {
         int loaded = 0;
         int failed = 0;
         try
@@ -1324,35 +1368,43 @@ public class RepositoryManager
             // process redos
             int loadedInterval = 100;
             int failedInterval = 100;
-            long originalCount = ENGINE_API.CountRedoRecords();
+            long originalCount = EngineApi.CountRedoRecords();
             if (originalCount == 0) return 0;
-            if (originalCount > 0) {
+            if (originalCount > 0)
+            {
                 Console.Error.WriteLine();
                 Console.Error.WriteLine("Found redos to process: " + originalCount);
                 Console.Error.WriteLine();
             }
-            for (int count = 0; ENGINE_API.CountRedoRecords() > 0; count++)
+            for (int count = 0; EngineApi.CountRedoRecords() > 0; count++)
             {
-                long returnCode = ENGINE_API.GetRedoRecord(out string recordJson);
-                if (returnCode != 0) {
-                    LogError("NativeEngine.GetRedoRecord()", ENGINE_API);
+                long returnCode = EngineApi.GetRedoRecord(out string recordJson);
+                if (returnCode != 0)
+                {
+                    LogError("NativeEngine.GetRedoRecord()", EngineApi);
                     failed++;
                     failedInterval = DoLoadFeedback(
                         "Redo's so far", failed, failedInterval, loaded, failed, silent);
-                } else {
-                    returnCode = ENGINE_API.ProcessRedoRecord(recordJson);
-                    if (returnCode != 0) {
-                        LogError("NativeEngine.ProcessRedoRecord()", ENGINE_API);
+                }
+                else
+                {
+                    returnCode = EngineApi.ProcessRedoRecord(recordJson);
+                    if (returnCode != 0)
+                    {
+                        LogError("NativeEngine.ProcessRedoRecord()", EngineApi);
                         failed++;
                         failedInterval = DoLoadFeedback(
                             "Redo's so far", failed, failedInterval, loaded, failed, silent);
-                    } else {
+                    }
+                    else
+                    {
                         loaded++;
                         loadedInterval = DoLoadFeedback(
                             "Redo's so far", loaded, loadedInterval, loaded, failed, silent);
                     }
                 }
-                if (count > (originalCount * 5)) {
+                if (count > (originalCount * 5))
+                {
                     Console.Error.WriteLine();
                     Console.Error.WriteLine("Processing redo's not converging -- giving up.");
                     Console.Error.WriteLine();
@@ -1366,7 +1418,9 @@ public class RepositoryManager
 
             return loaded;
 
-        } catch (Exception ignore) {
+        }
+        catch (Exception ignore)
+        {
             Console.Error.WriteLine();
             Console.Error.WriteLine("IGNORING EXCEPTION DURING REDOS:");
             Console.Error.WriteLine(ignore);
@@ -1377,19 +1431,21 @@ public class RepositoryManager
 
     }
 
-    private static int DoLoadFeedback(string    prefix,
-                                      int       count,
-                                      int       interval,
-                                      int       loaded,
-                                      int       failed,
-                                      bool      silent)
+    private static int DoLoadFeedback(string prefix,
+                                      int count,
+                                      int interval,
+                                      int loaded,
+                                      int failed,
+                                      bool silent)
     {
-        if (count > (interval * 10)) {
+        if (count > (interval * 10))
+        {
             interval *= 10;
         }
         if ((count > 0) && ((interval == 0) || (count % interval) == 0))
         {
-            if (!silent) {
+            if (!silent)
+            {
                 Console.Error.WriteLine(prefix + " (succeeded / failed): "
                                     + loaded + " / " + failed);
             }
@@ -1398,13 +1454,13 @@ public class RepositoryManager
     }
 
     private static bool AddDataSource(DirectoryInfo repository,
-                                      string        dataSource,
-                                      bool          verbose)
+                                      string dataSource,
+                                      bool verbose)
     {
         // add the data source and reinitialize
         IList<string> dataSourceList = new List<string>(1);
         dataSourceList.Add(dataSource);
-        Configuration config = ConfigSources(repository,
+        SzConfiguration config = ConfigSources(repository,
                                              dataSourceList,
                                              verbose);
         if (config == null) return false;
@@ -1414,16 +1470,19 @@ public class RepositoryManager
     }
 
     private static RecordReader? ProvideJsonRecords(FileInfo sourceFile,
-                                                    string?  dataSource)
+                                                    string? dataSource)
     {
         RecordReader? recordReader = null;
         // check if we have a real JSON array
-        try {
+        try
+        {
+#pragma warning disable CA2000
             FileStream fs = new FileStream(sourceFile.FullName, FileMode.Open);
             StreamReader reader = new StreamReader(fs, UTF8);
+#pragma warning restore CA2000
             recordReader = new RecordReader(reader, dataSource);
 
-            RecordFormat format = recordReader.GetFormat();
+            RecordFormat format = recordReader.Format;
             if (format != RecordFormat.Json && format != RecordFormat.JsonLines)
             {
                 Console.Error.WriteLine();
@@ -1433,7 +1492,9 @@ public class RepositoryManager
                 return null;
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             Console.Error.WriteLine(e.StackTrace);
             Console.Error.WriteLine();
@@ -1447,17 +1508,21 @@ public class RepositoryManager
     }
 
     private static RecordReader? ProvideCsvRecords(FileInfo sourceFile,
-                                                   string?  dataSource)
+                                                   string? dataSource)
     {
         RecordReader? recordReader = null;
         // check if we have a real JSON array
-        try {
+        try
+        {
+#pragma warning disable CA2000
             FileStream fs = new FileStream(sourceFile.FullName, FileMode.Open);
             StreamReader reader = new StreamReader(fs, UTF8);
-            
+#pragma warning restore CA2000
             recordReader = new RecordReader(RecordFormat.CSV, reader, dataSource);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             Console.Error.WriteLine(e.StackTrace);
             Console.Error.WriteLine();
@@ -1485,9 +1550,9 @@ public class RepositoryManager
     /// <param name="dataSource">The data source to use for loading the record.</param>
     ///
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool AddRecord(DirectoryInfo  repository,
-                                 string         jsonRecord,
-                                 string?        dataSource)
+    public static bool AddRecord(DirectoryInfo repository,
+                                 string jsonRecord,
+                                 string? dataSource)
     {
         return AddRecord(repository, false, jsonRecord, dataSource, false);
     }
@@ -1508,10 +1573,10 @@ public class RepositoryManager
     /// <param name="dataSource">The data source to use for loading the record.</param>
     ///
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool AddRecord(DirectoryInfo  repository,
-                                 bool           verbose,
-                                 string         jsonRecord,
-                                 string?        dataSource)
+    public static bool AddRecord(DirectoryInfo repository,
+                                 bool verbose,
+                                 string jsonRecord,
+                                 string? dataSource)
     {
         return AddRecord(repository, verbose, jsonRecord, dataSource, false);
     }
@@ -1532,10 +1597,10 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool AddRecord(DirectoryInfo  repository,
-                                 string         jsonRecord,
-                                 string?        dataSource,
-                                 bool           silent)
+    public static bool AddRecord(DirectoryInfo repository,
+                                 string jsonRecord,
+                                 string? dataSource,
+                                 bool silent)
     {
         return AddRecord(repository, false, jsonRecord, dataSource, silent);
     }
@@ -1558,27 +1623,31 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-    public static bool AddRecord(DirectoryInfo  repository,
-                                 bool           verbose,
-                                 string         jsonRecord,
-                                 string?        dataSource,
-                                 bool           silent)
+    public static bool AddRecord(DirectoryInfo repository,
+                                 bool verbose,
+                                 string jsonRecord,
+                                 string? dataSource,
+                                 bool silent)
     {
+        ArgumentNullException.ThrowIfNull(repository, nameof(repository));
         InitApis(repository, verbose);
 
         ISet<string> dataSources = GetDataSources();
         JsonNode? node = JsonNode.Parse(jsonRecord);
-        if (node == null) {
+        if (node == null)
+        {
             throw new ArgumentException("Failed to parse JSON record: " + jsonRecord);
         }
         JsonObject jsonObject = node.AsObject();
-        
-        if (dataSource == null) {
+
+        if (dataSource == null)
+        {
             dataSource = jsonObject.ContainsKey("DATA_SOURCE")
                 ? jsonObject["DATA_SOURCE"]?.GetValue<string>() : null;
         }
 
-        if (dataSource == null) {
+        if (dataSource == null)
+        {
             Console.Error.WriteLine();
             Console.Error.WriteLine("ERROR: Could not determine data source for record.");
             Console.Error.WriteLine();
@@ -1586,8 +1655,9 @@ public class RepositoryManager
         }
 
         // check if the data source is configured
-        dataSource = dataSource.ToUpper();
-        if (dataSource != null && !dataSources.Contains(dataSource)) {
+        dataSource = dataSource.ToUpper(CultureInfo.InvariantCulture);
+        if (dataSource != null && !dataSources.Contains(dataSource))
+        {
             if (!AddDataSource(repository, dataSource, verbose)) return false;
             dataSources.Add(dataSource);
         }
@@ -1602,15 +1672,17 @@ public class RepositoryManager
             return false;
         }
 
-        long returnCode = ENGINE_API.AddRecord(dataSource, recordID, jsonRecord);
-        if (returnCode != 0) {
-            LogError("NativeEngine.addRecord()", ENGINE_API);
+        long returnCode = EngineApi.AddRecord(dataSource, recordID, jsonRecord);
+        if (returnCode != 0)
+        {
+            LogError("NativeEngine.addRecord()", EngineApi);
             return false;
         }
 
         ProcessRedos(silent);
 
-        if (!silent) {
+        if (!silent)
+        {
             Console.Error.WriteLine();
             Console.Error.WriteLine("Added record to " + dataSource + " data source: ");
             Console.Error.WriteLine(jsonRecord);
@@ -1630,12 +1702,12 @@ public class RepositoryManager
     /// <param name="comment">The comment for the configuration.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration? UpdateConfig(DirectoryInfo repository,
-                                              JsonObject    configJson,
-                                              string        comment)
+    public static SzConfiguration? UpdateConfig(DirectoryInfo repository,
+                                              JsonObject configJson,
+                                              string comment)
     {
         return UpdateConfig(repository, configJson, comment, false);
     }
@@ -1651,13 +1723,13 @@ public class RepositoryManager
     /// <param name="comment">The comment for the configuration.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration? UpdateConfig(DirectoryInfo repository,
-                                              bool          verbose,
-                                              JsonObject    configJson,
-                                              string        comment)
+    public static SzConfiguration? UpdateConfig(DirectoryInfo repository,
+                                              bool verbose,
+                                              JsonObject configJson,
+                                              string comment)
     {
         return UpdateConfig(repository, verbose, configJson, comment, false);
     }
@@ -1673,13 +1745,13 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration? UpdateConfig(DirectoryInfo repository,
-                                              JsonObject    configJson,
-                                              string        comment,
-                                              bool          silent)
+    public static SzConfiguration? UpdateConfig(DirectoryInfo repository,
+                                              JsonObject configJson,
+                                              string comment,
+                                              bool silent)
     {
         return UpdateConfig(repository, false, configJson, comment, silent);
     }
@@ -1696,53 +1768,60 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration? UpdateConfig(DirectoryInfo repository,
-                                              bool          verbose,
-                                              JsonObject    configJson,
-                                              string        comment,
-                                              bool          silent)
+    public static SzConfiguration? UpdateConfig(DirectoryInfo repository,
+                                              bool verbose,
+                                              JsonObject configJson,
+                                              string comment,
+                                              bool silent)
     {
+        ArgumentNullException.ThrowIfNull(repository, nameof(repository));
+        ArgumentNullException.ThrowIfNull(configJson, nameof(configJson));
         InitApis(repository, verbose);
 
         long returnCode = 0;
         string configJsonText = configJson.ToJsonString();
-        returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out long resultConfigId);
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
+        returnCode = ConfigManagerApi.AddConfig(configJsonText, comment, out long resultConfigID);
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.AddConfig()", ConfigManagerApi);
             return null;
         }
-        returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfigId);
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.SetDefaultConfigID()", CONFIG_MGR_API);
+        returnCode = ConfigManagerApi.SetDefaultConfigID(resultConfigID);
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.SetDefaultConfigID()", ConfigManagerApi);
             return null;
         }
 
-        returnCode = CONFIG_MGR_API.GetConfig(resultConfigId, out string resultConfigJson);
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.GetConfig()", CONFIG_MGR_API);
+        returnCode = ConfigManagerApi.GetConfig(resultConfigID, out string resultConfigJson);
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.GetConfig()", ConfigManagerApi);
             return null;
         }
 
         // parse the configuration
         JsonNode? node = JsonNode.Parse(resultConfigJson);
-        if (node == null) {
+        if (node == null)
+        {
             throw new JsonException("Failed to parse config JSON: " + resultConfigJson);
         }
-        JsonObject resultConfig = ((JsonNode) node).AsObject();
-        
-        if (!silent) {
+        JsonObject resultConfig = ((JsonNode)node).AsObject();
+
+        if (!silent)
+        {
             Console.Error.WriteLine();
-            Console.Error.WriteLine("Added config and set as default: " + resultConfigId);
+            Console.Error.WriteLine("Added config and set as default: " + resultConfigID);
             Console.Error.WriteLine();
         }
 
         DestroyApis();
         InitApis(repository, verbose);
 
-        return new Configuration(resultConfigId, resultConfig);
+        return new SzConfiguration(resultConfigID, resultConfig);
     }
 
 
@@ -1755,11 +1834,11 @@ public class RepositoryManager
     /// <param name="dataSources">The set of data source codes to configure.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration ConfigSources(DirectoryInfo         repository,
-                                              ICollection<string>   dataSources)
+    public static SzConfiguration ConfigSources(DirectoryInfo repository,
+                                              ICollection<string> dataSources)
     {
         return ConfigSources(repository, dataSources, false);
     }
@@ -1774,12 +1853,12 @@ public class RepositoryManager
     /// <param name="dataSources">The set of data source codes to configure.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration ConfigSources(DirectoryInfo         repository,
-                                              bool                  verbose,
-                                              ICollection<string>   dataSources)
+    public static SzConfiguration ConfigSources(DirectoryInfo repository,
+                                              bool verbose,
+                                              ICollection<string> dataSources)
     {
         return ConfigSources(repository, verbose, dataSources, false);
     }
@@ -1794,12 +1873,12 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration ConfigSources(DirectoryInfo         repository,
-                                              ICollection<string>   dataSources,
-                                              bool                  silent)
+    public static SzConfiguration ConfigSources(DirectoryInfo repository,
+                                              ICollection<string> dataSources,
+                                              bool silent)
     {
         return ConfigSources(repository, false, dataSources, silent);
     }
@@ -1815,18 +1894,20 @@ public class RepositoryManager
     /// <param name="silent">Whether or not prevent console output.</param>
     ///
     /// <returns>
-    /// The <see cref="Configuration"/> describing the new configuration or
+    /// The <see cref="SzConfiguration"/> describing the new configuration or
     /// <c>null</c> if the operation failed.
     /// </returns>
-    public static Configuration ConfigSources(DirectoryInfo         repository,
-                                              bool                  verbose,
-                                              ICollection<string>   dataSources,
-                                              bool                  silent)
+    public static SzConfiguration ConfigSources(DirectoryInfo repository,
+                                              bool verbose,
+                                              ICollection<string> dataSources,
+                                              bool silent)
     {
+        ArgumentNullException.ThrowIfNull(repository, nameof(repository));
+        ArgumentNullException.ThrowIfNull(dataSources, nameof(dataSources));
         InitApis(repository, verbose);
-        long?       resultConfigId  = null;
-        JsonObject? resultConfig    = null;
-        IntPtr?     configHandle    = null;
+        long? resultConfigID = null;
+        JsonObject? resultConfig = null;
+        IntPtr? configHandle = null;
         long returnCode = 0;
         try
         {
@@ -1834,44 +1915,49 @@ public class RepositoryManager
             configHandle = handle;
 
             IDictionary<string, bool> dataSourceActions
-                = new Dictionary<string,bool>();
+                = new Dictionary<string, bool>();
             ISet<string> addedDataSources = new HashSet<string>();
             int addedCount = 0;
             foreach (string dataSourceCode in dataSources)
             {
-                if (existingSet.Contains(dataSourceCode)) {
+                if (existingSet.Contains(dataSourceCode))
+                {
                     dataSourceActions.Add(dataSourceCode, false);
                     continue;
                 }
                 JsonObject jsonObj = new JsonObject();
                 JsonValue jsonVal = JsonValue.Create(dataSourceCode);
                 jsonObj.Add("DSRC_CODE", jsonVal);
-                returnCode = CONFIG_API.AddDataSource(
+                returnCode = ConfigApi.AddDataSource(
                     handle, jsonObj.ToJsonString(), out string addResult);
-                if (returnCode != 0) {
-                    LogError("NativeConfig.AddDataSource()", CONFIG_API);
-                    throw new Exception("NativeConfig.AddDataSource() failed");
+                if (returnCode != 0)
+                {
+                    LogError("NativeConfig.AddDataSource()", ConfigApi);
+                    throw new TestException("NativeConfig.AddDataSource() failed");
                 }
                 dataSourceActions.Add(dataSourceCode, true);
                 addedDataSources.Add(dataSourceCode);
                 addedCount++;
             }
 
-            if (addedCount > 0) {
+            if (addedCount > 0)
+            {
                 string comment = BuildAddedComment(
                     "Added data sources: ", addedDataSources);
 
                 resultConfig = AddConfigAndSetDefault(
-                    handle, comment, out long configId);
-                resultConfigId = configId;
+                    handle, comment, out long configID);
+                resultConfigID = configID;
             }
 
-            if (!silent) {
+            if (!silent)
+            {
                 Console.Error.WriteLine();
                 Console.Error.WriteLine("Ensured specified data sources are configured.");
                 Console.Error.WriteLine("     Repository   : " + repository);
                 Console.Error.WriteLine("     Data Sources : ");
-                foreach (KeyValuePair<string,bool> entry in dataSourceActions) {
+                foreach (KeyValuePair<string, bool> entry in dataSourceActions)
+                {
                     Console.Error.WriteLine(
                         "          - " + entry.Key
                         + " (" + ((entry.Value) ? "added" : "preconfigured") + ")");
@@ -1879,25 +1965,29 @@ public class RepositoryManager
                 Console.Error.WriteLine();
             }
 
-            if (addedCount > 0) {
+            if (addedCount > 0)
+            {
                 DestroyApis();
                 InitApis(repository, verbose);
             }
 
-        } finally {
+        }
+        finally
+        {
             if (configHandle != null)
             {
-                CONFIG_API.Close((IntPtr) configHandle);
+                ConfigApi.Close((IntPtr)configHandle);
             }
         }
 
         // check if the result config ID is not set (usually means that all the
         // data sources to be added already existed)
-        if (resultConfigId == null || resultConfig == null) {
+        if (resultConfigID == null || resultConfig == null)
+        {
             return GetDefaultConfig();
         }
 
-        return new Configuration((long) resultConfigId, (JsonObject) resultConfig);
+        return new SzConfiguration((long)resultConfigID, (JsonObject)resultConfig);
     }
 
     /// <summary>
@@ -1906,19 +1996,23 @@ public class RepositoryManager
     private static string BuildAddedComment(string prefix, ISet<string> addedSet)
     {
         string comment;
-        if (addedSet.Count == 1) {
+        if (addedSet.Count == 1)
+        {
             IEnumerator<string> iter = addedSet.GetEnumerator();
             iter.MoveNext();
             comment = prefix + iter.Current;
 
-        } else {
+        }
+        else
+        {
             StringBuilder commentSB = new StringBuilder();
             commentSB.Append(prefix);
             IEnumerator<string> iter = addedSet.GetEnumerator();
             string sep = "";
             int index = 0;
             int count = addedSet.Count;
-            while (iter.MoveNext()) {
+            while (iter.MoveNext())
+            {
                 String code = iter.Current;
                 commentSB.Append(sep).Append(code);
                 sep = (++index < (count - 1)) ? ", " : " and ";
@@ -1939,58 +2033,62 @@ public class RepositoryManager
     {
         // write the modified config to a string buffer
         string? configJsonText = null;
-        long returnCode = CONFIG_API.Save(configHandle, out configJsonText);
+        long returnCode = ConfigApi.Save(configHandle, out configJsonText);
         if (returnCode != 0)
         {
-            LogError("NativeConfig.Save()", CONFIG_API);
-            throw new Exception("NativeConfig.Save() failed");
+            LogError("NativeConfig.Save()", ConfigApi);
+            throw new TestException("NativeConfig.Save() failed");
         }
 
-        returnCode = CONFIG_MGR_API.AddConfig(configJsonText, comment, out resultConfig);
-        
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.AddConfig()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigManager.AddConfig() failed");
+        returnCode = ConfigManagerApi.AddConfig(configJsonText, comment, out resultConfig);
+
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.AddConfig()", ConfigManagerApi);
+            throw new TestException("NativeConfigManager.AddConfig() failed");
         }
 
-        returnCode = CONFIG_MGR_API.SetDefaultConfigID(resultConfig);
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.SetDefaultConfigID()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigManager.SetDefaultConfigID() failed");
+        returnCode = ConfigManagerApi.SetDefaultConfigID(resultConfig);
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.SetDefaultConfigID()", ConfigManagerApi);
+            throw new TestException("NativeConfigManager.SetDefaultConfigID() failed");
         }
 
         // get the result config and its ID for the result
         JsonNode? node = JsonNode.Parse(configJsonText);
-        if (node == null) {
+        if (node == null)
+        {
             throw new JsonException("Failed to parse JSON config: " + configJsonText);
         }
-        return ((JsonNode) node).AsObject();
+        return ((JsonNode)node).AsObject();
     }
 
     /// <summary>
     /// Gets the {@link JsonObject} describing the current default config as well
     /// as setting the default config's ID in the specified result parameter.
     /// </summary>
-    private static Configuration GetDefaultConfig()
+    private static SzConfiguration GetDefaultConfig()
     {
-        long returnCode = CONFIG_MGR_API.GetDefaultConfigID(out long configID);
+        long returnCode = ConfigManagerApi.GetDefaultConfigID(out long configID);
         if (returnCode != 0)
         {
-            LogError("NativeConfigManager.GetDefaultConfigID()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigManager.GetDefaultConfigID() failed");
+            LogError("NativeConfigManager.GetDefaultConfigID()", ConfigManagerApi);
+            throw new TestException("NativeConfigManager.GetDefaultConfigID() failed");
         }
         string? configJson = null;
-        returnCode = CONFIG_MGR_API.GetConfig(configID, out configJson);
-        if (returnCode != 0) {
-            LogError("NativeConfigManager.GetConfig()", CONFIG_MGR_API);
-            throw new Exception("NativeConfigManager.GetConfig() failed");
+        returnCode = ConfigManagerApi.GetConfig(configID, out configJson);
+        if (returnCode != 0)
+        {
+            LogError("NativeConfigManager.GetConfig()", ConfigManagerApi);
+            throw new TestException("NativeConfigManager.GetConfig() failed");
         }
         JsonNode? node = JsonNode.Parse(configJson);
-        if (node == null) {
+        if (node == null)
+        {
             throw new JsonException("Failed to parse config JSON: " + configJson);
         }
-        JsonObject config = ((JsonNode) node).AsObject();
-        return new Configuration(configID, config);
+        JsonObject config = ((JsonNode)node).AsObject();
+        return new SzConfiguration(configID, config);
     }
-}
 }

@@ -1,5 +1,4 @@
-namespace Senzing.Sdk.Tests.NativeSzApi
-{
+namespace Senzing.Sdk.Tests.NativeSzApi;
 
 /// <summary>
 /// This exception is thrown when the Senzing native installation is invalid.
@@ -54,5 +53,4 @@ public class InvalidInstallationException : Exception
     {
         // do nothing more
     }
-}
 }

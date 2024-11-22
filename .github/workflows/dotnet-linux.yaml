@@ -1,0 +1,66 @@
+name: dotnet linux
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+    # branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dotnet-version: "8"
+            senzingsdk-version: "staging-v4"
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: install Senzing SDK
+        uses: senzing-factory/github-action-install-senzing-sdk@v1
+        with:
+          packages-to-install: "senzingsdk-runtime senzingsdk-setup"
+          senzingsdk-version: ${{ matrix.senzingsdk-version }}
+
+      - name: Build with DotNet
+        run: |
+          dotnet build Senzing.Sdk
+
+      - name: Validate tests compile
+        run: |
+          dotnet build Senzing.Sdk.Tests
+
+      - name: Run DotNet tests
+        env:
+          LD_LIBRARY_PATH: "/opt/senzing/er/lib"
+          SENZING_DATA_DIR: "/opt/senzing/data"
+        run: |
+          dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
+
+      - name: Store coverage file
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage.cobertura.xml
+          path: coverage.cobertura.xml
+
+  coverage:
+    name: Coverage
+    needs: dotnet-linux
+    permissions:
+      pull-requests: write
+    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
+    with:
+      thresholds: "49 90"

@@ -1,31 +1,32 @@
 namespace Senzing.Sdk.Tests.Core;
 
-using NUnit.Framework;
 using System;
+using System.Collections;
 using System.IO;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
+
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
-using System.Collections.Immutable;
-using System.Collections;
 
-using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.SzFlagUsageGroup;
-using NUnit.Framework.Internal;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-internal class SzCoreEngineWhyTest : AbstractTest {
-    private const string CustomersDataSource    = "CUSTOMERS";
-    private const string CompaniesDataSource    = "COMPANIES";
-    private const string EmployeesDataSource    = "EMPLOYEES";
-    private const string PassengersDataSource   = "PASSENGERS";
-    private const string VipsDataSource         = "VIPS";
-    private const string ContactsDataSource     = "CONTACTS";
-    private const string UnknownDataSource      = "UNKNOWN";
+internal class SzCoreEngineWhyTest : AbstractTest
+{
+    private const string CustomersDataSource = "CUSTOMERS";
+    private const string CompaniesDataSource = "COMPANIES";
+    private const string EmployeesDataSource = "EMPLOYEES";
+    private const string PassengersDataSource = "PASSENGERS";
+    private const string VipsDataSource = "VIPS";
+    private const string ContactsDataSource = "CONTACTS";
+    private const string UnknownDataSource = "UNKNOWN";
 
     private static readonly (string dataSourceCode, string recordID) ABC123
         = (PassengersDataSource, "ABC123");
@@ -77,11 +78,13 @@ internal class SzCoreEngineWhyTest : AbstractTest {
     private static readonly IList<SzFlag?> WhyRecordsFlagSets;
     private static readonly IList<SzFlag?> WhyRecordInEntityFlagSets;
 
-    static SzCoreEngineWhyTest() {
-        List<(string, string)> recordKeys   = new List<(string,string)>(12);
-        List<(string, string)> relatedKeys  = new List<(string,string)>(9);
+    static SzCoreEngineWhyTest()
+    {
+        List<(string, string)> recordKeys = new List<(string, string)>(12);
+        List<(string, string)> relatedKeys = new List<(string, string)>(9);
 
-        try {
+        try
+        {
             recordKeys.Add(ABC123);
             recordKeys.Add(DEF456);
             recordKeys.Add(GHI789);
@@ -105,11 +108,15 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             relatedKeys.Add(Contact3);
             relatedKeys.Add(Contact4);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             throw;
-            
-        } finally {
+
+        }
+        finally
+        {
             RecordKeys = recordKeys.AsReadOnly();
             RelatedRecordKeys = relatedKeys.AsReadOnly();
         }
@@ -151,81 +158,101 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         WhyRecordInEntityFlagSets = list.AsReadOnly();
     }
 
-    private IDictionary<(string,string), long> LoadedRecordMap
-        = new Dictionary<(string,string), long>();
+    private readonly Dictionary<(string, string), long> LoadedRecordMap
+        = new Dictionary<(string, string), long>();
 
-    private IDictionary<long, ISet<(string,string)>> LoadedEntityMap
-        = new Dictionary<long, ISet<(string,string)>>();
+    private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
+        = new Dictionary<long, ISet<(string, string)>>();
 
-    private SzCoreEnvironment? env = null;
+    private SzCoreEnvironment? env;
 
-    private SzCoreEnvironment Env {
-       get {
-            if (this.env != null) {
+    private SzCoreEnvironment Env
+    {
+        get
+        {
+            if (this.env != null)
+            {
                 return this.env;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException(
                     "The SzEnvironment is null");
             }
         }
     }
 
-    public long GetEntityID(string dataSourceCode, string recordID) {
+    public long GetEntityID(string dataSourceCode, string recordID)
+    {
         return GetEntityID((dataSourceCode, recordID));
     }
 
-    public long GetEntityID((string dataSourceCode, string recordID) key) {
-        if (LoadedRecordMap.ContainsKey(key)) {
+    public long GetEntityID((string dataSourceCode, string recordID) key)
+    {
+        if (LoadedRecordMap.ContainsKey(key))
+        {
             return LoadedRecordMap[key];
-        } else {
+        }
+        else
+        {
             throw new ArgumentException("Record ID not found: " + key);
         }
     }
 
     [OneTimeSetUp]
-    public void InitializeEnvironment() {
+    public void InitializeEnvironment()
+    {
         this.BeginTests();
         this.InitializeTestEnvironment();
         string settings = this.GetRepoSettings();
         string instanceName = this.GetInstanceName();
-        
+
         // now we just need the entity ID's for the loaded records to use later
         NativeEngine nativeEngine = new NativeEngineExtern();
-        try {
+        try
+        {
             long returnCode = nativeEngine.Init(instanceName, settings, false);
-            if (returnCode != 0) {
-                throw new Exception(nativeEngine.GetLastException());
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeEngine.GetLastException());
             }
 
             // get the loaded records and entity ID's
-            ISet<(string, string)> recordKeys = new HashSet<(string,string)>();
-            foreach ((string,string) recordKey in RecordKeys) {
+            ISet<(string, string)> recordKeys = new HashSet<(string, string)>();
+            foreach ((string, string) recordKey in RecordKeys)
+            {
                 recordKeys.Add(recordKey);
             }
-            foreach ((string,string) recordKey in RelatedRecordKeys) {
+            foreach ((string, string) recordKey in RelatedRecordKeys)
+            {
                 recordKeys.Add(recordKey);
             }
-            foreach ((string dataSourceCode, string recordID) key in recordKeys) {
+            foreach ((string dataSourceCode, string recordID) key in recordKeys)
+            {
                 // clear the buffer
                 returnCode = nativeEngine.GetEntityByRecordID(
                     key.dataSourceCode, key.recordID, out string result);
-                if (returnCode != 0) {
-                    throw new Exception(nativeEngine.GetLastException());
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
                 }
                 // parse the JSON 
-                JsonObject? jsonObj     = JsonNode.Parse(result)?.AsObject();
-                JsonObject? entity      = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
-                long         entityID   = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
+                JsonObject? entity = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                long entityID = entity?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
                 LoadedRecordMap.Add(key, entityID);
-                if (!LoadedEntityMap.ContainsKey(entityID)) {
-                    LoadedEntityMap.Add(entityID, new HashSet<(string,string)>());
+                if (!LoadedEntityMap.ContainsKey(entityID))
+                {
+                    LoadedEntityMap.Add(entityID, new HashSet<(string, string)>());
                 }
-                ISet<(string dataSourceCode, string recordID)> recordKeySet 
+                ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             };
 
-        } finally {
+        }
+        finally
+        {
             nativeEngine.Destroy();
         }
 
@@ -239,7 +266,8 @@ internal class SzCoreEngineWhyTest : AbstractTest {
     /**
      * Overridden to configure some data sources.
      */
-    protected override void PrepareRepository() {
+    protected override void PrepareRepository()
+    {
         DirectoryInfo repoDirectory = this.GetRepositoryDirectory();
 
         ISet<String> dataSources = SortedSetOf(PassengersDataSource,
@@ -249,12 +277,12 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                                                EmployeesDataSource,
                                                ContactsDataSource);
 
-        FileInfo passengerFile  = this.PreparePassengerFile();
-        FileInfo customerFile   = this.PrepareCustomerFile();
-        FileInfo vipFile        = this.PrepareVipFile();
-        FileInfo companyFile    = this.PrepareCompanyFile();
-        FileInfo employeeFile   = this.PrepareEmployeeFile();
-        FileInfo contactFile    = this.PrepareContactFile();
+        FileInfo passengerFile = this.PreparePassengerFile();
+        FileInfo customerFile = this.PrepareCustomerFile();
+        FileInfo vipFile = this.PrepareVipFile();
+        FileInfo companyFile = this.PrepareCompanyFile();
+        FileInfo employeeFile = this.PrepareEmployeeFile();
+        FileInfo contactFile = this.PrepareContactFile();
 
         RepositoryManager.ConfigSources(repoDirectory,
                                         dataSources,
@@ -264,34 +292,35 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                                    passengerFile,
                                    PassengersDataSource,
                                    true);
-     
+
         RepositoryManager.LoadFile(repoDirectory,
                                    customerFile,
                                    CustomersDataSource,
                                    true);
-    
+
         RepositoryManager.LoadFile(repoDirectory,
                                    vipFile,
                                    VipsDataSource,
                                    true);
-    
+
         RepositoryManager.LoadFile(repoDirectory,
                                    companyFile,
                                    CompaniesDataSource,
                                    true);
-    
+
         RepositoryManager.LoadFile(repoDirectory,
                                    employeeFile,
                                    EmployeesDataSource,
                                    true);
-    
+
         RepositoryManager.LoadFile(repoDirectory,
                                    contactFile,
                                    ContactsDataSource,
                                    true);
     }
 
-    private FileInfo PreparePassengerFile() {
+    private FileInfo PreparePassengerFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -309,7 +338,8 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         return this.PrepareCSVFile("test-passengers-", headers, passengers);
     }
 
-    private FileInfo PrepareCustomerFile() {
+    private FileInfo PrepareCustomerFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -328,7 +358,8 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         return this.PrepareJsonArrayFile("test-customers-", headers, customers);
     }
 
-    private FileInfo PrepareVipFile() {
+    private FileInfo PrepareVipFile()
+    {
         String[] headers = {
             "RECORD_ID", "NAME_FIRST", "NAME_LAST", "MOBILE_PHONE_NUMBER",
             "HOME_PHONE_NUMBER", "ADDR_FULL", "DATE_OF_BIRTH"};
@@ -347,31 +378,32 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         return this.PrepareJsonFile("test-vips-", headers, vips);
     }
 
-    private FileInfo PrepareCompanyFile() {
+    private FileInfo PrepareCompanyFile()
+    {
         List<JsonNode?> list = new List<JsonNode?>();
-        IDictionary<string,JsonNode?> map = new Dictionary<string,JsonNode?>();
+        IDictionary<string, JsonNode?> map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Company1.recordID);
         map.Add("DATA_SOURCE", Company1.dataSourceCode);
         map.Add("NAME_ORG", "Acme Corporation");
 
         List<JsonNode?> relList = new List<JsonNode?>();
-        IDictionary<string,JsonNode?> relMap = new Dictionary<string,JsonNode?>();
+        IDictionary<string, JsonNode?> relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "EMPLOYER_ID");
         relMap.Add("REL_ANCHOR_KEY", "ACME_CORP_KEY");
         relList.Add(new JsonObject(relMap));
 
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "CORP_HIERARCHY");
         relMap.Add("REL_ANCHOR_KEY", "ACME_CORP_KEY");
         relList.Add(new JsonObject(relMap));
 
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "CORP_HIERARCHY");
         relMap.Add("REL_POINTER_KEY", "COYOTE_SOLUTIONS_KEY");
         relMap.Add("REL_POINTER_ROLE", "ULTIMATE_PARENT");
         relList.Add(new JsonObject(relMap));
 
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "CORP_HIERARCHY");
         relMap.Add("REL_POINTER_KEY", "COYOTE_SOLUTIONS_KEY");
         relMap.Add("REL_POINTER_ROLE", "PARENT");
@@ -381,26 +413,26 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Company2.recordID);
         map.Add("DATA_SOURCE", Company2.dataSourceCode);
         map.Add("NAME_ORG", "Coyote Solutions");
 
         relList = new List<JsonNode?>();
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "EMPLOYER_ID");
         relMap.Add("REL_ANCHOR_KEY", "COYOTE_SOLUTIONS_KEY");
         relList.Add(new JsonObject(relMap));
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "CORP_HIERARCHY");
         relMap.Add("REL_ANCHOR_KEY", "COYOTE_SOLUTIONS_KEY");
         relList.Add(new JsonObject(relMap));
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "CORP_HIERARCHY");
         relMap.Add("REL_POINTER_KEY", "ACME_CORP_KEY");
         relMap.Add("REL_POINTER_ROLE", "SUBSIDIARY");
         relList.Add(new JsonObject(relMap));
-        
+
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
@@ -408,19 +440,20 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             "test-companies-", new JsonArray(list.ToArray()));
     }
 
-    private FileInfo PrepareEmployeeFile() {
+    private FileInfo PrepareEmployeeFile()
+    {
         List<JsonNode?> list = new List<JsonNode?>();
-        Dictionary<string,JsonNode?> map = new Dictionary<string,JsonNode?>();
+        Dictionary<string, JsonNode?> map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Employee1.recordID);
         map.Add("DATA_SOURCE", Employee1.dataSourceCode);
         map.Add("NAME_FULL", "Jeff Founder");
-        
-        List<JsonNode?> relList = new List<JsonNode?>();;
-        Dictionary<string, JsonNode?> relMap = new Dictionary<string,JsonNode?>();
+
+        List<JsonNode?> relList = new List<JsonNode?>(); ;
+        Dictionary<string, JsonNode?> relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "EMPLOYEE_NUM");
         relMap.Add("REL_ANCHOR_KEY", "1");
         relList.Add(new JsonObject(relMap));
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "EMPLOYER_ID");
         relMap.Add("REL_POINTER_KEY", "ACME_CORP_KEY");
         relMap.Add("REL_POINTER_ROLE", "EMPLOYED_BY");
@@ -428,21 +461,21 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Employee2.recordID);
         map.Add("DATA_SOURCE", Employee2.dataSourceCode);
         map.Add("NAME_FULL", "Jane Leader");
-        relList = new List<JsonNode?>();;
-        relMap = new Dictionary<string,JsonNode?>();
+        relList = new List<JsonNode?>(); ;
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "EMPLOYEE_NUM");
         relMap.Add("REL_ANCHOR_KEY", "2");
         relList.Add(new JsonObject(relMap));
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "EMPLOYEE_NUM");
         relMap.Add("REL_POINTER_KEY", "1");
         relMap.Add("REL_POINTER_ROLE", "MANAGED_BY");
         relList.Add(new JsonObject(relMap));
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "EMPLOYER_ID");
         relMap.Add("REL_POINTER_KEY", "ACME_CORP_KEY");
         relMap.Add("REL_POINTER_ROLE", "EMPLOYED_BY");
@@ -450,24 +483,24 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Employee3.recordID);
         map.Add("DATA_SOURCE", Employee3.dataSourceCode);
         map.Add("NAME_FULL", "Joe Workman");
 
-        relList = new List<JsonNode?>();;
-        relMap = new Dictionary<string,JsonNode?>();
+        relList = new List<JsonNode?>(); ;
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_ANCHOR_DOMAIN", "EMPLOYEE_NUM");
         relMap.Add("REL_ANCHOR_KEY", "6");
         relList.Add(new JsonObject(relMap));
 
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "EMPLOYEE_NUM");
         relMap.Add("REL_POINTER_KEY", "2");
         relMap.Add("REL_POINTER_ROLE", "MANAGED_BY");
         relList.Add(new JsonObject(relMap));
 
-        relMap = new Dictionary<string,JsonNode?>();
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("REL_POINTER_DOMAIN", "EMPLOYER_ID");
         relMap.Add("REL_POINTER_KEY", "ACME_CORP_KEY");
         relMap.Add("REL_POINTER_ROLE", "EMPLOYED_BY");
@@ -479,17 +512,18 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         return this.PrepareJsonFile("test-employees-", new JsonArray(list.ToArray()));
     }
 
-    private FileInfo PrepareContactFile() {
+    private FileInfo PrepareContactFile()
+    {
         List<JsonNode?> list = new List<JsonNode?>();
-        Dictionary<string,JsonNode?> map = new Dictionary<string,JsonNode?>();
+        Dictionary<string, JsonNode?> map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Contact1.recordID);
         map.Add("DATA_SOURCE", Contact1.dataSourceCode);
         map.Add("NAME_FULL", "Richard Couples");
         map.Add("PHONE_NUMBER", "718-949-8812");
         map.Add("ADDR_FULL", "10010 WOODLAND AVE; ATLANTA, GA 30334");
 
-        List<JsonNode?> relList = new List<JsonNode?>();;
-        Dictionary<string,JsonNode?> relMap = new Dictionary<string,JsonNode?>();
+        List<JsonNode?> relList = new List<JsonNode?>(); ;
+        Dictionary<string, JsonNode?> relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("RELATIONSHIP_TYPE", "SPOUSE");
         relMap.Add("RELATIONSHIP_KEY", "SPOUSES-1-2");
         relMap.Add("RELATIONSHIP_ROLE", "WIFE");
@@ -497,14 +531,14 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Contact2.recordID);
         map.Add("DATA_SOURCE", Contact2.dataSourceCode);
         map.Add("NAME_FULL", "Brianna Couples");
         map.Add("PHONE_NUMBER", "718-949-8812");
         map.Add("ADDR_FULL", "10010 WOODLAND AVE; ATLANTA, GA 30334");
-        relList = new List<JsonNode?>();;
-        relMap = new Dictionary<string,JsonNode?>();
+        relList = new List<JsonNode?>(); ;
+        relMap = new Dictionary<string, JsonNode?>();
         relMap.Add("RELATIONSHIP_TYPE", "SPOUSE");
         relMap.Add("RELATIONSHIP_KEY", "SPOUSES-1-2");
         relMap.Add("RELATIONSHIP_ROLE", "HUSBAND");
@@ -512,7 +546,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("RELATIONSHIP_LIST", new JsonArray(relList.ToArray()));
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Contact3.recordID);
         map.Add("DATA_SOURCE", Contact3.dataSourceCode);
         map.Add("NAME_FULL", "Samuel Strong");
@@ -520,7 +554,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         map.Add("ADDR_FULL", "10010 LAKE VIEW RD; SPRINGFIELD, MO 65807");
         list.Add(new JsonObject(map));
 
-        map = new Dictionary<string,JsonNode?>();
+        map = new Dictionary<string, JsonNode?>();
         map.Add("RECORD_ID", Contact4.recordID);
         map.Add("DATA_SOURCE", Contact4.dataSourceCode);
         map.Add("NAME_FULL", "Melissa Powers");
@@ -530,59 +564,70 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
         return this.PrepareJsonFile("test-contacts-", new JsonArray(list.ToArray()));
     }
-    
+
     [OneTimeTearDown]
-    public void TeardownEnvironment() {
-        try {
-            if (this.env != null) {
+    public void TeardownEnvironment()
+    {
+        try
+        {
+            if (this.env != null)
+            {
                 this.Env.Destroy();
                 this.env = null;
             }
             this.TeardownTestEnvironment();
-        } finally {
+        }
+        finally
+        {
             this.EndTests();
         }
     }
 
-    public static List<object?[]> GetWhyEntitiesParameters() {
+    public static List<object?[]> GetWhyEntitiesParameters()
+    {
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WhyEntitiesFlagSets);
 
         List<object?[]> result = new List<object?[]>();
 
         System.Collections.ArrayList relatedKeys
             = new System.Collections.ArrayList(RelatedRecordKeys.Count);
-        foreach ((string,string) recordKey in RelatedRecordKeys) {
+        foreach ((string, string) recordKey in RelatedRecordKeys)
+        {
             relatedKeys.Add(recordKey);
         }
 
         IList<System.Collections.IList> recordKeyCombos
             = GenerateCombinations(relatedKeys, relatedKeys);
 
-        IList<((string,string),(string,string))> comboTuples
-            = new List<((string,string),(string,string))>();
-        
+        IList<((string, string), (string, string))> comboTuples
+            = new List<((string, string), (string, string))>();
+
         IEnumerator<System.Collections.IList> ienum
              = recordKeyCombos.GetEnumerator();
-        while (ienum.MoveNext()) {
+        while (ienum.MoveNext())
+        {
             System.Collections.IList list = ienum.Current;
-            (string,string) key1 = (((string,string)?) list[0] ?? ("A","B"));
-            (string,string) key2 = (((string,string)?) list[1] ?? ("B","C"));   
+            (string, string) key1 = (((string, string)?)list[0] ?? ("A", "B"));
+            (string, string) key2 = (((string, string)?)list[1] ?? ("B", "C"));
 
             // thin the list out to reduce the number of tests
-            if (!key1.Equals(key2)) {
+            if (!key1.Equals(key2))
+            {
                 int index1 = RelatedRecordKeys.IndexOf(key1);
                 int index2 = RelatedRecordKeys.IndexOf(key2);
-                if (Math.Abs(index2 - index1) <= 4) { 
-                    comboTuples.Add((key1,key2));
+                if (Math.Abs(index2 - index1) <= 4)
+                {
+                    comboTuples.Add((key1, key2));
                 }
             }
         }
 
         Type? NotFound = typeof(SzNotFoundException);
-        
-        foreach (((string,string),(string,string)) recordKeyPair in comboTuples) {
-            (string,string) recordKey1 = recordKeyPair.Item1;
-            (string,string) recordKey2 = recordKeyPair.Item2;
+
+        foreach (((string, string), (string, string)) recordKeyPair in comboTuples)
+        {
+            (string, string) recordKey1 = recordKeyPair.Item1;
+            (string, string) recordKey2 = recordKeyPair.Item2;
 
             result.Add(new object?[] {
                 "Test " + recordKey1 + " vs " + recordKey2,
@@ -602,7 +647,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             (SzCoreEngineWhyTest t) => t.GetEntityID(Company1),
             flagSetIter.Next(),
             null});
-        
+
         result.Add(new object?[] {
             "Not found entity ID test",
             (PassengersDataSource, "XXX000"),
@@ -620,18 +665,18 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             (SzCoreEngineWhyTest t) => t.GetEntityID(Company1),
             flagSetIter.Next(),
             NotFound});
-        
+
         return result;
     }
 
-    public void ValidateWhyEntities(
-        string              whyEntitiesResult,
-        string              testData,
-        (string,string)     recordKey1,
-        long                entityID1,
-        (string,string)     recordKey2,
-        long                entityID2,
-        SzFlag?             flags)
+    public virtual void ValidateWhyEntities(
+        string whyEntitiesResult,
+        string testData,
+        (string, string) recordKey1,
+        long entityID1,
+        (string, string) recordKey2,
+        long entityID2,
+        SzFlag? flags)
     {
         JsonObject? jsonObject = JsonNode.Parse(whyEntitiesResult)?.AsObject();
 
@@ -644,7 +689,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             "The WHY_RESULTS array is not of the expected size: " + testData);
 
         JsonObject? whyResult = whyResults?[0]?.AsObject();
-        
+
         Assert.IsNotNull(whyResult,
             "First WHY_RESULTS element was null: " + testData);
 
@@ -687,23 +732,24 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         ISet<long> detailEntityIDs = new HashSet<long>();
 
         int count = entities?.Count ?? 0;
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             JsonObject? entity = entities?[index]?.AsObject();
-            
+
             Assert.IsNotNull(entity, "Entity detail was null: "
                              + entities + ", " + testData);
 
             entity = entity?["RESOLVED_ENTITY"]?.AsObject();
-            
+
             Assert.IsNotNull(entity, "Resolved entity in details was null: "
                              + entities + ", " + testData);
-            
+
             // get the entity ID
             long? id = entity?["ENTITY_ID"]?.GetValue<long>();
             Assert.IsNotNull(
                 id, "The entity detail was missing or has a null "
                 + "ENTITY_ID: " + entity + ", " + testData);
-            
+
             // add to the ID set
             detailEntityIDs.Add(id ?? 0L); // id cannot be null
         }
@@ -715,13 +761,13 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetWhyEntitiesParameters))]
     public void TestWhyEntities(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey1,
-        Func<SzCoreEngineWhyTest,long>              entityIDFunc1,
-        (string dataSourceCode, string recordID)    recordKey2,
-        Func<SzCoreEngineWhyTest,long>              entityIDFunc2,
-        SzFlag?                                     flags,
-        Type?                                       exceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey1,
+        Func<SzCoreEngineWhyTest, long> entityIDFunc1,
+        (string dataSourceCode, string recordID) recordKey2,
+        Func<SzCoreEngineWhyTest, long> entityIDFunc2,
+        SzFlag? flags,
+        Type? exceptionType)
     {
         long entityID1 = entityIDFunc1(this);
         long entityID2 = entityIDFunc2(this);
@@ -729,19 +775,22 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKey1=[ "
             + recordKey1 + " ], entityID1=[ " + entityID1
-            + " ], recordKey2=[ " + recordKey2 + " ], entityID2=[ " 
+            + " ], recordKey2=[ " + recordKey2 + " ], entityID2=[ "
             + entityID2 + " ], flags=[ " + SzWhyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.WhyEntities(entityID1, entityID2, flags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded whyEntities(): " + testData);
                 }
 
@@ -753,23 +802,31 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                                          entityID2,
                                          flags);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed whyEntities(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "whyEntities() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
@@ -777,16 +834,76 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         });
     }
 
-    public static List<object?[]> GetWhyRecordInEntityParameters() {
+    private static List<object?[]> GetRecordCombinations()
+    {
+        List<object?[]> result = new List<object?[]>(RecordKeys.Count * RecordKeys.Count);
+        foreach ((string, string) key1 in RecordKeys)
+        {
+            foreach ((string, string) key2 in RecordKeys)
+            {
+                if (key1.Equals(key2)) continue;
+                result.Add(new object?[] { key1, key2 });
+            }
+        }
+        return result;
+    }
+
+    [Test, TestCaseSource(nameof(GetRecordCombinations))]
+    public void TestWhyEntitiesByRecordIDDefaults(
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long entityID1 = GetEntityID(recordKey1);
+                long entityID2 = GetEntityID(recordKey2);
+
+                string defaultResult = engine.WhyEntities(entityID1, entityID2);
+
+                string explicitResult = engine.WhyEntities(
+                    entityID1, entityID2, SzWhyEntitiesDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyEntities(
+                    entityID1, entityID2, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+    public static List<object?[]> GetWhyRecordInEntityParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
-        Iterator<SzFlag?> flagSetIter 
+        Iterator<SzFlag?> flagSetIter
             = GetCircularIterator(WhyRecordInEntityFlagSets);
 
         Type? NotFound = typeof(SzNotFoundException);
         Type? UnknownSource = typeof(SzUnknownDataSourceException);
 
-        foreach ((string,string) recordKey in RecordKeys) {
+        foreach ((string, string) recordKey in RecordKeys)
+        {
             result.Add(new object?[] {
                 "Why " + recordKey + " in Entity",
                 recordKey,
@@ -810,10 +927,10 @@ internal class SzCoreEngineWhyTest : AbstractTest {
     }
 
     public void ValidateWhyRecordInEntity(
-        string                                      whyResultJson,
-        string                                      testData,
-        (string dataSourceCode, string recordID)    recordKey,
-        SzFlag?                                     flags)
+        string whyResultJson,
+        string testData,
+        (string dataSourceCode, string recordID) recordKey,
+        SzFlag? flags)
     {
         JsonObject? jsonObject = JsonNode.Parse(whyResultJson)?.AsObject();
 
@@ -822,11 +939,11 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         Assert.IsNotNull(whyResults,
             "Missing WHY_RESULTS from whyEntities() result JSON: " + testData);
 
-        Assert.That(whyResults?.Count, Is.EqualTo(1), 
+        Assert.That(whyResults?.Count, Is.EqualTo(1),
             "The WHY_RESULTS array is not of the expected size: " + testData);
 
         JsonObject? whyResult = whyResults?[0]?.AsObject();
-        
+
         Assert.IsNotNull(whyResult,
             "First WHY_RESULTS element was null: " + testData);
 
@@ -836,13 +953,13 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                          + whyResult + " ], " + testData);
 
         long whyID = jsonID ?? 0L;
-        
+
         long entityID = this.GetEntityID(recordKey);
 
         Assert.That(whyID, Is.EqualTo(entityID),
             "The entity ID in the why result was not as expected: "
             + "whyResult=[ " + whyResult + " ], " + testData);
-        
+
         JsonArray? entities = jsonObject?["ENTITIES"]?.AsArray();
 
         Assert.IsNotNull(entities,
@@ -861,14 +978,14 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         Assert.That(focusRecords?.Count, Is.EqualTo(1),
             "Size of FOCUS_RECORDS array not as expected: focusRecords=[ "
             + focusRecords + " ], " + testData);
-        
+
         JsonObject? focusRecord = focusRecords?[0]?.AsObject();
         Assert.IsNotNull(focusRecords, "The first element of FOCUS_RECORDS array "
-            + "is missing or null: focusRecords=[ " + focusRecords + " ], " 
+            + "is missing or null: focusRecords=[ " + focusRecords + " ], "
             + testData);
 
-        string? dataSource  = focusRecord?["DATA_SOURCE"]?.GetValue<string>();
-        string? recordID    = focusRecord?["RECORD_ID"]?.GetValue<string>();
+        string? dataSource = focusRecord?["DATA_SOURCE"]?.GetValue<string>();
+        string? recordID = focusRecord?["RECORD_ID"]?.GetValue<string>();
 
         Assert.IsNotNull(dataSource,
             "Focus record data source is missing or null: focusRecord=[ "
@@ -877,7 +994,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         Assert.IsNotNull(recordID,
             "Focus record ID is missing or null: focusRecord=[ "
             + focusRecord + " ], " + testData);
-        
+
         Assert.That(dataSource, Is.EqualTo(recordKey.dataSourceCode),
             "Focus record data source is not as expected: focusRecord=[ "
             + focusRecord + " ], " + testData);
@@ -889,9 +1006,10 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         // check that the entities we found are those requested
         ISet<long> detailEntityIDs = new HashSet<long>();
         int count = entities?.Count ?? 0;
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             JsonObject? entity = entities?[index]?.AsObject();
-            
+
             Assert.IsNotNull(entity, "Entity detail was null: "
                              + entities + ", " + testData);
 
@@ -899,14 +1017,14 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
             Assert.IsNotNull(entity, "Resolved entity in details was null: "
                              + entities + ", " + testData);
-            
+
             // get the entity ID
             long? id = entity?["ENTITY_ID"]?.GetValue<long>();
 
             Assert.IsNotNull(
                 id, "The entity detail was missing or has a null "
                 + "ENTITY_ID: " + entity + ", " + testData);
-            
+
             // add to the ID set
             detailEntityIDs.Add(id ?? 0L);
         }
@@ -917,10 +1035,10 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
     [Test, TestCaseSource(nameof(GetWhyRecordInEntityParameters))]
     public void TestWhyRecordInEntity(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey,
-        SzFlag?                                     flags,
-        Type?                                       exceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        SzFlag? flags,
+        Type? exceptionType)
     {
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKey=[ "
@@ -929,14 +1047,17 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.WhyRecordInEntity(
                     recordKey.dataSourceCode, recordKey.recordID, flags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded whyRecordInEntity(): "
                          + testData);
                 }
@@ -944,23 +1065,31 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                 this.ValidateWhyRecordInEntity(
                     result, testData, recordKey, flags);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed whyRecordInEntity(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "whyRecordInEntity() failed with an unexpected "
                         + "exception type: " + testData + ", " + description);
                 }
@@ -968,48 +1097,98 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         });
     }
 
-    public static List<object?[]> GetWhyRecordsParameters() {
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestWhyRecordInEntityDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode = recordKey.dataSourceCode;
+                string recordID = recordKey.recordID;
+
+                string defaultResult = engine.WhyRecordInEntity(dataSourceCode, recordID);
+
+                string explicitResult = engine.WhyRecordInEntity(
+                    dataSourceCode, recordID, SzWhyRecordInEntityDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyRecordInEntity(
+                    dataSourceCode, recordID, out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+
+    public static List<object?[]> GetWhyRecordsParameters()
+    {
         List<object?[]> result = new List<object?[]>();
 
         ArrayList recordKeys = new ArrayList(RecordKeys.Count);
-        foreach ((string,string) recordKey in RecordKeys) {
+        foreach ((string, string) recordKey in RecordKeys)
+        {
             recordKeys.Add(recordKey);
         }
 
-        IList<System.Collections.IList> recordKeyCombos 
+        IList<System.Collections.IList> recordKeyCombos
             = GenerateCombinations(recordKeys, recordKeys);
 
         IEnumerator<System.Collections.IList> ienum
             = recordKeyCombos.GetEnumerator();
-        
-        IList<((string,string),(string,string))> comboTuples
-            = new List<((string,string),(string,string))>(recordKeyCombos.Count);
-        
-        while (ienum.MoveNext()) {
+
+        IList<((string, string), (string, string))> comboTuples
+            = new List<((string, string), (string, string))>(recordKeyCombos.Count);
+
+        while (ienum.MoveNext())
+        {
             System.Collections.IList list = ienum.Current;
 
-            (string,string) key1 = ((string,string)?) list[0] ?? ("A","B");
-            (string,string) key2 = ((string,string)?) list[1] ?? ("C","D");
+            (string, string) key1 = ((string, string)?)list[0] ?? ("A", "B");
+            (string, string) key2 = ((string, string)?)list[1] ?? ("C", "D");
 
             // thin the list out to reduce the number of tests
-            if (!key1.Equals(key2)) {
+            if (!key1.Equals(key2))
+            {
                 int index1 = RecordKeys.IndexOf(key1);
                 int index2 = RecordKeys.IndexOf(key2);
-                if (Math.Abs(index2 - index1) <= 4) { 
-                    comboTuples.Add((key1,key2));
+                if (Math.Abs(index2 - index1) <= 4)
+                {
+                    comboTuples.Add((key1, key2));
                 }
             }
         }
-    
+
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(WhyRecordsFlagSets);
 
         Type? NotFound = typeof(SzNotFoundException);
         Type? UnknownSource = typeof(SzUnknownDataSourceException);
 
-        foreach (((string,string),(string,string)) keyPair in comboTuples) {
-            (string,string) recordKey1 = keyPair.Item1;
-            (string,string) recordKey2 = keyPair.Item2;
-            
+        foreach (((string, string), (string, string)) keyPair in comboTuples)
+        {
+            (string, string) recordKey1 = keyPair.Item1;
+            (string, string) recordKey2 = keyPair.Item2;
+
             result.Add(new object?[] {
                 "Why " + recordKey1 + " versus " + recordKey2,
                 recordKey1,
@@ -1043,11 +1222,11 @@ internal class SzCoreEngineWhyTest : AbstractTest {
     }
 
     public void ValidateWhyRecords(
-        string                                      whyResultJson,
-        string                                      testData,
-        (string dataSourceCode, string recordID)    recordKey1,
-        (string dataSourceCode, string recordID)    recordKey2,
-        SzFlag?                                     flags)
+        string whyResultJson,
+        string testData,
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2,
+        SzFlag? flags)
     {
         JsonObject? jsonObject = JsonNode.Parse(whyResultJson)?.AsObject();
 
@@ -1060,12 +1239,12 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             "The WHY_RESULTS array is not of the expected size: " + testData);
 
         JsonObject? whyResult = whyResults?[0]?.AsObject();
-        
+
         Assert.IsNotNull(whyResult,
             "First WHY_RESULTS element was null: " + testData);
 
-        long?       whyID1 = whyResult?["ENTITY_ID"]?.GetValue<long>();
-        long?       whyID2 = whyResult?["ENTITY_ID_2"]?.GetValue<long>();
+        long? whyID1 = whyResult?["ENTITY_ID"]?.GetValue<long>();
+        long? whyID2 = whyResult?["ENTITY_ID_2"]?.GetValue<long>();
 
         Assert.IsNotNull(whyID1, "The first entity ID was null: whyResult=[ "
                          + whyResult + " ], " + testData);
@@ -1082,7 +1261,7 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         Assert.IsTrue(whyIDs.SetEquals(entityIDs),
             "The entity ID's in the why result were not as expected: "
             + "whyResult=[ " + whyResult + " ], " + testData);
-        
+
         JsonArray? entities = jsonObject?["ENTITIES"]?.AsArray();
 
         Assert.IsNotNull(entities,
@@ -1098,18 +1277,18 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             + "from the why results: whyResult=[ " + whyResult + " ], "
             + testData);
 
-        Assert.That(focusRecords1?.Count, Is.EqualTo(1), 
+        Assert.That(focusRecords1?.Count, Is.EqualTo(1),
             "Size of FOCUS_RECORDS array not as expected: focusRecord1=[ "
             + focusRecords1 + " ], " + testData);
-        
+
         JsonObject? focusRecord1 = focusRecords1?[0]?.AsObject();
 
         Assert.IsNotNull(focusRecords1, "The first element of FOCUS_RECORDS array "
-            + "is missing or null: focusRecord1=[ " + focusRecords1 + " ], " 
+            + "is missing or null: focusRecord1=[ " + focusRecords1 + " ], "
             + testData);
 
-        string? dataSource1  = focusRecord1?["DATA_SOURCE"]?.GetValue<string>();
-        string? recordID1    = focusRecord1?["RECORD_ID"]?.GetValue<string>();
+        string? dataSource1 = focusRecord1?["DATA_SOURCE"]?.GetValue<string>();
+        string? recordID1 = focusRecord1?["RECORD_ID"]?.GetValue<string>();
 
         Assert.IsNotNull(dataSource1,
             "Focus record data source is missing or null: focusRecord=[ "
@@ -1128,15 +1307,15 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         Assert.That(focusRecords2?.Count, Is.EqualTo(1),
             "Size of FOCUS_RECORDS_2 array not as expected: focusRecords2=[ "
             + focusRecords2 + " ], " + testData);
-        
+
         JsonObject? focusRecord2 = focusRecords2?[0]?.AsObject();
-        
+
         Assert.IsNotNull(focusRecords2, "The first element of FOCUS_RECORDS_2 "
             + "array is missing or null: focusRecords=[ " + focusRecords2
             + " ], " + testData);
 
-        string? dataSource2  = focusRecord2?["DATA_SOURCE"]?.GetValue<string>();
-        string? recordID2    = focusRecord2?["RECORD_ID"]?.GetValue<string>();
+        string? dataSource2 = focusRecord2?["DATA_SOURCE"]?.GetValue<string>();
+        string? recordID2 = focusRecord2?["RECORD_ID"]?.GetValue<string>();
 
         Assert.IsNotNull(dataSource2,
             "Focus record data source is missing or null: focusRecord=[ "
@@ -1146,11 +1325,11 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             "Focus record ID is missing or null: focusRecord=[ "
             + focusRecord2 + " ], " + testData);
 
-        (string,string) whyKey1 = (dataSource1 ?? "", recordID1 ?? "");
-        (string,string) whyKey2 = (dataSource2 ?? "", recordID2 ?? "");
+        (string, string) whyKey1 = (dataSource1 ?? "", recordID1 ?? "");
+        (string, string) whyKey2 = (dataSource2 ?? "", recordID2 ?? "");
 
-        ISet<(string, string)> whyKeys      = SortedSetOf(whyKey1, whyKey2);
-        ISet<(string, string)> recordKeys   = SortedSetOf(recordKey1, recordKey2);
+        ISet<(string, string)> whyKeys = SortedSetOf(whyKey1, whyKey2);
+        ISet<(string, string)> recordKeys = SortedSetOf(recordKey1, recordKey2);
 
         Assert.IsTrue(whyKeys.SetEquals(recordKeys),
             "Focus records not as expected: focusRecord=[ "
@@ -1159,9 +1338,10 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         // check that the entities we found are those requested
         ISet<long> detailEntityIDs = new HashSet<long>();
         int count = entities?.Count ?? 0;
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             JsonObject? entity = entities?[index]?.AsObject();
-            
+
             Assert.IsNotNull(entity, "Entity detail was null: "
                              + entities + ", " + testData);
 
@@ -1169,14 +1349,14 @@ internal class SzCoreEngineWhyTest : AbstractTest {
 
             Assert.IsNotNull(entity, "Resolved entity in details was null: "
                              + entities + ", " + testData);
-            
+
             // get the entity ID
             long? id = entity?["ENTITY_ID"]?.GetValue<long>();
 
             Assert.IsNotNull(
                 id, "The entity detail was missing or has a null "
                 + "ENTITY_ID: " + entity + ", " + testData);
-            
+
             // add to the ID set
             detailEntityIDs.Add(id ?? 0L);
         }
@@ -1185,34 +1365,37 @@ internal class SzCoreEngineWhyTest : AbstractTest {
             "Entity detail entity ID's are not as expected: " + testData);
     }
 
-    [Test,TestCaseSource(nameof(GetWhyRecordsParameters))]
+    [Test, TestCaseSource(nameof(GetWhyRecordsParameters))]
     public void TestWhyRecords(
-        string                                      testDescription,
-        (string dataSourceCode, string recordID)    recordKey1,
-        (string dataSourceCode, string recordID)    recordKey2,
-        SzFlag?                                     flags,
-        Type?                                       exceptionType)
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2,
+        SzFlag? flags,
+        Type? exceptionType)
     {
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKey1=[ "
-            + recordKey1 + " ], recordKey2=[ " + recordKey2 
+            + recordKey1 + " ], recordKey2=[ " + recordKey2
             + " ], flags=[ " + SzWhyFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
 
-        this.PerformTest(() => {
-            try {
+        this.PerformTest(() =>
+        {
+            try
+            {
                 SzEngine engine = this.Env.GetEngine();
 
                 string result = engine.WhyRecords(
                     recordKey1.dataSourceCode,
-                    recordKey1.recordID, 
+                    recordKey1.recordID,
                     recordKey2.dataSourceCode,
-                    recordKey2.recordID, 
+                    recordKey2.recordID,
                     flags);
 
-                if (exceptionType != null) {
+                if (exceptionType != null)
+                {
                     Fail("Unexpectedly succeeded whyRecords(): "
                          + testData);
                 }
@@ -1220,23 +1403,31 @@ internal class SzCoreEngineWhyTest : AbstractTest {
                 this.ValidateWhyRecords(
                     result, testData, recordKey1, recordKey2, flags);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 string description = "";
-                if (e is SzException) {
-                    SzException sze = (SzException) e;
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
                     description = "errorCode=[ " + sze.ErrorCode
                         + " ], exception=[ " + e.ToString() + " ]";
-                } else {
+                }
+                else
+                {
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (exceptionType == null) {
+                if (exceptionType == null)
+                {
                     Fail("Unexpectedly failed whyRecords(): "
                          + testData + ", " + description, e);
 
-                } else if (exceptionType != e.GetType()) {
+                }
+                else if (exceptionType != e.GetType())
+                {
                     Assert.IsInstanceOf(
-                        exceptionType, e, 
+                        exceptionType, e,
                         "whyRecords() failed with an unexpected exception "
                         + "type: " + testData + ", " + description);
                 }
@@ -1244,4 +1435,62 @@ internal class SzCoreEngineWhyTest : AbstractTest {
         });
 
     }
+
+    [Test, TestCaseSource(nameof(GetRecordCombinations))]
+    public void TestWhyRecordsDefaults(
+        (string dataSourceCode, string recordID) recordKey1,
+        (string dataSourceCode, string recordID) recordKey2)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode1 = recordKey1.dataSourceCode;
+                string recordID1 = recordKey1.recordID;
+
+                string dataSourceCode2 = recordKey2.dataSourceCode;
+                string recordID2 = recordKey2.recordID;
+
+                string defaultResult = engine.WhyRecords(dataSourceCode1,
+                                                         recordID1,
+                                                         dataSourceCode2,
+                                                         recordID2);
+
+                string explicitResult = engine.WhyRecords(dataSourceCode1,
+                                                          recordID1,
+                                                          dataSourceCode2,
+                                                          recordID2,
+                                                          SzWhyRecordsDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhyRecords(
+                    dataSourceCode1,
+                    recordID1,
+                    dataSourceCode2,
+                    recordID2,
+                    out string nativeResult);
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
 }

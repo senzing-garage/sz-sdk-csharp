@@ -1,32 +1,37 @@
-using System;
-using System.IO;
+namespace Senzing.Sdk.Tests.Core;
+
+using System.Collections;
 using System.Text;
-using Senzing.Sdk.Core;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace Senzing.Sdk.Tests.Core {
+using Senzing.Sdk.Core;
 
-internal static class DebugExtensions {
-    public static string ToDebugString<K,V>(this IDictionary<K,V> dict) {
+using static System.StringComparison;
+
+internal static class DebugExtensions
+{
+    public static string ToDebugString<K, V>(this IDictionary<K, V> dict)
+    {
         StringBuilder sb = new StringBuilder();
         sb.Append("{ ");
         string prefix = "";
-        foreach (KeyValuePair<K,V> pair in dict) {
-            sb.Append(prefix).Append("[ ").Append(pair.Key).Append(":");
+        foreach (KeyValuePair<K, V> pair in dict)
+        {
+            sb.Append(prefix).Append("[ ").Append(pair.Key).Append(':');
             sb.Append(pair.Value).Append(" ]");
             prefix = ", ";
         }
         sb.Append(" }");
         return sb.ToString();
     }
-    public static string ToDebugString<T>(this ICollection<T> coll) {
+    public static string ToDebugString<T>(this ICollection<T> coll)
+    {
         StringBuilder sb = new StringBuilder();
         sb.Append("{ ");
         string prefix = "";
-        foreach (T elem in coll) {
+        foreach (T elem in coll)
+        {
             sb.Append(prefix).Append("[ ").Append(elem).Append(" ]");
             prefix = ", ";
         }
@@ -35,7 +40,8 @@ internal static class DebugExtensions {
     }
 }
 
-internal abstract class AbstractTest {
+internal abstract class AbstractTest
+{
     /// <summary>
     /// UTF8 encoding constant.
     /// </summary>
@@ -44,12 +50,12 @@ internal abstract class AbstractTest {
     /// <summary>
     /// The number of tests that failed for this instance.
     /// </summary>
-    private int failureCount = 0;
+    private int failureCount;
 
     /// <summary>
     /// The number of tests that succeeded for this instance.
     /// </summary>
-    private int successCount = 0;
+    private int successCount;
 
     /// <summary>
     /// The time of the last progress log.
@@ -59,17 +65,18 @@ internal abstract class AbstractTest {
     /// <summary>
     /// The class-wide repo directory.
     /// </summary>
-    private DirectoryInfo repoDirectory;
+    private readonly DirectoryInfo repoDirectory;
 
     /// <summary>
     /// Whether or not the repository has been created.
     /// </summary>
-    private bool repoCreated = false;
+    private bool repoCreated;
 
     /// <summary>
     /// Protected default constructor.
     /// </summary>
-    protected AbstractTest() : this(null) {
+    protected AbstractTest() : this(null)
+    {
         // do nothing
     }
 
@@ -81,8 +88,10 @@ internal abstract class AbstractTest {
     /// <param name="repoDirectory">
     /// The directory in which to include the entity repository.
     /// </param>
-    protected AbstractTest(DirectoryInfo? repoDirectory) {
-        if (repoDirectory == null) {
+    protected AbstractTest(DirectoryInfo? repoDirectory)
+    {
+        if (repoDirectory == null)
+        {
             repoDirectory = CreateTestRepoDirectory(this.GetType());
         }
         this.repoDirectory = repoDirectory;
@@ -96,14 +105,16 @@ internal abstract class AbstractTest {
     /// <c>true</c> if replaying previous results and <c>false</c>
     /// if using the live API.
     /// </summary>
-    protected virtual void BeginTests() {
+    protected virtual void BeginTests()
+    {
         // do nothing for now
     }
 
     /// <summary>
     /// Signals the end of the current test suite.
     /// </summary>
-    protected virtual void EndTests() {
+    protected virtual void EndTests()
+    {
         this.ConditionallyLogCounts(true);
     }
 
@@ -123,11 +134,12 @@ internal abstract class AbstractTest {
     /// <param name="settings">
     /// The settings to use for initialization.
     /// </param>
-    protected void Init(NativeConfig config, string instanceName, string settings) 
+    protected virtual void Init(NativeConfig config, string instanceName, string settings)
     {
         long returnCode = config.Init(instanceName, settings, false);
-        if (returnCode != 0) {
-            throw new Exception(config.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(config.GetLastException());
         }
     }
 
@@ -147,13 +159,14 @@ internal abstract class AbstractTest {
     /// <param name="settings">
     /// The settings to use for initialization.
     /// </param>
-    protected void Init(NativeConfigManager configMgr, 
-                        string              instanceName,
-                        string              settings) 
+    protected virtual void Init(NativeConfigManager configMgr,
+                                string instanceName,
+                                string settings)
     {
         long returnCode = configMgr.Init(instanceName, settings, false);
-        if (returnCode != 0) {
-            throw new Exception(configMgr.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(configMgr.GetLastException());
         }
     }
 
@@ -167,8 +180,10 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>Always returns <c>null</c>.</summary>
-    protected NativeConfig? Destroy(NativeConfig? config) {
-        if (config == null) {
+    protected virtual NativeConfig? Destroy(NativeConfig? config)
+    {
+        if (config == null)
+        {
             return null;
         }
         config.Destroy();
@@ -185,8 +200,10 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>Always returns <c>null</c>.</returns>
-    protected NativeConfigManager? Destroy(NativeConfigManager? configMgr) {
-        if (configMgr == null) {
+    protected virtual NativeConfigManager? Destroy(NativeConfigManager? configMgr)
+    {
+        if (configMgr == null)
+        {
             return null;
         }
         configMgr.Destroy();
@@ -202,11 +219,13 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>The config handle for the config.</returns>
-    protected IntPtr CreateDefaultConfig(NativeConfig config) {
+    protected virtual IntPtr CreateDefaultConfig(NativeConfig config)
+    {
         // create the default config
         long returnCode = config.Create(out IntPtr configHandle);
-        if (returnCode != 0) {
-            throw new Exception(config.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(config.GetLastException());
         }
         return configHandle;
     }
@@ -229,14 +248,15 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>The configuration ID for the added config.</returns>
-    protected long AddConfig(NativeConfigManager    configMgr, 
-                             string                 config,
-                             string                 comment) 
+    protected virtual long AddConfig(NativeConfigManager configMgr,
+                                     string config,
+                                     string comment)
     {
         long returnCode = configMgr.AddConfig(
             config, comment, out long configID);
-        if (returnCode != 0) {
-            throw new Exception(configMgr.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(configMgr.GetLastException());
         }
         return configID;
     }
@@ -253,10 +273,12 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The configuration ID for the default config ID.
     /// </returns>
-    protected long GetDefaultConfigID(NativeConfigManager configMgr) {
+    protected virtual long GetDefaultConfigID(NativeConfigManager configMgr)
+    {
         long returnCode = configMgr.GetDefaultConfigID(out long configID);
-        if (returnCode != 0) {
-            throw new Exception(configMgr.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(configMgr.GetLastException());
         }
         return configID;
     }
@@ -280,9 +302,11 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>Always returns <c>null</c></returns>
-    protected long? CloseConfig(NativeConfig? config, IntPtr? configHandle) {
-        if (config != null && configHandle != null) {
-            config.Close((IntPtr) configHandle);
+    protected virtual long? CloseConfig(NativeConfig? config, IntPtr? configHandle)
+    {
+        if (config != null && configHandle != null)
+        {
+            config.Close((IntPtr)configHandle);
         }
         return null;
     }
@@ -304,9 +328,9 @@ internal abstract class AbstractTest {
     /// <param name="dataSource">
     /// The data source code for the data source to add to the config.
     /// </param>
-    protected void AddDataSource(NativeConfig   config,
-                                 IntPtr         configHandle,
-                                 string         dataSource)
+    protected virtual void AddDataSource(NativeConfig config,
+                                         IntPtr configHandle,
+                                         string dataSource)
     {
         StringBuilder sb = new StringBuilder("{\"DSRC_CODE\": ");
         sb.Append(Utilities.JsonEscape(dataSource)).Append('}');
@@ -314,8 +338,9 @@ internal abstract class AbstractTest {
 
         long returnCode = config.AddDataSource(
             configHandle, json, out string result);
-        if (returnCode != 0) {
-            throw new Exception(config.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(config.GetLastException());
         }
     }
 
@@ -334,10 +359,12 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>The JSON <c>string</c> for the config.</returns>
-    protected string ExportConfig(NativeConfig config, IntPtr configHandle) {
+    protected virtual string ExportConfig(NativeConfig config, IntPtr configHandle)
+    {
         long returnCode = config.Save(configHandle, out string configJson);
-        if (returnCode != 0) {
-            throw new Exception(config.GetLastException());
+        if (returnCode != 0)
+        {
+            throw new TestException(config.GetLastException());
         }
         return configJson;
     }
@@ -357,17 +384,21 @@ internal abstract class AbstractTest {
     /// </param>
     /// 
     /// <returns>The JSON <c>string</c> that for the created config.</returns>
-    protected string CreateConfig(NativeConfig      config,
-                                  params string[]   dataSources) 
+    protected virtual string CreateConfig(NativeConfig config,
+                                          params string[] dataSources)
     {
         string result;
         IntPtr configHandle = CreateDefaultConfig(config);
-        try {
-            foreach (string dataSource in dataSources) {
+        try
+        {
+            foreach (string dataSource in dataSources)
+            {
                 AddDataSource(config, configHandle, dataSource);
             }
             result = ExportConfig(config, configHandle);
-        } finally {
+        }
+        finally
+        {
             CloseConfig(config, configHandle);
         }
         return result;
@@ -383,7 +414,8 @@ internal abstract class AbstractTest {
     /// </remarks>
     /// 
     /// <returns>The instance name with which to initialize the API.</returns>
-    protected string GetInstanceName() {
+    protected string GetInstanceName()
+    {
         return this.GetInstanceName(null);
     }
 
@@ -404,10 +436,14 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The instance name with which to initialize the API.
     /// </returns>
-    protected string GetInstanceName(string? suffix) {
-        if (suffix != null && suffix.Trim().Length > 0) {
+    protected string GetInstanceName(string? suffix)
+    {
+        if (suffix != null && suffix.Trim().Length > 0)
+        {
             suffix = " - " + suffix.Trim();
-        } else {
+        }
+        else
+        {
             suffix = "";
         }
         return this.GetType().Name + suffix;
@@ -421,7 +457,8 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The contents of the JSON init file as a <c>string</c>.
     /// </returns>
-    protected string GetRepoSettings() {
+    protected string GetRepoSettings()
+    {
         return this.ReadRepoSettingsFile(this.GetRepositoryDirectory());
     }
 
@@ -437,8 +474,9 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The contents of the JSON init file as a <c>string</c>.
     /// </returns>
-    protected string ReadRepoSettingsFile(DirectoryInfo repoDirectory) {
-        string initJsonFile = Path.Combine(repoDirectory.FullName, 
+    protected virtual string ReadRepoSettingsFile(DirectoryInfo repoDirectory)
+    {
+        string initJsonFile = Path.Combine(repoDirectory.FullName,
                                             "sz-init.json");
 
 
@@ -452,7 +490,8 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </returns>
-    protected DirectoryInfo CreateTestRepoDirectory() {
+    protected DirectoryInfo CreateTestRepoDirectory()
+    {
         return CreateTestRepoDirectory(this.GetType(), null);
     }
 
@@ -467,7 +506,8 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </summary>
-    protected DirectoryInfo CreateTestRepoDirectory(string testName) {
+    protected DirectoryInfo CreateTestRepoDirectory(string testName)
+    {
         return CreateTestRepoDirectory(this.GetType(), testName);
     }
 
@@ -483,7 +523,8 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </summary>
-    protected static DirectoryInfo CreateTestRepoDirectory(Type t) {
+    protected static DirectoryInfo CreateTestRepoDirectory(Type t)
+    {
         return CreateTestRepoDirectory(t, null);
     }
 
@@ -521,7 +562,7 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </summary>
-    protected static DirectoryInfo DoCreateTestRepoDirectory(string prefix) 
+    protected static DirectoryInfo DoCreateTestRepoDirectory(string prefix)
     {
         // create the test repo directory name
         string dirName = (prefix == null || prefix.Length == 0)
@@ -532,14 +573,16 @@ internal abstract class AbstractTest {
         string currentDir = Environment.CurrentDirectory;
         string solutionFile = Path.Combine(currentDir, "sz-sdk-csharp.sln");
 
-        if (!File.Exists(solutionFile)) {
+        if (!File.Exists(solutionFile))
+        {
             string tempDir = Path.Combine(Path.GetTempPath(), dirName);
             return Directory.CreateDirectory(tempDir);
         }
-        
+
         // we found the solution file, ensure we have a test-repos directory
         string testRepoDir = Path.Combine(currentDir, "test-repos");
-        if (!Directory.Exists(testRepoDir)) {
+        if (!Directory.Exists(testRepoDir))
+        {
             Directory.CreateDirectory(testRepoDir);
         }
 
@@ -562,7 +605,8 @@ internal abstract class AbstractTest {
     /// The <see cref="System.IO.DirectoryInfo"/> identifying the repository
     /// directory used for the test.
     /// </returns>
-    protected DirectoryInfo GetRepositoryDirectory() {
+    protected DirectoryInfo GetRepositoryDirectory()
+    {
         return this.repoDirectory;
     }
 
@@ -571,7 +615,8 @@ internal abstract class AbstractTest {
     /// <c>[OneTimeSetup]</c> to create and initialize the Senzing
     /// entity repository.
     /// </summary>
-    protected void InitializeTestEnvironment() {
+    protected void InitializeTestEnvironment()
+    {
         this.InitializeTestEnvironment(false);
     }
 
@@ -585,15 +630,17 @@ internal abstract class AbstractTest {
     /// <c>true</c> if the default configuration should be excluded
     /// from the repository, and <c>false</c> if it should be included.
     /// </param>
-    protected void InitializeTestEnvironment(bool excludeConfig) {
+    protected void InitializeTestEnvironment(bool excludeConfig)
+    {
         String moduleName = this.GetInstanceName("RepoMgr (create)");
         RepositoryManager.SetThreadModuleName(moduleName);
         bool concluded = false;
-        try {
+        try
+        {
             RepositoryManager.CreateRepo(this.GetRepositoryDirectory(),
                                          excludeConfig,
                                          true);
-            
+
             this.repoCreated = true;
 
             this.PrepareRepository();
@@ -601,12 +648,17 @@ internal abstract class AbstractTest {
             RepositoryManager.Conclude();
             concluded = true;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             throw;
 
-        } finally {
-            if (!concluded) {
+        }
+        finally
+        {
+            if (!concluded)
+            {
                 RepositoryManager.Conclude();
             }
             RepositoryManager.ClearThreadModuleName();
@@ -622,7 +674,8 @@ internal abstract class AbstractTest {
     /// It will delete the entity repository that was created for the tests if
     /// there are no test failures recorded via <see cref="InrementFailureCount"/>.
     /// </remarks>
-    protected void TeardownTestEnvironment() {
+    protected void TeardownTestEnvironment()
+    {
         int failureCount = this.GetFailureCount();
         TeardownTestEnvironment((failureCount == 0));
     }
@@ -641,16 +694,19 @@ internal abstract class AbstractTest {
     /// <c>true</c> if the test repository should be deleted,
     /// otherwise <c>false</c>
     /// </param>
-    protected void TeardownTestEnvironment(bool deleteRepository) {
+    protected void TeardownTestEnvironment(bool deleteRepository)
+    {
         string? preserveProp
             = Environment.GetEnvironmentVariable("SENZING_TEST_PRESERVE_REPOS");
-        if (preserveProp != null) {
-            preserveProp = preserveProp.Trim().ToLower();
+        if (preserveProp != null)
+        {
+            preserveProp = preserveProp.Trim();
         }
-        bool preserve = (preserveProp != null && preserveProp.Equals("true"));
+        bool preserve = (preserveProp != null && preserveProp.Equals("true", OrdinalIgnoreCase));
 
         // cleanup the repo directory
-        if (this.repoCreated && deleteRepository && !preserve) {
+        if (this.repoCreated && deleteRepository && !preserve)
+        {
             DeleteRepository(this.repoDirectory);
         }
     }
@@ -673,8 +729,10 @@ internal abstract class AbstractTest {
     /// <param name="repoDirectory">
     ///  The repository directory to delete.
     /// </param>
-    protected static void DeleteRepository(DirectoryInfo repoDirectory) {
-        if (repoDirectory.Exists && IsDirectory(repoDirectory.FullName)) {
+    protected static void DeleteRepository(DirectoryInfo repoDirectory)
+    {
+        if (repoDirectory.Exists && IsDirectory(repoDirectory.FullName))
+        {
             repoDirectory.Delete(true);
         }
     }
@@ -688,7 +746,8 @@ internal abstract class AbstractTest {
     /// By default this function does nothing.  The repository directory
     /// can be obtained via <see cref="GetRepositoryDirectory"/>.
     /// </remarks>
-    protected virtual void PrepareRepository() {
+    protected virtual void PrepareRepository()
+    {
         // do nothing
     }
 
@@ -697,7 +756,8 @@ internal abstract class AbstractTest {
     /// </summary>
     ///
     /// <returns>The new failure count.</returns>
-    protected int IncrementFailureCount() {
+    protected int IncrementFailureCount()
+    {
         this.failureCount++;
         this.ConditionallyLogCounts(false);
         return this.failureCount;
@@ -708,7 +768,8 @@ internal abstract class AbstractTest {
     /// </summary>
     ///
     /// <returns>The new success count.</returns>
-    protected int IncrementSuccessCount() {
+    protected int IncrementSuccessCount()
+    {
         this.successCount++;
         this.ConditionallyLogCounts(false);
         return this.successCount;
@@ -721,7 +782,8 @@ internal abstract class AbstractTest {
     /// <param name="complete">
     /// <c>true</c> if tests are complete for this class, otherwise <c>false</c>.
     /// </param>
-    protected void ConditionallyLogCounts(bool complete) {
+    protected void ConditionallyLogCounts(bool complete)
+    {
         int successCount = this.GetSuccessCount();
         int failureCount = this.GetFailureCount();
 
@@ -730,17 +792,20 @@ internal abstract class AbstractTest {
                 ? (now - this.progressLogTimestamp)
                 : 0L;
 
-        if (complete || (lapse > 30000L)) {
+        if (complete || (lapse > 30000L))
+        {
             Console.WriteLine(this.GetType().Name
                     + (complete ? " Complete: " : " Progress: ")
                     + successCount + " (succeeded) / " + failureCount
                     + " (failed)");
             this.progressLogTimestamp = now;
         }
-        if (complete) {
+        if (complete)
+        {
             Console.WriteLine();
         }
-        if (this.progressLogTimestamp < 0L) {
+        if (this.progressLogTimestamp < 0L)
+        {
             this.progressLogTimestamp = now;
         }
     }
@@ -754,7 +819,8 @@ internal abstract class AbstractTest {
     /// </remarks>
     ///
     /// <returns>The current failure count.</returns>
-    protected int GetFailureCount() {
+    protected int GetFailureCount()
+    {
         return this.failureCount;
     }
 
@@ -767,7 +833,8 @@ internal abstract class AbstractTest {
     /// </remarks>
     ///
     /// <returns>The current success count.</returns>
-    protected int GetSuccessCount() {
+    protected int GetSuccessCount()
+    {
         return this.successCount;
     }
 
@@ -778,26 +845,36 @@ internal abstract class AbstractTest {
     /// </summary>
     ///
     /// <param name="testFunction">The function to execute.</param>
-    protected void PerformTest(Action testFunction) {
+    protected void PerformTest(Action testFunction)
+    {
         bool success = false;
-        try {
+        try
+        {
             testFunction();
             success = true;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.Error.WriteLine(e);
             Console.Error.WriteLine(e.StackTrace);
             string? fastFail = Environment.GetEnvironmentVariable("SENZING_TEST_FAST_FAIL");
-            if ("true".Equals(fastFail)) {
+            if ("true".Equals(fastFail, OrdinalIgnoreCase))
+            {
                 Thread.Sleep(5000);
                 Environment.Exit(1);
             }
             throw;
 
-        } finally {
-            if (!success) {
+        }
+        finally
+        {
+            if (!success)
+            {
                 this.IncrementFailureCount();
-            } else {
+            }
+            else
+            {
                 this.IncrementSuccessCount();
             }
         }
@@ -812,8 +889,8 @@ internal abstract class AbstractTest {
     /// <param name="expectedKeys">
     /// The zero or more expected property keys.
     /// </param>
-    public static void ValidateJsonDataMap(JsonObject?      jsonData, 
-                                           params string[]  expectedKeys) 
+    public static void ValidateJsonDataMap(JsonObject? jsonData,
+                                           params string[] expectedKeys)
     {
         ValidateJsonDataMap(null,
                             jsonData,
@@ -833,9 +910,9 @@ internal abstract class AbstractTest {
     /// <param name="expectedKeys">
     /// The zero or more expected property keys.
     /// </param>
-    public static void ValidateJsonDataMap(string?          testInfo,
-                                           JsonObject?      jsonData,
-                                           params string[]  expectedKeys)
+    public static void ValidateJsonDataMap(string? testInfo,
+                                           JsonObject? jsonData,
+                                           params string[] expectedKeys)
     {
         ValidateJsonDataMap(testInfo, jsonData, true, expectedKeys);
     }
@@ -854,9 +931,10 @@ internal abstract class AbstractTest {
     /// The zero or more expected property keys -- these are either a minimum 
     /// or exact set depending on the <c>strict</c> parameter.
     /// </param>
-    public static void ValidateJsonDataMap(JsonObject?      jsonData,
-                                           bool             strict,
-                                           params string[]  expectedKeys) {
+    public static void ValidateJsonDataMap(JsonObject? jsonData,
+                                           bool strict,
+                                           params string[] expectedKeys)
+    {
         ValidateJsonDataMap(null, jsonData, strict, expectedKeys);
     }
 
@@ -877,36 +955,44 @@ internal abstract class AbstractTest {
     /// The zero or more expected property keys -- these are either a minimum 
     /// or exact set depending on the <c>strict</c> parameter.
     /// </param>
-    public static void ValidateJsonDataMap(string?          testInfo,
-                                           JsonObject?      jsonData,
-                                           bool             strict,
-                                           params string[]  expectedKeys) 
+    public static void ValidateJsonDataMap(string? testInfo,
+                                           JsonObject? jsonData,
+                                           bool strict,
+                                           params string[] expectedKeys)
     {
         String suffix = (testInfo != null && testInfo.Trim().Length > 0)
                 ? " ( " + testInfo + " )"
                 : "";
 
-        if (jsonData == null) {
+        if (jsonData == null)
+        {
             Assert.Fail("Expected json data but got null value" + suffix);
-            throw new Exception("Expected json data but got null value" + suffix);
-        } else {
+            throw new TestException("Expected json data but got null value" + suffix);
+        }
+        else
+        {
             ISet<string> actualKeySet = new HashSet<string>();
             ISet<string> expectedKeySet = new HashSet<string>();
-            IEnumerator<KeyValuePair<string,JsonNode?>> enumerator
+            IEnumerator<KeyValuePair<string, JsonNode?>> enumerator
                 = jsonData.GetEnumerator();
-            while (enumerator.MoveNext()) {
+            while (enumerator.MoveNext())
+            {
                 actualKeySet.Add(enumerator.Current.Key);
             }
-            foreach (string key in expectedKeys) {
+            foreach (string key in expectedKeys)
+            {
                 expectedKeySet.Add(key);
-                if (!actualKeySet.Contains(key)) {
+                if (!actualKeySet.Contains(key))
+                {
                     Assert.Fail("JSON property missing from json data: "
                                 + key + " / " + jsonData + suffix);
                 }
             }
-            if (strict && expectedKeySet.Count != actualKeySet.Count) {
+            if (strict && expectedKeySet.Count != actualKeySet.Count)
+            {
                 ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
-                foreach (string key in expectedKeySet) {
+                foreach (string key in expectedKeySet)
+                {
                     extraKeySet.Remove(key);
                 }
                 Assert.Fail("Unexpected JSON properties in json data: "
@@ -923,7 +1009,7 @@ internal abstract class AbstractTest {
     ///
     /// <param name="jsonData">The json data to validate.</param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
-    public static void ValidateJsonDataMapArray(JsonArray?      jsonData,
+    public static void ValidateJsonDataMapArray(JsonArray? jsonData,
                                                 params string[] expectedKeys)
     {
         ValidateJsonDataMapArray(null, jsonData, true, expectedKeys);
@@ -940,9 +1026,10 @@ internal abstract class AbstractTest {
     /// </param>
     /// <param name="jsonData">The json data to validate.</param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
-    public static void ValidateJsonDataMapArray(string?         testInfo,
-                                                JsonArray?      jsonData,
-                                                params string[] expectedKeys) {
+    public static void ValidateJsonDataMapArray(string? testInfo,
+                                                JsonArray? jsonData,
+                                                params string[] expectedKeys)
+    {
         ValidateJsonDataMapArray(testInfo, jsonData, true, expectedKeys);
     }
 
@@ -958,9 +1045,10 @@ internal abstract class AbstractTest {
     /// allowed to be present.
     /// </param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
-    public static void ValidateJsonDataMapArray(JsonArray?      jsonData,
-                                                bool            strict,
-                                                params string[] expectedKeys) {
+    public static void ValidateJsonDataMapArray(JsonArray? jsonData,
+                                                bool strict,
+                                                params string[] expectedKeys)
+    {
         ValidateJsonDataMapArray(null, jsonData, strict, expectedKeys);
     }
 
@@ -980,49 +1068,60 @@ internal abstract class AbstractTest {
     /// </param>
     /// <param name="expectedKeys">The zero or more expected property keys.</param>
     /// </summary>
-    public static void ValidateJsonDataMapArray(string?         testInfo,
-                                                JsonArray?      jsonData,
-                                                bool            strict,
+    public static void ValidateJsonDataMapArray(string? testInfo,
+                                                JsonArray? jsonData,
+                                                bool strict,
                                                 params string[] expectedKeys)
     {
         string suffix = (testInfo != null && testInfo.Trim().Length > 0)
                 ? " ( " + testInfo + " )"
                 : "";
 
-        if (jsonData == null) {
+        if (jsonData == null)
+        {
             Assert.Fail("Expected json data but got null value" + suffix);
-            throw new Exception("Expected json data but got null value" + suffix);
-        } else {
+            throw new TestException("Expected json data but got null value" + suffix);
+        }
+        else
+        {
             ISet<string> expectedKeySet = new HashSet<string>();
-            foreach (string key in expectedKeys) {
+            foreach (string key in expectedKeys)
+            {
                 expectedKeySet.Add(key);
             }
 
-            for (int index = 0; index < jsonData.Count; index++) {
+            for (int index = 0; index < jsonData.Count; index++)
+            {
                 JsonNode? node = jsonData[index];
-                if (node == null) {
-                    throw new Exception("Null object in an array with valid index");
+                if (node == null)
+                {
+                    throw new TestException("Null object in an array with valid index");
                 }
-                JsonObject obj = ((JsonNode) node).AsObject();
-                
+                JsonObject obj = ((JsonNode)node).AsObject();
+
                 ISet<string> actualKeySet = new HashSet<string>();
-                IEnumerator<KeyValuePair<string,JsonNode?>> enumerator
+                IEnumerator<KeyValuePair<string, JsonNode?>> enumerator
                     = obj.GetEnumerator();
-                while (enumerator.MoveNext()) {
+                while (enumerator.MoveNext())
+                {
                     actualKeySet.Add(enumerator.Current.Key);
                 }
-                foreach (string key in expectedKeySet) {
-                    if (!actualKeySet.Contains(key)) {
+                foreach (string key in expectedKeySet)
+                {
+                    if (!actualKeySet.Contains(key))
+                    {
                         Assert.Fail(
                             "JSON property missing from json data array element: "
                              + key + " / " + actualKeySet + suffix);
                     }
                 }
-                if (strict && expectedKeySet.Count != actualKeySet.Count) {
+                if (strict && expectedKeySet.Count != actualKeySet.Count)
+                {
                     ISet<string> extraKeySet = new HashSet<string>(actualKeySet);
-                    foreach (string key in expectedKeySet) {
+                    foreach (string key in expectedKeySet)
+                    {
                         extraKeySet.Remove(key);
-                    } 
+                    }
                     Assert.Fail("Unexpected JSON properties in json data: "
                                 + extraKeySet + suffix);
                 }
@@ -1031,46 +1130,54 @@ internal abstract class AbstractTest {
         }
     }
 
-    internal static List<T> ListOf<T>(params T[] elems) {
+    internal static List<T> ListOf<T>(params T[] elems)
+    {
         List<T> result = new List<T>(elems.Length);
-        foreach (T elem in elems) {
+        foreach (T elem in elems)
+        {
             result.Add(elem);
         }
         return result;
     }
 
 
-    internal static SortedSet<T> SortedSetOf<T>(params T[] elems) {
+    internal static SortedSet<T> SortedSetOf<T>(params T[] elems)
+    {
         SortedSet<T> result = new SortedSet<T>();
-        foreach (T elem in elems) {
+        foreach (T elem in elems)
+        {
             result.Add(elem);
         }
         return result;
     }
 
-    internal static SortedDictionary<K,V> SortedMapOf<K,V>(params (K,V)[] tuples) 
+    internal static SortedDictionary<K, V> SortedMapOf<K, V>(params (K, V)[] tuples)
         where K : notnull
     {
-        SortedDictionary<K,V> result = new SortedDictionary<K, V>();
-        foreach ((K,V) tuple in tuples) {
+        SortedDictionary<K, V> result = new SortedDictionary<K, V>();
+        foreach ((K, V) tuple in tuples)
+        {
             result.Add(tuple.Item1, tuple.Item2);
         }
         return result;
     }
 
-    internal static Dictionary<K,V> MapOf<K,V>(params (K,V)[] tuples) 
+    internal static Dictionary<K, V> MapOf<K, V>(params (K, V)[] tuples)
         where K : notnull
     {
-        Dictionary<K,V> result = new Dictionary<K, V>();
-        foreach ((K,V) tuple in tuples) {
+        Dictionary<K, V> result = new Dictionary<K, V>();
+        foreach ((K, V) tuple in tuples)
+        {
             result.Add(tuple.Item1, tuple.Item2);
         }
         return result;
     }
 
-    internal static ISet<T> SetOf<T>(params T[] elems) {
+    internal static ISet<T> SetOf<T>(params T[] elems)
+    {
         ISet<T> result = new HashSet<T>();
-        foreach (T elem in elems) {
+        foreach (T elem in elems)
+        {
             result.Add(elem);
         }
         return result;
@@ -1082,23 +1189,26 @@ internal abstract class AbstractTest {
     /// </summary>
     /// <param name="variants">The one or more lists of variants</param>
     protected static IList<System.Collections.IList> GenerateCombinations(
-        params System.Collections.IList[] variants) 
+        params System.Collections.IList[] variants)
     {
         // determine the total number of combinations
         int comboCount = 1;
-        foreach (System.Collections.IList v in variants) {
+        foreach (System.Collections.IList v in variants)
+        {
             comboCount *= v.Count;
         }
 
         // determine the intervals for each variant
         IList<int> intervals = new List<int>(variants.Length);
         // iterate over the variants
-        for (int index = 0; index < variants.Length; index++) {
+        for (int index = 0; index < variants.Length; index++)
+        {
             // default the interval count to one (1)
             int intervalCount = 1;
 
             // loop over the remaining variants after the current
-            for (int index2 = index + 1; index2 < variants.Length; index2++) {
+            for (int index2 = index + 1; index2 < variants.Length; index2++)
+            {
                 // multiply the interval count by the remaining variant sizes
                 intervalCount *= variants[index2].Count;
             }
@@ -1109,11 +1219,13 @@ internal abstract class AbstractTest {
 
         List<System.Collections.IList> optionCombos
             = new List<System.Collections.IList>(comboCount);
-        for (int comboIndex = 0; comboIndex < comboCount; comboIndex++) {
+        for (int comboIndex = 0; comboIndex < comboCount; comboIndex++)
+        {
             System.Collections.IList optionCombo
                 = new ArrayList(variants.Length);
 
-            for (int index = 0; index < variants.Length; index++) {
+            for (int index = 0; index < variants.Length; index++)
+            {
                 int interval = intervals[index];
                 int valueIndex = (comboIndex / interval) % variants[index].Count;
                 optionCombo.Add(variants[index][valueIndex]);
@@ -1134,26 +1246,28 @@ internal abstract class AbstractTest {
     /// <param name="includeNull">Whether or not to include null values.</param>
     ///
     /// <returns>The list of parameter value lists.</returns>
-    protected static IList<IList<Boolean?>> GetBooleanVariants(int   paramCount, 
-                                                               bool  includeNull) 
+    protected static IList<IList<Boolean?>> GetBooleanVariants(int paramCount,
+                                                               bool includeNull)
     {
-        Boolean?[] boolsSansNull = [ true, false ];
-        Boolean?[] boolsWithNull = [ null, true, false ];
+        Boolean?[] boolsSansNull = [true, false];
+        Boolean?[] boolsWithNull = [null, true, false];
 
         Boolean?[] booleanValues = (includeNull) ? boolsWithNull : boolsSansNull;
-        
-    
-        int variantCount = (int) Math.Ceiling(Math.Pow(booleanValues.Length, paramCount));
+
+
+        int variantCount = (int)Math.Ceiling(Math.Pow(booleanValues.Length, paramCount));
         IList<IList<Boolean?>> variants = new List<IList<Boolean?>>(variantCount);
 
         // iterate over the variants
-        for (int index1 = 0; index1 < variantCount; index1++) {
+        for (int index1 = 0; index1 < variantCount; index1++)
+        {
             // create the parameter list
             IList<Boolean?> parms = new List<Boolean?>(paramCount);
 
             // iterate over the parameter slots
-            for (int index2 = 0; index2 < paramCount; index2++) {
-                int repeat = (int) Math.Ceiling(Math.Pow(booleanValues.Length, index2));
+            for (int index2 = 0; index2 < paramCount; index2++)
+            {
+                int repeat = (int)Math.Ceiling(Math.Pow(booleanValues.Length, index2));
                 int valueIndex = (index1 / repeat) % booleanValues.Length;
                 parms.Add(booleanValues[valueIndex]);
             }
@@ -1167,7 +1281,8 @@ internal abstract class AbstractTest {
     /// <summary>
     /// Interface to mirror Java iterators
     /// </summary>
-    public interface Iterator<T> {
+    public interface Iterator<T>
+    {
         /// <summary>
         /// Checks if there is another element in the iteration.
         /// </summary>
@@ -1190,25 +1305,31 @@ internal abstract class AbstractTest {
     /// <summary>
     /// Utility class for circular iteration.
     /// </summary>
-    internal class CircularIterator<T> : Iterator<T> {
-        private ICollection<T> collection;
-        private IEnumerator<T> enumerator;
+    internal class CircularIterator<T> : Iterator<T>
+    {
+        private readonly ICollection<T> collection;
+        private readonly IEnumerator<T> enumerator;
 
-        internal CircularIterator(ICollection<T> collection) {
+        internal CircularIterator(ICollection<T> collection)
+        {
             this.collection = collection;
             this.enumerator = this.collection.GetEnumerator();
         }
 
-        public bool HasNext() {
+        public bool HasNext()
+        {
             return (this.collection.Count > 0);
         }
 
-        public T Next() {
-            if (!this.HasNext()) {
+        public T Next()
+        {
+            if (!this.HasNext())
+            {
                 throw new InvalidOperationException("No such element");
             }
             bool found = this.enumerator.MoveNext();
-            if (!found) {
+            if (!found)
+            {
                 this.enumerator.Reset();
                 this.enumerator.MoveNext();
             }
@@ -1241,15 +1362,17 @@ internal abstract class AbstractTest {
     /// <param name="records">The one or more records.</param>
     ///
     /// <returns>The <see cref="System.IO.FileInfo"/> that was created.</returns>
-    protected FileInfo PrepareCSVFile(string            filePrefix,
-                                      string[]          headers,
+    protected FileInfo PrepareCSVFile(string filePrefix,
+                                      string[] headers,
                                       params string[][] records)
     {
         // check the arguments
         int count = headers.Length;
-        for (int index = 0; index < records.Length; index++) {
+        for (int index = 0; index < records.Length; index++)
+        {
             string[] record = records[index];
-            if (record.Length != count) {
+            if (record.Length != count)
+            {
                 throw new ArgumentException(
                     "The header and records do not all have the same number of "
                         + "elements.  expected=[ " + count + " ], received=[ "
@@ -1261,37 +1384,46 @@ internal abstract class AbstractTest {
         string filePath = Path.Combine(Path.GetTempPath(), fileName);
 
         FileStream? fs = null;
-        
+
         // populate the file as a CSV
-        try {
+        try
+        {
             fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
 
-            StreamWriter sw = new StreamWriter(fs, UTF8);
-
-            string prefix = "";
-            foreach (string header in headers) {
-                sw.Write(prefix);
-                sw.Write(CSVQuote(header));
-                prefix = ",";
-            }
-            sw.WriteLine();
-            sw.Flush();
-
-            foreach (String[] record in records) {
-                prefix = "";
-                foreach (string value in record) {
+            using (StreamWriter sw = new StreamWriter(fs, UTF8))
+            {
+                string prefix = "";
+                foreach (string header in headers)
+                {
                     sw.Write(prefix);
-                    sw.Write(CSVQuote(value));
+                    sw.Write(CSVQuote(header));
                     prefix = ",";
                 }
                 sw.WriteLine();
                 sw.Flush();
-            }
-            sw.Flush();
 
-        } finally {
-            if (fs != null) {
+                foreach (String[] record in records)
+                {
+                    prefix = "";
+                    foreach (string value in record)
+                    {
+                        sw.Write(prefix);
+                        sw.Write(CSVQuote(value));
+                        prefix = ",";
+                    }
+                    sw.WriteLine();
+                    sw.Flush();
+                }
+                sw.Flush();
+            }
+
+        }
+        finally
+        {
+            if (fs != null)
+            {
                 fs.Close();
+                fs.Dispose();
             }
         }
 
@@ -1308,15 +1440,17 @@ internal abstract class AbstractTest {
     /// <param name="records">The one or more records.</param>
     ///
     /// <returns>The <see cref="System.IO.FileInfo"/> that was created.</returns>
-    protected FileInfo PrepareJsonArrayFile(string              filePrefix,
-                                            string[]            headers,
-                                            params string[][]   records) 
+    protected virtual FileInfo PrepareJsonArrayFile(string filePrefix,
+                                                    string[] headers,
+                                                    params string[][] records)
     {
         // check the arguments
         int count = headers.Length;
-        for (int index = 0; index < records.Length; index++) {
+        for (int index = 0; index < records.Length; index++)
+        {
             string[] record = records[index];
-            if (record.Length != count) {
+            if (record.Length != count)
+            {
                 throw new ArgumentException(
                     "The header and records do not all have the same number of "
                         + "elements.  expected=[ " + count + " ], received=[ "
@@ -1327,30 +1461,38 @@ internal abstract class AbstractTest {
         string fileName = filePrefix + Path.GetRandomFileName() + ".json";
         string filePath = Path.Combine(Path.GetTempPath(), fileName);
         FileStream? fs = null;
-        
-        // populate the file as a CSV
-        try {
-            fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, UTF8);
 
-            JsonArray jsonArr = new JsonArray();
-            foreach (string[] record in records) {
-                JsonObject jsonObj = new JsonObject();
-                for (int index = 0; index < record.Length; index++) {
-                    string key      = headers[index];
-                    string value    = record[index];
-                    jsonObj.Add(key, JsonValue.Create(value));
+        // populate the file as a CSV
+        try
+        {
+            fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            using (StreamWriter sw = new StreamWriter(fs, UTF8))
+            {
+                JsonArray jsonArr = new JsonArray();
+                foreach (string[] record in records)
+                {
+                    JsonObject jsonObj = new JsonObject();
+                    for (int index = 0; index < record.Length; index++)
+                    {
+                        string key = headers[index];
+                        string value = record[index];
+                        jsonObj.Add(key, JsonValue.Create(value));
+                    }
+                    jsonArr.Add(jsonObj);
                 }
-                jsonArr.Add(jsonObj);
+
+                string jsonText = jsonArr.ToJsonString();
+                sw.Write(jsonText);
+                sw.Flush();
             }
 
-            string jsonText = jsonArr.ToJsonString();
-            sw.Write(jsonText);
-            sw.Flush();
-
-        } finally {
-            if (fs != null) {
+        }
+        finally
+        {
+            if (fs != null)
+            {
                 fs.Close();
+                fs.Dispose();
             }
         }
 
@@ -1368,14 +1510,17 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.FileInfo"/> for the file that was created.
     /// </returns>
-    protected FileInfo PrepareJsonFile(string               filePrefix,
-                                       string[]             headers,
-                                       params string[][]    records) {
+    protected virtual FileInfo PrepareJsonFile(string filePrefix,
+                                               string[] headers,
+                                               params string[][] records)
+    {
         // check the arguments
         int count = headers.Length;
-        for (int index = 0; index < records.Length; index++) {
+        for (int index = 0; index < records.Length; index++)
+        {
             string[] record = records[index];
-            if (record.Length != count) {
+            if (record.Length != count)
+            {
                 throw new ArgumentException(
                     "The header and records do not all have the same number of "
                         + "elements.  expected=[ " + count + " ], received=[ "
@@ -1388,26 +1533,34 @@ internal abstract class AbstractTest {
         FileStream? fs = null;
 
         // populate the file as one JSON record per line
-        try {
+        try
+        {
             fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, UTF8);
-
-            foreach (string[] record in records) {
-                JsonObject jsonObj = new JsonObject();
-                for (int index = 0; index < record.Length; index++) {
-                    string key      = headers[index];
-                    string value    = record[index];
-                    jsonObj.Add(key, JsonValue.Create(value));
+            using (StreamWriter sw = new StreamWriter(fs, UTF8))
+            {
+                foreach (string[] record in records)
+                {
+                    JsonObject jsonObj = new JsonObject();
+                    for (int index = 0; index < record.Length; index++)
+                    {
+                        string key = headers[index];
+                        string value = record[index];
+                        jsonObj.Add(key, JsonValue.Create(value));
+                    }
+                    string jsonText = jsonObj.ToJsonString();
+                    sw.WriteLine(jsonText);
+                    sw.Flush();
                 }
-                string jsonText = jsonObj.ToJsonString();
-                sw.WriteLine(jsonText);
                 sw.Flush();
             }
-            sw.Flush();
 
-        } finally {
-            if (fs != null) {
+        }
+        finally
+        {
+            if (fs != null)
+            {
                 fs.Close();
+                fs.Dispose();
             }
         }
 
@@ -1426,25 +1579,30 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.FileInfo"/> for the file that was created.
     /// </returns>
-    protected FileInfo PrepareJsonArrayFile(string      filePrefix,
-                                            JsonArray   jsonArray) 
+    protected virtual FileInfo PrepareJsonArrayFile(string filePrefix,
+                                                    JsonArray jsonArray)
     {
         string fileName = filePrefix + Path.GetRandomFileName() + ".json";
         string filePath = Path.Combine(Path.GetTempPath(), fileName);
         FileStream? fs = null;
 
         // populate the file as one JSON record per line
-        try {
+        try
+        {
             fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, UTF8);
-
-            String jsonText = jsonArray.ToJsonString();
-            sw.WriteLine(jsonText);
-            sw.Flush();
-
-        } finally {
-            if (fs != null) {
+            using (StreamWriter sw = new StreamWriter(fs, UTF8))
+            {
+                String jsonText = jsonArray.ToJsonString();
+                sw.WriteLine(jsonText);
+                sw.Flush();
+            }
+        }
+        finally
+        {
+            if (fs != null)
+            {
                 fs.Close();
+                fs.Dispose();
             }
         }
 
@@ -1463,33 +1621,42 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.IO.FileInfo"/> for the file that was created.
     /// </returns>
-    protected FileInfo PrepareJsonFile(string       filePrefix,
-                                       JsonArray    jsonArray) 
+    protected virtual FileInfo PrepareJsonFile(string filePrefix,
+                                               JsonArray jsonArray)
     {
         string fileName = filePrefix + Path.GetRandomFileName() + ".json";
         string filePath = Path.Combine(Path.GetTempPath(), fileName);
         FileStream? fs = null;
 
         // populate the file as one JSON record per line
-        try {
+        try
+        {
             fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, UTF8);
-            
-            for (int index = 0; index < jsonArray.Count; index++) {
-                JsonNode? node = jsonArray[index];
-                if (node == null) {
-                    throw new Exception("Null object in an array with valid index");
-                }
-                JsonObject record = ((JsonNode) node).AsObject();
 
-                string jsonText = record.ToJsonString();
-                sw.WriteLine(jsonText);
+            using (StreamWriter sw = new StreamWriter(fs, UTF8))
+            {
+                for (int index = 0; index < jsonArray.Count; index++)
+                {
+                    JsonNode? node = jsonArray[index];
+                    if (node == null)
+                    {
+                        throw new ArgumentException("Null object in an array with valid index");
+                    }
+                    JsonObject record = ((JsonNode)node).AsObject();
+
+                    string jsonText = record.ToJsonString();
+                    sw.WriteLine(jsonText);
+                    sw.Flush();
+                }
                 sw.Flush();
             }
-            sw.Flush();
-        } finally {
-            if (fs != null) {
+        }
+        finally
+        {
+            if (fs != null)
+            {
                 fs.Close();
+                fs.Dispose();
             }
         }
 
@@ -1503,14 +1670,18 @@ internal abstract class AbstractTest {
     /// <param name="text">The text to be quoted.</param>
     ///
     /// <returns>The quoted text</returns>
-    protected string CSVQuote(string text) {
-        if (text.IndexOf("\"") < 0 && text.IndexOf("\\") < 0) {
+    protected virtual string CSVQuote(string text)
+    {
+        if (text.IndexOf('"', Ordinal) < 0 && text.IndexOf('\\', Ordinal) < 0)
+        {
             return "\"" + text + "\"";
         }
         char[] textChars = text.ToCharArray();
         StringBuilder sb = new StringBuilder(text.Length * 2);
-        foreach (char c in textChars) {
-            if (c == '"' || c == '\\') {
+        foreach (char c in textChars)
+        {
+            if (c == '"' || c == '\\')
+            {
                 sb.Append('\\');
             }
             sb.Append(c);
@@ -1527,16 +1698,27 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.Text.Json.Nodes.JsonObject"/> that was parsed.
     /// </returns>
-    protected static JsonObject ParseJsonObject(string text) {
-        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions() {
-            CommentHandling = JsonCommentHandling.Skip
-        });
-        if (node == null) {
-            throw new JsonException(
-                    "Failed to parse text as JSON: " + text);
-        }
+    protected static JsonObject ParseJsonObject(string text)
+    {
+        try
+        {
+            JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
+            {
+                CommentHandling = JsonCommentHandling.Skip
+            });
+            if (node == null)
+            {
+                throw new JsonException(
+                        "Failed to parse text as JSON: " + text);
+            }
+            return ((JsonNode)node).AsObject();
 
-        return ((JsonNode) node).AsObject();
+        }
+        catch (JsonException e)
+        {
+            throw new JsonException(
+                "Failed to parse text as JSON: " + text, e);
+        }
     }
 
     /// <summary>
@@ -1548,30 +1730,38 @@ internal abstract class AbstractTest {
     /// <returns>
     /// The <see cref="System.Text.Json.Nodes.JsonArray"/> that was parsed.
     /// </returns>
-    protected static JsonArray ParseJsonArray(string text) {
-        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions() {
+    protected static JsonArray ParseJsonArray(string text)
+    {
+        JsonNode? node = JsonNode.Parse(text, null, new JsonDocumentOptions()
+        {
             CommentHandling = JsonCommentHandling.Skip
         });
-        if (node == null) {
+        if (node == null)
+        {
             throw new JsonException(
                     "Failed to parse text as JSON: " + text);
         }
 
-        return ((JsonNode) node).AsArray();
+        return ((JsonNode)node).AsArray();
     }
 
     /// <summary>
     /// Triggers the failure of a test with an optional message and optional
     /// exception
     /// </summary>
-    protected static void Fail(string? message, Exception? e = null) {
-        if (message == null && e == null) {
+    protected static void Fail(string? message, Exception? e = null)
+    {
+        if (message == null && e == null)
+        {
             Assert.Fail();
-        } else if (e != null) {
-            Assert.Fail(LoggingUtilities.FormatException(message,e));
-        } else {
+        }
+        else if (e != null)
+        {
+            Assert.Fail(LoggingUtilities.FormatException(message, e));
+        }
+        else
+        {
             Assert.Fail(message);
         }
     }
-}
 }
