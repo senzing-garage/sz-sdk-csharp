@@ -1,0 +1,71 @@
+name: dotnet windows
+
+defaults:
+  run:
+    shell: pwsh
+
+on:
+  pull_request:
+    # branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - dotnet-version: "8"
+            senzingsdk-version: "staging-v4"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Install Senzing SDK
+        uses: senzing-factory/github-action-install-senzing-sdk@v1
+        with:
+          senzingsdk-version: ${{ matrix.senzingsdk-version }}
+
+      - name: Build with DotNet
+        run: |
+          dotnet build Senzing.Sdk
+
+      - name: Validate tests compile
+        run: |
+          dotnet build Senzing.Sdk.Tests
+
+      - name: Add to "Path" environment variable
+        run: |
+          Add-Content $env:GITHUB_PATH "C:\Program Files\Senzing\er\lib"
+
+      - name: Run DotNet tests
+        env:
+          SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
+        run: |
+          dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
+
+      - name: Store coverage file
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage.cobertura.xml
+          path: ${{ github.workspace }}/coverage.cobertura.xml
+
+  coverage:
+    name: Coverage
+    needs: dotnet-windows
+    permissions:
+      pull-requests: write
+    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
+    with:
+      thresholds: "49 90"
