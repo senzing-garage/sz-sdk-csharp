@@ -949,7 +949,6 @@ internal class SzCoreEngineReadTest : AbstractTest
         });
     }
 
-
     [Test, TestCaseSource(nameof(GetGetEntityParameters))]
     public void TestGetEntityByRecordID(
         string testDescription,
@@ -1168,6 +1167,233 @@ internal class SzCoreEngineReadTest : AbstractTest
                 Assert.That(defaultResult, Is.EqualTo(nativeResult),
                     "Explicitly setting default flags yields a different result "
                     + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting entity by record", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestFindInterestingEntitiesByRecordIDDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                string dataSourceCode = recordKey.dataSourceCode;
+                string recordID = recordKey.recordID;
+
+                string defaultResult = engine.FindInterestingEntities(
+                    dataSourceCode, recordID);
+
+                string explicitResult = engine.FindInterestingEntities(
+                    dataSourceCode, recordID, SzNoFlags);
+
+                string nullResult = engine.FindInterestingEntities(
+                    dataSourceCode, recordID, null);
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nullResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than setting the flags parameter to null for the SDK function.");
+
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed getting interesting entities by record", e);
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetGetEntityParameters))]
+    public void TestFindInterestingEntitiesByRecordID(
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineReadTest, long> entityIDFunc,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType)
+    {
+        long entityID = entityIDFunc(this);
+
+        string testData = "description=[ " + testDescription
+            + " ], recordKey=[ " + recordKey + " ], entityID=[ "
+            + entityID + " ], flags=[ " + SzEntityFlags.FlagsToString(flags)
+            + " ], expectedExceptionType=[ " + recordExceptionType + " ]";
+
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzEngine engine = this.Env.GetEngine();
+
+                string result = engine.FindInterestingEntities(
+                    recordKey.dataSourceCode, recordKey.recordID, flags);
+
+                if (recordExceptionType != null)
+                {
+                    Fail("Unexpectedly succeeded in getting an entity: " + testData);
+                }
+
+                // parse the result
+                JsonObject? jsonObject = null;
+                try
+                {
+                    jsonObject = JsonNode.Parse(result)?.AsObject();
+
+                    if (jsonObject == null)
+                    {
+                        throw new JsonException("Failed to parse as JsonObject");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse entity result JSON: " + testData
+                         + ", result=[ " + result + " ]", e);
+                }
+
+            }
+            catch (Exception e)
+            {
+                string description = "";
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
+                    description = "errorCode=[ " + sze.ErrorCode
+                        + " ], exception=[ " + e.ToString() + " ]";
+                }
+                else
+                {
+                    description = "exception=[ " + e.ToString() + " ]";
+                }
+
+                if (recordExceptionType == null)
+                {
+                    Fail("Unexpectedly failed getting interesting entities "
+                         + "by record: " + description, e);
+
+                }
+                else
+                {
+                    Assert.IsInstanceOf(
+                        recordExceptionType, e,
+                        "find-interesting-entities-by-record failed with an "
+                        + "unexpected exception type: " + description);
+                }
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetGetEntityParameters))]
+    public void TestFindInterestingEntitiesByEntityID(
+        string testDescription,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineReadTest, long> entityIDFunc,
+        SzFlag? flags,
+        Type? recordExceptionType,
+        Type? entityExceptionType)
+    {
+        long entityID = entityIDFunc(this);
+
+        string testData = "description=[ " + testDescription
+            + " ], recordKey=[ " + recordKey + " ], entityID=[ "
+            + entityID + " ], flags=[ " + SzEntityFlags.FlagsToString(flags)
+            + " ], expectedExceptionType=[ " + entityExceptionType + " ]";
+
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzEngine engine = this.Env.GetEngine();
+
+                string result = engine.FindInterestingEntities(entityID, flags);
+
+                if (entityExceptionType != null)
+                {
+                    Fail("Unexpectedly succeeded in getting an entity: " + testData);
+                }
+
+                // parse the result
+                JsonObject? jsonObject = null;
+                try
+                {
+                    jsonObject = JsonNode.Parse(result)?.AsObject();
+
+                }
+                catch (Exception e)
+                {
+                    Fail("Failed to parse entity result JSON: " + testData
+                         + ", result=[ " + result + " ]", e);
+                }
+
+            }
+            catch (Exception e)
+            {
+                string description = "";
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
+                    description = "errorCode=[ " + sze.ErrorCode
+                        + " ], exception=[ " + e.ToString() + " ]";
+                }
+                else
+                {
+                    description = "exception=[ " + e.ToString() + " ]";
+                }
+
+                if (entityExceptionType == null)
+                {
+                    Fail("Unexpectedly failed getting interesting entities by ID: "
+                         + description, e);
+
+                }
+                else
+                {
+                    Assert.IsInstanceOf(
+                        entityExceptionType, e,
+                        "find-interesting-entities-by-id failed with an unexpected "
+                        + "exception type: " + description);
+                }
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(RecordKeys))]
+    public void TestFindInterestingEntitiesByEntityIDDefaults(
+        (string dataSourceCode, string recordID) recordKey)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                long entityID = GetEntityID(recordKey);
+
+                string defaultResult = engine.FindInterestingEntities(entityID);
+
+                string explicitResult = engine.FindInterestingEntities(
+                    entityID, SzNoFlags);
+
+                string nullResult = engine.FindInterestingEntities(
+                    entityID, null);
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nullResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than setting the flags parameter to null for the SDK function.");
+
             }
             catch (Exception e)
             {

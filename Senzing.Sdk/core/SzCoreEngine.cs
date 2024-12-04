@@ -826,6 +826,62 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
+        /// Implemented to call the external native helper function
+        /// <see cref="Sz_findInterestingEntitiesByEntityID_helper"/>.
+        /// </summary>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        public string FindInterestingEntities(long entityId,
+                                              SzFlag? flags = SzNoFlags)
+        {
+            return this.env.Execute(() =>
+            {
+                // clear out the SDK-specific flags
+                long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
+
+                // check if we have flags to pass downstream
+                long returnCode = this.nativeApi.FindInterestingEntitiesByEntityID(
+                    entityId, downstreamFlags, out string result);
+
+                // check the return code
+                this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+                // return the result
+                return result;
+            });
+        }
+
+        /// <summary>
+        /// Implemented to call the external native helper function 
+        /// <see cref="Sz_findInterestingEntitiesByRecordID_helper"/>. 
+        /// </summary>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        public string FindInterestingEntities(string dataSourceCode,
+                                              string recordID,
+                                              SzFlag? flags = SzEntityDefaultFlags)
+        {
+            return this.env.Execute(() =>
+            {
+                // clear out the SDK-specific flags
+                long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
+
+                // check if we have flags to pass downstream
+                long returnCode = this.nativeApi.FindInterestingEntitiesByRecordID(
+                    dataSourceCode,
+                    recordID,
+                    downstreamFlags,
+                    out string result);
+
+                // check the return code
+                this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+                // return the result
+                return result;
+            });
+        }
+
+        /// <summary>
         /// Implemented to call the external native helper function 
         /// <see cref="Sz_getRecord_V2_helper"/>. 
         /// </summary>
