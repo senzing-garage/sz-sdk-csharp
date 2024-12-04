@@ -607,11 +607,13 @@ internal class SzCoreEngineReadTest : AbstractTest
                     // try closing the handle twice (should succeed)
                     engine.CloseExport(invalidHandle);
 
+                    // should not be able to close an invalid handle
+                    Fail("Unexpectedly succeeded in closing an invalid export handle.");
+
                 }
                 catch (Exception)
                 {
-                    // TODO(bcaceres): This should have succeeded but currently fails
-                    // Fail("Failed to close an export handle more than once.", e);
+                    // expected
                 }
 
                 string fullExport = sb.ToString();
