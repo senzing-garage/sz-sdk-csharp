@@ -2,7 +2,7 @@ namespace Senzing.Sdk
 {
 
     /// <summary>
-    /// Defines the Java interface to the Senzing product functions.
+    /// Defines the C# interface to the Senzing product functions.
     /// </summary>
     /// 
     /// <remarks>
