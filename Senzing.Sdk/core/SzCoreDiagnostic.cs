@@ -3,7 +3,11 @@ using Senzing.Sdk;
 
 namespace Senzing.Sdk.Core
 {
-    public class SzCoreDiagnostic : SzDiagnostic
+    /// <summary>
+    /// Provides the internal core implementation of <see cref="SzDiagnostic"/>
+    /// that works with the <see cref="SzCoreEnvironment"/> class. 
+    /// </summary>
+    internal class SzCoreDiagnostic : SzDiagnostic
     {
 
         /// <summary>
@@ -117,7 +121,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_getDatastoreInfo_helper"/>. 
+        /// <c>SzDiagnostic_getDatastoreInfo_helper"</c> via
+        /// <see cref="NativeDiagnosticExtern.GetDatastoreInfo(out string)"/>. 
         /// </summary>
         public string GetDatastoreInfo()
         {
@@ -136,7 +141,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+        /// <c>SzDiagnostic_checkDatastorePerformance_helper"</c> via
+        /// <see cref="NativeDiagnosticExtern.CheckDatastorePerformance(int, out string)"/>.
         /// </summary>
         public string CheckDatastorePerformance(int secondsToRun)
         {
@@ -156,7 +162,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+        /// <c>SzDiagnostic_checkDatastorePerformance_helper"</c> via
+        /// <see cref="NativeDiagnosticExtern.GetFeature(long, out string)"/>.
         /// </summary>
         public string GetFeature(long featureID)
         {
@@ -176,7 +183,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_purgeRepository"/>. 
+        /// <c>SzDiagnostic_purgeRepository"</c> via
+        /// <see cref="NativeDiagnosticExtern.PurgeRepository"/>.
         /// </summary>
         public void PurgeRepository()
         {

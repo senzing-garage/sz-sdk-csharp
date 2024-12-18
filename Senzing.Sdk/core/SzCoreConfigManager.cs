@@ -2,7 +2,11 @@ using Senzing.Sdk;
 
 namespace Senzing.Sdk.Core
 {
-    public class SzCoreConfigManager : SzConfigManager
+    /// <summary>
+    /// Provides the internal core implementation of <see cref="SzConfigManager"/>
+    /// that works with the <see cref="SzCoreEnvironment"/> class. 
+    /// </summary>
+    internal class SzCoreConfigManager : SzConfigManager
     {
 
         /// <summary>
@@ -97,7 +101,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_addConfig_helper"/>. 
+        /// <c>SzConfigMgr_addConfig_helper"</c> via
+        /// <see cref="NativeConfigManagerExtern.AddConfig(string, string, out long)"/>. 
         /// </summary>
         public long AddConfig(string configDefinition, string configComment)
         {
@@ -117,7 +122,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_getConfig_helper"/>. 
+        /// <c>SzConfigMgr_getConfig_helper"</c> via
+        /// <see cref="NativeConfigManagerExtern.GetConfig(long, out string)"/>. 
         /// </summary>
         public string GetConfig(long configID)
         {
@@ -137,7 +143,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_getConfigList_helper"/>. 
+        /// <c>SzConfigMgr_getConfigList_helper"</c> via
+        /// <see cref="NativeConfigManager.GetConfigList(out string)"/>. 
         /// </summary>
         public string GetConfigs()
         {
@@ -156,7 +163,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_getDefaultConfigID_helper"/>. 
+        /// <c>SzConfigMgr_getDefaultConfigID_helper"</c> via
+        /// <see cref="NativeConfigManagerExtern.GetDefaultConfigID(out long)"/>. 
         /// </summary>
         public long GetDefaultConfigID()
         {
@@ -175,7 +183,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_replaceDefaultConfigID"/>. 
+        /// <c>SzConfigMgr_replaceDefaultConfigID"</c> via
+        /// <see cref="NativeConfigManagerExtern.ReplaceDefaultConfigID(long, long)"/>. 
         /// </summary>
         public void ReplaceDefaultConfigID(long currentDefaultConfigID,
                                            long newDefaultConfigID)
@@ -196,7 +205,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_setDefaultConfigID_helper"/>. 
+        /// <c>SzConfigMgr_setDefaultConfigID_helper"</c> via
+        /// <see cref="NativeConfigManagerExtern.SetDefaultConfigID(long)"/>. 
         /// </summary>
         public void SetDefaultConfigID(long configID)
         {

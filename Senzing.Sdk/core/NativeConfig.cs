@@ -88,7 +88,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Closes the in-memory configuration associated with the specified config
         /// handle and cleans up system resources.
-        /// <//summary>
+        /// </summary>
         /// 
         /// <remarks>
         /// After calling this method, the configuration handle can no longer be used

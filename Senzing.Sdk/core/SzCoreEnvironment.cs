@@ -42,6 +42,7 @@ namespace Senzing.Sdk.Core
         /// <see cref="SzEngine" />, <see cref="SzConfigManager" /> and
         /// <see cref="SzDiagnostic"/> require database configuration to connect
         /// to the Senzing repository.
+        /// </para>
         /// </remarks>
         /// 
         /// <seealso cref="Builder.Settings" />
@@ -390,6 +391,7 @@ namespace Senzing.Sdk.Core
         /// <remarks>
         /// This will throw any exception produced by the specified task, wrapping it in
         /// an <see cref="Senzing.Sdk.SzException"/> if it is a that is not of type {@link SzException}.
+        /// </remarks>
         /// 
         /// <typeparam name="T">
         /// The return type of the specified function and the type returned by this function.
@@ -990,7 +992,7 @@ namespace Senzing.Sdk.Core
             /// </summary>
             /// 
             /// <remarks>
-            /// This method will throw an <see cref="System.IllegalOperationExeption"/>
+            /// This method will throw an <see cref="InvalidOperationException"/>
             /// if another active <see cref="SzCoreEnvironment"/> instance exists since
             /// only one active instance can exist within a process at any given time.
             /// An active instance is one that has been constructed, but has not yet
@@ -1001,7 +1003,7 @@ namespace Senzing.Sdk.Core
             /// The newly created <see cref="SzCoreEnvironment"/> instance.
             /// </returns>
             /// 
-            /// <exception cref="System.InvalidOperationException">
+            /// <exception cref="InvalidOperationException">
             /// If another active <see cref="SzCoreEnvironment"/> instance exists when
             /// this method is invoked.
             /// </exception>

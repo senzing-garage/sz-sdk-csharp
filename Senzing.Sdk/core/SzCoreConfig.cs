@@ -2,7 +2,11 @@ using System;
 
 namespace Senzing.Sdk.Core
 {
-    public class SzCoreConfig : SzConfig
+    /// <summary>
+    /// Provides the internal core implementation of <see cref="SzConfig"/>
+    /// that works with the <see cref="SzCoreEnvironment"/> class. 
+    /// </summary>
+    internal class SzCoreConfig : SzConfig
     {
 
         /// <summary>
@@ -97,7 +101,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_create_helper"/>.
+        /// <c>SzConfig_create_helper"</c> via
+        /// <see cref="NativeConfigExtern.Create(out IntPtr)"/>.
         /// </summary>
         public IntPtr CreateConfig()
         {
@@ -116,7 +121,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_load_helper"/>. 
+        /// <c>SzConfig_load_helper"</c> via
+        /// <see cref="NativeConfigExtern.Load(string, out IntPtr)"/>.
         /// </summary>
         public IntPtr ImportConfig(string configDefinition)
         {
@@ -136,7 +142,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_save_helper"/>. 
+        /// <c>SzConfig_save_helper"</c> via
+        /// <see cref="NativeConfigExtern.Save(IntPtr, out string)"/>.
         /// </summary>
         public string ExportConfig(IntPtr configHandle)
         {
@@ -156,7 +163,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_close_helper"/>. 
+        /// <c>SzConfig_close_helper"</c> via
+        /// <see cref="NativeConfigExtern.Close(IntPtr)"/>
         /// </summary>
         public void CloseConfig(IntPtr configHandle)
         {
@@ -175,7 +183,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_listDataSources_helper"/>. 
+        /// <c>SzConfig_listDataSources_helper"</c> via 
+        /// <see cref="NativeConfigExtern.ListDataSources(IntPtr, out string)"/>.
         /// </summary>
         public string GetDataSources(IntPtr configHandle)
         {
@@ -195,7 +204,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_addDataSource_helper"/>.
+        /// <c>SzConfig_addDataSource_helper"</c> via
+        /// <see cref="NativeConfigExtern.AddDataSource(IntPtr, string, out string)"/>. 
         /// </summary>
         public string AddDataSource(IntPtr configHandle, string dataSourceCode)
         {
@@ -219,7 +229,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_deleteDataSource_helper"/>.
+        /// <c>SzConfig_deleteDataSource_helper"</c> via
+        /// <see cref="NativeConfigExtern.DeleteDataSource(IntPtr, string)"/>. 
         /// </summary>
         public void DeleteDataSource(IntPtr configHandle, string dataSourceCode)
         {

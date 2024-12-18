@@ -245,7 +245,6 @@ namespace Senzing.Sdk.Core
         /// </param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        /// </returns>
         long ReevaluateRecord(string dataSourceCode, string recordID, long flags);
 
         /// <summary>
@@ -906,6 +905,7 @@ namespace Senzing.Sdk.Core
         ///      ]
         ///    }
         /// </code>
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
@@ -965,6 +965,7 @@ namespace Senzing.Sdk.Core
         ///      ]
         ///    }
         /// </code>
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
@@ -1042,6 +1043,7 @@ namespace Senzing.Sdk.Core
         ///      ]
         ///    }
         /// </code>
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
@@ -1127,6 +1129,7 @@ namespace Senzing.Sdk.Core
         ///      ]
         ///    }
         /// </code>
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
@@ -1567,7 +1570,7 @@ namespace Senzing.Sdk.Core
         /// constructed from its base records.
         /// </summary>
         ///
-        /// <param name="entityID">The entity ID identifying the entity</entity>
+        /// <param name="entityID">The entity ID identifying the entity</param>
         ///
         /// <param name="response">
         /// The out <c>string</c> response parameter to set to the JSON 
@@ -1582,7 +1585,7 @@ namespace Senzing.Sdk.Core
         /// constructed from its base records.
         /// </summary>
         ///
-        /// <param name="entityID">The entity ID identifying the entity</entity>
+        /// <param name="entityID">The entity ID identifying the entity</param>
         ///
         /// <param name="flags">
         /// The flags to control how the operation is performed and specifically
@@ -1692,8 +1695,8 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <remarks>
-        /// The exported data is read via the <see cref="fetchNext"/> function
-        /// and should be closed via the <see cref="closeExport"/> function when
+        /// The exported data is read via the <see cref="FetchNext"/> function
+        /// and should be closed via the <see cref="CloseExport"/> function when
         /// the export is complete.
         /// </remarks>
         ///
@@ -1717,13 +1720,14 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <remarks>
-        /// The exported data is read via the <see cref="fetchNext"/> function
-        /// and should be closed via the <see cref="closeExport"/> function when
+        /// The exported data is read via the <see cref="FetchNext"/> function
+        /// and should be closed via the <see cref="CloseExport"/> function when
         /// the export is complete.
         /// <para>
         /// The first output row returned by the export-handle contains the
         /// column headers as a string.  Each following row contains the
         /// exported entity data.
+        /// </para>
         /// </remarks>
         ///
         /// <param name="csvColumnList">

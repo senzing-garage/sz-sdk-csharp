@@ -90,7 +90,7 @@ namespace Senzing.Sdk.Core
             SzConfig_clearLastException();
         }
         /// <summary>
-        /// Combines an <see cref="System.IntPtr""/> response with a
+        /// Combines an <see cref="System.IntPtr"/> response with a
         /// <c>long</c> return code to handle the result from the 
         /// config helper functions.
         /// </summary>

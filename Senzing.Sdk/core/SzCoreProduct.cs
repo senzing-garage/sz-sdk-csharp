@@ -4,7 +4,7 @@ using Senzing.Sdk;
 namespace Senzing.Sdk.Core
 {
     /// <summary>
-    /// The internal implementation of <see cref="Senzing.Sdk.SzProduct"/>
+    /// The internal core implementation of <see cref="Senzing.Sdk.SzProduct"/>
     /// that works with the <see cref="SzCoreEnvironment"/>. 
     /// </summary>
     internal class SzCoreProduct : SzProduct
@@ -101,7 +101,8 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Implemented to call the native <c>G2Product_license()</c> function.
+        /// Implemented to call the native <c>G2Product_license()</c>
+        /// function via <see cref="NativeProductExtern.License"/> 
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>
@@ -114,7 +115,8 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Implemented to call the native <c>G2Product_version()</c> function.
+        /// Implemented to call the native <c>G2Product_version()</c>
+        /// function via <see cref="NativeProductExtern.Version"/>.
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>

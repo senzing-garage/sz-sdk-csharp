@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
 
+using static Senzing.Sdk.SzFlag;
+
 namespace Senzing.Sdk
 {
 
@@ -326,13 +328,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzExportIncludeSingleRecordEntities"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzExportIncludeAllEntities
@@ -359,13 +362,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzExportIncludeDisclosed"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzExportIncludeAllHavingRelationships
@@ -393,7 +397,7 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeDisclosedRelations"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the 
         /// <see cref="SzFlagUsageGroup.SzEntityFlags"/> usage group, and by extension 
         /// belong to the following usage groups which are super sets:
@@ -417,6 +421,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzEntityIncludeAllRelations
@@ -446,13 +451,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzSearchIncludeNameOnly"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchIncludeAllEntities
@@ -472,7 +478,7 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRecordJsonData"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the 
         /// <see cref="SzFlagUsageGroup.SzRecordFlags"/> usage group, and by extension 
         /// belong to the following usage groups which are super sets:
@@ -499,6 +505,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzRecordDefaultFlags
@@ -511,7 +518,7 @@ namespace Senzing.Sdk
         /// <remarks>
         /// This constant may be used directly but is primarily used as a basis for
         /// other aggregate constants.
-        /// <p>
+        /// <para>
         /// The included <see cref="SzFlag"/> values are:
         /// <list>
         ///   <item>
@@ -530,7 +537,8 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRecordMatchingInfo"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// All the flags in this constant belong to the 
         /// <see cref="SzFlagUsageGroup.SzEntityFlags"/> usage group, and by extension 
         /// belong to the following usage groups which are super sets:
@@ -554,6 +562,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzEntityCoreFlags
@@ -589,7 +598,7 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRelatedMatchingInfo"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the 
         /// <see cref="SzFlagUsageGroup.SzEntityFlags"/> usage group, and by extension 
         /// belong to the following usage groups which are super sets:
@@ -613,6 +622,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzEntityDefaultFlags
@@ -639,7 +649,7 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRelatedMatchingInfo"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the 
         /// <see cref="SzFlagUsageGroup.SzEntityFlags"/> usage group, and by extension 
         /// belong to the following usage groups which are super sets:
@@ -663,6 +673,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzEntityBriefDefaultFlags
@@ -684,13 +695,14 @@ namespace Senzing.Sdk
         ///      <description>All flags from <see cref="SzEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzExportDefaultFlags
@@ -713,13 +725,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRecordSummary"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzFindPathDefaultFlags
@@ -744,13 +757,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzEntityIncludeRecordSummary"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzFindNetworkDefaultFlags
@@ -778,13 +792,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzWhyEntitiesDefaultFlags
@@ -813,13 +828,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzWhyRecordsDefaultFlags
@@ -848,13 +864,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzWhyRecordInEntityDefaultFlags
@@ -874,13 +891,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzHowFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzHowEntityDefaultFlags
@@ -897,13 +915,14 @@ namespace Senzing.Sdk
         ///      <description>All flags from <see cref="SzEntityCoreFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzVirtualEntityDefaultFlags = SzEntityCoreFlags;
@@ -931,13 +950,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchByAttributesAll
@@ -973,13 +993,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchByAttributesStrong
@@ -1002,13 +1023,14 @@ namespace Senzing.Sdk
         ///      <description>All flags from <see cref="SzSearchIncludeAllEntities"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchByAttributesMinimalAll = SzSearchIncludeAllEntities;
@@ -1028,13 +1050,14 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlag.SzSearchIncludePossiblySame"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchByAttributesMinimalStrong
@@ -1051,13 +1074,14 @@ namespace Senzing.Sdk
         ///      <description>All flags from <see cref="SzSearchByAttributesAll"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         public const SzFlag SzSearchByAttributesDefaultFlags = SzSearchByAttributesAll;
@@ -1150,7 +1174,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Obtains the flags belonging to an <b>individual<b> 
+        /// Obtains the flags belonging to an <b>individual</b> 
         /// <see cref="SzFlagUsageGroup"/> as an aggregate
         /// <see cref="SzFlag"/> value for all flags associated with
         /// the specfied group.
@@ -1163,7 +1187,7 @@ namespace Senzing.Sdk
         ///
         /// <returns>
         /// The aggregate <see cref="SzFlag"/> value with the bits set
-        /// for all flags belonging to specified <b>individual<b>
+        /// for all flags belonging to specified <b>individual</b>
         /// <see cref="SzFlagUsageGroup"/>.
         /// </returns>
         ///
@@ -1190,7 +1214,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Obtains the flags belonging to an <b>individual<b> 
+        /// Obtains the flags belonging to an <b>individual</b> 
         /// <see cref="SzFlagUsageGroup"/> as a read-only dictionary of
         /// individual <see cref="SzFlag"/> keys mapped to
         /// <see cref="SzFlag"/> symbolic name values.
@@ -1213,7 +1237,7 @@ namespace Senzing.Sdk
         /// <returns>
         /// A read-only dictionary of individual <see cref="SzFlag"/> keys mapped to
         /// <see cref="SzFlag"/> symbolic name values for those flags belonging to
-        /// specified <b>individual<b> <see cref="SzFlagUsageGroup"/>.
+        /// specified <b>individual</b> <see cref="SzFlagUsageGroup"/>.
         /// </returns>
         ///
         /// <exception cref="System.ArgumentException">
@@ -1240,7 +1264,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Obtains the flags belonging to an <b>individual<b> 
+        /// Obtains the flags belonging to an <b>individual</b> 
         /// <see cref="SzFlagUsageGroup"/> as a read-only dictionary of
         /// individual <see cref="SzFlag"/> symbolic name keys mapped to
         /// <see cref="SzFlag"/> values.
@@ -1249,8 +1273,8 @@ namespace Senzing.Sdk
         /// <remarks>
         /// <b>NOTE:</b> The is provided as an alternative to <see cref="GetFlags"/>
         /// for disambiguation of different flags that otherwise have the same value
-        /// (e.g.: <see cref="SzSearchIncludePossiblySame"/> and
-        /// <see cref="SzExportIncludePossiblySame"/>).
+        /// (e.g.: <see cref="SzFlag.SzSearchIncludePossiblySame"/> and
+        /// <see cref="SzFlag.SzExportIncludePossiblySame"/>).
         /// </remarks>
         ///
         /// <param name="group">
@@ -1261,7 +1285,7 @@ namespace Senzing.Sdk
         /// <returns>
         /// A read-only dictionary of individual <see cref="SzFlag"/> symbolic name
         /// keys mapped to <see cref="SzFlag"/> values for those flags belonging to
-        /// specified <b>individual<b> <see cref="SzFlagUsageGroup"/>.
+        /// specified <b>individual</b> <see cref="SzFlagUsageGroup"/>.
         /// </returns>
         ///
         /// <exception cref="System.ArgumentException">
@@ -1295,8 +1319,9 @@ namespace Senzing.Sdk
         ///
         /// <remarks>
         /// <b>NOTE:</b> The is provided for disambiguation of different flags that
-        /// otherwise have the same value (e.g.: <see cref="SzSearchIncludePossiblySame"/>
-        /// and <see cref="SzExportIncludePossiblySame"/>).
+        /// otherwise have the same value (e.g.:
+        /// <see cref="SzFlag.SzSearchIncludePossiblySame"/> and
+        /// <see cref="SzFlag.SzExportIncludePossiblySame"/>).
         /// </remarks>
         ///
         /// <returns>
@@ -1316,22 +1341,25 @@ namespace Senzing.Sdk
         /// </summary>
         ///
         /// <remarks>
-        /// <p>
+        /// <para>
         /// <b>NOTE:</b> This method is useful in logging which flags were past to a
         /// particular method using the <see cref="SzFlagUsageGroup"/> for the flags that
         /// are accepted by that method.
-        /// <p>
+        /// </para>
+        /// <para>
         /// Some <see cref="SzFlag"/> values have the same underlying bitwise flag value
         /// which can lead to ambiguity with the default <c>ToString()</c> implementation
         /// for enums.  However, none of the <see cref="SzFlag"/> instances for a single
         /// <see cref="SzFlagUsageGroup"/> should overlap in bitwise values and this
         /// method will prefer the <see cref="SzFlag"/> symbol belonging to the respective
         /// <see cref="SzFlagUsageGroup"/> for formatting the <c>string</c>.
-        /// <p>
+        /// </para>
+        /// <para>
         /// If the respective <see cref="SzFlagUsageGroup"/> is an aggregate group value
         /// representing multiple groups (or no groups) then this method simply defaults 
         /// to formatting the set bit values using numeric representation, foregoing the
         /// use of symbolic flag names altogether.
+        /// </para>
         /// </remarks>
         ///
         /// <param name="group">

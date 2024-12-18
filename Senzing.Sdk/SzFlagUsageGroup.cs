@@ -1,5 +1,8 @@
 using System;
 
+using static Senzing.Sdk.SzFlag;
+using static Senzing.Sdk.SzFlags;
+
 namespace Senzing.Sdk
 {
     /// <summary>
@@ -18,7 +21,7 @@ namespace Senzing.Sdk
         /// The <see cref="SzFlag"/> instances included in this usage group are:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlag.SzWITH_INFO"/></description>
+        ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -54,15 +57,16 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzEntityIncludeRecordUnmappedData"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         SzRecordFlags = (1L << 1),
 
         /// <summary>
@@ -146,7 +150,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeMatchKeyDetails"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
         ///   <item>
@@ -159,7 +163,8 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzEntityBriefDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -170,6 +175,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzEntityFlags = (1L << 2),
@@ -262,7 +268,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzFindPathIncludeMatchingInfo"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
         /// <list>
@@ -270,7 +276,8 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzFindPathDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -290,6 +297,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzFindPathFlags = (1L << 3),
@@ -379,7 +387,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzFindNetworkIncludeMatchingInfo"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
         /// <list>
@@ -387,7 +395,8 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzFindNetworkDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -407,6 +416,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzFindNetworkFlags = (1L << 4),
@@ -511,7 +521,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzSearchIncludeNameOnly"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "search" operations are:
         /// <list>
@@ -534,7 +544,8 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzSearchByAttributesDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -554,6 +565,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzSearchFlags = (1L << 5),
@@ -668,7 +680,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzExportDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -688,6 +700,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzExportFlags = (1L << 6),
@@ -777,21 +790,22 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlags.SzWHY_Entities_DefaultFlags"/></description>
+        ///     <description><see cref="SzFlags.SzWhyEntitiesDefaultFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlags.SzWHY_RECORDS_DefaultFlags"/></description>
+        ///     <description><see cref="SzFlags.SzWhyRecordsDefaultFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlags.SzWHY_RecordIN_EntityDefaultFlags"/></description>
+        ///     <description><see cref="SzFlags.SzWhyRecordInEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -811,6 +825,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzWhyFlags = (1L << 7),
@@ -835,7 +850,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "how" operations are:
         /// <list>
@@ -843,7 +858,8 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzHowEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// </para>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for definining entity or record detail levels are:
         /// <list>
@@ -863,6 +879,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzHowFlags = (1L << 8),
@@ -918,13 +935,14 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzEntityIncludeFeatureStats"/></description>
         ///   </item>
         /// </list>
-        /// <p>
+        /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzVirtualEntityFlags = (1L << 9)

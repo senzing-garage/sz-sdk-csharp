@@ -12,11 +12,12 @@ namespace Senzing.Sdk
     /// extension method.  This helps in identifying which flags are applicable
     /// to which functions since a function will document which 
     /// <see cref="SzFlagUsageGroup"/> to refer to for applicable flags.
-    /// <p>
+    /// <para>
     /// Passing an <c>SzFlag</c> to a function to which it does not apply will
     /// either have no effect or activate an applicable <see cref="SzFlag"/>
     /// that happens to have the same bitwise value as the non-applicable
     /// <see cref="SzFlag"/>
+    /// </para>
     /// </remarks>
     /// 
     /// <seealso href="https://docs.senzing.com/flags/index.html"/>
