@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "./Senzing.Sdk",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "target/api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "target/apidocs/_site/**",
+          "CONTRIBUTING.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "target/apidocs/_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "Senzing.Sdk",
+      "_appTitle": "Senzing.Sdk",
+      "_enableSearch": true,
+      "pdf": true
+    }
+  }
+}

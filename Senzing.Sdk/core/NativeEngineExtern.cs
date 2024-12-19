@@ -16,7 +16,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native function
-        /// <see cref="SzConfig_init"/>
+        /// <see cref="Sz_init"/>
         /// </summary>
         public long Init(string moduleName, string iniParams, bool verboseLogging)
         {
@@ -31,7 +31,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native function
-        /// <see cref="SzConfig_initWithConfigID"/>.
+        /// <see cref="Sz_initWithConfigID"/>.
         /// </summary>
         public long InitWithConfigID(string moduleName,
                                      string iniParams,
@@ -50,7 +50,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native function
-        /// <see cref="SzConfig_reinit"/>.
+        /// <see cref="Sz_reinit"/>.
         /// </summary>
         public long Reinit(long initConfigID)
         {
@@ -127,7 +127,7 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Combines an <see cref="System.IntPtr""/> response with a
+        /// Combines an <see cref="System.IntPtr"/> response with a
         /// <c>long</c> return code to handle the result from the 
         /// engine helper functions.
         /// </summary>

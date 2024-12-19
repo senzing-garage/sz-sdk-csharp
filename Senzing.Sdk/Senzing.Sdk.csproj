@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>7.3</LangVersion>
     <AnalysisMode>All</AnalysisMode>
     <AnalysisModeSecurity>All</AnalysisModeSecurity>
@@ -11,13 +12,6 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="roslynator.analyzers" Version="4.12.9">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

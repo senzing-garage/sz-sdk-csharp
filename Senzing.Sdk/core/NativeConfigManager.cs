@@ -47,7 +47,7 @@ namespace Senzing.Sdk.Core
         /// 
         /// <param name="configStr">
         /// The JSON text describing the configuration.
-        /// /param>
+        /// </param>
         /// 
         /// <param name="configComments">
         /// The comments for the configuration.
@@ -58,7 +58,6 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        /// 
         long AddConfig(string configStr, string configComments, out long configID);
 
         /// <summary>

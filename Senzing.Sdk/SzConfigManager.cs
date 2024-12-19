@@ -4,7 +4,7 @@ namespace Senzing.Sdk
 {
 
     /// <summary>
-    /// Defines the Java interface to the Senzing config manager functions.
+    /// Defines the C# interface to the Senzing config manager functions.
     /// </summary>
     /// 
     /// <remarks>

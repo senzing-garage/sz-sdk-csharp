@@ -13,7 +13,7 @@ namespace Senzing.Sdk
     {
         /// <summary>
         /// The default buffer size for hex formatting.
-        /// </summaryf>
+        /// </summary>
         private const int HexBufferSize = 20;
 
         /// <summary>

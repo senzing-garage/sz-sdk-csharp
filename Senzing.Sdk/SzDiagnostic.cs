@@ -14,6 +14,7 @@ namespace Senzing.Sdk
         /// <summary>
         /// Gathers detailed information on the data store and returns it as a
         /// JSON <c>string</c>.
+        /// </summary>
         ///
         /// <returns>A JSON <c>string</c> describing the datastore.</returns>
         ///

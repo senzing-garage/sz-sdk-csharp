@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+using static Senzing.Sdk.SzFlag;
 using static Senzing.Sdk.SzFlags;
+using static Senzing.Sdk.SzFlagUsageGroup;
 
 namespace Senzing.Sdk
 {
@@ -42,17 +44,19 @@ namespace Senzing.Sdk
         /// <remarks>
         /// If a record already exists with the same data source code and record ID,
         /// then it will be replaced.
-        /// <p>
+        /// <para>
         /// The specified JSON data may optionally contain the <c>DATA_SOURCE</c>
         /// and <c>RECORD_ID</c> properties, but, if so, they must match the
         /// specified parameters.
-        /// <p>
+        /// </para>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzModifyFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -71,12 +75,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
-        /// to the <see cref="SzFlagUsageGroup.SzModifyFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter will default its value to
-        /// <see cref="SzFlags.SzNoFlags"/>.  Specify
-        /// <see cref="SzFlag.SzWithInfo"/> for an INFO response.  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// to the <see cref="SzModifyFlags"/> group to control how the operation
+        /// is performed and the content of the response.  Omitting this parameter
+        /// will default its value to <see cref="SzNoFlags"/>.  Specify
+        /// <see cref="SzWithInfo"/> for an INFO response.  Specifying <c>null</c>
+        /// is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -113,9 +116,9 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzRecordFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzRecordFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="recordDefinition">
@@ -124,11 +127,10 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
-        /// to the <see cref="SzFlagUsageGroup.SzRecordFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter will default its value to
-        /// <see cref="SzFlags.SzRecordDefaultFlags"/>.  Specifying <c>null</c>
-        /// is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// to the <see cref="SzRecordFlags"/> group to control how the operation
+        /// is performed and the content of the response.  Omitting this parameter
+        /// will default its value to <see cref="SzRecordDefaultFlags"/>.  Specifying
+        /// <c>null</c> is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -138,10 +140,10 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlag.SzEntityIncludeInternalFeatures"/>
-        /// <seealso cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/>
-        /// <seealso cref="SzFlag.SzEntityIncludeRecordFeatureStats"/>
-        /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
+        /// <seealso cref="SzEntityIncludeInternalFeatures"/>
+        /// <seealso cref="SzEntityIncludeRecordFeatureDetails"/>
+        /// <seealso cref="SzEntityIncludeRecordFeatureStats"/>
+        /// <seealso cref="SzRecordFlags"/>
         string PreprocessRecord(string recordDefinition,
                                 SzFlag? flags = SzRecordDefaultFlags);
 
@@ -154,13 +156,14 @@ namespace Senzing.Sdk
         /// This method is idempotent, meaning multiple calls this method with
         /// the same parameters will all succeed regardless of whether or not the
         /// record is found in the repository.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzModifyFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -175,12 +178,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
-        /// to the <see cref="SzFlagUsageGroup.SzModifyFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter will default its value to 
-        /// <see cref="SzFlags.SzNoFlags"/>.  Specify 
-        /// <see cref="SzFlag.SzWithInfo"/> for an INFO response.  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// to the <see cref="SzModifyFlags"/> group to control how the operation
+        /// is performed and the content of the response.  Omitting this parameter
+        /// will default its value to <see cref="SzNoFlags"/>.  Specify 
+        /// <see cref="SzWithInfo"/> for an INFO response.  Specifying <c>null</c>
+        /// is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -194,9 +196,8 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlag.SzWithInfo"/>
-        /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
-        /// </summary>
+        /// <seealso cref="SzWithInfo"/>
+        /// <seealso cref="SzModifyFlags"/>
         string DeleteRecord(string dataSourceCode,
                             string recordID,
                             SzFlag? flags = SzNoFlags);
@@ -211,15 +212,16 @@ namespace Senzing.Sdk
         /// for the record ID is not found, then the operation silently does nothing
         /// with no exception.  This is to ensure consistent behavior in case of a
         /// race condition with record deletion.  To ensure that the record was
-        /// found, specify the <see cref="SzFlag.SzWithInfo"/> flag and check the
-        /// returned INFO document for affected entities.
-        /// <p>
+        /// found, specify the <see cref="SzWithInfo"/> flag and check the returned
+        /// INFO document for affected entities.
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzModifyFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -234,12 +236,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
-        /// to the <see cref="SzFlagUsageGroup.SzModifyFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter will default its value to
-        /// <see cref="SzFlags.SzNoFlags"/>.   Specify
-        /// <see cref="SzFlag.SzWithInfo"/> for an INFO response.  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// to the <see cref="SzModifyFlags"/> group to control how the operation
+        /// is performed and the content of the response.  Omitting this parameter
+        /// will default its value to <see cref="SzNoFlags"/>.   Specify
+        /// <see cref="SzWithInfo"/> for an INFO response.  Specifying <c>null</c>
+        /// is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -253,7 +254,7 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlag.SzWithInfo"/>
+        /// <seealso cref="SzWithInfo"/>
         /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
         string ReevaluateRecord(string dataSourceCode,
                                 string recordID,
@@ -269,13 +270,14 @@ namespace Senzing.Sdk
         /// To ensure that the entity was found, specify the
         /// <see cref="SzFlag.SzWithInfo"/> flag and check the returned INFO document
         /// for affected entities.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityID">
@@ -311,21 +313,23 @@ namespace Senzing.Sdk
         /// The specified search attributes are treated as a hypothetical record and 
         /// the search results are those entities that would match or relate to 
         /// that hypothetical record on some level (depending on the specified flags).
-        /// <p>
+        /// <para>
         /// If the specified search profile is <c>null</c> then the default
         /// generic thresholds from the default search profile will be used for the
-        /// search (alternatively, use <see cref="SearchByAttributes(string,SzFlag)"/>
+        /// search (alternatively, use <see cref="SearchByAttributes(string,SzFlag?)"/>
         /// to omit the parameter).  If your search requires different behavior using
         /// alternate generic thresholds, please contact 
         /// <see href="mailto:support@senzing.com">support@senzing.com</see> for
         /// details on configuring a custom search profile.
-        /// <p>
+        /// </para>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the search is performed but also the content of the
         /// response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzSearchFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="attributes">
@@ -354,7 +358,7 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SearchByAttributes(string, SzFlag)"/>
+        /// <seealso cref="SearchByAttributes(string, SzFlag?)"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesDefaultFlags"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesAll"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesStrong"/>
@@ -368,11 +372,11 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// This method is equivalent to calling
-        /// <see cref="SearchByAttributes(string,string,SzFlag)"/>
+        /// <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// with a <c>null</c> value for the search profile parameter.
         /// </summary>
         /// <remarks>
-        /// See <see cref="SearchByAttributes(string,string,SzFlag)"/>
+        /// See <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// documentation for details.
         /// </remarks>
         ///
@@ -397,7 +401,7 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SearchByAttributes(string, string, SzFlag)"/>
+        /// <seealso cref="SearchByAttributes(string, string, SzFlag?)"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesDefaultFlags"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesAll"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesStrong"/>
@@ -415,13 +419,14 @@ namespace Senzing.Sdk
         ///
         /// <remarks>
         /// The result is returned as a JSON document describing the entity.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzEntityFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityID">
@@ -459,13 +464,14 @@ namespace Senzing.Sdk
         ///
         /// <remarks>
         /// The result is returned as a JSON document describing the entity.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzEntityFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -515,11 +521,12 @@ namespace Senzing.Sdk
         /// <remarks>
         /// The result is returned as a JSON document describing the interesting
         /// entities.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
         /// may contain any flags, but currenlty no flags are specifically defined
         /// for this experimental method.  Flags are not applicable to this method
         /// will simply be ignored.
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityID">
@@ -544,7 +551,7 @@ namespace Senzing.Sdk
         /// </exception>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
-        string FindInterestingEntities(long entityId, SzFlag? flags = SzNoFlags);
+        string FindInterestingEntities(long entityID, SzFlag? flags = SzNoFlags);
 
         /// <summary>
         /// An <b>experimental</b> method to obtain interesting entities pertaining
@@ -555,11 +562,12 @@ namespace Senzing.Sdk
         /// <remarks>
         /// The result is returned as a JSON document describing the interesting
         /// entities.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
         /// may contain any flags, but currenlty no flags are specifically defined
         /// for this experimental method.  Flags are not applicable to this method
         /// will simply be ignored.
+        /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -606,26 +614,26 @@ namespace Senzing.Sdk
         ///
         /// <remarks>
         /// Entities to be avoided when finding the path may optionally be specified
-        /// as a non-null <see cref="System.Collections.Generic.ISet"/> of
-        /// <c>long</c> entity ID's identifying entities to be avoided.  By default
-        /// the specified entities will be avoided unless absolutely neccessary to
-        /// find the path.  To strictly avoid the specified entities specify the
-        /// <see cref="SzFlag.SzFindPathStrictAvoid"/> flag.
-        /// <p>
-        /// Further, a <see cref="System.Collections.Generic.ISet"/> of
-        /// <c>string</c> data source codes may optionally be specified to identify
-        /// required data sources.  If specified as non-null, then the required data
-        /// sources <see cref="System.Colletions.Generic.ISet">set</see> contains
-        /// non-null <c>string</c> data source codes that identify data sources for
-        /// which a record from <b>at least one</b> must exist on the path.
-        /// <p>
+        /// as a non-null <see cref="ISet{T}"/> of <c>long</c> entity ID's identifying
+        /// entities to be avoided.  By default the specified entities will be avoided
+        /// unless absolutely neccessary to find the path.  To strictly avoid the
+        /// specified entities specify the <see cref="SzFindPathStrictAvoid"/> flag.
+        /// <para>
+        /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
+        /// optionally be specified to identify required data sources.  If specified
+        /// as non-null, then the required data sources <see cref="ISet{T}">set</see>
+        /// contains non-null <c>string</c> data source codes that identify data
+        /// sources for which a record from <b>at least one</b> must exist on the path.
+        /// </para>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the level of
         /// detail provided for the entity path and those entities on the path.
         /// Any <see cref="SzFlag"/> value may be included, but only flags
-        /// belonging to the <see cref="SzFlagUsageGroup.SzFindPathFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// belonging to the <see cref="SzFindPathFlags"/> group will be recognized
+        /// (other <see cref="SzFlag"/> values will be ignored unless they have
+        /// equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="startEntityID">The entity ID of the first entity.</param>
@@ -637,13 +645,13 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="avoidEntityIDs">
-        /// The optional <see cref="System.Collections.Generic.ISet"/> of <c>long</c>
+        /// The optional <see cref="System.Collections.Generic.ISet{T}"/> of <c>long</c>
         /// entity ID's identifying entities to be avoided when finding the path, or
         /// <c>null</c> if no entities are to be avoided.
         /// </param>
         ///
         /// <param name="requiredDataSources">
-        /// The optional<see cref="System.Collections.Generic.ISet"/> of non-null
+        /// The optional <see cref="System.Collections.Generic.ISet{T}"/> of non-null
         /// <c>string</c> data source codes identifying the data sources for
         /// which at least one record must be included on the path, or <c>null</c>
         /// if none are required.
@@ -654,7 +662,7 @@ namespace Senzing.Sdk
         /// <see cref="SzFlagUsageGroup.SzFindPathFlags"/> group to control how the
         /// operation is performed and the content of the response.  Omitting this
         /// parameter will default its value to the default recommended flags
-        /// (<see cref="SzFlags.SzEntityFindPathDefaultFlags"/>).  Specifying
+        /// (<see cref="SzFlags.SzFindPathDefaultFlags"/>).  Specifying
         /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
         /// </param>
         ///
@@ -677,7 +685,7 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzFlags.SzFindPathDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzFindPathFlags"/>
-        /// <seealso cref="FindPath(string,string,string,string,ISet<(string,string)>,ISet<string>,SzFlag)"/>
+        /// <seealso cref="FindPath(string,string,string,string,int,ISet{ValueTuple{string,string}},ISet{string},SzFlag?)"/>
         string FindPath(long startEntityID,
                         long endEntityID,
                         int maxDegrees,
@@ -692,25 +700,25 @@ namespace Senzing.Sdk
         ///
         /// <remarks>
         /// Entities to be avoided when finding the path may optionally be specified
-        /// as a non-null <see cref="System.Collections.Generic.ISet"/> of tuples of
-        /// data source code and record ID pairs identifying the constituent records
-        /// of entities to be avoided.  By default the associated entities will be
-        /// avoided unless absolutely neccessary to find the path.  To strictly
-        /// avoid the associated entities specify the 
-        /// <see cref="SzFlag.SzFindPathStrictAvoid"/> flag. 
-        /// <p>
-        /// Further, a <see cref="System.Collections.Generic.ISet"/> of 
-        /// <c>string</c> data source codes may optionally be specified to identify
-        /// required data sources.  If specified as non-null, then the required data
-        /// sources <see cref="System.Colletions.Generic.ISet">set</see> contains
-        /// non-null <c>string</c> data source codes that identify data sources for
-        /// which a record from <b>at least one</b> must exist on the path.
-        /// <p>
+        /// as a non-null <see cref="ISet{T}"/> of tuples of data source code and
+        /// record ID pairs identifying the constituent records of entities to be
+        /// avoided.  By default the associated entities will be avoided unless
+        /// absolutely neccessary to find the path.  To strictly avoid the associated
+        /// entities specify the <see cref="SzFindPathStrictAvoid"/> flag. 
+        /// <para>
+        /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
+        /// optionally be specified to identify required data sources.  If specified
+        /// as non-null, then the required data sources <see cref="ISet{T}">set</see>
+        /// contains non-null <c>string</c> data source codes that identify data
+        /// sources for which a record from <b>at least one</b> must exist on the path.
+        /// </para>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values may
         /// contain any <see cref="SzFlag"/> value, but only flags belonging to the
-        /// <see cref="SzFlagUsageGroup.SzFindPathFlags"/> group will be recognized
-        /// (other <see cref="SzFlag"/> values will be ignored unless they have
-        /// equivalent bit flags).
+        /// <see cref="SzFindPathFlags"/> group will be recognized (other
+        /// <see cref="SzFlag"/> values will be ignored unless they have equivalent
+        /// bit flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="startDataSourceCode">
@@ -737,27 +745,25 @@ namespace Senzing.Sdk
         /// The maximum number of degrees for the path search.
         /// </param>
         ///
-        /// <param name="avoidEntityIDs">
-        /// The optional <see cref="System.Collections.Generic.ISet"/> of tuples
-        /// containing data source code and record ID pairs identifying records 
-        /// whose entities are to be avoided when finding the path, or <c>null</c>
-        /// if no entities are to be avoided.
+        /// <param name="avoidRecordKeys">
+        /// The optional <see cref="ISet{T}"/> of tuples containing data source code
+        /// and record ID pairs identifying records whose entities are to be avoided
+        /// when finding the path, or <c>null</c> if no entities are to be avoided.
         /// </param>
         ///
         /// <param name="requiredDataSources">
-        /// The optional<see cref="System.Collections.Generic.ISet"/> of non-null
-        /// <c>string</c> data source codes identifying the data sources for
-        /// which at least one record must be included on the path, or <c>null</c>
-        /// if none are required.
+        /// The optional<see cref="ISet{T}"/> of non-null <c>string</c> data source
+        /// codes identifying the data sources for which at least one record must
+        /// be included on the path, or <c>null</c> if none are required.
         /// </param>
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to the
-        /// <see cref="SzFlagUsageGroup.SzFindPathFlags"/> group to control how the
-        /// operation is performed and the content of the response.  Omitting this
-        /// parameter will default its value to the default recommended flags
-        /// (<see cref="SzFlags.SzEntityFindPathDefaultFlags"/>).  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// <see cref="SzFindPathFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter will
+        /// default its value to the default recommended flags
+        /// (<see cref="SzFindPathDefaultFlags"/>).  Specifying <c>null</c> is
+        /// equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -777,9 +783,9 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzFindPathDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzFindPathFlags"/>
-        /// <seealso cref="FindPath(long,long,int,ISet<long>,ISet<string>,SzFlag)"/>
+        /// <seealso cref="SzFindPathDefaultFlags"/>
+        /// <seealso cref="SzFindPathFlags"/>
+        /// <seealso cref="FindPath(long,long,int,ISet{long},ISet{string},SzFlag?)"/>
         string FindPath(
             string startDataSourceCode,
             string startRecordID,
@@ -793,7 +799,7 @@ namespace Senzing.Sdk
         /// <summary>
         /// Finds a network of entity relationships surrounding the paths between
         /// a set of entities identified by one or more <c>long</c> entity ID's
-        /// included in the specified <see cref="System.Collections.Generic.ISet"/>.
+        /// included in the specified <see cref="ISet{T}"/>.
         /// </summary>
         ///
         /// <remarks>
@@ -803,18 +809,19 @@ namespace Senzing.Sdk
         /// the network may be specified to find other related entities.  If build
         /// out is specified, it can be limited to a maximum total number of
         /// build-out entities for the whole network.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzFindNetworkFlags"/> group
+        /// flags belonging to the <see cref="SzFindNetworkFlags"/> group
         /// will be recognized (other <see cref="SzFlag"/> values will be ignored
         /// unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="entityIDs">
-        /// The non-null <see cref="System.Collection.Generic.ISet"/> of <c>long</c>
-        /// entity ID's identifying the entities for which to build the network.
+        /// The non-null <see cref="ISet{T}"/> of <c>long</c> entity ID's
+        /// identifying the entities for which to build the network.
         /// </param>
         ///
         /// <param name="maxDegrees">
@@ -831,15 +838,13 @@ namespace Senzing.Sdk
         /// The maximum number of entities to build out for the entire network.
         /// </param>
         ///
-        /// <param
-        ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to the
-        /// <see cref="SzFlagUsageGroup.SzFindNetworkFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter will default its value to the default recommended flags
-        /// (<see cref="SzFlags.SzEntityFindNetworkDefaultFlags"/>).  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// <see cref="SzFindNetworkFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter will
+        /// default its value to the default recommended flags
+        /// (<see cref="SzFindNetworkDefaultFlags"/>).  Specifying <c>null</c> is
+        /// equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -855,7 +860,7 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzFlags.SzFindNetworkDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzFindNetworkFlags"/>
-        /// <seealso cref="FindNetwork(ISet<(string,string)>,int,int,int,SzFlag)"/>
+        /// <seealso cref="FindNetwork(ISet{ValueTuple{string,string}},int,int,int,SzFlag?)"/>
         string FindNetwork(
             ISet<long> entityIDs,
             int maxDegrees,
@@ -867,7 +872,7 @@ namespace Senzing.Sdk
         /// Finds a network of entity relationships surrounding the paths between
         /// a set of entities having the constiuent records identified by the tuples
         /// of data source code and record ID pairs included in the specified 
-        /// <see cref="System.Collections.Generic.ISet"/>.
+        /// <see cref="ISet{T}"/>.
         /// </summary>
         ///
         /// <remarks>
@@ -877,19 +882,20 @@ namespace Senzing.Sdk
         /// the network may be specified to find other related entities.  If build
         /// out is specified, it can be limited to a maximum total number of
         /// build-out entities for the whole network.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzFindNetworkFlags"/> group
+        /// flags belonging to the <see cref="SzFindNetworkFlags"/> group
         /// will be recognized (other <see cref="SzFlag"/> values will be ignored
         /// unless they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="recordKeys">
-        /// The non-null  <see cref="System.Collection.Generic.ISet"/> of tuples of
-        /// data source code and record ID pairs identifying the constiuent records
-        /// of the entities for which to build the network.
+        /// The non-null  <see cref="ISet{T}"/> of tuples of data source code and
+        /// record ID pairs identifying the constiuent records of the entities for
+        /// which to build the network.
         /// </param>
         ///
         /// <param name="maxDegrees">
@@ -908,11 +914,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to the
-        /// <see cref="SzFlagUsageGroup.SzFindNetworkFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter will default its value to the default recommended flags
-        /// (<see cref="SzFlags.SzEntityFindNetworkDefaultFlags"/>).  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// <see cref="SzFindNetworkFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter will
+        /// default its value to the default recommended flags
+        /// (<see cref="SzFindNetworkDefaultFlags"/>).  Specifying
+        /// <c>null</c> is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -931,9 +937,9 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzFindNetworkDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzFindNetworkFlags"/>
-        /// <seealso cref="FindNetwork(ISet<long>,int,int,int,SzFlag)"/>
+        /// <seealso cref="SzFindNetworkDefaultFlags"/>
+        /// <seealso cref="SzFindNetworkFlags"/>
+        /// <seealso cref="FindNetwork(ISet{long},int,int,int,SzFlag?)"/>
         string FindNetwork(
             ISet<(string dataSourceCode, string recordID)> recordKeys,
             int maxDegrees,
@@ -949,9 +955,9 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzWhyFlags"/> group will be recognized
+        /// (other <see cref="SzFlag"/> values will be ignored unless they have
+        /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -965,12 +971,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzWhyRecordInEntityDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzWhyFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzWhyRecordInEntityDefaultFlags"/> for
+        /// the default recommended flags.  Specifying <c>null</c> is equivalent to
+        /// specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -989,10 +994,10 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzWhyRecordInEntityDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzWhyFlags"/>
-        /// <seealso cref="WhyEntities(long,long,SzFlag"/>
-        /// <seealso cref="WhyRecords(string,string,string,string,SzFlag)/>
+        /// <seealso cref="SzWhyRecordInEntityDefaultFlags"/>
+        /// <seealso cref="SzWhyFlags"/>
+        /// <seealso cref="WhyEntities(long,long,SzFlag?)"/>
+        /// <seealso cref="WhyRecords(string,string,string,string,SzFlag?)"/>
         string WhyRecordInEntity(
             string dataSourceCode,
             string recordID,
@@ -1007,9 +1012,9 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzWhyFlags"/> group will be recognized
+        /// (other <see cref="SzFlag"/> values will be ignored unless they have
+        /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
@@ -1032,12 +1037,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzWhyRecordsDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzWhyFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzWhyRecordsDefaultFlags"/> for the
+        /// default recommended flags.  Specifying <c>null</c> is equivalent to
+        /// specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -1056,10 +1060,10 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzWhyRecordsDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzWhyFlags"/>
-        /// <seealso cref="WhyRecordInEntity(string,string,SzFlag)"/>
-        /// <seealso cref="WhyEntities(long,long,SzFlag)"/>
+        /// <seealso cref="SzWhyRecordsDefaultFlags"/>
+        /// <seealso cref="SzWhyFlags"/>
+        /// <seealso cref="WhyRecordInEntity(string,string,SzFlag?)"/>
+        /// <seealso cref="WhyEntities(long,long,SzFlag?)"/>
         string WhyRecords(string dataSourceCode1,
                           string recordID1,
                           string dataSourceCode2,
@@ -1074,9 +1078,9 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzWhyFlags"/> group will be recognized
+        /// (other <see cref="SzFlag"/> values will be ignored unless they have
+        /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
@@ -1085,12 +1089,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzWhyFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzWhyEntitiesDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzWhyFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzWhyEntitiesDefaultFlags"/> for the
+        /// default recommended flags.  Specifying <c>null</c> is equivalent to
+        /// specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -1104,10 +1107,10 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzWhyEntitiesDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzWhyFlags"/>
-        /// <seealso cref="WhyRecords(string,string,string,string,SzFlag)"/>
-        /// <seealso cref="WhyRecordInEntity(string,string,SzFlag)"/>
+        /// <seealso cref="SzWhyEntitiesDefaultFlags"/>
+        /// <seealso cref="SzWhyFlags"/>
+        /// <seealso cref="WhyRecords(string,string,string,string,SzFlag?)"/>
+        /// <seealso cref="WhyRecordInEntity(string,string,SzFlag?)"/>
         string WhyEntities(long entityID1,
                            long entityID2,
                            SzFlag? flags = SzWhyEntitiesDefaultFlags);
@@ -1121,21 +1124,20 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzHowFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzHowFlags"/> group will be recognized
+        /// (other <see cref="SzFlag"/> values will be ignored unless they have
+        /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="entityID">The entity ID of the entity.</param>
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzHowFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzHowEntityDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzHowFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzHowEntityDefaultFlags"/> for the
+        /// default recommended flags.  Specifying <c>null</c> is equivalent to
+        /// specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -1148,40 +1150,39 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzHowEntityDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzHowFlags"/>
+        /// <seealso cref="SzHowEntityDefaultFlags"/>
+        /// <seealso cref="SzHowFlags"/>
         /// <seealso cref="GetVirtualEntity"/>
         string HowEntity(long entityID, SzFlag? flags = SzHowEntityDefaultFlags);
 
         /// <summary>
         /// Describes a hypothetically entity that would be composed of the one or
         /// more records identified by the tuples of data source code and record ID
-        /// pairs in the specified <see cref="System.Collections.Generic.ISet"/>.
+        /// pairs in the specified <see cref="ISet{T}"/>.
         /// </summary>
         ///
         /// <remarks>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzVirtualEntityFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless they
+        /// have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="recordKeys">
-        /// The non-null non-empty <see cref="System.Collections.Generic.ISet"/> of
-        /// tuples of data source code and record ID pairs identifying the records to 
-        /// use to build the virtual entity.
+        /// The non-null non-empty <see cref="ISet{T}"/> of tuples of data source
+        /// code and record ID pairs identifying the records to use to build the
+        /// virtual entity.
         /// </param>
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter defaults it value to
-        /// <see cref="SzFlags.SzWhyEntitiesDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzVirtualEntityFlags"/> group to control how the
+        /// operation is performed and the content of the response.  Omitting this
+        /// parameter defaults it value to <see cref="SzWhyEntitiesDefaultFlags"/>
+        /// for the default recommended flags.  Specifying <c>null</c> is equivalent
+        /// to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -1196,9 +1197,9 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzVirtualEntityDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzHowFlags"/>
-        /// <seealso cref="HowEntity(long,SzFlag)"/>
+        /// <seealso cref="SzVirtualEntityDefaultFlags"/>
+        /// <seealso cref="SzHowFlags"/>
+        /// <seealso cref="HowEntity(long,SzFlag?)"/>
         string GetVirtualEntity(
             ISet<(string dataSourceCode, string recordID)> recordKeys,
             SzFlag? flags = SzVirtualEntityDefaultFlags);
@@ -1212,9 +1213,9 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzRecordFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzRecordFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
@@ -1228,12 +1229,11 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzRecordFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzRecordsDefaultFlags"/> for the default
+        /// the <see cref="SzRecordFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzRecordDefaultFlags"/> for the default
         /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
-        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>The JSON <c>string</c> describing the record.</returns>
@@ -1265,31 +1265,31 @@ namespace Senzing.Sdk
         /// <remarks>
         /// Each output line contains the exported entity data for a single resolved
         /// entity.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzExportFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzExportFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzExportFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzExportDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to
-        /// specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzExportFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzExportDefaultFlags"/> for the default
+        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
+        /// <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>The export handle to use for retrieving the export data.</returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzExportDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzExportFlags"/>
+        /// <seealso cref="SzExportDefaultFlags"/>
+        /// <seealso cref="SzExportFlags"/>
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="CloseExport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
@@ -1305,13 +1305,14 @@ namespace Senzing.Sdk
         /// <remarks>
         /// The first exported line contains the CSV header and each subsequent line
         /// contains the exported entity data for a single resolved entity.
-        /// <p>
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzExportFlags"/> group
-        /// will be recognized (other <see cref="SzFlag"/> values will be ignored
-        /// unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzExportFlags"/> group will be
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless they
+        /// have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <param name="csvColumnList">
@@ -1322,23 +1323,22 @@ namespace Senzing.Sdk
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
-        /// the <see cref="SzFlagUsageGroup.SzExportFlags"/> group to control how
-        /// the operation is performed and the content of the response.  Omitting
-        /// this parameter defaults it value to
-        /// <see cref="SzFlags.SzExportDefaultFlags"/> for the default
-        /// recommended flags.  Specifying <c>null</c> is equivalent to
-        /// specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// the <see cref="SzExportFlags"/> group to control how the operation is
+        /// performed and the content of the response.  Omitting this parameter
+        /// defaults it value to <see cref="SzExportDefaultFlags"/> for the default
+        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
+        /// <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>The export handle to use for retrieving the export data.</returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlags.SzExportDefaultFlags"/>
-        /// <seealso cref="SzFlagUsageGroup.SzExportFlags"/>
+        /// <seealso cref="SzExportDefaultFlags"/>
+        /// <seealso cref="SzExportFlags"/>
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="CloseExport"/>
-        /// <seealso cref="ExportJsonEntityReport(SzFlag)"/>
+        /// <seealso cref="ExportJsonEntityReport(SzFlag?)"/>
         IntPtr ExportCsvEntityReport(
             string csvColumnList,
             SzFlag? flags = SzExportDefaultFlags);
@@ -1402,21 +1402,20 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
-        /// group will be recognized (other <see cref="SzFlag"/> values will be
-        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// flags belonging to the <see cref="SzModifyFlags"/> group will be 
+        /// recognized (other <see cref="SzFlag"/> values will be ignored unless
+        /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <param name="redoRecord">The redo record to be processed.</param>
         ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
-        /// to the <see cref="SzFlagUsageGroup.SzModifyFlags"/> group to control
-        /// how the operation is performed and the content of the response.
-        /// Omitting this parameter will default its value to
-        /// <see cref="SzFlags.SzNoFlags"/>.  Specify
-        /// <see cref="SzFlag.SzWithInfo"/> for an INFO response.  Specifying
-        /// <c>null</c> is equivalent to specifying <see cref="SzFlags.SzNoFlags"/>.
+        /// to the <see cref="SzModifyFlags"/> group to control how the operation
+        /// is performed and the content of the response.  Omitting this parameter
+        /// will default its value to <see cref="SzNoFlags"/>.  Specify
+        /// <see cref="SzWithInfo"/> for an INFO response.  Specifying
+        /// <c>null</c> is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         ///
         /// <returns>
@@ -1426,8 +1425,8 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzFlag.SzWithInfo"/>
-        /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
+        /// <seealso cref="SzWithInfo"/>
+        /// <seealso cref="SzModifyFlags"/>
         /// <seealso cref="GetRedoRecord"/>
         /// <seealso cref="CountRedoRecords"/> 
         string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzNoFlags);
