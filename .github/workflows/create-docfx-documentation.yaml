@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
-    branches: "47-skern"
   workflow_dispatch:
 
 permissions:
