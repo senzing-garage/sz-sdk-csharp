@@ -192,14 +192,14 @@ public class InstallLocations
         string? defaultConfigPath = null;
 
         // check if we are building within the dev structure
-        string[] directoryStructure = ["sz-sdk-java", "java", "g2", "apps", "dev"];
+        string[] directoryStructure = ["net8.0", "*", "bin", "Senzing.Sdk.Tests", "sz-sdk-csharp", "csharp", "g2", "apps", "dev"];
         DirectoryInfo? workingDir = new DirectoryInfo(Environment.CurrentDirectory);
         DirectoryInfo? previousDir = null;
         bool devStructure = true;
         foreach (var dirName in directoryStructure)
         {
             if (workingDir == null) break;
-            if (!workingDir.Name.Equals(dirName, OrdinalIgnoreCase))
+            if (!dirName.Equals("*", OrdinalIgnoreCase) && !workingDir.Name.Equals(dirName, OrdinalIgnoreCase))
             {
                 devStructure = false;
                 break;
