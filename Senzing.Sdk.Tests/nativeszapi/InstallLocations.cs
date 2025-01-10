@@ -4,8 +4,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-using SQLitePCL;
-
 using static System.StringComparison;
 
 /// <summary>
