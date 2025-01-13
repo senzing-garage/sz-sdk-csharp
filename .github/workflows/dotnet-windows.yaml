@@ -32,9 +32,9 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Install Senzing SDK
-        uses: senzing-factory/github-action-install-senzing-sdk@v1
+        uses: senzing-factory/github-action-install-senzing-sdk@v2
         with:
-          senzingsdk-version: ${{ matrix.senzingsdk-version }}
+          senzingsdk-repository-path: ${{ secrets.SENZING_WIN_BETA_REPOSITORY }}
 
       - name: Build with DotNet
         run: |
