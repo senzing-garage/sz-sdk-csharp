@@ -32,8 +32,8 @@ internal class SzFlagsTest : AbstractTest
 
     /// <summary>
     /// The dictionary of <c>string</c> field names for declared 
-    /// constants of {@link Set}'s of {@link SzFlag} instance to the
-    /// actual {@link Set} of {@link SzFlag} instances.
+    /// constants of aggregate <see cref="SzFlag"/> values to the
+    /// actual aggregate <see cref="SzFlag"/> value.
     /// </summary>
     private readonly Dictionary<string, SzFlag> flagsMap = new Dictionary<string, SzFlag>();
 

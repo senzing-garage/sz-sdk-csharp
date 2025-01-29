@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace Senzing.Sdk.Core
@@ -52,13 +54,43 @@ namespace Senzing.Sdk.Core
         /// The number of milliseconds to delay (if not notified) until checking
         /// if we are ready to destroy.
         /// </summary>
-        /// 
         private const int DestroyDelay = 5000;
 
         /// <summary>
         /// Internal object for class-wide synchronized locking.
         /// </summary>
         private static readonly Object ClassMonitor = new Object();
+
+        /// <summary>
+        /// The <see cref="System.Collections.ObjectModel.ReadOnlyDictionary{TKey, TValue}"/>
+        /// of integer error code keys to <c>Type</c> values representing the exception class
+        /// associated with the respective error code.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// The dictionary does not store entries that map to <see cref="SzException"/>
+        /// since that is the default for any error code not otherwise mapped.
+        /// </remarks>
+        private static readonly ReadOnlyDictionary<long, Type> ExceptionMap;
+
+        /// <summary>
+        /// The class initializer.
+        /// </summary>
+        static SzCoreEnvironment()
+        {
+            IDictionary<long, Type> map = new Dictionary<long, Type>();
+            IDictionary<long, Type> result = new Dictionary<long, Type>();
+            SzExceptionMapper.RegisterExceptions(map);
+            Type baseType = typeof(SzException);
+            foreach (KeyValuePair<long, Type> mapping in map)
+            {
+                if (!baseType.Equals(mapping.Value))
+                {
+                    result.Add(mapping.Key, mapping.Value);
+                }
+            }
+            ExceptionMap = new ReadOnlyDictionary<long, Type>(result);
+        }
 
         /// <summary>
         /// Enumerates the possible states for an instance of <c>SzCoreEnvironment</c>.
@@ -390,7 +422,8 @@ namespace Senzing.Sdk.Core
         /// 
         /// <remarks>
         /// This will throw any exception produced by the specified task, wrapping it in
-        /// an <see cref="Senzing.Sdk.SzException"/> if it is a that is not of type {@link SzException}.
+        /// an <see cref="Senzing.Sdk.SzException"/> if it is a that is not of type
+        /// <see cref="SzException"/>.
         /// </remarks>
         /// 
         /// <typeparam name="T">
@@ -512,26 +545,24 @@ namespace Senzing.Sdk.Core
             long errorCode = nativeApi.GetLastExceptionCode();
             string message = nativeApi.GetLastException();
             nativeApi.ClearLastException();
-            switch (errorCode)
+
+            // get the exception class
+            Type exceptionType = ExceptionMap.ContainsKey(errorCode)
+                ? ExceptionMap[errorCode] : typeof(SzException);
+
+            try
             {
-                case 23L:
-                    goto case 3131L;
-                case 24L:
-                    goto case 3131L;
-                case 88L:
-                    goto case 3131L;
-                case 3131L:
-                    throw new SzBadInputException(errorCode, message);
-                case 2207L:
-                    throw new SzUnknownDataSourceException(errorCode, message);
-                case 33L:
-                    goto case 37L;
-                case 37L:
-                    throw new SzNotFoundException(errorCode, message);
-                case 7245L:
-                    throw new SzReplaceConflictException(errorCode, message);
-                default:
-                    throw new SzException(errorCode, message);
+                throw (SzException)Activator.CreateInstance(exceptionType,
+                                                             errorCode,
+                                                             message);
+            }
+            catch (SzException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new SzException(errorCode, message, e);
             }
         }
 

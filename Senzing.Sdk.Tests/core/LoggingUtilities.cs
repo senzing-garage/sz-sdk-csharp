@@ -287,9 +287,9 @@ public static class LoggingUtilities
 
 
     /// <summary>
-    /// Formats an error message from a {@link NativeApi} instance, including
-    /// the details (which may contain sensitive PII information) as part of
-    /// the result.
+    /// Formats an error message from a <see cref="NativeApi"/> instance,
+    /// including the details (which may contain sensitive PII information)
+    /// as part of the result.
     /// </summary>
     /// 
     /// <param name="operation">
@@ -400,7 +400,7 @@ public static class LoggingUtilities
     }
 
     /// <summary>
-    /// Convert a throwable to a {@link Long} value so we don't keep a reference
+    /// Convert a throwable to a <c>long</c> value so we don't keep a reference
     /// to what could be a complex exception object.
     /// </summary>
     /// 
@@ -445,7 +445,8 @@ public static class LoggingUtilities
     }
 
     /// <summary>
-    /// Sets the specified {@link Throwable} as the last logged exception.
+    /// Sets the specified <see cref="System.Exception"/> as the last logged
+    /// exception.
     /// </summary>
     /// 
     /// <remarks>

@@ -55,7 +55,7 @@ internal sealed class AccessToken : Object
     /// </remarks>
     /// 
     /// <returns>
-    /// The current thread-local {@link AccessToken} for this thread which
+    /// The current thread-local <c>AccessToken</c> for this thread which
     /// will change once <see cref="claimThreadAccessToken"/> is called.
     /// </returns>
     public static AccessToken GetThreadAccessToken()
