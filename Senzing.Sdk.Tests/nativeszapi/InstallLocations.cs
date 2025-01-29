@@ -142,9 +142,9 @@ public class InstallLocations
     }
 
     /// <summary>
-    /// Produces a {@link String} describing this instance.
+    /// Produces a <c>string</c> describing this instance.
     /// 
-    /// @return A {@link String} describing this instance.
+    /// @return A <c>string</c> describing this instance.
     /// </summary>
     public override string ToString()
     {
@@ -174,10 +174,10 @@ public class InstallLocations
     }
 
     /// <summary>
-    /// Finds the install directories and returns the {@link InstallLocations}
+    /// Finds the install directories and returns the <c>InstallLocations</c>
     /// instance describing those locations.
     ///
-    /// @return The {@link InstallLocations} instance describing the install
+    /// @return The <c>InstallLocations</c> instance describing the install
     ///         locations.
     /// </summary>
     public static InstallLocations? FindLocations()

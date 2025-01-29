@@ -3,15 +3,15 @@ using System;
 namespace Senzing.Sdk
 {
     /// <summary>
-    /// Describes an exceptional condition when an attempt is made to replace
-    /// a Senzing value with a new value providing it has not not already been
-    /// changed, however, the current value is no longer the expected value and
-    /// has therefore already been changed.
+    /// Extends <see cref="SzRetryableException"/> to define an exceptional
+    /// condition where a database connection was lost causing a Senzing 
+    /// operation to fail.  Retrying the operation would likely result in
+    /// the connection being reestablished and the operation succeeding.
     /// </summary>
-    public class SzReplaceConflictException : SzException
+    public class SzDatabaseConnectionLostException : SzRetryableException
     {
         /// <summary>Default constructor.</summary>
-        public SzReplaceConflictException()
+        public SzDatabaseConnectionLostException()
             : base()
         {
             // do nothing
@@ -24,7 +24,7 @@ namespace Senzing.Sdk
         /// <param name="message">
         /// The message explaining the reason for the exception.
         /// </param>
-        public SzReplaceConflictException(string message)
+        public SzDatabaseConnectionLostException(string message)
             : base(message)
         {
             // do nothing
@@ -39,7 +39,7 @@ namespace Senzing.Sdk
         /// <param name="message">
         /// The message explaining the reason for the exception.
         /// </param>
-        public SzReplaceConflictException(long? errorCode, string message)
+        public SzDatabaseConnectionLostException(long? errorCode, string message)
             : base(errorCode, message)
         {
             // do nothing
@@ -51,7 +51,7 @@ namespace Senzing.Sdk
         /// </summary>
         /// 
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(Exception cause)
+        public SzDatabaseConnectionLostException(Exception cause)
             : base(null, cause)
         {
             // do nothing
@@ -67,7 +67,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(string message, Exception cause)
+        public SzDatabaseConnectionLostException(string message, Exception cause)
             : base(message, cause)
         {
             // do nothing
@@ -86,7 +86,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(long? errorCode, string message, Exception cause)
+        public SzDatabaseConnectionLostException(long? errorCode, string message, Exception cause)
             : base(errorCode, message, cause)
         {
             // do nothing

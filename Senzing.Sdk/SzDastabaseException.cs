@@ -3,15 +3,14 @@ using System;
 namespace Senzing.Sdk
 {
     /// <summary>
-    /// Describes an exceptional condition when an attempt is made to replace
-    /// a Senzing value with a new value providing it has not not already been
-    /// changed, however, the current value is no longer the expected value and
-    /// has therefore already been changed.
+    /// Extends <see cref="SzUnrecoverableException"/> to define an exceptional
+    /// condition triggered by a database error from which we cannot recover
+    /// (e.g.: missing or unexpected schema defintion).
     /// </summary>
-    public class SzReplaceConflictException : SzException
+    public class SzDatabaseException : SzUnrecoverableException
     {
         /// <summary>Default constructor.</summary>
-        public SzReplaceConflictException()
+        public SzDatabaseException()
             : base()
         {
             // do nothing
@@ -24,7 +23,7 @@ namespace Senzing.Sdk
         /// <param name="message">
         /// The message explaining the reason for the exception.
         /// </param>
-        public SzReplaceConflictException(string message)
+        public SzDatabaseException(string message)
             : base(message)
         {
             // do nothing
@@ -39,7 +38,7 @@ namespace Senzing.Sdk
         /// <param name="message">
         /// The message explaining the reason for the exception.
         /// </param>
-        public SzReplaceConflictException(long? errorCode, string message)
+        public SzDatabaseException(long? errorCode, string message)
             : base(errorCode, message)
         {
             // do nothing
@@ -51,7 +50,7 @@ namespace Senzing.Sdk
         /// </summary>
         /// 
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(Exception cause)
+        public SzDatabaseException(Exception cause)
             : base(null, cause)
         {
             // do nothing
@@ -67,7 +66,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(string message, Exception cause)
+        public SzDatabaseException(string message, Exception cause)
             : base(message, cause)
         {
             // do nothing
@@ -86,7 +85,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="cause">The underlying cause for the exception.</param>
-        public SzReplaceConflictException(long? errorCode, string message, Exception cause)
+        public SzDatabaseException(long? errorCode, string message, Exception cause)
             : base(errorCode, message, cause)
         {
             // do nothing

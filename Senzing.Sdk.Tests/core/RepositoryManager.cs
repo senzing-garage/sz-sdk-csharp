@@ -2065,8 +2065,9 @@ public static class RepositoryManager
     }
 
     /// <summary>
-    /// Gets the {@link JsonObject} describing the current default config as well
-    /// as setting the default config's ID in the specified result parameter.
+    /// Gets the <see cref="SzConfiguration"/> describing the current
+    /// default config as well as setting the default config's ID in
+    /// the specified result parameter.
     /// </summary>
     private static SzConfiguration GetDefaultConfig()
     {

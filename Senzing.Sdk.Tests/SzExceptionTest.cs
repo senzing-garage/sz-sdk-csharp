@@ -16,10 +16,19 @@ internal class SzExceptionTest : AbstractTest
     {
         List<Type> types = new List<Type>();
         types.Add(typeof(SzException));
+        types.Add(typeof(SzConfigurationException));
+        types.Add(typeof(SzDatabaseConnectionLostException));
+        types.Add(typeof(SzDatabaseException));
         types.Add(typeof(SzBadInputException));
+        types.Add(typeof(SzLicenseException));
         types.Add(typeof(SzNotFoundException));
-        types.Add(typeof(SzUnknownDataSourceException));
+        types.Add(typeof(SzNotInitializedException));
         types.Add(typeof(SzReplaceConflictException));
+        types.Add(typeof(SzRetryableException));
+        types.Add(typeof(SzRetryTimeoutExceededException));
+        types.Add(typeof(SzUnhandledException));
+        types.Add(typeof(SzUnknownDataSourceException));
+        types.Add(typeof(SzUnrecoverableException));
         return types;
     }
 

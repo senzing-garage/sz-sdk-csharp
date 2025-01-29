@@ -212,8 +212,8 @@ internal class NativeApiFactory
     /// 
     /// <remarks>
     /// If a <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/>
-    /// is installed then it is used to create the instance, otherwise a new instance of {@link NativeConfigJni} is
-    /// constructed and returned.
+    /// is installed then it is used to create the instance, otherwise a new instance of
+    /// <see cref="NativeConfigJni"/> is constructed and returned.
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeConfig"/> to use.
     ///
@@ -238,10 +238,10 @@ internal class NativeApiFactory
     }
 
     /// <summary>
-    /// Provides a new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.  If a
-    /// <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/> is installed then it is used to create
-    /// the instance, otherwise a new instance of {@link NativeProductJni} is
-    /// constructed and returned.
+    /// Provides a new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
+    /// If a <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/> is installed then
+    /// it is used to create the instance, otherwise a new instance of
+    /// <see cref="NariveProductJni"/> is constructed and returned.
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
     ///
@@ -302,14 +302,12 @@ internal class NativeApiFactory
     }
 
     ///
-    /// Provides a new instance of <see cref="Senzing.Sdk.Core.NativeDiagnostic"/> to use.  If a
-    /// <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/> is installed then it is used to create
-    /// the instance, otherwise a new instance of {@link NativeDiagnosticJni} is
-    /// constructed and returned.
+    /// Provides a new instance of <see cref="Senzing.Sdk.Core.NativeDiagnostic"/>
+    /// to use.  If a <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/> is
+    /// installed then it is used to create the instance, otherwise a new instance
+    /// of <see cref="NativeDiagnosticJni"/> is constructed and returned.
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeDiagnostic"/> to use.
-    ///
-    ///
     public static NativeDiagnostic CreateDiagnosticApi()
     {
         NativeApiProvider? provider = GetInstalledProvider();
