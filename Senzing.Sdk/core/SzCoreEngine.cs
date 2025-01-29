@@ -22,7 +22,8 @@ namespace Senzing.Sdk.Core
         /// The empty response for operations where the info can optionally
         /// generated but was not requested.
         /// </summary>
-        internal const string NoInfo = "{}";
+        internal const string NoInfo
+            = "{\"AFFECTED_ENTITIES\":[],\"INTERESTING_ENTITIES\":{\"ENTITIES\":[]}}";
 
         /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
@@ -152,7 +153,7 @@ namespace Senzing.Sdk.Core
                 long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
                 long returnCode = 0;
-                string result = NoInfo;
+                string result = null;
                 // check if we have flags to pass downstream or need info
                 if (downstreamFlags == 0L
                     && (flags == null || ((flags & SzWithInfo) == SzNoFlags)))
@@ -282,7 +283,7 @@ namespace Senzing.Sdk.Core
                 long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
                 long returnCode = 0;
-                string result = NoInfo;
+                string result = null;
                 // check if we have flags to pass downstream or need info
                 if (downstreamFlags == 0L
                     && (flags == null || ((flags & SzWithInfo) == SzNoFlags)))
@@ -1076,7 +1077,7 @@ namespace Senzing.Sdk.Core
             return this.env.Execute(() =>
             {
                 long returnCode = 0;
-                string result = NoInfo;
+                string result = null;
                 // check if we have flags to pass downstream
                 if (flags == null || ((flags & SzWithInfo) == SzNoFlags))
                 {
@@ -1117,7 +1118,7 @@ namespace Senzing.Sdk.Core
                 long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
                 long returnCode = 0;
-                string result = NoInfo;
+                string result = null;
 
                 // check if we have flags to pass downstream or need info
                 if (flags == null || ((flags & SzWithInfo) == SzNoFlags))
@@ -1170,7 +1171,7 @@ namespace Senzing.Sdk.Core
                 long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
                 long returnCode = 0;
-                string result = NoInfo;
+                string result = null;
 
                 // check if we have flags to pass downstream or need info
                 if (flags == null || ((flags & SzWithInfo) == SzNoFlags))
@@ -1197,7 +1198,7 @@ namespace Senzing.Sdk.Core
                     // check if record not found yields empty INFO
                     if (result.Length == 0)
                     {
-                        result = NoInfo;
+                        result = null;
                     }
                 }
 

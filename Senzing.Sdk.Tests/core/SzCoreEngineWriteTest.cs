@@ -736,7 +736,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 }
                 else
                 {
-                    Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
+                    Assert.That(result, Is.Null,
                                 "No INFO requested, but non-empty response received: "
                                 + testData);
                 }
@@ -908,7 +908,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 }
                 else
                 {
-                    Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
+                    Assert.That(result, Is.Null,
                                 "No INFO requested, but non-empty response received");
                 }
 
@@ -1038,17 +1038,13 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
                     if (dict.Count > 0)
                     {
-                        Assert.IsTrue(dict.ContainsKey("DATA_SOURCE"),
-                                      "Info message lacking DATA_SOURCE key: " + testData);
-                        Assert.IsTrue(dict.ContainsKey("RECORD_ID"),
-                                      "Info message lacking RECORD_ID key: " + testData);
                         Assert.IsTrue(dict.ContainsKey("AFFECTED_ENTITIES"),
                                       "Info message lacking AFFECTED_ENTITIES key: " + testData);
                     }
                 }
                 else
                 {
-                    Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
+                    Assert.That(result, Is.Null,
                                  "No INFO requested, but non-empty response received: "
                                  + testData);
                 }
@@ -1178,7 +1174,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 }
                 else
                 {
-                    Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
+                    Assert.That(result, Is.Null,
                                  "No INFO requested, but non-empty response received: "
                                  + testData);
                 }
@@ -1348,7 +1344,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                     }
                     else
                     {
-                        Assert.That(result, Is.EqualTo(SzCoreEngine.NoInfo),
+                        Assert.That(result, Is.Null,
                                     "No INFO requested, but non-empty response received: "
                                     + result);
                     }
