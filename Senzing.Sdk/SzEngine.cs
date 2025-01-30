@@ -84,7 +84,8 @@ namespace Senzing.Sdk
         ///
         /// <returns>
         /// The JSON <c>string</c> result produced by adding the record to the
-        /// repository (depending on the specified flags).
+        /// repository, or <c>null</c> if the specified flags do not indicate 
+        /// that an INFO message should be returned.
         /// </returns>
         ///
         /// <exception cref="SzUnknownDataSourceException">
@@ -186,8 +187,9 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The JSON <c>string</c> result produced by deleting the record from the
-        /// repository (depending on the specified flags).
+        /// The JSON <c>string</c> result produced by deleting the record from
+        /// the repository, or <c>null</c> if the specified flags do not
+        /// indicate that an INFO message should be returned.
         /// </returns>
         ///
         /// <exception cref="SzUnknownDataSourceException">
@@ -244,8 +246,9 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The JSON <c>string</c> result produced by reevaluating the record in the
-        /// repository (depending on the specified flags).
+        /// The JSON <c>string</c> result produced by reevaluating the record,
+        /// or <c>null</c> if the specified flags do not indicate that an INFO
+        /// message should be returned.
         /// </returns>
         ///
         /// <exception cref="SzUnknownDataSourceException">
@@ -295,8 +298,9 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The JSON <c>string</c> result produced by reevaluating the entity in
-        /// the repository (depending on the specified flags).
+        /// The JSON <c>string</c> result produced by reevaluating the entity,
+        /// or <c>null</c> if the specified flags do not indicate that an INFO
+        /// message should be returned.
         /// </returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
@@ -1419,8 +1423,9 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The JSON <c>string</c> result produced by adding the record to the
-        /// repository (depending on the specified flags).
+        /// The JSON <c>string</c> result produced by processing the redo record,
+        /// or <c>null</c> if the specified flags do not indicate that an INFO
+        /// message should be returned.
         /// </returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
