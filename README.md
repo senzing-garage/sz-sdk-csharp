@@ -12,7 +12,7 @@ This repository is dependent on the Senzing native shared library (`.so`,
 While this SDK is being made available as open source, the actual Senzing.Sdk
 NuGet package file (`Senzing.Sdk.4.0.0-beta.1.1.nupkg`) that you use should be
 obtained from Senzing product installation to ensure that the C# code version
-matches the native library version.  
+matches the native library version.
 
 ### Preequisites
 1. Microsoft .NET for your platform: https://dotnet.microsoft.com/en-us/download
@@ -44,14 +44,14 @@ matches the native library version.
     dotnet build Senzing.Sdk
     ```
     The DLL will be found in `Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be ound in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0-beta1.1.nupkg` 
+    The NuGet package will be ound in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0-beta1.1.nupkg`
 
 1. Building with Release:
     ```console
     dotnet build -c Release Senzing.Sdk
     ```
     The DLL will be found in `Senzing.Sdk/bin/Release/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be ound in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0-beta1.1.nupkg` 
+    The NuGet package will be ound in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0-beta1.1.nupkg`
 
 1. Running unit tests:
     ```console
@@ -69,7 +69,7 @@ matches the native library version.
     dotnet docfx docfx.json
     ```
     The generated documentation will reside in `target/apidocs/_site/`
-    
+
 1. Clean up build artfiacts:
     ```console
     dotnet clean Senzing.Sdk
@@ -117,7 +117,7 @@ matches the native library version.
         ```console
         dotnet add [your-project-name] package Senzing.Sdk --version 4.0.0-beta1.1
         ```
-    - **OPTION 3:** Add the latest production version of Senzing.Sdk as your dependency 
+    - **OPTION 3:** Add the latest production version of Senzing.Sdk as your dependency
     *(note: this will only function once Senzing.Sdk v4.0.0 is released)*:
         ```console
         dotnet add [your-project-name] package Senzing.Sdk
