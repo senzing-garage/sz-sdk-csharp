@@ -7,7 +7,9 @@
     <AnalysisMode>All</AnalysisMode>
     <AnalysisModeSecurity>All</AnalysisModeSecurity>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <PackageVersion>4.0.0-beta1.1</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

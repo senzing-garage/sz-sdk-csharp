@@ -520,6 +520,15 @@ namespace Senzing.Sdk
         ///   <item>
         ///     <description><see cref="SzFlag.SzSearchIncludeNameOnly"/></description>
         ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeAllCandidates"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeRequest"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeRequestDetails"/></description>
+        ///   </item>
         /// </list>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
