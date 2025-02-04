@@ -397,5 +397,33 @@ namespace Senzing.Sdk.Core
         /// </summary>
         public const long SzSearchByAttributesDefaultFlags
           = (SzSearchByAttributesAll);
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// search results should not only include those entities that
+        /// satisfy resolution rule, but also those that present on the
+        /// candidate list but fail to satisfy a resolution rule.
+        /// </summary>
+        public const long SzSearchIncludeAllCandidates = (1L << 32);
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// the search response should include the basic feature
+        /// information for the search criteria features.
+        /// </summary>
+        public const long SzSearchIncludeRequest = (1L << 37);
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// the search response should include detailed feature 
+        /// information for search criteria features (including feature
+        /// stats and generic status).
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// This flag has no effect unless
+        /// <see cref="SzSearchIncludeRequest"/> is also specified.
+        /// </remarks>
+        public const long SzSearchIncludeRequestDetails = (1L << 38);
     }
 }

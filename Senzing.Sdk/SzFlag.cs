@@ -795,6 +795,66 @@ namespace Senzing.Sdk
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
-        SzSearchIncludeNameOnly = SzExportIncludeNameOnly
+        SzSearchIncludeNameOnly = SzExportIncludeNameOnly,
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// search results should not only include those entities that
+        /// satisfy resolution rule, but also those that present on the
+        /// candidate list but fail to satisfy a resolution rule.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// This flag belongs to the following usage groups:
+        /// <list>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        SzSearchIncludeAllCandidates = (1L << 32),
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// the search response should include the basic feature
+        /// information for the search criteria features.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// This flag belongs to the following usage groups:
+        /// <list>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        SzSearchIncludeRequest = (1L << 37),
+
+        /// <summary>
+        /// The bitwise flag for search functionality to indicate that
+        /// the search response should include detailed feature 
+        /// information for search criteria features (including feature
+        /// stats and generic status).
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// This flag has no effect unless
+        /// <see cref="SzSearchIncludeRequest"/> is also specified.
+        /// <para>
+        /// This flag belongs to the following usage groups:
+        /// <list>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        SzSearchIncludeRequestDetails = (1L << 38)
     }
 }

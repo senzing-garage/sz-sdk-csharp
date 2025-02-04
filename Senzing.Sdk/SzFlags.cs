@@ -252,7 +252,10 @@ namespace Senzing.Sdk
                 | SzFlag.SzSearchIncludeResolved
                 | SzFlag.SzSearchIncludePossiblySame
                 | SzFlag.SzSearchIncludePossiblyRelated
-                | SzFlag.SzSearchIncludeNameOnly;
+                | SzFlag.SzSearchIncludeNameOnly
+                | SzFlag.SzSearchIncludeAllCandidates
+                | SzFlag.SzSearchIncludeRequest
+                | SzFlag.SzSearchIncludeRequestDetails;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
