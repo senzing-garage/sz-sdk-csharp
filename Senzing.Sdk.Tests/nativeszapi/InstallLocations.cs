@@ -477,7 +477,17 @@ public class InstallLocations
         if (configDir == null && defaultConfigPath != null)
         {
             configDir = new DirectoryInfo(defaultConfigPath);
-            if (!configDir.Exists) configDir = null;
+            if (!configDir.Exists) {
+                configDir = null;
+            }
+        }
+
+        // if still null, try to use the install's etc directory
+        if (configDir == null && installDir != null) {
+            configDir = new DirectoryInfo(Path.Combine(installDir.FullName, "etc"));
+            if (!configDir.Exists) {
+                configDir = null;
+            }                
         }
 
         if (configPath != null && configDir != null && !configDir.Exists)
