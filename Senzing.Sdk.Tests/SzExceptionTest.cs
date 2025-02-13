@@ -19,6 +19,7 @@ internal class SzExceptionTest : AbstractTest
         types.Add(typeof(SzConfigurationException));
         types.Add(typeof(SzDatabaseConnectionLostException));
         types.Add(typeof(SzDatabaseException));
+        types.Add(typeof(SzDatabaseTransientException));
         types.Add(typeof(SzBadInputException));
         types.Add(typeof(SzLicenseException));
         types.Add(typeof(SzNotFoundException));
