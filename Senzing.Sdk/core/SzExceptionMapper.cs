@@ -19,448 +19,448 @@ namespace Senzing.Sdk.Core
         /// </param>
         public static void RegisterExceptions(IDictionary<long, Type> dictionary)
         {
-            dictionary.Add(2L, typeof(SzBadInputException));
-            dictionary.Add(5L, typeof(SzException));
-            dictionary.Add(7L, typeof(SzBadInputException));
-            dictionary.Add(10L, typeof(SzRetryTimeoutExceededException));
-            dictionary.Add(14L, typeof(SzConfigurationException));
-            dictionary.Add(18L, typeof(SzException));
-            dictionary.Add(19L, typeof(SzConfigurationException));
-            dictionary.Add(20L, typeof(SzConfigurationException));
-            dictionary.Add(21L, typeof(SzConfigurationException));
-            dictionary.Add(22L, typeof(SzBadInputException));
-            dictionary.Add(23L, typeof(SzBadInputException));
-            dictionary.Add(24L, typeof(SzBadInputException));
-            dictionary.Add(25L, typeof(SzBadInputException));
-            dictionary.Add(26L, typeof(SzBadInputException));
-            dictionary.Add(27L, typeof(SzException));
-            dictionary.Add(28L, typeof(SzConfigurationException));
-            dictionary.Add(29L, typeof(SzException));
-            dictionary.Add(30L, typeof(SzConfigurationException));
-            dictionary.Add(31L, typeof(SzException));
-            dictionary.Add(32L, typeof(SzException));
-            dictionary.Add(33L, typeof(SzNotFoundException));
-            dictionary.Add(34L, typeof(SzConfigurationException));
-            dictionary.Add(35L, typeof(SzConfigurationException));
-            dictionary.Add(36L, typeof(SzConfigurationException));
-            dictionary.Add(37L, typeof(SzNotFoundException));
-            dictionary.Add(38L, typeof(SzException));
-            dictionary.Add(39L, typeof(SzException));
-            dictionary.Add(40L, typeof(SzConfigurationException));
-            dictionary.Add(41L, typeof(SzException));
-            dictionary.Add(42L, typeof(SzException));
-            dictionary.Add(43L, typeof(SzException));
-            dictionary.Add(44L, typeof(SzException));
-            dictionary.Add(45L, typeof(SzException));
-            dictionary.Add(46L, typeof(SzException));
-            dictionary.Add(47L, typeof(SzException));
-            dictionary.Add(48L, typeof(SzNotInitializedException));
-            dictionary.Add(50L, typeof(SzNotInitializedException));
-            dictionary.Add(51L, typeof(SzBadInputException));
-            dictionary.Add(52L, typeof(SzException));
-            dictionary.Add(53L, typeof(SzBadInputException));
-            dictionary.Add(54L, typeof(SzDatabaseException));
-            dictionary.Add(55L, typeof(SzException));
-            dictionary.Add(56L, typeof(SzException));
-            dictionary.Add(57L, typeof(SzException));
-            dictionary.Add(58L, typeof(SzException));
-            dictionary.Add(60L, typeof(SzConfigurationException));
-            dictionary.Add(61L, typeof(SzConfigurationException));
-            dictionary.Add(62L, typeof(SzConfigurationException));
-            dictionary.Add(63L, typeof(SzNotInitializedException));
-            dictionary.Add(64L, typeof(SzConfigurationException));
-            dictionary.Add(65L, typeof(SzBadInputException));
-            dictionary.Add(66L, typeof(SzBadInputException));
-            dictionary.Add(67L, typeof(SzConfigurationException));
-            dictionary.Add(68L, typeof(SzException));
-            dictionary.Add(69L, typeof(SzException));
-            dictionary.Add(76L, typeof(SzException));
-            dictionary.Add(77L, typeof(SzException));
-            dictionary.Add(78L, typeof(SzException));
-            dictionary.Add(79L, typeof(SzException));
-            dictionary.Add(80L, typeof(SzException));
-            dictionary.Add(81L, typeof(SzException));
-            dictionary.Add(82L, typeof(SzException));
-            dictionary.Add(83L, typeof(SzException));
-            dictionary.Add(84L, typeof(SzException));
-            dictionary.Add(85L, typeof(SzException));
-            dictionary.Add(86L, typeof(SzException));
-            dictionary.Add(87L, typeof(SzUnhandledException));
-            dictionary.Add(88L, typeof(SzBadInputException));
-            dictionary.Add(89L, typeof(SzConfigurationException));
-            dictionary.Add(90L, typeof(SzConfigurationException));
-            dictionary.Add(91L, typeof(SzException));
-            dictionary.Add(92L, typeof(SzException));
-            dictionary.Add(93L, typeof(SzException));
-            dictionary.Add(94L, typeof(SzException));
-            dictionary.Add(95L, typeof(SzException));
-            dictionary.Add(96L, typeof(SzException));
-            dictionary.Add(999L, typeof(SzLicenseException));
-            dictionary.Add(1000L, typeof(SzDatabaseException));
-            dictionary.Add(1001L, typeof(SzDatabaseException));
-            dictionary.Add(1002L, typeof(SzDatabaseException));
-            dictionary.Add(1003L, typeof(SzDatabaseException));
-            dictionary.Add(1004L, typeof(SzDatabaseException));
-            dictionary.Add(1005L, typeof(SzDatabaseException));
-            dictionary.Add(1006L, typeof(SzDatabaseConnectionLostException));
-            dictionary.Add(1007L, typeof(SzDatabaseConnectionLostException));
-            dictionary.Add(1008L, typeof(SzDatabaseException));
-            dictionary.Add(1009L, typeof(SzDatabaseException));
-            dictionary.Add(1010L, typeof(SzDatabaseException));
-            dictionary.Add(1011L, typeof(SzDatabaseException));
-            dictionary.Add(1012L, typeof(SzDatabaseException));
-            dictionary.Add(1013L, typeof(SzDatabaseException));
-            dictionary.Add(1014L, typeof(SzDatabaseException));
-            dictionary.Add(1015L, typeof(SzDatabaseException));
-            dictionary.Add(1016L, typeof(SzDatabaseException));
-            dictionary.Add(1017L, typeof(SzDatabaseException));
-            dictionary.Add(1018L, typeof(SzDatabaseException));
-            dictionary.Add(1019L, typeof(SzConfigurationException));
-            dictionary.Add(2001L, typeof(SzConfigurationException));
-            dictionary.Add(2002L, typeof(SzException));
-            dictionary.Add(2003L, typeof(SzException));
-            dictionary.Add(2005L, typeof(SzException));
-            dictionary.Add(2006L, typeof(SzException));
-            dictionary.Add(2007L, typeof(SzException));
-            dictionary.Add(2009L, typeof(SzException));
-            dictionary.Add(2010L, typeof(SzException));
-            dictionary.Add(2012L, typeof(SzConfigurationException));
-            dictionary.Add(2015L, typeof(SzConfigurationException));
-            dictionary.Add(2027L, typeof(SzException));
-            dictionary.Add(2029L, typeof(SzConfigurationException));
-            dictionary.Add(2034L, typeof(SzConfigurationException));
-            dictionary.Add(2036L, typeof(SzConfigurationException));
-            dictionary.Add(2037L, typeof(SzConfigurationException));
-            dictionary.Add(2038L, typeof(SzConfigurationException));
-            dictionary.Add(2041L, typeof(SzConfigurationException));
-            dictionary.Add(2045L, typeof(SzConfigurationException));
-            dictionary.Add(2047L, typeof(SzConfigurationException));
-            dictionary.Add(2048L, typeof(SzConfigurationException));
-            dictionary.Add(2049L, typeof(SzConfigurationException));
-            dictionary.Add(2050L, typeof(SzConfigurationException));
-            dictionary.Add(2051L, typeof(SzConfigurationException));
-            dictionary.Add(2057L, typeof(SzBadInputException));
-            dictionary.Add(2061L, typeof(SzConfigurationException));
-            dictionary.Add(2062L, typeof(SzConfigurationException));
-            dictionary.Add(2065L, typeof(SzConfigurationException));
-            dictionary.Add(2066L, typeof(SzConfigurationException));
-            dictionary.Add(2067L, typeof(SzConfigurationException));
-            dictionary.Add(2069L, typeof(SzConfigurationException));
-            dictionary.Add(2070L, typeof(SzConfigurationException));
-            dictionary.Add(2071L, typeof(SzConfigurationException));
-            dictionary.Add(2073L, typeof(SzException));
-            dictionary.Add(2074L, typeof(SzException));
-            dictionary.Add(2075L, typeof(SzConfigurationException));
-            dictionary.Add(2076L, typeof(SzConfigurationException));
-            dictionary.Add(2079L, typeof(SzConfigurationException));
-            dictionary.Add(2080L, typeof(SzConfigurationException));
-            dictionary.Add(2081L, typeof(SzConfigurationException));
-            dictionary.Add(2082L, typeof(SzConfigurationException));
-            dictionary.Add(2083L, typeof(SzConfigurationException));
-            dictionary.Add(2084L, typeof(SzConfigurationException));
-            dictionary.Add(2088L, typeof(SzConfigurationException));
-            dictionary.Add(2089L, typeof(SzConfigurationException));
-            dictionary.Add(2090L, typeof(SzConfigurationException));
-            dictionary.Add(2091L, typeof(SzConfigurationException));
-            dictionary.Add(2092L, typeof(SzConfigurationException));
-            dictionary.Add(2093L, typeof(SzConfigurationException));
-            dictionary.Add(2094L, typeof(SzConfigurationException));
-            dictionary.Add(2095L, typeof(SzConfigurationException));
-            dictionary.Add(2097L, typeof(SzException));
-            dictionary.Add(2099L, typeof(SzConfigurationException));
-            dictionary.Add(2101L, typeof(SzConfigurationException));
-            dictionary.Add(2102L, typeof(SzConfigurationException));
-            dictionary.Add(2103L, typeof(SzConfigurationException));
-            dictionary.Add(2104L, typeof(SzConfigurationException));
-            dictionary.Add(2105L, typeof(SzConfigurationException));
-            dictionary.Add(2106L, typeof(SzConfigurationException));
-            dictionary.Add(2107L, typeof(SzConfigurationException));
-            dictionary.Add(2108L, typeof(SzConfigurationException));
-            dictionary.Add(2109L, typeof(SzConfigurationException));
-            dictionary.Add(2110L, typeof(SzConfigurationException));
-            dictionary.Add(2111L, typeof(SzConfigurationException));
-            dictionary.Add(2112L, typeof(SzConfigurationException));
-            dictionary.Add(2113L, typeof(SzConfigurationException));
-            dictionary.Add(2114L, typeof(SzConfigurationException));
-            dictionary.Add(2116L, typeof(SzException));
-            dictionary.Add(2117L, typeof(SzConfigurationException));
-            dictionary.Add(2118L, typeof(SzConfigurationException));
-            dictionary.Add(2120L, typeof(SzConfigurationException));
-            dictionary.Add(2121L, typeof(SzConfigurationException));
-            dictionary.Add(2123L, typeof(SzConfigurationException));
-            dictionary.Add(2131L, typeof(SzConfigurationException));
-            dictionary.Add(2135L, typeof(SzConfigurationException));
-            dictionary.Add(2136L, typeof(SzConfigurationException));
-            dictionary.Add(2137L, typeof(SzConfigurationException));
-            dictionary.Add(2138L, typeof(SzConfigurationException));
-            dictionary.Add(2139L, typeof(SzConfigurationException));
-            dictionary.Add(2207L, typeof(SzUnknownDataSourceException));
-            dictionary.Add(2209L, typeof(SzConfigurationException));
-            dictionary.Add(2210L, typeof(SzConfigurationException));
-            dictionary.Add(2211L, typeof(SzConfigurationException));
-            dictionary.Add(2212L, typeof(SzConfigurationException));
-            dictionary.Add(2213L, typeof(SzConfigurationException));
-            dictionary.Add(2214L, typeof(SzConfigurationException));
-            dictionary.Add(2215L, typeof(SzConfigurationException));
-            dictionary.Add(2216L, typeof(SzConfigurationException));
-            dictionary.Add(2217L, typeof(SzConfigurationException));
-            dictionary.Add(2218L, typeof(SzConfigurationException));
-            dictionary.Add(2219L, typeof(SzConfigurationException));
-            dictionary.Add(2220L, typeof(SzConfigurationException));
-            dictionary.Add(2221L, typeof(SzConfigurationException));
-            dictionary.Add(2222L, typeof(SzConfigurationException));
-            dictionary.Add(2223L, typeof(SzConfigurationException));
-            dictionary.Add(2224L, typeof(SzConfigurationException));
-            dictionary.Add(2225L, typeof(SzConfigurationException));
-            dictionary.Add(2226L, typeof(SzConfigurationException));
-            dictionary.Add(2227L, typeof(SzConfigurationException));
-            dictionary.Add(2228L, typeof(SzConfigurationException));
-            dictionary.Add(2230L, typeof(SzConfigurationException));
-            dictionary.Add(2231L, typeof(SzConfigurationException));
-            dictionary.Add(2232L, typeof(SzConfigurationException));
-            dictionary.Add(2233L, typeof(SzConfigurationException));
-            dictionary.Add(2234L, typeof(SzConfigurationException));
-            dictionary.Add(2235L, typeof(SzConfigurationException));
-            dictionary.Add(2236L, typeof(SzConfigurationException));
-            dictionary.Add(2237L, typeof(SzConfigurationException));
-            dictionary.Add(2238L, typeof(SzConfigurationException));
-            dictionary.Add(2239L, typeof(SzConfigurationException));
-            dictionary.Add(2240L, typeof(SzConfigurationException));
-            dictionary.Add(2241L, typeof(SzConfigurationException));
-            dictionary.Add(2242L, typeof(SzConfigurationException));
-            dictionary.Add(2243L, typeof(SzConfigurationException));
-            dictionary.Add(2244L, typeof(SzConfigurationException));
-            dictionary.Add(2245L, typeof(SzConfigurationException));
-            dictionary.Add(2246L, typeof(SzConfigurationException));
-            dictionary.Add(2247L, typeof(SzConfigurationException));
-            dictionary.Add(2248L, typeof(SzConfigurationException));
-            dictionary.Add(2249L, typeof(SzConfigurationException));
-            dictionary.Add(2250L, typeof(SzConfigurationException));
-            dictionary.Add(2251L, typeof(SzConfigurationException));
-            dictionary.Add(2252L, typeof(SzConfigurationException));
-            dictionary.Add(2253L, typeof(SzConfigurationException));
-            dictionary.Add(2254L, typeof(SzConfigurationException));
-            dictionary.Add(2255L, typeof(SzConfigurationException));
-            dictionary.Add(2256L, typeof(SzConfigurationException));
-            dictionary.Add(2257L, typeof(SzConfigurationException));
-            dictionary.Add(2258L, typeof(SzConfigurationException));
-            dictionary.Add(2259L, typeof(SzConfigurationException));
-            dictionary.Add(2260L, typeof(SzConfigurationException));
-            dictionary.Add(2261L, typeof(SzConfigurationException));
-            dictionary.Add(2262L, typeof(SzConfigurationException));
-            dictionary.Add(2263L, typeof(SzConfigurationException));
-            dictionary.Add(2264L, typeof(SzConfigurationException));
-            dictionary.Add(2266L, typeof(SzConfigurationException));
-            dictionary.Add(2267L, typeof(SzConfigurationException));
-            dictionary.Add(2268L, typeof(SzConfigurationException));
-            dictionary.Add(2269L, typeof(SzConfigurationException));
-            dictionary.Add(2270L, typeof(SzConfigurationException));
-            dictionary.Add(2271L, typeof(SzConfigurationException));
-            dictionary.Add(2272L, typeof(SzConfigurationException));
-            dictionary.Add(2273L, typeof(SzConfigurationException));
-            dictionary.Add(2274L, typeof(SzConfigurationException));
-            dictionary.Add(2275L, typeof(SzConfigurationException));
-            dictionary.Add(2276L, typeof(SzConfigurationException));
-            dictionary.Add(2277L, typeof(SzConfigurationException));
-            dictionary.Add(2278L, typeof(SzConfigurationException));
-            dictionary.Add(2279L, typeof(SzConfigurationException));
-            dictionary.Add(2280L, typeof(SzConfigurationException));
-            dictionary.Add(2281L, typeof(SzConfigurationException));
-            dictionary.Add(2282L, typeof(SzConfigurationException));
-            dictionary.Add(2283L, typeof(SzConfigurationException));
-            dictionary.Add(2285L, typeof(SzException));
-            dictionary.Add(2286L, typeof(SzException));
-            dictionary.Add(2287L, typeof(SzException));
-            dictionary.Add(2288L, typeof(SzException));
-            dictionary.Add(2289L, typeof(SzConfigurationException));
-            dictionary.Add(2290L, typeof(SzConfigurationException));
-            dictionary.Add(2291L, typeof(SzConfigurationException));
-            dictionary.Add(2292L, typeof(SzException));
-            dictionary.Add(2293L, typeof(SzException));
-            dictionary.Add(2294L, typeof(SzException));
-            dictionary.Add(3011L, typeof(SzException));
-            dictionary.Add(3101L, typeof(SzException));
-            dictionary.Add(3102L, typeof(SzException));
-            dictionary.Add(3103L, typeof(SzException));
-            dictionary.Add(3104L, typeof(SzException));
-            dictionary.Add(3110L, typeof(SzException));
-            dictionary.Add(3111L, typeof(SzException));
-            dictionary.Add(3112L, typeof(SzException));
-            dictionary.Add(3121L, typeof(SzBadInputException));
-            dictionary.Add(3122L, typeof(SzBadInputException));
-            dictionary.Add(3123L, typeof(SzBadInputException));
-            dictionary.Add(3131L, typeof(SzBadInputException));
-            dictionary.Add(7209L, typeof(SzConfigurationException));
-            dictionary.Add(7211L, typeof(SzConfigurationException));
-            dictionary.Add(7212L, typeof(SzConfigurationException));
-            dictionary.Add(7216L, typeof(SzConfigurationException));
-            dictionary.Add(7217L, typeof(SzConfigurationException));
-            dictionary.Add(7218L, typeof(SzConfigurationException));
-            dictionary.Add(7220L, typeof(SzConfigurationException));
-            dictionary.Add(7221L, typeof(SzConfigurationException));
-            dictionary.Add(7222L, typeof(SzException));
-            dictionary.Add(7223L, typeof(SzConfigurationException));
-            dictionary.Add(7224L, typeof(SzConfigurationException));
-            dictionary.Add(7226L, typeof(SzConfigurationException));
-            dictionary.Add(7227L, typeof(SzConfigurationException));
-            dictionary.Add(7228L, typeof(SzConfigurationException));
-            dictionary.Add(7230L, typeof(SzConfigurationException));
-            dictionary.Add(7232L, typeof(SzConfigurationException));
-            dictionary.Add(7233L, typeof(SzConfigurationException));
-            dictionary.Add(7234L, typeof(SzConfigurationException));
-            dictionary.Add(7235L, typeof(SzConfigurationException));
-            dictionary.Add(7236L, typeof(SzConfigurationException));
-            dictionary.Add(7237L, typeof(SzConfigurationException));
-            dictionary.Add(7238L, typeof(SzException));
-            dictionary.Add(7239L, typeof(SzConfigurationException));
-            dictionary.Add(7240L, typeof(SzConfigurationException));
-            dictionary.Add(7241L, typeof(SzConfigurationException));
-            dictionary.Add(7242L, typeof(SzConfigurationException));
-            dictionary.Add(7243L, typeof(SzConfigurationException));
-            dictionary.Add(7244L, typeof(SzConfigurationException));
-            dictionary.Add(7245L, typeof(SzReplaceConflictException));
-            dictionary.Add(7246L, typeof(SzConfigurationException));
-            dictionary.Add(7247L, typeof(SzConfigurationException));
-            dictionary.Add(7303L, typeof(SzBadInputException));
-            dictionary.Add(7305L, typeof(SzBadInputException));
-            dictionary.Add(7313L, typeof(SzBadInputException));
-            dictionary.Add(7314L, typeof(SzBadInputException));
-            dictionary.Add(7317L, typeof(SzConfigurationException));
-            dictionary.Add(7344L, typeof(SzConfigurationException));
-            dictionary.Add(7426L, typeof(SzBadInputException));
-            dictionary.Add(7511L, typeof(SzException));
-            dictionary.Add(8000L, typeof(SzBadInputException));
-            dictionary.Add(8410L, typeof(SzException));
-            dictionary.Add(8501L, typeof(SzConfigurationException));
-            dictionary.Add(8502L, typeof(SzException));
-            dictionary.Add(8503L, typeof(SzException));
-            dictionary.Add(8504L, typeof(SzException));
-            dictionary.Add(8505L, typeof(SzException));
-            dictionary.Add(8508L, typeof(SzException));
-            dictionary.Add(8509L, typeof(SzException));
-            dictionary.Add(8514L, typeof(SzException));
-            dictionary.Add(8516L, typeof(SzConfigurationException));
-            dictionary.Add(8517L, typeof(SzConfigurationException));
-            dictionary.Add(8520L, typeof(SzException));
-            dictionary.Add(8521L, typeof(SzException));
-            dictionary.Add(8522L, typeof(SzConfigurationException));
-            dictionary.Add(8524L, typeof(SzException));
-            dictionary.Add(8525L, typeof(SzConfigurationException));
-            dictionary.Add(8526L, typeof(SzConfigurationException));
-            dictionary.Add(8527L, typeof(SzConfigurationException));
-            dictionary.Add(8528L, typeof(SzConfigurationException));
-            dictionary.Add(8529L, typeof(SzConfigurationException));
-            dictionary.Add(8530L, typeof(SzException));
-            dictionary.Add(8536L, typeof(SzConfigurationException));
-            dictionary.Add(8538L, typeof(SzConfigurationException));
-            dictionary.Add(8539L, typeof(SzException));
-            dictionary.Add(8540L, typeof(SzConfigurationException));
-            dictionary.Add(8541L, typeof(SzException));
-            dictionary.Add(8542L, typeof(SzException));
-            dictionary.Add(8543L, typeof(SzConfigurationException));
-            dictionary.Add(8544L, typeof(SzConfigurationException));
-            dictionary.Add(8545L, typeof(SzConfigurationException));
-            dictionary.Add(8556L, typeof(SzConfigurationException));
-            dictionary.Add(8557L, typeof(SzConfigurationException));
-            dictionary.Add(8593L, typeof(SzException));
-            dictionary.Add(8594L, typeof(SzException));
-            dictionary.Add(8595L, typeof(SzException));
-            dictionary.Add(8598L, typeof(SzException));
-            dictionary.Add(8599L, typeof(SzConfigurationException));
-            dictionary.Add(8601L, typeof(SzConfigurationException));
-            dictionary.Add(8602L, typeof(SzConfigurationException));
-            dictionary.Add(8603L, typeof(SzException));
-            dictionary.Add(8604L, typeof(SzConfigurationException));
-            dictionary.Add(8605L, typeof(SzConfigurationException));
-            dictionary.Add(8606L, typeof(SzConfigurationException));
-            dictionary.Add(8607L, typeof(SzConfigurationException));
-            dictionary.Add(8608L, typeof(SzConfigurationException));
-            dictionary.Add(8701L, typeof(SzConfigurationException));
-            dictionary.Add(8702L, typeof(SzConfigurationException));
-            dictionary.Add(9000L, typeof(SzLicenseException));
-            dictionary.Add(9107L, typeof(SzConfigurationException));
-            dictionary.Add(9110L, typeof(SzConfigurationException));
-            dictionary.Add(9111L, typeof(SzConfigurationException));
-            dictionary.Add(9112L, typeof(SzConfigurationException));
-            dictionary.Add(9113L, typeof(SzConfigurationException));
-            dictionary.Add(9115L, typeof(SzBadInputException));
-            dictionary.Add(9116L, typeof(SzConfigurationException));
-            dictionary.Add(9117L, typeof(SzConfigurationException));
-            dictionary.Add(9118L, typeof(SzConfigurationException));
-            dictionary.Add(9119L, typeof(SzConfigurationException));
-            dictionary.Add(9120L, typeof(SzConfigurationException));
-            dictionary.Add(9210L, typeof(SzConfigurationException));
-            dictionary.Add(9220L, typeof(SzConfigurationException));
-            dictionary.Add(9222L, typeof(SzConfigurationException));
-            dictionary.Add(9224L, typeof(SzConfigurationException));
-            dictionary.Add(9228L, typeof(SzConfigurationException));
-            dictionary.Add(9240L, typeof(SzConfigurationException));
-            dictionary.Add(9241L, typeof(SzConfigurationException));
-            dictionary.Add(9250L, typeof(SzConfigurationException));
-            dictionary.Add(9251L, typeof(SzConfigurationException));
-            dictionary.Add(9252L, typeof(SzConfigurationException));
-            dictionary.Add(9253L, typeof(SzConfigurationException));
-            dictionary.Add(9254L, typeof(SzConfigurationException));
-            dictionary.Add(9255L, typeof(SzConfigurationException));
-            dictionary.Add(9256L, typeof(SzConfigurationException));
-            dictionary.Add(9257L, typeof(SzConfigurationException));
-            dictionary.Add(9258L, typeof(SzConfigurationException));
-            dictionary.Add(9259L, typeof(SzConfigurationException));
-            dictionary.Add(9260L, typeof(SzConfigurationException));
-            dictionary.Add(9261L, typeof(SzConfigurationException));
-            dictionary.Add(9264L, typeof(SzConfigurationException));
-            dictionary.Add(9265L, typeof(SzConfigurationException));
-            dictionary.Add(9266L, typeof(SzConfigurationException));
-            dictionary.Add(9267L, typeof(SzException));
-            dictionary.Add(9268L, typeof(SzException));
-            dictionary.Add(9269L, typeof(SzConfigurationException));
-            dictionary.Add(9270L, typeof(SzConfigurationException));
-            dictionary.Add(9271L, typeof(SzException));
-            dictionary.Add(9272L, typeof(SzException));
-            dictionary.Add(9273L, typeof(SzException));
-            dictionary.Add(9274L, typeof(SzException));
-            dictionary.Add(9275L, typeof(SzException));
-            dictionary.Add(9276L, typeof(SzException));
-            dictionary.Add(9277L, typeof(SzException));
-            dictionary.Add(9278L, typeof(SzException));
-            dictionary.Add(9279L, typeof(SzException));
-            dictionary.Add(9280L, typeof(SzException));
-            dictionary.Add(9281L, typeof(SzException));
-            dictionary.Add(9282L, typeof(SzException));
-            dictionary.Add(9283L, typeof(SzException));
-            dictionary.Add(9284L, typeof(SzConfigurationException));
-            dictionary.Add(9285L, typeof(SzConfigurationException));
-            dictionary.Add(9286L, typeof(SzConfigurationException));
-            dictionary.Add(9287L, typeof(SzException));
-            dictionary.Add(9288L, typeof(SzException));
-            dictionary.Add(9289L, typeof(SzException));
-            dictionary.Add(9290L, typeof(SzException));
-            dictionary.Add(9292L, typeof(SzConfigurationException));
-            dictionary.Add(9293L, typeof(SzConfigurationException));
-            dictionary.Add(9295L, typeof(SzConfigurationException));
-            dictionary.Add(9296L, typeof(SzConfigurationException));
-            dictionary.Add(9297L, typeof(SzConfigurationException));
-            dictionary.Add(9298L, typeof(SzConfigurationException));
-            dictionary.Add(9299L, typeof(SzException));
-            dictionary.Add(9300L, typeof(SzConfigurationException));
-            dictionary.Add(9301L, typeof(SzConfigurationException));
-            dictionary.Add(9305L, typeof(SzException));
-            dictionary.Add(9308L, typeof(SzConfigurationException));
-            dictionary.Add(9309L, typeof(SzConfigurationException));
-            dictionary.Add(9310L, typeof(SzConfigurationException));
-            dictionary.Add(9311L, typeof(SzException));
-            dictionary.Add(9406L, typeof(SzException));
-            dictionary.Add(9408L, typeof(SzConfigurationException));
-            dictionary.Add(9409L, typeof(SzConfigurationException));
-            dictionary.Add(9410L, typeof(SzException));
-            dictionary.Add(9411L, typeof(SzException));
-            dictionary.Add(9413L, typeof(SzConfigurationException));
-            dictionary.Add(9414L, typeof(SzBadInputException));
-            dictionary.Add(9500L, typeof(SzConfigurationException));
-            dictionary.Add(9501L, typeof(SzException));
-            dictionary.Add(9701L, typeof(SzException));
-            dictionary.Add(9802L, typeof(SzConfigurationException));
-            dictionary.Add(9803L, typeof(SzConfigurationException));
+            dictionary.Add(2L, typeof(SzBadInputException));                 // EAS_ERR_INVALID_MESSAGE                                                               "Invalid Message"
+            dictionary.Add(5L, typeof(SzRetryableException));                // EAS_ERR_EXCEEDED_MAX_RETRIES                                                          "Exceeded the Maximum Number of Retries Allowed"
+            dictionary.Add(7L, typeof(SzBadInputException));                 // EAS_ERR_EMPTY_MESSAGE                                                                 "Empty Message"
+            dictionary.Add(10L, typeof(SzRetryTimeoutExceededException));    // EAS_ERR_RETRY_TIMEOUT                                                                 "Retry timeout exceeded RES_ENT_ID locklist [{0}]"
+            dictionary.Add(14L, typeof(SzConfigurationException));           // EAS_ERR_INVALID_DATASTORE_CONFIGURATION_TYPE                                          "Invalid Datastore Configuration Type"
+            dictionary.Add(18L, typeof(SzException));                        // EAS_ERR_COULD_NOT_INITIALIZE_SYSTEM_PARAMETERS                                        "Could not initialize system parameters"
+            dictionary.Add(19L, typeof(SzConfigurationException));           // EAS_ERR_NO_CONFIGURATION_FOUND                                                        "Configuration not found"
+            dictionary.Add(20L, typeof(SzConfigurationException));           // EAS_ERR_CONFIG_CANNOT_BE_NULL_DATABASE                                                "Configuration cannot be loaded from database connection"
+            dictionary.Add(21L, typeof(SzConfigurationException));           // EAS_ERR_CONFIG_CANNOT_BE_NULL_CONFIG_FILE                                             "Configuration cannot be loaded from config file"
+            dictionary.Add(22L, typeof(SzBadInputException));                // EAS_ERR_INVALID_DOCTYPE                                                               "Invalid DocType {0}"
+            dictionary.Add(23L, typeof(SzBadInputException));                // EAS_ERR_CONFLICTING_DATA_SOURCE_VALUES                                                "Conflicting DATA_SOURCE values '{0}' and '{1}'"
+            dictionary.Add(24L, typeof(SzBadInputException));                // EAS_ERR_CONFLICTING_RECORD_ID_VALUES                                                  "Conflicting RECORD_ID values '{0}' and '{1}'"
+            dictionary.Add(25L, typeof(SzBadInputException));                // EAS_ERR_INVALID_BULK_REQUEST                                                          "Invalid Bulk Request [{0}]"
+            dictionary.Add(26L, typeof(SzBadInputException));                // EAS_ERR_RESERVED_WORD_USED_IN_DOCUMENT                                                "Inbound data contains a reserved keyword '{0}'"
+            dictionary.Add(27L, typeof(SzException));                        // EAS_ERR_INVALID_VALUE_FOR_SEARCH_ATTRIBUTES                                           "Invalid value for search-attributes"
+            dictionary.Add(28L, typeof(SzConfigurationException));           // EAS_ERR_INVALID_JSON_CONFIG_DOCUMENT                                                  "Invalid JSON config document"
+            dictionary.Add(29L, typeof(SzException));                        // EAS_ERR_INVALID_VALUE_OF_MAX_ENTITIES                                                 "Invalid value of max entities '{0}'"
+            dictionary.Add(30L, typeof(SzConfigurationException));           // EAS_ERR_INVALID_MATCH_LEVEL                                                           "Invalid match level '{0}'"
+            dictionary.Add(31L, typeof(SzException));                        // EAS_ERR_INVALID_VALUE_OF_MAX_DEGREE                                                   "Invalid value of max degree '{0}'"
+            dictionary.Add(32L, typeof(SzException));                        // EAS_ERR_INVALID_VALUE_OF_BUILDOUT_DEGREE                                              "Invalid value of build out degree '{0}'"
+            dictionary.Add(33L, typeof(SzNotFoundException));                // EAS_ERR_UNKNOWN_DSRC_RECORD_ID                                                        "Unknown record: dsrc[{0}], record[{1}]"
+            dictionary.Add(34L, typeof(SzConfigurationException));           // EAS_ERR_AMBIGUOUS_ENTITY_FTYPE_MISSING                                                "AMBIGUOUS_ENTITY Feature Type is not configured"
+            dictionary.Add(35L, typeof(SzConfigurationException));           // EAS_ERR_AMBIGUOUS_TIER_FELEM_MISSING                                                  "AMBIGUOUS_TIER Feature Element is not configured"
+            dictionary.Add(36L, typeof(SzConfigurationException));           // EAS_ERR_AMBIGUOUS_FTYPE_ID_FELEM_MISSING                                              "AMBIGUOUS_FTYPE_ID Feature Element is not configured"
+            dictionary.Add(37L, typeof(SzNotFoundException));                // EAS_ERR_UNKNOWN_RESOLVED_ENTITY_VALUE                                                 "Unknown resolved entity value '{0}'"
+            dictionary.Add(38L, typeof(SzException));                        // EAS_ERR_RECORD_HAS_NO_RESOLVED_ENTITY                                                 "Data source record has no resolved entity: dsrc[{0}], recordID[{1}]"
+            dictionary.Add(39L, typeof(SzException));                        // EAS_ERR_NO_OBSERVED_ENTITY_FOR_DSRC_ENTITY_KEY                                        "No observed entity for entity key: dsrc[{0}], record_id[{1}], key[{2}]"
+            dictionary.Add(40L, typeof(SzConfigurationException));           // EAS_ERR_CONFIG_COMPATIBILITY_MISMATCH                                                 "The engine configuration compatibility version [{0}] does not match the version of the provided config[{1}]."
+            dictionary.Add(41L, typeof(SzException));                        // EAS_ERR_DOCUMENT_PREPROCESSING_FAILED                                                 "Document preprocessing failed"
+            dictionary.Add(42L, typeof(SzException));                        // EAS_ERR_DOCUMENT_LOAD_PROCESSING_FAILED                                               "Document load processing failed"
+            dictionary.Add(43L, typeof(SzException));                        // EAS_ERR_DOCUMENT_ER_PROCESSING_FAILED                                                 "Document ER processing failed"
+            dictionary.Add(44L, typeof(SzException));                        // EAS_ERR_CHECK_ENTITY_PROCESSING_FAILED                                                "Check entity processing failed"
+            dictionary.Add(45L, typeof(SzException));                        // EAS_ERR_INPUT_PROCEDURE_PROCESSING_FAILED                                             "Input procedure processing failed"
+            dictionary.Add(46L, typeof(SzException));                        // EAS_ERR_DOCUMENT_HASHING_PROCESSING_FAILED                                            "Document hashing-processing failed"
+            dictionary.Add(47L, typeof(SzException));                        // EAS_ERR_SESSION_IS_INVALID                                                            "Session is invalid"
+            dictionary.Add(48L, typeof(SzNotInitializedException));          // EAS_ERR_G2_NOT_INITIALIZED                                                            "G2 is not initialized"
+            dictionary.Add(50L, typeof(SzNotInitializedException));          // EAS_ERR_G2HASHER_NOT_INITIALIZED                                                      "G2Hasher is not initialized"
+            dictionary.Add(51L, typeof(SzBadInputException));                // EAS_ERR_BOTH_RECORD_ID_AND_ENT_SRC_KEY_SPECIFIED                                      "Cannot use both Record ID and Entity Source Key in record"
+            dictionary.Add(52L, typeof(SzException));                        // EAS_ERR_UNKNOWN_RELATIONSHIP_ID_VALUE                                                 "Unknown relationship ID value '{0}'"
+            dictionary.Add(53L, typeof(SzBadInputException));                // EAS_ERR_G2DIAGNOSTIC_NOT_INITIALIZED                                                  "G2Diagnostic is not initialized"
+            dictionary.Add(54L, typeof(SzDatabaseException));                // EAS_ERR_G2_DATA_REPOSITORY_WAS_PURGED                                                 "Data repository was purged"
+            dictionary.Add(55L, typeof(SzException));                        // EAS_ERR_NO_RESOLVED_ENTITY_FOR_DSRC_ENTITY_KEY                                        "No resolved entity for entity key: dsrc[{0}], record_id[{1}], key[{2}]"
+            dictionary.Add(56L, typeof(SzException));                        // EAS_ERR_NO_RECORDS_EXIST_FOR_RESOLVED_ENTITY                                          "No data source records exist for entity ID: entityID[{0}]"
+            dictionary.Add(57L, typeof(SzException));                        // EAS_ERR_UNKNOWN_FEATURE_ID_VALUE                                                      "Unknown feature ID value '{0}'"
+            dictionary.Add(58L, typeof(SzException));                        // EAS_ERR_G2_INITIALIZATION_FAILURE                                                     "G2 initialization process has failed"
+            dictionary.Add(60L, typeof(SzConfigurationException));           // EAS_ERR_CONFIG_DATABASE_MISMATCH                                                      "The engine configuration does not match the records loaded into the repository:  errors[{0}]."
+            dictionary.Add(61L, typeof(SzConfigurationException));           // EAS_ERR_AMBIGUOUS_SUPPRESSED_LIBFEAT_FELEM_MISSING                                    "AMBIGUOUS_SUPRESSED_LIBFEAT Feature Element is not configured"
+            dictionary.Add(62L, typeof(SzConfigurationException));           // EAS_ERR_AMBIGUOUS_TYPE_FELEM_MISSING                                                  "AMBIGUOUS_TYPE Feature Element is not configured"
+            dictionary.Add(63L, typeof(SzNotInitializedException));          // EAS_ERR_G2CONFIGMGR_NOT_INITIALIZED                                                   "G2ConfigMgr is not initialized"
+            dictionary.Add(64L, typeof(SzConfigurationException));           // EAS_ERR_CONFUSED_ENTITY_FTYPE_MISSING                                                 "CONFUSED_ENTITY Feature Type is not configured"
+            dictionary.Add(65L, typeof(SzBadInputException));                // EAS_ERR_SUPPRESSED_RELATION_DOMAIN_FTYPE_MISSING                                      "SUPPRESSED_RELATION_DOMAIN Feature Type is not configured"
+            dictionary.Add(66L, typeof(SzBadInputException));                // EAS_ERR_UNKNOWN_GENERIC_PLAN_VALUE                                                    "Unknown generic plan value '{0}'"
+            dictionary.Add(67L, typeof(SzConfigurationException));           // EAS_ERR_INVALID_GENERIC_PLAN_VALUE                                                    "Invalid Generic Plan ID [{0}] configured for the '{1}' retention level.'"
+            dictionary.Add(68L, typeof(SzException));                        // EAS_ERR_UNKNOWN_ER_RESULT                                                             "Unknown ER-result."
+            dictionary.Add(69L, typeof(SzException));                        // EAS_ERR_NO_CANDIDATES                                                                 "No candidates."
+            dictionary.Add(76L, typeof(SzException));                        // EAS_ERR_INBOUND_FEATURE_VERSION_NEWER_THAN_CONFIG                                     "Inbound Feature Version [{0}] is newer than configured version [{1}] for feature type[{2}]."
+            dictionary.Add(77L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_PRIMING_GNR                                                        "Error when priming GNR resources '{0}'"
+            dictionary.Add(78L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_ENCRYPTING                                                         "Error when encrypting '{0}'"
+            dictionary.Add(79L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_DECRYPTING                                                         "Error when decrypting '{0}'"
+            dictionary.Add(80L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_VALIDATING_ENCRYPTION_SIGNATURE_COMPATIBILITY                      "Error when validating encryption signature compatibility '{0}'"
+            dictionary.Add(81L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_CHECKING_DISTINCT_FEATURE_GENERALIZATION                           "Error when checking distinct feature generalization '{0}'"
+            dictionary.Add(82L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_RUNNING_DQM                                                        "Error when running DQM '{0}'"
+            dictionary.Add(83L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_CREATING_EFEATS                                                    "Error when creating EFEATS '{0}'"
+            dictionary.Add(84L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_SIMPLE_SCORING                                                     "Error when simple scoring '{0}'"
+            dictionary.Add(85L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_SCORING_PAIR                                                       "Error when scoring a pair '{0}'"
+            dictionary.Add(86L, typeof(SzException));                        // EAS_ERR_ERROR_WHEN_SCORING_SET                                                        "Error when scoring a set '{0}'"
+            dictionary.Add(87L, typeof(SzUnhandledException));               // EAS_ERR_SRD_EXCEPTION                                                                 "SRD Exception '{0}'"
+            dictionary.Add(88L, typeof(SzBadInputException));                // EAS_ERR_UNKNOWN_SEARCH_PROFILE_VALUE                                                  "Unknown search profile value '{0}'"
+            dictionary.Add(89L, typeof(SzConfigurationException));           // EAS_ERR_MISCONFIGURED_SEARCH_PROFILE_VALUE                                            "Misconfigured search profile value '{0}'"
+            dictionary.Add(90L, typeof(SzConfigurationException));           // EAS_ERR_CANNOT_ADD_LIBRARY_FEATURES_TO_DATASTORE                                      "Cannot add library features to datastore:  '{0}'"
+            dictionary.Add(91L, typeof(SzException));                        // EAS_ERR_TRUSTED_ID_FTYPE_MISSING                                                      "TRUSTED_ID Feature Type is not configured"
+            dictionary.Add(92L, typeof(SzException));                        // EAS_ERR_RECORD_TYPE_FTYPE_MISSING                                                     "RECORD_TYPE Feature Type is not configured"
+            dictionary.Add(93L, typeof(SzException));                        // EAS_ERR_CONFUSED_ENTTIY_FELEM_MISSING                                                 "YESNO_FLAG Feature Element is not configured"
+            dictionary.Add(94L, typeof(SzException));                        // EAS_ERR_DOMAIN_NAME_FELEM_MISSING                                                     "DOMAIN_NAME Feature Element is not configured"
+            dictionary.Add(95L, typeof(SzException));                        // EAS_ERR_SUPRESSED_RELATIONSHIP_FTYPE_ID_FELEM_MISSING                                 "SUPRESSED_RELATIONSHIP_FTYPE_ID Feature Element is not configured"
+            dictionary.Add(96L, typeof(SzException));                        // EAS_ERR_SUPRESSED_RELATIONSHIP_CONNECTING_FTYPE_ID_FELEM_MISSING                      "SUPRESSED_RELATIONSHIP_CONNECTING_FTYPE_ID Feature Element is not configured"
+            dictionary.Add(999L, typeof(SzLicenseException));                // EAS_ERR_LICENSE_HAS_EXPIRED                                                           "License has expired"
+            dictionary.Add(1000L, typeof(SzDatabaseException));              // EAS_ERR_UNHANDLED_DATABASE_ERROR                                                      "Unhandled Database Error '{0}'"
+            dictionary.Add(1001L, typeof(SzDatabaseException));              // EAS_ERR_CRITICAL_DATABASE_ERROR                                                       "Critical Database Error '{0}'"
+            dictionary.Add(1002L, typeof(SzDatabaseException));              // EAS_ERR_DATABASE_MEMORY_ERROR                                                         "Database Memory Error '{0}'"
+            dictionary.Add(1003L, typeof(SzDatabaseException));              // EAS_ERR_TABLE_SPACE_OR_LOG_VIOLATION                                                  "Table Space or Log Violation '{0}'"
+            dictionary.Add(1004L, typeof(SzDatabaseException));              // EAS_ERR_RESOURCE_CONTENTION                                                           "Resource Contention '{0}'"
+            dictionary.Add(1005L, typeof(SzDatabaseException));              // EAS_ERR_USER_DEFINED_PROC_ERROR                                                       "User Defined Procedure or Function Error '{0}'"
+            dictionary.Add(1006L, typeof(SzDatabaseConnectionLostException));  // EAS_ERR_DATABASE_CONNECTION_FAILURE                                                   "Database Connection Failure '{0}'"
+            dictionary.Add(1007L, typeof(SzDatabaseConnectionLostException));  // EAS_ERR_DATABASE_CONNECTION_LOST                                                      "Database Connection Lost '{0}'"
+            dictionary.Add(1008L, typeof(SzDatabaseTransientException));     // EAS_ERR_DEADLOCK_ERROR                                                                "Deadlock Error '{0}'"
+            dictionary.Add(1009L, typeof(SzDatabaseException));              // EAS_ERR_INSUFFICIENT_PERMISSIONS                                                      "Insufficient Permissions '{0}'"
+            dictionary.Add(1010L, typeof(SzDatabaseException));              // EAS_ERR_TRANSACTION_ERROR                                                             "Transaction Error '{0}'"
+            dictionary.Add(1011L, typeof(SzDatabaseException));              // EAS_ERR_UNIQUE_CONSTRAINT_VIOLATION                                                   "Unique Constraint Violation '{0}'"
+            dictionary.Add(1012L, typeof(SzDatabaseException));              // EAS_ERR_CONSTRAINT_VIOLATION                                                          "Constraint Violation '{0}'"
+            dictionary.Add(1013L, typeof(SzDatabaseException));              // EAS_ERR_SYNTAX_ERROR                                                                  "Syntax Error '{0}'"
+            dictionary.Add(1014L, typeof(SzDatabaseException));              // EAS_ERR_CURSOR_ERROR                                                                  "Cursor Error '{0}'"
+            dictionary.Add(1015L, typeof(SzDatabaseException));              // EAS_ERR_DATATYPE_ERROR                                                                "Data Type Error '{0}'"
+            dictionary.Add(1016L, typeof(SzDatabaseException));              // EAS_ERR_TRANSACTION_ABORTED_ERROR                                                     "Transaction Aborted '{0}'"
+            dictionary.Add(1017L, typeof(SzDatabaseException));              // EAS_ERR_DATABASE_OPERATOR_NOT_SET                                                     "Database operator not set '{0}'"
+            dictionary.Add(1018L, typeof(SzDatabaseException));              // EAS_ERR_DATABASE_EXCEPTION_GENERATOR_NOT_SET                                          "Database exception generator not set '{0}'"
+            dictionary.Add(1019L, typeof(SzConfigurationException));         // EAS_ERR_DATABASE_SCHEMA_TABLES_NOT_FOUND                                              "Datastore schema tables not found. [{0}]"
+            dictionary.Add(2001L, typeof(SzConfigurationException));         // EAS_ERR_FEATURE_HAS_NO_FTYPE_CODE                                                     "Cannot process feature with no FTYPE_CODE[{0}]"
+            dictionary.Add(2002L, typeof(SzException));                      // EAS_ERR_REQUESTED_CONFIG_FOR_INVALID_FTYPE_CODE                                       "Requested config for invalid FTYPE_CODE[{0}]"
+            dictionary.Add(2003L, typeof(SzException));                      // EAS_ERR_NO_FELEM_CODE                                                                 "Cannot process OBS_FELEM with no FELEM_CODE[{0}]"
+            dictionary.Add(2005L, typeof(SzException));                      // EAS_ERR_INVALID_FELEM_CODE                                                            "FELEM_CODE[{0}] is not configured for FTYPE_CODE[{1}]"
+            dictionary.Add(2006L, typeof(SzException));                      // EAS_ERR_MISSING_ENT_SRC_KEY                                                           "OBS_ENT is missing ENT_SRC_KEY"
+            dictionary.Add(2007L, typeof(SzException));                      // EAS_ERR_MISSING_OBS_SRC_KEY                                                           "OBS is missing OBS_SRC_KEY"
+            dictionary.Add(2009L, typeof(SzException));                      // EAS_ERR_NO_OBS_ENT_FOR_ENT_SRC_KEY                                                    "No OBS_ENT found for ENT_SRC_KEY[{0}]"
+            dictionary.Add(2010L, typeof(SzException));                      // EAS_ERR_ENT_SRC_KEY_CHANGED                                                           "Expected ENT_SRC_KEY [{0}] changed to [{1}]"
+            dictionary.Add(2012L, typeof(SzConfigurationException));         // EAS_ERR_ERRULE_CONFIGURED_FOR_RESOLVE_AND_RELATE                                      "ER Rule [{0}] is configured for both resolve and relate."
+            dictionary.Add(2015L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_FTYPE_CODE                                                            "Invalid FTYPE_CODE[{0}]"
+            dictionary.Add(2027L, typeof(SzException));                      // EAS_ERR_PLUGIN_INIT                                                                   "Plugin initialization error {0}"
+            dictionary.Add(2029L, typeof(SzConfigurationException));         // EAS_ERR_REQUESTED_CONFIG_FOR_INVALID_PLUGIN                                           "Configuration not found for plugin type: {0}"
+            dictionary.Add(2034L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_CFRTN_VAL                                                             "CFRTN_ID[{0}]/FTYPE[{1}] is expecting CFRTN_VAL[{2}] which is not offered by CFUNC_ID[{3}][{4}]. Available scores are [{5}]"
+            dictionary.Add(2036L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_HAS_NO_BOM                                                              "FType configured with no Feature Elements (Bill of Materials)  FTYPE_ID[{0}] FTYPE_CODE[{1}]"
+            dictionary.Add(2037L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_CALL_HAS_NO_BOM                                                          "Function call ({3}) configured with no Bill of Materials  {4}[{0}] FTYPE_ID[{1}] FTYPE_CODE[{2}]"
+            dictionary.Add(2038L, typeof(SzConfigurationException));         // EAS_ERR_DISTINCT_FEATURE_HAS_NO_BOM                                                   "Distinct feature call configured with no Bill of Materials  DFCALL_ID[{0}]"
+            dictionary.Add(2041L, typeof(SzConfigurationException));         // EAS_ERR_EFCALL_HAS_NO_BOM                                                             "EFeature creation call configured with no Bill of Materials  EFCALL_ID[{0}]"
+            dictionary.Add(2045L, typeof(SzConfigurationException));         // EAS_ERR_CFRTN_REFERS_BAD_CFUNC_ID                                                     "CFG_CFRTN references CFUNC_ID[{0}] which is not configured"
+            dictionary.Add(2047L, typeof(SzConfigurationException));         // EAS_ERR_MISSING_DSRC_CODE                                                             "Observation is missing DSRC_CODE tag which is required"
+            dictionary.Add(2048L, typeof(SzConfigurationException));         // EAS_ERR_FEAT_FREQ_INVALID                                                             "FEATURE CODE[{0}] FEATURE FREQUENCY[{1}] is an invalid frequency"
+            dictionary.Add(2049L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_INVALID                                                                  "{2} [{0}] is invalid for {3}[{1}]"
+            dictionary.Add(2050L, typeof(SzConfigurationException));         // EAS_ERR_QUAL_FRAG_NOT_FOUND                                                           "Rule[{0}] Qualifier Fragment[{1}]: Fragment not found"
+            dictionary.Add(2051L, typeof(SzConfigurationException));         // EAS_ERR_DISQUAL_FRAG_NOT_FOUND                                                        "Rule[{0}] Disqualifier Fragment[{1}]: Fragment not found"
+            dictionary.Add(2057L, typeof(SzBadInputException));              // EAS_ERR_BAD_DSRC_ACTION                                                               "Observation has DSRC_ACTION[{0}] which is invalid.  Valid values are [A]dd, [C]hange, [D]elete or E[X]tensive Evaluation"
+            dictionary.Add(2061L, typeof(SzConfigurationException));         // EAS_ERR_DUPLICATE_LOOKUP_IDENTIFIER                                                   "Duplicate [{0}] with identifier value [{1}].  Only unique values are allowed."
+            dictionary.Add(2062L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_LOOKUP_IDENTIFIER                                                     "Requested lookup of [{0}] using unknown value [{1}].  Value not found."
+            dictionary.Add(2065L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_HAS_MULTIPLE_DEFINITIONS                                                "FType configured with multiple definitions. FTYPE_CODE[{0}] used in FTYPE_ID[{1}] and FTYPE_ID[{2}]"
+            dictionary.Add(2066L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_HAS_MULTIPLE_DEFINITIONS                                                "FElem configured with multiple definitions. FELEM_CODE[{0}] used in FELEM_ID[{1}] and FELEM_ID[{2}]"
+            dictionary.Add(2067L, typeof(SzConfigurationException));         // EAS_ERR_ERFRAG_HAS_MULTIPLE_DEFINITIONS                                               "ER Fragment code configured with multiple definitions. ERFRAG_CODE[{0}] used in ERFRAG_ID[{1}] and ERFRAG_ID[{2}]"
+            dictionary.Add(2069L, typeof(SzConfigurationException));         // EAS_ERR_BOM_CONFIG_INVALID_FOR_SIMPLE_PLUGIN                                          "Configured plugin for CFCALL_ID[{0}] requires exactly one value in BOM"
+            dictionary.Add(2070L, typeof(SzConfigurationException));         // EAS_ERR_EFCALL_HAS_INVALID_FUNCTION                                                   "EFeature creation call configured with invalid function ID EFCALL_ID[{0}] EFUNC_ID[{1}]"
+            dictionary.Add(2071L, typeof(SzConfigurationException));         // EAS_ERR_EFBOM_HAS_INVALID_EFCALL                                                      "EFeature BOM configured with invalid EFCALL_ID[{0}]"
+            dictionary.Add(2073L, typeof(SzException));                      // EAS_ERR_LOADING_LIBRARY                                                               "Library loading error {0}"
+            dictionary.Add(2074L, typeof(SzException));                      // EAS_ERR_SCORING_MANAGER_PLUGIN                                                        "Scoring manager: id {0} and {1} do not match"
+            dictionary.Add(2075L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_FTYPE_CODE                                      "Table {0} configured with an invalid type FTYPE_CODE[{1}]"
+            dictionary.Add(2076L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_FELEM_CODE                                      "Table {0} configured with an invalid type FELEM_CODE[{1}]"
+            dictionary.Add(2079L, typeof(SzConfigurationException));         // EAS_ERR_EFBOM_CONFIGURED_WITH_INVALID_FTYPE_ID                                        "CFG_EFBOM configured with an invalid type FTYPE_ID[{0}]"
+            dictionary.Add(2080L, typeof(SzConfigurationException));         // EAS_ERR_EFBOM_CONFIGURED_WITH_INVALID_FELEM_ID                                        "CFG_EFBOM configured with an invalid type FELEM_ID[{0}]"
+            dictionary.Add(2081L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_CALL_CONFIGURED_WITH_INVALID_FTYPE_ID                                    "{1} configured with an invalid type FTYPE_ID[{0}]"
+            dictionary.Add(2082L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_CALL_CONFIGURED_WITH_INVALID_FUNC_ID                                     "{1} configured with an invalid type {2}[{0}]"
+            dictionary.Add(2083L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_BOM_CONFIGURED_WITH_INVALID_FTYPE_ID                                     "{1} configured with an invalid type FTYPE_ID[{0}]"
+            dictionary.Add(2084L, typeof(SzConfigurationException));         // EAS_ERR_FUNC_BOM_CONFIGURED_WITH_INVALID_FELEM_ID                                     "{1} configured with an invalid type FELEM_ID[{0}]"
+            dictionary.Add(2088L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_RCLASS_ID                                       "Table {0} configured with an invalid RCLASS_ID[{1}]"
+            dictionary.Add(2089L, typeof(SzConfigurationException));         // EAS_ERR_UNKNOWN_FCLASS_ID                                                             "UNKNOWN FCLASS ID[{0}]"
+            dictionary.Add(2090L, typeof(SzConfigurationException));         // EAS_ERR_SFCALL_HAS_INVALID_FUNCTION                                                   "Feature standardization call configured with invalid function ID SFCALL_ID[{0}] SFUNC_ID[{1}]"
+            dictionary.Add(2091L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_BOTH_FTYPE_ID_AND_FELEM_ID                              "{0} configured with both an FTYPE_ID[{1}] and FELEM_ID[{2}]"
+            dictionary.Add(2092L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_NEITHER_FTYPE_ID_NOR_FELEM_ID                           "{0} configured with neither an FTYPE_ID nor an FELEM_ID"
+            dictionary.Add(2093L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_DUPLICATE_EXEC_ORDER_FOR_IDENTIFIER_LIST                "Table [{0}] configured with duplicate execution order value [{3}] for identifiers[{1}] with values [{2}]"
+            dictionary.Add(2094L, typeof(SzConfigurationException));         // EAS_ERR_DUPLICATE_VALUE_FOR_FIELD_IN_TABLE                                            "Duplicate value [{2}] of field [{1}] in config [{0}]"
+            dictionary.Add(2095L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_FTYPE_CODE_FELEM_CODE_PAIR                      "Table {0} configured with an invalid FTYPE_CODE[{1}]/FELEM_CODE[{2}] pair"
+            dictionary.Add(2097L, typeof(SzException));                      // EAS_ERR_DUPLICATE_VALUES_FOR_FIELDS_IN_TABLE                                          "Duplicate values [{3}][{4}] of fields [{1}][{2}] in config [{0}]"
+            dictionary.Add(2099L, typeof(SzConfigurationException));         // EAS_ERR_COUNTER_CONFIG_INVALID_THRESHOLD                                              "Next Threshold for a counter should be no less than 10, but has NEXT_THRESH{0}"
+            dictionary.Add(2101L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_OP_UNSUPPORTED                                                          "XPath operation unsupported [{0}]"
+            dictionary.Add(2102L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_AXIS_UNSUPPORTED                                                        "XPath axis unsupported [{0}]"
+            dictionary.Add(2103L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_TEST_UNSUPPORTED                                                        "XPath test unsupported [{0}]"
+            dictionary.Add(2104L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_TYPE_UNSUPPORTED                                                        "XPath type unsupported [{0}]"
+            dictionary.Add(2105L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_NODE_PREFIX_UNSUPPORTED                                                 "XPath node prefix unsupported [{0}]"
+            dictionary.Add(2106L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_NODE_NAME_UNSUPPORTED                                                   "XPath node name unsupported position[{0}], name[{1}]"
+            dictionary.Add(2107L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_BEHAVIOR_TYPE_UNSUPPORTED                                               "XPath behavior type unsupported [{0}]"
+            dictionary.Add(2108L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_BUCKET_UNSUPPORTED                                                      "XPath bucket type unsupported [{0}]"
+            dictionary.Add(2109L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_VALUE_TYPE_UNSUPPORTED                                                  "XPath value type unsupported [{0}]"
+            dictionary.Add(2110L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_PLUS_TYPE_UNSUPPORTED                                                   "XPath plus operand type unsupported [{0}]"
+            dictionary.Add(2111L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_FRAGMENT_NOT_EVALUATED                                                  "XPath fragment not evaluated[{0}]"
+            dictionary.Add(2112L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_FRAGMENT_NOT_CONFIGURED                                                 "XPath fragment not configured[{0}]"
+            dictionary.Add(2113L, typeof(SzConfigurationException));         // EAS_ERR_XPATH_FUNCTION_UNSUPPORTED                                                    "XPath function unsupported [{0}]"
+            dictionary.Add(2114L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_FTYPE_SCORESET                                                        "Cannot set score for invalid FTYPE_ID [{0}]"
+            dictionary.Add(2116L, typeof(SzException));                      // EAS_ERR_UNINITIALIZED_AMBIGUOUS_CACHE                                                 "Uninitialized Ambiguous Test Cache"
+            dictionary.Add(2117L, typeof(SzConfigurationException));         // EAS_ERR_SCORING_CALL_HAS_NO_BOM                                                       "Scoring call configured with no Bill of Materials  CFCALL_ID[{0}]."
+            dictionary.Add(2118L, typeof(SzConfigurationException));         // EAS_ERR_BOM_CONFIG_INVALID_FOR_SCORING_PLUGIN                                         "Configured plugin for CFCALL_ID[{0}] has invalid BOM."
+            dictionary.Add(2120L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_FTYPE_ID                                        "Table {0} configured with an invalid type FTYPE_ID[{1}]"
+            dictionary.Add(2121L, typeof(SzConfigurationException));         // EAS_ERR_TABLE_CONFIGURED_WITH_INVALID_FELEM_ID                                        "Table {0} configured with an invalid type FELEM_ID[{1}]"
+            dictionary.Add(2123L, typeof(SzConfigurationException));         // EAS_ERR_CFUNC_CONFIGURED_WITH_NO_CFRTN                                                "CFG_CFUNC [{0}] feature type [{1}] configured without any corresponding return values in CFG_CFRTN"
+            dictionary.Add(2131L, typeof(SzConfigurationException));         // EAS_ERR_OBS_ENT_NOT_FOUND                                                             "Requested resolution of OBS_ENT_ID that is not loaded OBS_ENT_ID[{0}]"
+            dictionary.Add(2135L, typeof(SzConfigurationException));         // EAS_ERR_INPUT_MAPPING_CONFIG_ERROR                                                    "Error in input mapping config[{0}]"
+            dictionary.Add(2136L, typeof(SzConfigurationException));         // EAS_ERR_INPUT_MAPPING_MISSING_REQUIRED_FIELD                                          "Error in input mapping, missing required field[{0}]"
+            dictionary.Add(2137L, typeof(SzConfigurationException));         // EAS_ERR_INPUT_MAPPING_MALFORMED_INPUT                                                 "Error in input mapping, input message is malformed[{0}]"
+            dictionary.Add(2138L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_CFRTN_INDEX                                                           "CFRTN_ID[{0}] is out of range. Valid range is 0-7"
+            dictionary.Add(2139L, typeof(SzConfigurationException));         // EAS_ERR_DSRC_INTEREST_CONFIGURED_WITH_INVALID_DSRCID                                  "Data Source Interest configured with invalid Data Source ID DSRC_ID[{0}]"
+            dictionary.Add(2207L, typeof(SzUnknownDataSourceException));     // EAS_ERR_DATA_SOURCE_CODE_DOES_NOT_EXIST                                               "Data source code [{0}] does not exist."
+            dictionary.Add(2209L, typeof(SzConfigurationException));         // EAS_ERR_DATA_SOURCE_ID_ALREADY_EXISTS                                                 "Data source ID [{0}] already exists."
+            dictionary.Add(2210L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_DOES_NOT_EXIST                                                     "Feature element code [{0}] does not exist."
+            dictionary.Add(2211L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_ALREADY_EXISTS                                                     "Feature element code [{0}] already exists."
+            dictionary.Add(2212L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_ID_ALREADY_EXISTS                                                       "Feature element ID [{0}] already exists."
+            dictionary.Add(2213L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_FELEM_DATA_TYPE                                                       "Invalid feature element datatype [{0}] found.  Datatype must be in [{1}]."
+            dictionary.Add(2214L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_IS_CONFIGURED_FOR_USE_IN_FEATURES                                       "Feature element [{0}] is configured for use in feature(s) [{1}]."
+            dictionary.Add(2215L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CODE_DOES_NOT_EXIST                                                     "Feature type code [{0}] does not exist."
+            dictionary.Add(2216L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CODE_ALREADY_EXISTS                                                     "Feature type code [{0}] already exists."
+            dictionary.Add(2217L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_ID_ALREADY_EXISTS                                                       "Feature type ID [{0}] already exists."
+            dictionary.Add(2218L, typeof(SzConfigurationException));         // EAS_ERR_FEATURE_FREQUENCY_IS_INVALID                                                  "Feature type frequency [{0}] is invalid."
+            dictionary.Add(2219L, typeof(SzConfigurationException));         // EAS_ERR_FEATURE_ELEMENT_LIST_IS_EMPTY                                                 "Feature element list is empty."
+            dictionary.Add(2220L, typeof(SzConfigurationException));         // EAS_ERR_STANDARDIZATION_FUNCTION_DOES_NOT_EXIST                                       "Standardization function [{0}] does not exist."
+            dictionary.Add(2221L, typeof(SzConfigurationException));         // EAS_ERR_FUNCTION_USES_BOTH_FTYPE_AND_FELEM_TRIGGER                                    "Function call requested uses both triggering feature type [{0}] and triggering feature element code [{1}].  Cannot use both triggering feature type and triggering feature element code."
+            dictionary.Add(2222L, typeof(SzConfigurationException));         // EAS_ERR_EXPRESSION_FUNCTION_DOES_NOT_EXIST                                            "Expression function [{0}] does not exist."
+            dictionary.Add(2223L, typeof(SzConfigurationException));         // EAS_ERR_EXPRESSION_FUNCTION_FEATURE_ELEMENT_LIST_IS_EMPTY                             "Expression function feature element list is empty."
+            dictionary.Add(2224L, typeof(SzConfigurationException));         // EAS_ERR_COMPARISON_FUNCTION_DOES_NOT_EXIST                                            "Comparison function [{0}] does not exist."
+            dictionary.Add(2225L, typeof(SzConfigurationException));         // EAS_ERR_COMPARISON_FUNCTION_FEATURE_ELEMENT_LIST_IS_EMPTY                             "Comparison function feature element list is empty."
+            dictionary.Add(2226L, typeof(SzConfigurationException));         // EAS_ERR_DISTINCT_FUNCTION_DOES_NOT_EXIST                                              "Distinct feature function [{0}] does not exist."
+            dictionary.Add(2227L, typeof(SzConfigurationException));         // EAS_ERR_DISTINCT_FUNCTION_FEATURE_ELEMENT_LIST_IS_EMPTY                               "Distinct feature function feature element list is empty."
+            dictionary.Add(2228L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_MUST_BE_UNIQUE_IN_FELEM_LIST                                       "Feature element code [{0}] must be unique in felem list."
+            dictionary.Add(2230L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CODE_AND_FELEM_CODE_MUST_BE_UNIQUE_IN_EXPRESSED_FUNCTION_CALL           "Feature type [{0}] and feature element [{1}] must be unique in expressed feature function call."
+            dictionary.Add(2231L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CODE_AND_FELEM_CODE_IN_EXPRESSED_FUNCTION_CALL_DO_NOT_EXIST_IN_FEATURE  "Feature type [{0}] and feature element [{1}] requested for expressed feature function call, but don't exist in feature [{0}]."
+            dictionary.Add(2232L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_MUST_BE_UNIQUE_IN_COMPARISON_FUNCTION_CALL                         "Feature element [{0}] must be unique in comparison feature function call."
+            dictionary.Add(2233L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_IN_COMPARISON_FUNCTION_CALL_DOES_NOT_EXIST_IN_FEATURE              "Feature element [{0}] requested for comparison feature function call, but doesn't exist in feature [{1}]."
+            dictionary.Add(2234L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_MUST_BE_UNIQUE_IN_DISTINCT_FUNCTION_CALL                           "Feature element [{0}] must be unique in distinct feature function call."
+            dictionary.Add(2235L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_IN_DISTINCT_FUNCTION_CALL_DOES_NOT_EXIST_IN_FEATURE                "Feature element [{0}] requested for distinct feature function call, but doesn't exist in feature [{1}]."
+            dictionary.Add(2236L, typeof(SzConfigurationException));         // EAS_ERR_EXEC_ORDER_IS_NOT_SPECIFIED_FOR_FUNCTION                                      "Exec order not specified for function."
+            dictionary.Add(2237L, typeof(SzConfigurationException));         // EAS_ERR_SFCALL_ID_ALREADY_EXISTS                                                      "Standardization function call ID [{0}] already exists."
+            dictionary.Add(2238L, typeof(SzConfigurationException));         // EAS_ERR_EFCALL_ID_ALREADY_EXISTS                                                      "Expression function call ID [{0}] already exists."
+            dictionary.Add(2239L, typeof(SzConfigurationException));         // EAS_ERR_CFCALL_ID_ALREADY_EXISTS                                                      "Comparison function call ID [{0}] already exists."
+            dictionary.Add(2240L, typeof(SzConfigurationException));         // EAS_ERR_DFCALL_ID_ALREADY_EXISTS                                                      "Distinct feature function call ID [{0}] already exists."
+            dictionary.Add(2241L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CODE_REQUIRED_BY_SEPARATE_EXPRESSED_FUNCTION_CALL                       "Feature type [{0}] required for separate expressed feature function call [{1}]."
+            dictionary.Add(2242L, typeof(SzConfigurationException));         // EAS_ERR_SFCALL_ID_DOES_NOT_EXIST                                                      "Standardization function call ID [{0}] does not exist."
+            dictionary.Add(2243L, typeof(SzConfigurationException));         // EAS_ERR_EFCALL_ID_DOES_NOT_EXIST                                                      "Expression function call ID [{0}] does not exist."
+            dictionary.Add(2244L, typeof(SzConfigurationException));         // EAS_ERR_CFCALL_ID_DOES_NOT_EXIST                                                      "Comparison function call ID [{0}] does not exist."
+            dictionary.Add(2245L, typeof(SzConfigurationException));         // EAS_ERR_DFCALL_ID_DOES_NOT_EXIST                                                      "Distinct feature function call ID [{0}] does not exist."
+            dictionary.Add(2246L, typeof(SzConfigurationException));         // EAS_ERR_BOM_EXEC_ORDER_ALREADY_EXISTS                                                 "BOM exec order value [{0}] already exists."
+            dictionary.Add(2247L, typeof(SzConfigurationException));         // EAS_ERR_COMPARISON_FUNCTION_CALL_DOES_NOT_EXIST_FOR_FEATURE                           "Comparison function call does not exist for feature [{0}]."
+            dictionary.Add(2248L, typeof(SzConfigurationException));         // EAS_ERR_DISTINCT_FUNCTION_CALL_DOES_NOT_EXIST_FOR_FEATURE                             "Distinct feature function call does not exist for feature [{0}]."
+            dictionary.Add(2249L, typeof(SzConfigurationException));         // EAS_ERR_CONFLICTING_SPECIFIERS_FOR_FUNCTION_CALL                                      "Conflicting specifiers: Function call ID [{0}] does not match function call ID [{1}] from feature type."
+            dictionary.Add(2250L, typeof(SzConfigurationException));         // EAS_ERR_ATTR_CODE_DOES_NOT_EXIST                                                      "Attribute code [{0}] does not exist."
+            dictionary.Add(2251L, typeof(SzConfigurationException));         // EAS_ERR_ATTR_CODE_ALREADY_EXISTS                                                      "Attribute code [{0}] already exists."
+            dictionary.Add(2252L, typeof(SzConfigurationException));         // EAS_ERR_ATTR_ID_ALREADY_EXISTS                                                        "Attribute ID [{0}] already exists."
+            dictionary.Add(2253L, typeof(SzConfigurationException));         // EAS_ERR_ATTR_CLASS_CODE_DOES_NOT_EXIST                                                "Attribute class code [{0}] does not exist."
+            dictionary.Add(2254L, typeof(SzConfigurationException));         // EAS_ERR_FUNCTION_USES_NEITHER_FTYPE_NOR_FELEM_TRIGGER                                 "Function call requested uses neither triggering feature type [{0}] nor triggering feature element code [{1}].  At least one trigger must be specified."
+            dictionary.Add(2255L, typeof(SzConfigurationException));         // EAS_ERR_FEATURE_CLASS_CODE_DOES_NOT_EXIST                                             "Feature class code [{0}] does not exist."
+            dictionary.Add(2256L, typeof(SzConfigurationException));         // EAS_ERR_RELATIONSHIP_TYPE_CODE_DOES_NOT_EXIST                                         "Relationship type code [{0}] does not exist."
+            dictionary.Add(2257L, typeof(SzConfigurationException));         // EAS_ERR_FELEM_CODE_NOT_IN_FEATURE                                                     "Feature element code [{0}] not included in feature[{1}]."
+            dictionary.Add(2258L, typeof(SzConfigurationException));         // EAS_ERR_ER_FRAGMENT_DOES_NOT_EXIST                                                    "ER fragment code [{0}] does not exist."
+            dictionary.Add(2259L, typeof(SzConfigurationException));         // EAS_ERR_ER_RULE_DOES_NOT_EXIST                                                        "ER rule code [{0}] does not exist."
+            dictionary.Add(2260L, typeof(SzConfigurationException));         // EAS_ERR_ERFRAG_ID_ALREADY_EXISTS                                                      "ER fragment ID [{0}] already exists."
+            dictionary.Add(2261L, typeof(SzConfigurationException));         // EAS_ERR_ERRULE_ID_ALREADY_EXISTS                                                      "ER rule ID [{0}] already exists."
+            dictionary.Add(2262L, typeof(SzConfigurationException));         // EAS_ERR_ERFRAG_CODE_ALREADY_EXISTS                                                    "ER fragment code [{0}] already exists."
+            dictionary.Add(2263L, typeof(SzConfigurationException));         // EAS_ERR_ERRULE_CODE_ALREADY_EXISTS                                                    "ER rule code [{0}] already exists."
+            dictionary.Add(2264L, typeof(SzConfigurationException));         // EAS_ERR_ERFRAG_CODE_DOES_NOT_EXIST                                                    "ER fragment code [{0}] does not exist."
+            dictionary.Add(2266L, typeof(SzConfigurationException));         // EAS_ERR_ERFRAG_CODE_MUST_BE_UNIQUE_IN_DEPENDENCY_LIST                                 "ER fragment code [{0}] must be unique in dependency list."
+            dictionary.Add(2267L, typeof(SzConfigurationException));         // EAS_ERR_SECTION_NAME_ALREADY_EXISTS                                                   "Section name [{0}] already exists."
+            dictionary.Add(2268L, typeof(SzConfigurationException));         // EAS_ERR_SECTION_NAME_DOES_NOT_EXIST                                                   "Section name [{0}] does not exist."
+            dictionary.Add(2269L, typeof(SzConfigurationException));         // EAS_ERR_SECTION_FIELD_NAME_ALREADY_EXISTS                                             "Section field name [{0}] already exists."
+            dictionary.Add(2270L, typeof(SzConfigurationException));         // EAS_ERR_SFUNC_ID_ALREADY_EXISTS                                                       "Feature standardization function ID [{0}] already exists."
+            dictionary.Add(2271L, typeof(SzConfigurationException));         // EAS_ERR_SFUNC_CODE_ALREADY_EXISTS                                                     "Feature standardization function code [{0}] already exists."
+            dictionary.Add(2272L, typeof(SzConfigurationException));         // EAS_ERR_EFUNC_ID_ALREADY_EXISTS                                                       "Feature expression function ID [{0}] already exists."
+            dictionary.Add(2273L, typeof(SzConfigurationException));         // EAS_ERR_EFUNC_CODE_ALREADY_EXISTS                                                     "Feature expression function code [{0}] already exists."
+            dictionary.Add(2274L, typeof(SzConfigurationException));         // EAS_ERR_CFUNC_ID_ALREADY_EXISTS                                                       "Feature comparison function ID [{0}] already exists."
+            dictionary.Add(2275L, typeof(SzConfigurationException));         // EAS_ERR_CFUNC_CODE_ALREADY_EXISTS                                                     "Feature comparison function code [{0}] already exists."
+            dictionary.Add(2276L, typeof(SzConfigurationException));         // EAS_ERR_DFUNC_ID_ALREADY_EXISTS                                                       "Feature distinct function ID [{0}] already exists."
+            dictionary.Add(2277L, typeof(SzConfigurationException));         // EAS_ERR_DFUNC_CODE_ALREADY_EXISTS                                                     "Feature distinct function code [{0}] already exists."
+            dictionary.Add(2278L, typeof(SzConfigurationException));         // EAS_ERR_COMPATIBILITY_VERSION_NOT_FOUND_IN_CONFIG                                     "Compatibility version not found in document."
+            dictionary.Add(2279L, typeof(SzConfigurationException));         // EAS_ERR_CFRTN_ID_ALREADY_EXISTS                                                       "Feature comparison function return ID [{0}] already exists."
+            dictionary.Add(2280L, typeof(SzConfigurationException));         // EAS_ERR_CFUNC_CODE_DOES_NOT_EXIST                                                     "Feature comparison function code [{0}] does not exist."
+            dictionary.Add(2281L, typeof(SzConfigurationException));         // EAS_ERR_CFRTN_VALUE_ALREADY_EXISTS                                                    "Feature comparison function return value [{0}] already exists for comparison function [{1}] ftype [{2}]."
+            dictionary.Add(2282L, typeof(SzConfigurationException));         // EAS_ERR_CFUNC_EXEC_ORDER_ALREADY_EXISTS                                               "Feature comparison function exec order value [{0}] already exists for comparison function [{1}] ftype [{2}]."
+            dictionary.Add(2283L, typeof(SzConfigurationException));         // EAS_ERR_EFUNC_CODE_DOES_NOT_EXIST                                                     "Feature expression function code [{0}] does not exist."
+            dictionary.Add(2285L, typeof(SzException));                      // EAS_ERR_INVALID_FORMAT_FOR_ENTITIES                                                   "Invalid format for ENTITIES."
+            dictionary.Add(2286L, typeof(SzException));                      // EAS_ERR_NO_ENTITY_ID_FOUND_FOR_ENTITY                                                 "No entity ID found for entity."
+            dictionary.Add(2287L, typeof(SzException));                      // EAS_ERR_NO_DATA_SOURCE_FOUND                                                          "No data source found."
+            dictionary.Add(2288L, typeof(SzException));                      // EAS_ERR_NO_RECORD_ID_FOUND                                                            "No record ID found."
+            dictionary.Add(2289L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_FEATURE_CLASS_FOR_FEATURE_TYPE                                        "Invalid feature class [{0}] for feature type [{1}]."
+            dictionary.Add(2290L, typeof(SzConfigurationException));         // EAS_ERR_FRAGMENT_IS_CONFIGURED_FOR_USE_IN_RULES                                       "Rule fragment [{0}] is configured for use in rules(s) [{1}]."
+            dictionary.Add(2291L, typeof(SzConfigurationException));         // EAS_ERR_FRAGMENT_IS_CONFIGURED_FOR_USE_IN_FRAGMENT                                    "Rule fragment [{0}] is configured for use in fragments(s) [{1}]."
+            dictionary.Add(2292L, typeof(SzException));                      // EAS_ERR_CANT_RETRIEVE_OBS_FEATURE_DATA_FOR_OBS_ENT                                    "Could not retrieve observed feature data for observed entity [{0}]."
+            dictionary.Add(2293L, typeof(SzException));                      // EAS_ERR_NO_RECORDS_SPECIFIED                                                          "No records specified."
+            dictionary.Add(2294L, typeof(SzException));                      // EAS_ERR_DATA_SOURCE_ID_DOES_NOT_EXIST                                                 "Data source ID [{0}] does not exist."
+            dictionary.Add(3011L, typeof(SzException));                      // EAS_ERR_DELETE_WITH_RESOLVE_ONLY                                                      "Cannot delete an entity with type RESOLVE_ONLY"
+            dictionary.Add(3101L, typeof(SzException));                      // EAS_ERR_INVALID_SESSION_HANDLE                                                        "Invalid Session Handle [{0}]"
+            dictionary.Add(3102L, typeof(SzException));                      // EAS_ERR_INVALID_REPORT_HANDLE                                                         "Invalid Report Handle [{0}]"
+            dictionary.Add(3103L, typeof(SzException));                      // EAS_ERR_INVALID_EXPORT_HANDLE                                                         "Invalid Export Handle [{0}]"
+            dictionary.Add(3104L, typeof(SzException));                      // EAS_ERR_INVALID_CONFIG_HANDLE                                                         "Invalid Config Handle [{0}]"
+            dictionary.Add(3110L, typeof(SzException));                      // EAS_ERR_RESPONSE_MESSAGE_SIZE_LARGER_THAN_BUFFER_SIZE                                 "Response message size [{0}] is larger than buffer size [{1}]"
+            dictionary.Add(3111L, typeof(SzException));                      // EAS_ERR_RESPONSE_RESIZE_FUNCTION_IS_NOT_PROVIDED                                      "Resize function is not provided"
+            dictionary.Add(3112L, typeof(SzException));                      // EAS_ERR_RESPONSE_RESIZE_FUNCTION_GAVE_INVALID_RESULT                                  "Resize function returned an invalid result"
+            dictionary.Add(3121L, typeof(SzBadInputException));              // EAS_ERR_JSON_PARSING_FAILURE                                                          "JSON Parsing Failure [code={0},offset={1}]"
+            dictionary.Add(3122L, typeof(SzBadInputException));              // EAS_ERR_JSON_PARSING_FAILURE_MUST_BE_OBJECT_OR_ARRAY                                  "JSON Parsing Failure.  JSON must be object or array."
+            dictionary.Add(3123L, typeof(SzBadInputException));              // EAS_ERR_JSON_PARSING_FAILURE_OBJECT_HAS_DUPLICATE_KEYS                                "Json object has duplicate keys."
+            dictionary.Add(3131L, typeof(SzBadInputException));              // EAS_ERR_UNKNOWN_COLUMN_REQUESTED_FOR_CSV_EXPORT                                       "Invalid column [{0}] requested for CSV export."
+            dictionary.Add(7209L, typeof(SzConfigurationException));         // EAS_ERR_DB_BAD_BACKEND_TYPE                                                           "Invalid [SQL] Backend Parameter. Valid values are SQL or HYBRID"
+            dictionary.Add(7211L, typeof(SzConfigurationException));         // EAS_ERR_DB_BAD_CLUSTER_SIZE                                                           "Cluster [{0}] is configured with an invalid size. Size must be equal to 1."
+            dictionary.Add(7212L, typeof(SzConfigurationException));         // EAS_ERR_DB_BAD_CLUSTER_NODE                                                           "Cluster [{0}] Node [{1}] is not configured."
+            dictionary.Add(7216L, typeof(SzConfigurationException));         // EAS_ERR_DB_BAD_CLUSTER_DEFINITION                                                     "Cluster [{0}] is not properly configured"
+            dictionary.Add(7217L, typeof(SzConfigurationException));         // EAS_ERR_DB_CONFLICTING_DEFAULT_SHARD_CONFIG                                           "Cannot specify both default backend database and default backend cluster"
+            dictionary.Add(7218L, typeof(SzConfigurationException));         // EAS_ERR_DB_CLUSTER_DOES_NOT_EXIST                                                     "Cluster [{0}] does not exist"
+            dictionary.Add(7220L, typeof(SzConfigurationException));         // EAS_ERR_NO_CONFIG_REGISTERED_IN_DATASTORE                                             "No engine configuration registered in datastore (see https://senzing.zendesk.com/hc/en-us/articles/360036587313)."
+            dictionary.Add(7221L, typeof(SzConfigurationException));         // EAS_ERR_NO_CONFIG_REGISTERED_FOR_DATA_ID                                              "No engine configuration registered with data ID [{0}]."
+            dictionary.Add(7222L, typeof(SzException));                      // EAS_ERR_FAILED_TO_SET_SYS_VAR_IN_DATASTORE                                            "Could not set system variable value in database for Group[{0}],Code[{1}],Value[{2}]."
+            dictionary.Add(7223L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_SCHEMA_VERSION_IN_DATASTORE                                           "Invalid version number for datastore schema [version '{0}']."
+            dictionary.Add(7224L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_SCHEMA_VERSION_IN_ENGINE                                              "Invalid version number for engine schema [version '{0}']."
+            dictionary.Add(7226L, typeof(SzConfigurationException));         // EAS_ERR_INCOMPATIBLE_DATASTORE_SCHEMA_VERSION                                         "Incompatible datastore schema version: [Engine version '{0}'.  Datastore version '{1}' is installed, but must be between '{2}' and '{3}'.]"
+            dictionary.Add(7227L, typeof(SzConfigurationException));         // EAS_ERR_CONFLICTING_SCHEMA_VERSIONS_IN_DATASTORE                                      "Conflicting version numbers for datastore schema [{0}]."
+            dictionary.Add(7228L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_SCHEMA_VERSION                                                        "Invalid schema version number [version '{0}']."
+            dictionary.Add(7230L, typeof(SzConfigurationException));         // EAS_ERR_ENGINE_CONFIGURATION_FILE_NOT_FOUND                                           "Engine configuration file not found [{0}]."
+            dictionary.Add(7232L, typeof(SzConfigurationException));         // EAS_ERR_ENGINE_CONFIGURATION_NOT_FOUND                                                "No engine configuration found."
+            dictionary.Add(7233L, typeof(SzConfigurationException));         // EAS_ERR_DATASTORE_ENCRYPTION_SIGNATURE_IS_INCOMPATIBLE                                "Datastore encryption signature is not compatible."
+            dictionary.Add(7234L, typeof(SzConfigurationException));         // EAS_ERR_FAILED_TO_GET_ENCRYPTION_SIGNATURE                                            "Failed to get encryption signature: '{0}'"
+            dictionary.Add(7235L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CONFIGURED_AS_REL_BUT_NO_RTYPE                                          "FTYPE_CODE[{0}] IS CONFIGURED AS A RELATIONSHIP FEATURE TYPE BUT RTYPE_ID IS NOT SET."
+            dictionary.Add(7236L, typeof(SzConfigurationException));         // EAS_ERR_DUPLICATE_BEHAVIOR_OVERRIDE_KEY_IN_CFG_FBOVR                                  "Duplicate behavior override keys in CFG_FBOVR -- FTYPE_ID[{0}], UTYPE_CODE[{1}] referenced in CFG_FBOVR."
+            dictionary.Add(7237L, typeof(SzConfigurationException));         // EAS_ERR_UNKNOWN_FTYPE_IN_TABLE                                                        "Unknown FTYPE_ID[{0}] referenced in {1}."
+            dictionary.Add(7238L, typeof(SzException));                      // EAS_ERR_DATASTORE_ENCRYPTION_CONFIGURATION_DOES_NOT_MATCH_DATASTORE                   "Datastore encryption configuration does not match data store:  '{0}'"
+            dictionary.Add(7239L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_GENERIC_THRESHOLD_CANDIDATE_CAP                                       "Invalid generic threshold {0} cap [{1}] for [GPLAN_ID[{2}], BEHAVIOR[{3}], FTYPE_ID[{4}]]."
+            dictionary.Add(7240L, typeof(SzConfigurationException));         // EAS_ERR_INCORRECT_BEHAVIOR_REFERENCED                                                 "Incorrect BEHAVIOR[{0}] referenced in CFG_GENERIC_THRESHOLD for [GPLAN_ID[{1}], FTYPE_ID[{2}]].  FType configured for behavior [{3}]"
+            dictionary.Add(7241L, typeof(SzConfigurationException));         // EAS_ERR_UNKNOWN_GPLAN_IN_TABLE                                                        "Unknown GPLAN_ID[{0}] referenced in {1}."
+            dictionary.Add(7242L, typeof(SzConfigurationException));         // EAS_ERR_MULTIPLE_GENERIC_THRESHOLD_DEFINITIONS                                        "Multiple Generic Threshold definitions for [GPLAN_ID[{0}], BEHAVIOR[{1}], FTYPE_ID[{2}]]."
+            dictionary.Add(7243L, typeof(SzConfigurationException));         // EAS_ERR_ER_FRAGMENT_HAS_UNDEFINED_DEPENDENT_FRAGMENTS                                 "ER Fragment [{0}] configured with undefined dependent fragments. Fragment [{1}] undefined."
+            dictionary.Add(7244L, typeof(SzConfigurationException));         // EAS_ERR_ER_RULE_FRAGMENT_LACKS_REQUIRED_FRAGMENT                                      "ER Rule Fragment configuration lacks the required {0} fragment."
+            dictionary.Add(7245L, typeof(SzReplaceConflictException));       // EAS_ERR_CURRENT_CONFIG_REGISTERED_DOES_NOT_MATCH_DATA_ID                              "Current configuration ID does not match specified data ID [{0}]."
+            dictionary.Add(7246L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_MAXIMUM_DATASTORE_SCHEMA_VERSION                                      "Invalid maximum datastore version number for engine schema [version '{0}']."
+            dictionary.Add(7247L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_MINIMUM_DATASTORE_SCHEMA_VERSION                                      "Invalid minimum datastore version number for engine schema [version '{0}']."
+            dictionary.Add(7303L, typeof(SzBadInputException));              // EAS_ERR_MANDATORY_SEGMENT_WITH_MISSING_REQUIREMENTS                                   "Mandatory segment with missing requirements:"
+            dictionary.Add(7305L, typeof(SzBadInputException));              // EAS_ERR_MISSING_JSON_ROOT_ELEMENT                                                     "No root element name in json TEMPLATE"
+            dictionary.Add(7313L, typeof(SzBadInputException));              // EAS_ERR_REQUIRED_ELEMENT_WITH_EMPTY_FIELD                                             "A non-empty value for [{0}] must be specified."
+            dictionary.Add(7314L, typeof(SzBadInputException));              // EAS_ERR_REQUIRED_ELEMENT_NOT_FOUND                                                    "A value for [{0}] must be specified."
+            dictionary.Add(7317L, typeof(SzConfigurationException));         // EAS_ERR_FAILED_TO_OPEN_FILE                                                           "Failed to open file: {0}"
+            dictionary.Add(7344L, typeof(SzConfigurationException));         // EAS_ERR_UNKNOWN_MAPPING_DIRECTIVE                                                     "Invalid mapping directive [{0}] for attribute [{1}]."
+            dictionary.Add(7426L, typeof(SzBadInputException));              // EAS_ERR_XLITERATOR_FAILED                                                             "Transliteration failed"
+            dictionary.Add(7511L, typeof(SzException));                      // EAS_ERR_ABORT_ER_AND_RETRY                                                            "Detected change in candidate entity[{0}].  Restarting ER evaluation."
+            dictionary.Add(8000L, typeof(SzBadInputException));              // EAS_ERR_GNRNP                                                                         "GNR NameParser Failure"
+            dictionary.Add(8410L, typeof(SzException));                      // EAS_ERR_UNINITIALIZED_AMBIGUOUS_FEATURE                                               "Cannot use uninitialized ambiguous feature."
+            dictionary.Add(8501L, typeof(SzConfigurationException));         // EAS_ERR_SALT_DIGEST_ALGORITHM_NOT_AVAILABLE                                           "Failed to get {0} digest algorithm from ICC."
+            dictionary.Add(8502L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_CONTEXT_CREATE_FAILED                                             "Failed to create a digest context."
+            dictionary.Add(8503L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_CONTEXT_INIT_FAILED                                               "Failed {0} to initialise a digest context."
+            dictionary.Add(8504L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_FAILED                                                            "Failed {0} to digest block {1}."
+            dictionary.Add(8505L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_FINAL_FAILED                                                      "Failed {0} to complete digest."
+            dictionary.Add(8508L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_UNKNOWN_EXCEPTION                                                 "Unrecognized exception thrown generating digest."
+            dictionary.Add(8509L, typeof(SzException));                      // EAS_ERR_SALT_DIGEST_ALGORITHM_REQUIRED                                                "Cannot generate a digest without a valid algorithm."
+            dictionary.Add(8514L, typeof(SzException));                      // EAS_ERR_SALT_RANDOM_FAILED                                                            "Failed {0} to get random content"
+            dictionary.Add(8516L, typeof(SzConfigurationException));         // EAS_ERR_SALT_MUST_BE_SIZE                                                             "A salt value must be {0} bytes long but the provided one is {1} bytes."
+            dictionary.Add(8517L, typeof(SzConfigurationException));         // EAS_ERR_SALT_DOES_NOT_MATCH_CHECKSUM                                                  "The salt value does not match the recorded checksum."
+            dictionary.Add(8520L, typeof(SzException));                      // EAS_ERR_SALT_G2SS_INIT_FAILED                                                         "Secure Store initialization failed."
+            dictionary.Add(8521L, typeof(SzException));                      // EAS_ERR_SALT_G2SS_TOKEN_MUST_BE_INIT                                                  "Hashing with a named salt requires the Secure Store to be initialized."
+            dictionary.Add(8522L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_SOPIN_NOT_VALID                                                     "The Security Officer (SO) PIN is not correct."
+            dictionary.Add(8524L, typeof(SzException));                      // EAS_ERR_SALT_G2SS_INIT_UNKNOWN_EXCEPTION                                              "Secure Store initialization failed with an unrecognized exception"
+            dictionary.Add(8525L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_LOAD                                                   "Secure Store is required to load salt"
+            dictionary.Add(8526L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_GENERATE                                               "Secure Store is required to generate salt"
+            dictionary.Add(8527L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_IMPORT                                                 "Secure Store is required to import salt"
+            dictionary.Add(8528L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_EXPORT                                                 "Secure Store is required to export salt"
+            dictionary.Add(8529L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_DELETE                                                 "Secure Store is required to delete salt"
+            dictionary.Add(8530L, typeof(SzException));                      // EAS_ERR_SALT_CANNOT_OVERWRITE                                                         "You cannot overwrite an existing salt called {0}"
+            dictionary.Add(8536L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_LEGACY                                                 "Secure Store is required to add a legacy salt"
+            dictionary.Add(8538L, typeof(SzConfigurationException));         // EAS_ERR_SALT_G2SS_REQUIRED_FOR_METHOD                                                 "Secure Store is required to change hashing method"
+            dictionary.Add(8539L, typeof(SzException));                      // EAS_ERR_SALT_G2SS_ERROR_CHANGING_METHOD                                               "Secure Store error changing hashing method"
+            dictionary.Add(8540L, typeof(SzConfigurationException));         // EAS_ERR_SALT_WRONG_SIZE                                                               "The object called {0} is not a salt"
+            dictionary.Add(8541L, typeof(SzException));                      // EAS_ERR_SALT_BASE64_DECODE_ERROR                                                      "Base64 decoding error in salt {0} at character {1}"
+            dictionary.Add(8542L, typeof(SzException));                      // EAS_ERR_SALT_UNINITIALIZED                                                            "Must load a salt before using it."
+            dictionary.Add(8543L, typeof(SzConfigurationException));         // EAS_ERR_SALT_NOT_FOUND                                                                "There is no salt called {0} in the Secure Store."
+            dictionary.Add(8544L, typeof(SzConfigurationException));         // EAS_ERR_SALT_PASSWORD_NOT_STRONG_ENOUGH                                               "The password must be stronger: {0}"
+            dictionary.Add(8545L, typeof(SzConfigurationException));         // EAS_ERR_SALT_ADMIN_NAME_REQUIRED                                                      "Specify -name and the name to use for the salt"
+            dictionary.Add(8556L, typeof(SzConfigurationException));         // EAS_ERR_SALT_ADMIN_METHOD_NOT_RECOGNISED                                              "Hashing method {0} not supported."
+            dictionary.Add(8557L, typeof(SzConfigurationException));         // EAS_ERR_SALT_METHOD_DOES_NOT_MATCH                                                    "The hashing method in the configuration ({1}) does not match the method ({2}) of the salt {0}"
+            dictionary.Add(8593L, typeof(SzException));                      // EAS_ERR_SALT_HMAC_CONTEXT_INIT_FAILED                                                 "Failed {0} to initialise an HMAC context."
+            dictionary.Add(8594L, typeof(SzException));                      // EAS_ERR_SALT_HMAC_FAILED                                                              "Failed {0} to HMAC block {1}."
+            dictionary.Add(8595L, typeof(SzException));                      // EAS_ERR_SALT_HMAC_FINAL_FAILED                                                        "Failed {0} to complete HMAC."
+            dictionary.Add(8598L, typeof(SzException));                      // EAS_ERR_SALT_HMAC_UNKNOWN_EXCEPTION                                                   "Unrecognized exception thrown generating HMAC."
+            dictionary.Add(8599L, typeof(SzConfigurationException));         // EAS_ERR_SALT_UNKNOWN_HASHING_METHOD                                                   "Unrecognized hashing method ({0}) requested."
+            dictionary.Add(8601L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_REQUIRES_SECURE_STORE                                                  "Using a named salt requires the Secure Store configured and running"
+            dictionary.Add(8602L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_CHECKSUM_DOES_NOT_MATCH                                                "The hashing checksum configured ({1}) does not match the checksum ({2}) of the salt named {0}"
+            dictionary.Add(8603L, typeof(SzException));                      // EAS_ERR_HASHER_UNABLE_TO_RECORD_SALT                                                  "Unable to record the configured salt"
+            dictionary.Add(8604L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_REQUIRES_FUNCTION                                                      "Using hashing requires a configured hashing function"
+            dictionary.Add(8605L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_EPHEMERAL_OR_NAMED_SALT                                                "Specify either a named salt or an ephemeral one. Can not have both"
+            dictionary.Add(8606L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_SALT_REQUIRED                                                          "Hashing requires a salt to be configured."
+            dictionary.Add(8607L, typeof(SzConfigurationException));         // EAS_ERR_HASHER_INVALID_ARGS                                                           "Invalid arguments to hashing function. Either a parameter wasn't provided or a buffer was too small: location={0}, dataPtr={1}, dataLength={2}, outputPtr={3}, outputLength={4}, output={5}"
+            dictionary.Add(8608L, typeof(SzConfigurationException));         // EAS_ERR_NO_SALT_VALUE_CONFIGURED                                                      "No salt value is configured. A salt value must be configured if you wish to export the token library."
+            dictionary.Add(8701L, typeof(SzConfigurationException));         // EAS_ERR_PARAMETER_NOT_READABLE                                                        "The parameter store does not support a read interface"
+            dictionary.Add(8702L, typeof(SzConfigurationException));         // EAS_ERR_PARAMETER_NOT_WRITABLE                                                        "The parameter store does not support a write interface"
+            dictionary.Add(9000L, typeof(SzLicenseException));               // EAS_LIMIT_MAX_OBS_ENT                                                                 "LIMIT: Maximum number of records ingested: {0}"
+            dictionary.Add(9107L, typeof(SzConfigurationException));         // EAS_ERR_CANT_GET_PARAMETER_FROM_THE_STORE                                             "Cannot get parameter [{0}] from parameter store"
+            dictionary.Add(9110L, typeof(SzConfigurationException));         // EAS_ERR_INSUFFICIENT_CONFIG                                                           "Insufficient configuration for the {0} table!"
+            dictionary.Add(9111L, typeof(SzConfigurationException));         // EAS_ERR_PARSE_FRAGMENT                                                                "ERROR parsing FragmentID[{0}] FragmentName[{1}] : [{2}] is an invalid RuleID dependency"
+            dictionary.Add(9112L, typeof(SzConfigurationException));         // EAS_ERR_FAILED_TO_OPEN_INI_FILE_FOR_WRITING                                           "Failed to open ini file for writing [{0}]"
+            dictionary.Add(9113L, typeof(SzConfigurationException));         // EAS_ERR_FAILED_TO_OPEN_INI_FILE_FOR_READING                                           "Failed to open ini file for reading [{0}]"
+            dictionary.Add(9115L, typeof(SzBadInputException));              // EAS_ERR_INPUT_NOT_STANDARDIZED                                                        "Cannot process Observation that has not been standardized"
+            dictionary.Add(9116L, typeof(SzConfigurationException));         // EAS_ERR_CONFIG_TABLE_NOT_FOUND                                                        "CONFIG information for {0} not found!"
+            dictionary.Add(9117L, typeof(SzConfigurationException));         // EAS_ERR_CONFIG_TABLE_COLUMN_NOT_FOUND                                                 "CONFIG information for {0} not found in {1}!"
+            dictionary.Add(9118L, typeof(SzConfigurationException));         // EAS_ERR_CONFIG_TABLE_COLUMN_INDEX_NOT_FOUND                                           "Invalid column index {0} queried from {1} container!"
+            dictionary.Add(9119L, typeof(SzConfigurationException));         // EAS_ERR_CONFIG_TABLE_COLUMN_NAME_NOT_FOUND                                            "Invalid column name {0} queried from {1} container!"
+            dictionary.Add(9120L, typeof(SzConfigurationException));         // EAS_ERR_CONFIG_TABLE_MALFORMED                                                        "CONFIG information for {0} is malformed!"
+            dictionary.Add(9210L, typeof(SzConfigurationException));         // EAS_ERR_DIGEST_CONTEXT_INIT_FAILED                                                    "Unable to initialize Digest Context."
+            dictionary.Add(9220L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CANNOT_BE_HASHED                                                        "FType configured to be hashed, but cannot be scored.  FTYPE_ID[{0}] FTYPE_CODE[{1}]"
+            dictionary.Add(9222L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CONFIGURED_TO_BE_HASHED_MISSING_SALT                                    "A Feature Type is marked for hashing, but a valid salt value was not found.  FTYPE_ID[{0}] FTYPE_CODE[{1}]"
+            dictionary.Add(9224L, typeof(SzConfigurationException));         // EAS_ERR_FTYPE_CONFIGURED_TO_BE_HASHED                                                 "FType configured to be hashed, but no hashable data found.  FTYPE_ID[{0}] FTYPE_CODE[{1}]"
+            dictionary.Add(9228L, typeof(SzConfigurationException));         // EAS_ERR_UNEXPECTED_SALT_CHECKSUM_LIST                                                 "The SALT checksum on the Observation does not match the EXPECTED SALT checksum: EXPECTED=[{0}] Observation=[{1}]"
+            dictionary.Add(9240L, typeof(SzConfigurationException));         // EAS_ERR_CIPHER_CONTEXT_INIT_FAILED                                                    "Unable to initialize an ICC Context."
+            dictionary.Add(9241L, typeof(SzConfigurationException));         // EAS_ERR_CIPHER_OP_FAILED                                                              "Unable to perform a required ICC operation."
+            dictionary.Add(9250L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_LIB                                                              "Invalid ({1}) Secure Store plug-in library: {0}"
+            dictionary.Add(9251L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_URL                                                              "Invalid Secure Store URL: {0}"
+            dictionary.Add(9252L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_PIN                                                              "Invalid Secure Store credential specification: {0}"
+            dictionary.Add(9253L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_TOKEN_INIT_FAILED                                                        "Secure Store token initialization failed: {0}."
+            dictionary.Add(9254L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_TOKEN_UNINITIALIZED                                                      "Cannot open a Secure Store session when the token is uninitialized."
+            dictionary.Add(9255L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_USER_PIN_UNINITIALIZED                                                   "Secure Store credential is uninitialized."
+            dictionary.Add(9256L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_SESSION_OPEN                                                             "Cannot open a Secure Store session when one is already open."
+            dictionary.Add(9257L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NO_SESSION                                                               "Cannot use Secure Store without a session."
+            dictionary.Add(9258L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_SESSION_OPEN_FAILED                                                      "Secure Store session could not be opened: {0}."
+            dictionary.Add(9259L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_ADMIN_LOGIN_FAILED                                                       "Secure Store admin login failed: {0}."
+            dictionary.Add(9260L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_USER_LOGIN_FAILED                                                        "Secure Store user login failed: {0}."
+            dictionary.Add(9261L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_PKCS11_ERROR                                                             "Secure Store function failed: {0}"
+            dictionary.Add(9264L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_LOGOUT_FAILED                                                            "Secure Store logout failed: {0}."
+            dictionary.Add(9265L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NEED_RW_SESSION                                                          "Secure Store session must be read/write."
+            dictionary.Add(9266L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_UNABLE_TO_VERIFY_KEY                                                     "Secure Store key does not meet requirements."
+            dictionary.Add(9267L, typeof(SzException));                      // EAS_ERR_G2SS_UNABLE_TO_CREATE_KEY                                                     "Secure Store key creation failed."
+            dictionary.Add(9268L, typeof(SzException));                      // EAS_ERR_G2SS_UNABLE_TO_CHANGE_PIN                                                     "Secure Store password change failed: {0}."
+            dictionary.Add(9269L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_OLD_CREDENTIAL                                                   "Secure Store old credential is invalid."
+            dictionary.Add(9270L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_NEW_CREDENTIAL                                                   "Secure Store new credential is invalid."
+            dictionary.Add(9271L, typeof(SzException));                      // EAS_ERR_G2SS_OUT_OF_MEMORY                                                            "Secure Store out of memory."
+            dictionary.Add(9272L, typeof(SzException));                      // EAS_ERR_G2SS_FIND_INIT_FAILED                                                         "Secure Store object locating failed: {0}."
+            dictionary.Add(9273L, typeof(SzException));                      // EAS_ERR_G2SS_FIND_FAILED                                                              "Secure Store object find failed: {0}."
+            dictionary.Add(9274L, typeof(SzException));                      // EAS_ERR_G2SS_CRYPTO_SETUP_FAILED                                                      "Secure Store setup of encryption failed: {0}."
+            dictionary.Add(9275L, typeof(SzException));                      // EAS_ERR_G2SS_ENCRYPT_START_FAILED                                                     "Secure Store unable to start encryption: {0}."
+            dictionary.Add(9276L, typeof(SzException));                      // EAS_ERR_G2SS_ENCRYPT_SIZE_FAILED                                                      "Secure Store unable to get the size of encrypted data: {0}."
+            dictionary.Add(9277L, typeof(SzException));                      // EAS_ERR_G2SS_ENCRYPT_FAILED                                                           "Secure Store encryption failed: {0}."
+            dictionary.Add(9278L, typeof(SzException));                      // EAS_ERR_G2SS_DECRYPT_START_FAILED                                                     "Secure Store unable to start decryption: {0}."
+            dictionary.Add(9279L, typeof(SzException));                      // EAS_ERR_G2SS_DECRYPT_FAILED                                                           "Secure Store decryption failed: {0}."
+            dictionary.Add(9280L, typeof(SzException));                      // EAS_ERR_G2SS_OBJECT_SAVE_FAILED                                                       "Secure Store unable to save object: {0}."
+            dictionary.Add(9281L, typeof(SzException));                      // EAS_ERR_G2SS_OBJECT_DELETE_FAILED                                                     "Secure Store unable to delete object: {0}."
+            dictionary.Add(9282L, typeof(SzException));                      // EAS_ERR_G2SS_OBJECT_CHANGE_FAILED                                                     "Secure Store unable to modify object: {0}."
+            dictionary.Add(9283L, typeof(SzException));                      // EAS_ERR_G2SS_UNINITIALIZED                                                            "Secure Store has not been initialized"
+            dictionary.Add(9284L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INVALID_SLOT_ID                                                          "Can not obtain info on specified slot. Possibly invalid slot ID specified in Secure Store URL: {0}"
+            dictionary.Add(9285L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NO_TOKEN_IN_SLOT                                                         "No security token present in slot specified by Secure Store URL: slot ID = {0}"
+            dictionary.Add(9286L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_TOKEN_NOT_FOUND                                                          "Can not obtain info for security token. Possibly invalid token label and/or slot ID specified in Secure Store URL: {0}"
+            dictionary.Add(9287L, typeof(SzException));                      // EAS_ERR_G2SS_TOKEN_IMPL_ERROR                                                         "An internal error occurred in the security token implementation library: Return Code = {0}"
+            dictionary.Add(9288L, typeof(SzException));                      // EAS_ERR_G2SS_USER_PIN_PROMPT_FAILED                                                   "Was unable to prompt user for security token authentication."
+            dictionary.Add(9289L, typeof(SzException));                      // EAS_ERR_G2SS_LABEL_CHANGED_SINCE_CONFIG_INIT                                          "Secure Store has been reconfigured since loading."
+            dictionary.Add(9290L, typeof(SzException));                      // EAS_ERR_G2SS_OBJECT_NOT_FOUND                                                         "Secure Store does not have an object called {0}."
+            dictionary.Add(9292L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NO_PASSWORD                                                              "No password supplied"
+            dictionary.Add(9293L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NO_SEC_STORE_PREFIX                                                      "Secure Store expects a different format (starting with {0}) when a password is supplied"
+            dictionary.Add(9295L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_NO_DATA_OBJECTS                                                          "There are no Secure Store objects stored on the token"
+            dictionary.Add(9296L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_SEC_STORE_ARCHIVE_BAD                                                    "The exported archive appears to be corrupted around object {0}"
+            dictionary.Add(9297L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_FILE_NOT_FOUND                                                           "Secure Store failed to open {0}"
+            dictionary.Add(9298L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_FILE_CONTENTS_BAD                                                        "Secure Store contents of {0} not usable."
+            dictionary.Add(9299L, typeof(SzException));                      // EAS_ERR_G2SS_CLASS_NOT_INIT                                                           "Secure Store internal error."
+            dictionary.Add(9300L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_PASSWORD_CHECK_ERROR                                                     "Secure Store internal error ({0}) checking password."
+            dictionary.Add(9301L, typeof(SzConfigurationException));         // EAS_ERR_MISSING_SEQUENCE_ENTRY                                                        "Missing Sequence Entry[{0}] in the SYS_SEQUENCE table!"
+            dictionary.Add(9305L, typeof(SzException));                      // EAS_ERR_SEQUENCE_RETRIES_FAILED                                                       "Retries failed to retrieve Sequence Entry[{0}] in the SYS_SEQUENCE table!  This may mean the CACHE_SIZE is too small."
+            dictionary.Add(9308L, typeof(SzConfigurationException));         // EAS_ERR_MISSING_STATUS_ENTRY                                                          "Could not retrieve status entry[{0}] in the SYS_STATUS table!"
+            dictionary.Add(9309L, typeof(SzConfigurationException));         // EAS_ERR_SEQUENCE_HAS_BEEN_RESET                                                       "Sequence entry[{0}] has been reset."
+            dictionary.Add(9310L, typeof(SzConfigurationException));         // EAS_ERR_INVALID_STATUS_ENTRY_VALUE                                                    "Invalid value for status entry[{0}] in the SYS_STATUS table!"
+            dictionary.Add(9311L, typeof(SzException));                      // EAS_ERR_COULD_NOT_RECORD_USAGE_TYPE                                                   "Could not record usage type [{0}] in the SYS_CODES_USED table!"
+            dictionary.Add(9406L, typeof(SzException));                      // EAS_ERR_G2SS_SESSION_MUST_NOT_BE_OPEN                                                 "Secure Store cannot fetch a value with sync if a session is already open."
+            dictionary.Add(9408L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_PASSWORD_INADEQUATE                                                      "The provided password is not strong enough: {0}"
+            dictionary.Add(9409L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_FUNCTION_LIST_NOT_SET                                                    "The security token interface is not yet set"
+            dictionary.Add(9410L, typeof(SzException));                      // EAS_ERR_G2SS_PKCS_INIT_FAILED                                                         "Initializing token driver failed {0}"
+            dictionary.Add(9411L, typeof(SzException));                      // EAS_ERR_G2SS_PKCS_FINAL_FAILED                                                        "Finalizing token driver failed {0}"
+            dictionary.Add(9413L, typeof(SzConfigurationException));         // EAS_ERR_G2SS_INCORRECT_PASSWORD                                                       "The export file password appears to be incorrect."
+            dictionary.Add(9414L, typeof(SzBadInputException));              // EAS_ERR_STRING_IS_INVALID_UTF8                                                        "Invalid data string. Data must be in UTF-8."
+            dictionary.Add(9500L, typeof(SzConfigurationException));         // EAS_ERR_TOKEN_LIBRARY_CHECKSUM_MISMATCH                                               "Cannot load token library. The checksum does not match the configuration of this node. Found: [{0}] Expected: [{1}]"
+            dictionary.Add(9501L, typeof(SzException));                      // EAS_TOKEN_LIBRARY_ALREADY_HASHED                                                      "Cannot hash token library. The Token Library contains previous hashed data"
+            dictionary.Add(9701L, typeof(SzException));                      // EAS_ERR_CANT_RETRIEVE_INDEX_FROM_MEMORY_ROW                                           "Cannot retrieve index[{0}] from memory row of key[{1}], out of range!"
+            dictionary.Add(9802L, typeof(SzConfigurationException));         // EAS_ERR_INBOUND_OBS_CONFIG_CHECKSUM_MISMATCH                                          "Configuration checksum on inbound observation [{0}] does not match this nodes configuration checksum [{1}]. Cannot process."
+            dictionary.Add(9803L, typeof(SzConfigurationException));         // EAS_ERR_CALC_CONFIGCHKSUM_AND_PARAMSTORE_CONFIGCHKSUM_DONT_MATCH                      "The calculated configuration checksum [{0}] does not match the CONFIGURATION_CHECKSUM value in the parameter store [{1}]."
         }
     }
 }
