@@ -117,7 +117,7 @@ matches the native library version.
         dotnet nuget add source %USERPROFILE%\dev\nuget\packages -n dev
         ```
 
-1. Push the `Senzing.Sdk` NuGet package from your Senzing destribution to your local repository:
+1. Push the `Senzing.Sdk` NuGet package from your Senzing distribution to your local repository:
 
     ```console
     dotnet nuget push [path-to-Senzing.Sdk.4.0.0-beta.2.0.nupkg] --source [local-source-name]

@@ -19,13 +19,6 @@ namespace Senzing.Sdk.Core
         private const long SdkFlagMask = ~((long)SzWithInfo);
 
         /// <summary>
-        /// The empty response for operations where the info can optionally
-        /// generated but was not requested.
-        /// </summary>
-        internal const string NoInfo
-            = "{\"AFFECTED_ENTITIES\":[],\"INTERESTING_ENTITIES\":{\"ENTITIES\":[]}}";
-
-        /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
         /// </summary>
         private readonly SzCoreEnvironment env;
@@ -1136,12 +1129,6 @@ namespace Senzing.Sdk.Core
 
                     // set the info result if requested
                     result = info;
-
-                    // check if record not found yields empty INFO
-                    if (result.Length == 0)
-                    {
-                        result = NoInfo;
-                    }
                 }
 
                 // check the return code
