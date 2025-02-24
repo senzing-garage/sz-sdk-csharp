@@ -126,13 +126,13 @@ matches the native library version.
     - Example (macOS / Linux):
 
         ```console
-        dotnet nuget push /opt/senzing/er/lib/Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
+        dotnet nuget push /opt/senzing/er/sdk/dotnet/Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
         ```
 
     - Example (Windows):
 
         ```console
-        dotnet nuget push %USERPROFILE%\Senzing\er\lib\Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
+        dotnet nuget push %USERPROFILE%\Senzing\er\sdk\dotnet\Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
         ```
 
 1. Add the `Senzing.Sdk` NuGet package as a dependency to your project:
