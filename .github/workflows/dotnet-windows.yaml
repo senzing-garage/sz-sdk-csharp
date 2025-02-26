@@ -46,12 +46,11 @@ jobs:
 
       - name: Add to "Path" environment variable
         run: |
-          Add-Content $env:GITHUB_PATH "C:\Program Files\Senzing\er\lib"
+          Add-Content $env:GITHUB_PATH "$Env:USERPROFILE\Senzing\er\lib"
 
       - name: Run DotNet tests
-        env:
-          SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
+          $Env:SENZING_DATA_DIR = "$Env:USERPROFILE\Senzing\er\data"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
