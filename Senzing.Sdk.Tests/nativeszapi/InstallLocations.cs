@@ -210,31 +210,33 @@ public class InstallLocations
         DirectoryInfo? devDistDir = (devStructure && previousDir != null)
             ? new DirectoryInfo(Path.Combine(previousDir.FullName, "dist")) : null;
 
-        switch (Environment.OSVersion.Platform)
+        if (OperatingSystem.IsWindows())
         {
-            case PlatformID.Win32NT:
-                defaultInstallPath = (devDistDir == null)
-                    ? "C:\\Program Files\\Senzing\\er" : devDistDir.FullName;
-                break;
-            case PlatformID.MacOSX:
-                defaultInstallPath = (devDistDir == null)
-                    ? "/opt/senzing/er" : devDistDir.FullName;
-                break;
-            case PlatformID.Unix:
-                if (devDistDir == null)
-                {
-                    defaultInstallPath = "/opt/senzing/er";
-                    defaultConfigPath = "/etc/opt/senzing";
-                }
-                else
-                {
-                    defaultInstallPath = devDistDir.FullName;
-                }
-                break;
-            default:
-                throw new NotSupportedException(
-                    "Unsupported Operating System: "
-                    + Environment.OSVersion.Platform);
+            defaultInstallPath = (devDistDir == null)
+                ? "C:\\Program Files\\Senzing\\er" : devDistDir.FullName;
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            defaultInstallPath = (devDistDir == null)
+                ? "/opt/senzing/er" : devDistDir.FullName;
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            if (devDistDir == null)
+            {
+                defaultInstallPath = "/opt/senzing/er";
+                defaultConfigPath = "/etc/opt/senzing";
+            }
+            else
+            {
+                defaultInstallPath = devDistDir.FullName;
+            }
+        }
+        else
+        {
+            throw new NotSupportedException(
+                "Unsupported Operating System: "
+                + Environment.OSVersion.Platform);
         }
 
         // check for senzing system properties
