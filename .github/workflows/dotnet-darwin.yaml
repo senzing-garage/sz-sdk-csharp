@@ -42,7 +42,9 @@ jobs:
 
       - name: Run DotNet tests
         run: |
+          # shellcheck disable=SC2034
           DYLD_LIBRARY_PATH="$HOME/senzing/er/lib"
+          # shellcheck disable=SC2034
           SENZING_DATA_DIR="$HOME/senzing/er/data"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
