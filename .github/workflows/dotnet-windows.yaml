@@ -32,7 +32,7 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Install Senzing SDK
-        uses: senzing-factory/github-action-install-senzing-sdk@v2
+        uses: senzing-factory/github-action-install-senzing-sdk@v3
         with:
           senzingsdk-repository-path: ${{ secrets.SENZING_WIN_BETA_REPOSITORY }}
 
@@ -46,12 +46,11 @@ jobs:
 
       - name: Add to "Path" environment variable
         run: |
-          Add-Content $env:GITHUB_PATH "C:\Program Files\Senzing\er\lib"
+          Add-Content $env:GITHUB_PATH "$Env:USERPROFILE\Senzing\er\lib"
 
       - name: Run DotNet tests
-        env:
-          SENZING_DATA_DIR: 'C:\Program Files\Senzing\er\data'
         run: |
+          $Env:SENZING_DIR = "$Env:USERPROFILE\Senzing\er"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
