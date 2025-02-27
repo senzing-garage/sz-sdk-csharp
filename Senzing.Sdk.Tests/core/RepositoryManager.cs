@@ -115,29 +115,27 @@ public static class RepositoryManager
 
                 Console.Error.WriteLine(e);
                 Console.Error.WriteLine();
-                switch (Environment.OSVersion.Platform)
+                if (OperatingSystem.IsWindows())
                 {
-                    case PlatformID.Win32NT:
-                        Console.Error.WriteLine("Failed to load native G2.dll library.");
-                        Console.Error.WriteLine(
-                            "Check PATH environment variable for " + libPath);
-                        break;
-                    case PlatformID.MacOSX:
-                        Console.Error.WriteLine("Failed to load native libG2.so library");
-                        Console.Error.WriteLine(
-                            "Check DYLD_LIBRARY_PATH environment variable for: ");
-                        Console.Error.WriteLine("     - " + libPath);
-                        Console.Error.WriteLine("     - " + Path.Combine(libPath.FullName, "macos"));
-                        break;
-                    case PlatformID.Unix:
-                        Console.Error.WriteLine("Failed to load native libG2.so library");
-                        Console.Error.WriteLine(
-                            "Check LD_LIBRARY_PATH environment variable for: ");
-                        Console.Error.WriteLine("     - " + libPath);
-                        Console.Error.WriteLine("     - " + Path.Combine(libPath.FullName, "debian"));
-                        break;
-                    default:
-                        break;
+                    Console.Error.WriteLine("Failed to load native Sz.dll library.");
+                    Console.Error.WriteLine(
+                        "Check PATH environment variable for " + libPath);
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    Console.Error.WriteLine("Failed to load native libSz.so library");
+                    Console.Error.WriteLine(
+                        "Check DYLD_LIBRARY_PATH environment variable for: ");
+                    Console.Error.WriteLine("     - " + libPath);
+                    Console.Error.WriteLine("     - " + Path.Combine(libPath.FullName, "macos"));
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    Console.Error.WriteLine("Failed to load native libSz.so library");
+                    Console.Error.WriteLine(
+                        "Check LD_LIBRARY_PATH environment variable for: ");
+                    Console.Error.WriteLine("     - " + libPath);
+                    Console.Error.WriteLine("     - " + Path.Combine(libPath.FullName, "debian"));
                 }
                 throw;
             }
