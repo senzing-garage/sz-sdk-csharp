@@ -50,7 +50,6 @@ jobs:
 
       - name: Run DotNet tests
         run: |
-          $Env:SENZING_PATH = "$Env:USERPROFILE\Senzing"
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
