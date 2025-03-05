@@ -232,12 +232,15 @@ public class InstallLocations
         }
 
         // check if we are in the dev structure with no senzing path defined
-        if (devDistDir != null && senzingPath == null) {
-            defaultSenzingPath  = devDistDir.FullName;
-            defaultInstallPath  = devDistDir.FullName;
-            defaultSupportPath  = devSupport?.FullName; // should not be null
-            defaultConfigPath   = devConfig?.FullName;  // should not be null
-        } else {
+        if (devDistDir != null && senzingPath == null)
+        {
+            defaultSenzingPath = devDistDir.FullName;
+            defaultInstallPath = devDistDir.FullName;
+            defaultSupportPath = devSupport?.FullName; // should not be null
+            defaultConfigPath = devConfig?.FullName;  // should not be null
+        }
+        else
+        {
             if (OperatingSystem.IsWindows())
             {
                 defaultSenzingPath = homeSenzing.FullName;
@@ -295,36 +298,45 @@ public class InstallLocations
 
         // check for the root senzing directory
         senzingDir = new DirectoryInfo(senzingPath == null ? defaultSenzingPath : senzingPath);
-        if (!senzingDir.Exists) {
+        if (!senzingDir.Exists)
+        {
             senzingDir = null;
         }
 
         // check the senzing install directory
         installDir = (installPath != null)
             ? new DirectoryInfo(installPath)
-            : ((senzingDir == null) 
+            : ((senzingDir == null)
                 ? new DirectoryInfo(defaultInstallPath)
                 : ("dist".Equals(senzingDir.Name, OrdinalIgnoreCase)
                     ? senzingDir : new DirectoryInfo(Path.Combine(senzingDir.FullName, "er"))));
 
         if (!installDir.Exists || !IsDirectory(installDir.FullName))
         {
-            if (!installDir.Exists) {
+            if (!installDir.Exists)
+            {
                 Console.Error.WriteLine("Could not find Senzing ER installation directory:");
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine("Senzing ER installation directory appears invalid:");
             }
             Console.Error.WriteLine("     " + installDir.FullName);
             Console.Error.WriteLine();
-            if (installPath != null) {
+            if (installPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_DIR environment variable.");
-            
-            } else if (senzingPath != null) {
+
+            }
+            else if (senzingPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_PATH environment variable.");
-    
-            } else {
+
+            }
+            else
+            {
                 Console.Error.WriteLine(
                         "Use the SENZING_PATH environment variable to specify a "
                         + "base Senzing path.");
@@ -345,16 +357,18 @@ public class InstallLocations
             && "dist".Equals(installDir.Name, OrdinalIgnoreCase))
         {
             supportDir = new DirectoryInfo(Path.Combine(installDir.FullName, "data"));
-            if (!supportDir.Exists) {
+            if (!supportDir.Exists)
+            {
                 supportDir = null;
             }
         }
 
         // check if support dir is not defined BUT senzing path is defined
-        if (supportDir == null && senzingPath != null && senzingDir != null) 
+        if (supportDir == null && senzingPath != null && senzingDir != null)
         {
             supportDir = new DirectoryInfo(Path.Combine(senzingDir.FullName, "data"));
-            if (!supportDir.Exists) {
+            if (!supportDir.Exists)
+            {
                 supportDir = null;
             }
         }
@@ -366,25 +380,33 @@ public class InstallLocations
         }
 
         // verify the discovered support directory
-        if ((supportDir != null) 
-            && ((!supportDir.Exists) || (!IsDirectory(supportDir.FullName)))) 
+        if ((supportDir != null)
+            && ((!supportDir.Exists) || (!IsDirectory(supportDir.FullName))))
         {
-            if (!supportDir.Exists) {
+            if (!supportDir.Exists)
+            {
                 Console.Error.WriteLine("Could not find Senzing support directory:");
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine("Senzing support directory appears invalid:");
             }
             Console.Error.WriteLine("     " + supportDir.FullName);
             Console.Error.WriteLine();
-            if (supportPath != null) {
+            if (supportPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_SUPPORT_DIR environment variable.");
-            
-            } else if (senzingPath != null) {
+
+            }
+            else if (senzingPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_PATH environment variable.");
-    
-            } else {
+
+            }
+            else
+            {
                 Console.Error.WriteLine(
                         "Use the SENZING_PATH environment variable to specify a "
                         + "base Senzing path.");
@@ -402,46 +424,58 @@ public class InstallLocations
         resourceDir = (resourcePath != null) ? new DirectoryInfo(resourcePath) : null;
 
         // try the "resources" sub-directory of the installation
-        if (resourceDir == null && installDir != null) {
+        if (resourceDir == null && installDir != null)
+        {
             resourceDir = new DirectoryInfo(Path.Combine(installDir.FullName, "resources"));
-            if (!resourceDir.Exists) {
+            if (!resourceDir.Exists)
+            {
                 resourceDir = null;
             }
         }
 
         // set the templates directory if we have the resource directory
         if (resourceDir != null && resourceDir.Exists
-            && IsDirectory(resourceDir.FullName)) 
+            && IsDirectory(resourceDir.FullName))
         {
             templatesDir = new DirectoryInfo(Path.Combine(resourceDir.FullName, "templates"));
         }
 
         // verify the discovered resource path
-        if ((resourceDir == null) || (!resourceDir.Exists) 
-                || (!IsDirectory(resourceDir.FullName))) 
+        if ((resourceDir == null) || (!resourceDir.Exists)
+                || (!IsDirectory(resourceDir.FullName)))
         {
-            if (resourceDir == null || !resourceDir.Exists) {
+            if (resourceDir == null || !resourceDir.Exists)
+            {
                 Console.Error.WriteLine("Could not find Senzing resource directory:");
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine("Senzing resource directory appears invalid:");
             }
             if (resourceDir != null) Console.Error.WriteLine("         " + resourceDir);
-            
+
             Console.Error.WriteLine();
 
-            if (resourcePath != null) {
+            if (resourcePath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_RESOURCE_DIR environment variable.");
-            
-            } else if (senzingPath != null) {
+
+            }
+            else if (senzingPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_PATH environment variable.");
-    
-            } else if (installPath != null) {
+
+            }
+            else if (installPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_DIR environment variable.");
 
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine(
                         "Use the or SENZING_PATH environment variable to specify a "
                         + "valid base Senzing path.");
@@ -467,20 +501,24 @@ public class InstallLocations
         }
 
         // check if config dir is still not defined and fall back to default
-        if (configDir == null && defaultConfigPath != null) {
+        if (configDir == null && defaultConfigPath != null)
+        {
             configDir = new DirectoryInfo(defaultConfigPath);
-            if (!configDir.Exists) {
+            if (!configDir.Exists)
+            {
                 configDir = null;
             }
         }
 
         // if still null, try to use the install's etc directory
-        if (configDir == null && installDir != null) {
+        if (configDir == null && installDir != null)
+        {
             configDir = new DirectoryInfo(
                 Path.Combine(installDir.FullName, "etc"));
-            if (!configDir.Exists) {
-                 configDir = null;
-            }                
+            if (!configDir.Exists)
+            {
+                configDir = null;
+            }
         }
 
         // validate the contents of the config directory
@@ -488,7 +526,8 @@ public class InstallLocations
         string missingFilesString = "";
 
         // check if the config directory does not exist
-        if (configDir != null && supportDir != null && configDir.Exists) {
+        if (configDir != null && supportDir != null && configDir.Exists)
+        {
             String[] requiredFiles = ["cfgVariant.json"];
 
             foreach (string fileName in requiredFiles)
@@ -507,37 +546,49 @@ public class InstallLocations
         }
 
         // verify the discovered config directory
-        if ((configDir == null) || (!configDir.Exists) 
+        if ((configDir == null) || (!configDir.Exists)
                 || (!IsDirectory(configDir.FullName)) || (missingFiles.Count > 0))
         {
-            if (configDir == null || !configDir.Exists) {
+            if (configDir == null || !configDir.Exists)
+            {
                 Console.Error.WriteLine("Could not find Senzing config directory:");
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine("Senzing config directory appears invalid:");
             }
             if (configDir != null) Console.Error.WriteLine("     " + configDir);
 
-            if (missingFiles.Count > 0) {
-                foreach (string missing in missingFiles) {
+            if (missingFiles.Count > 0)
+            {
+                foreach (string missing in missingFiles)
+                {
                     Console.Error.WriteLine(
                             "         " + missing + " was not found in config directory");
                 }
             }
 
             Console.Error.WriteLine();
-            if (configPath != null) {
+            if (configPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_CONFIG_DIR environment variable.");
-            
-            } else if (senzingPath != null) {
+
+            }
+            else if (senzingPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_PATH environment variable.");
-    
-            } else if (installPath != null) {
+
+            }
+            else if (installPath != null)
+            {
                 Console.Error.WriteLine(
                         "Check the SENZING_DIR environment variable.");
 
-            } else {
+            }
+            else
+            {
                 Console.Error.WriteLine(
                         "Use the SENZING_PATH environment variable to specify a "
                         + "valid base Senzing path.");
