@@ -42,11 +42,10 @@ jobs:
 
       - name: configure environment
         run: |
-          SENZING_DIR="${HOME}/senzing/er"
+          SENZING_PATH="${HOME}/senzing"
           {
-            echo "SENZING_DIR=${SENZING_DIR}"
-            echo "DYLD_LIBRARY_PATH=${SENZING_DIR}/lib"
-            echo "SENZING_DATA_DIR=${SENZING_DIR}/data"
+            echo "SENZING_PATH=${SENZING_PATH}"
+            echo "DYLD_LIBRARY_PATH=${SENZING_PATH}/er/lib"
           } >> "$GITHUB_ENV"
 
       - name: Run DotNet tests
