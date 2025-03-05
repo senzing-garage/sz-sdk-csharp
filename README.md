@@ -20,10 +20,10 @@ matches the native library version.
 
 1. Senzing v4.0 or later (for running unit tests)
 
-1. Set the `SENZING_DIR` environment variable:
-    - Linux: `export SENZING_DIR=/opt/senzing/er`
-    - macOS: `export SENZING_DIR=/Library/Senzing/er`
-    - Windows: `set SENZING_DIR=C:\Senzing\er`
+1. Set the `SENZING_PATH` environment variable:
+    - Linux: `export SENZING_PATH=/opt/senzing`
+    - macOS: `export SENZING_PATH=$HOME/senzing`
+    - Windows: `set SENZING_PATH=%USERPROFILE%\senzing`
 
 1. Set your library path appropriately for Senzing libraries:
     - Linux: Set the `LD_LIBRARY_PATH`:

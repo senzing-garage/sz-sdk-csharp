@@ -45,7 +45,6 @@ jobs:
       - name: Run DotNet tests
         env:
           LD_LIBRARY_PATH: "/opt/senzing/er/lib"
-          SENZING_DATA_DIR: "/opt/senzing/data"
         run: |
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
