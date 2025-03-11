@@ -1,0 +1,405 @@
+{
+  "source_base_path": "/home/runner/work/sz-sdk-csharp/sz-sdk-csharp",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CODE_OF_CONDUCT.md",
+      "output": {
+        ".html": {
+          "relative_path": "CODE_OF_CONDUCT.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/development.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/development.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/errors.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/errors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/examples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Builder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Builder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzBadInputException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzBadInputException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfig.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfigManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfigManager.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfigurationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfigurationException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseConnectionLostException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseConnectionLostException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseTransientException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseTransientException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDiagnostic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDiagnostic.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzEngine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzEngine.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzEnvironment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlag.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlagUsageGroup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlagUsageGroup.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlags.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzLicenseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzLicenseException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzNotFoundException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzNotFoundException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzNotInitializedException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzNotInitializedException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzProduct.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzProduct.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzReplaceConflictException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzReplaceConflictException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzRetryTimeoutExceededException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzRetryTimeoutExceededException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzRetryableException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzRetryableException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnhandledException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnhandledException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnknownDataSourceException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnknownDataSourceException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnrecoverableException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnrecoverableException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "target/api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "target/api/toc.json"
+        },
+        ".html": {
+          "relative_path": "target/api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

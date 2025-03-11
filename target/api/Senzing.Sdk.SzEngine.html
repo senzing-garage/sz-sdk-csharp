@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface SzEngine | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface SzEngine | Senzing.Sdk ">
+      
+      <meta name="description" content="Defines the interface to the Senzing engine functions.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.0.0-beta.2.0/apiSpec/new?filename=Senzing_Sdk_SzEngine.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzEngine%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzEngine">
+
+
+
+  <h1 id="Senzing_Sdk_SzEngine" data-uid="Senzing.Sdk.SzEngine" class="text-break">
+Interface SzEngine  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the interface to the Senzing engine functions.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface SzEngine</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Senzing_Sdk_SzEngine_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The Senzing engine functions primarily provide means of working with
+identity data records, entities and their relationships.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzEngine_AddRecord_" data-uid="Senzing.Sdk.SzEngine.AddRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_AddRecord_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.AddRecord(System.String,System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  AddRecord(string, string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Loads the record described by the specified <code>string</code> record
+definition having the specified data source code and record ID using
+the specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string AddRecord(string dataSourceCode, string recordID, string recordDefinition, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identifying the data source for the record being
+added.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the record being added within
+the scope of its associated data source.</p>
+</dd>
+    <dt><code>recordDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> that defines the record, typically in JSON format.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group to control how the operation
+is performed and the content of the response.  Omitting this parameter
+will default its value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specify
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> for an INFO response.  Specifying <code>null</code>
+is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by adding the record to the
+repository, or <code>null</code> if the specified flags do not indicate
+that an INFO message should be returned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_AddRecord_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If a record already exists with the same data source code and record ID,
+then it will be replaced.</p>
+<p>
+The specified JSON data may optionally contain the <code>DATA_SOURCE</code>
+and <code>RECORD_ID</code> properties, but, if so, they must match the
+specified parameters.
+</p><p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzBadInputException.html">SzBadInputException</a></dt>
+    <dd><p>If the specified record definition has a data source or record ID value
+that conflicts with the specified data source code and/or record ID
+values.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_CloseExport_" data-uid="Senzing.Sdk.SzEngine.CloseExport*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_" data-uid="Senzing.Sdk.SzEngine.CloseExport(System.IntPtr)">
+  CloseExport(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1398"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This function closes an export handle of a previously opened
+export to clean up system resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CloseExport(IntPtr exportHandle)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>exportHandle</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd><p>The export handle of the export to close.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_CloseExport_System_IntPtr__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This function is idempotent and may be called for an export
+that has already been closed.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_">FetchNext(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag__">ExportJsonEntityReport(SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ExportCsvEntityReport(string, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_CountRedoRecords_" data-uid="Senzing.Sdk.SzEngine.CountRedoRecords*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_CountRedoRecords" data-uid="Senzing.Sdk.SzEngine.CountRedoRecords">
+  CountRedoRecords()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1470"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the number of redo records pending to be processed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long CountRedoRecords()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The number of redo records pending to be processed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ProcessRedoRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ProcessRedoRecord(string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_GetRedoRecord">GetRedoRecord()</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_DeleteRecord_" data-uid="Senzing.Sdk.SzEngine.DeleteRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_DeleteRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.DeleteRecord(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  DeleteRecord(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delete a previously loaded record identified by the specified
+data source code and record ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string DeleteRecord(string dataSourceCode, string recordID, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identifying the data source for the record being
+deleted.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the record being deleted within
+the scope of its associated data source.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group to control how the operation
+is performed and the content of the response.  Omitting this parameter
+will default its value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specify
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> for an INFO response.  Specifying <code>null</code>
+is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by deleting the record from
+the repository, or <code>null</code> if the specified flags do not
+indicate that an INFO message should be returned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_DeleteRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method is idempotent, meaning multiple calls this method with
+the same parameters will all succeed regardless of whether or not the
+record is found in the repository.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_ExportCsvEntityReport_" data-uid="Senzing.Sdk.SzEngine.ExportCsvEntityReport*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.ExportCsvEntityReport(System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  ExportCsvEntityReport(string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1346"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Iniitiates an export of entity data in CSV format and returns an
+&quot;export handle&quot; that can be used to <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_">read
+     the export data</a> and must be <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_">closed</a>
+when complete.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr ExportCsvEntityReport(string csvColumnList, SzFlag? flags = SzFlag.SzExportIncludeMultiRecordEntities | SzFlag.SzExportIncludeSingleRecordEntities | SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>csvColumnList</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Specify <code>&quot;*&quot;</code> to indicate &quot;all columns&quot;, specify empty-string to
+indicate the &quot;standard columns&quot;, otherwise specify a comma-sepatated
+list of column names.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzExportDefaultFlags">SzExportDefaultFlags</a> for the default
+recommended flags.  Specifying <code>null</code> is equivalent to specifying
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd><p>The export handle to use for retrieving the export data.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The first exported line contains the CSV header and each subsequent line
+contains the exported entity data for a single resolved entity.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they
+have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzExportDefaultFlags">SzExportDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_">FetchNext(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_">CloseExport(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag__">ExportJsonEntityReport(SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_ExportJsonEntityReport_" data-uid="Senzing.Sdk.SzEngine.ExportJsonEntityReport*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.ExportJsonEntityReport(System.Nullable{Senzing.Sdk.SzFlag})">
+  ExportJsonEntityReport(SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1300"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Iniitiates an export of entity data as JSON-lines format and returns an
+&quot;export handle&quot; that can be used to <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_">read
+     the export data</a> and must be <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_">closed</a>
+when complete.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IntPtr ExportJsonEntityReport(SzFlag? flags = SzFlag.SzExportIncludeMultiRecordEntities | SzFlag.SzExportIncludeSingleRecordEntities | SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzExportDefaultFlags">SzExportDefaultFlags</a> for the default
+recommended flags.  Specifying <code>null</code> is equivalent to specifying
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd><p>The export handle to use for retrieving the export data.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Each output line contains the exported entity data for a single resolved
+entity.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzExportDefaultFlags">SzExportDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_">FetchNext(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_">CloseExport(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ExportCsvEntityReport(string, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_FetchNext_" data-uid="Senzing.Sdk.SzEngine.FetchNext*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FetchNext_System_IntPtr_" data-uid="Senzing.Sdk.SzEngine.FetchNext(System.IntPtr)">
+  FetchNext(IntPtr)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1377"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fetches the next line of entity data from the export identified
+by the specified export handle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FetchNext(IntPtr exportHandle)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>exportHandle</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.intptr">IntPtr</a></dt>
+    <dd><p>The export handle to identify the export from which to retrieve
+the next line of data.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The next line of export data whose format depends on which function
+was used to initiate the export, or <code>null</code> if there is no more
+data to be exported via the specified handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FetchNext_System_IntPtr__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The specified export handle can be obtained from
+<a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag__">ExportJsonEntityReport(SzFlag?)</a> or
+<a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ExportCsvEntityReport(string, SzFlag?)</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CloseExport_System_IntPtr_">CloseExport(IntPtr)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportJsonEntityReport_System_Nullable_Senzing_Sdk_SzFlag__">ExportJsonEntityReport(SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ExportCsvEntityReport_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ExportCsvEntityReport(string, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_FindInterestingEntities_" data-uid="Senzing.Sdk.SzEngine.FindInterestingEntities*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindInterestingEntities_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindInterestingEntities(System.Int64,System.Nullable{Senzing.Sdk.SzFlag})">
+  FindInterestingEntities(long, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>An <b>experimental</b> method to obtain interesting entities pertaining
+to the entity identified by the specified entity ID using the specified
+flags.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindInterestingEntities(long entityID, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID identifying the entity that will be the focus for the
+interesting entities to be returned.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values for the operation,
+though no flags are currently defined for this experimental method.
+Omitting this parameter will default its value to
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specifying <code>null</code> is equivalent
+to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the interesting entities.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindInterestingEntities_System_Int64_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The result is returned as a JSON document describing the interesting
+entities.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values
+may contain any flags, but currenlty no flags are specifically defined
+for this experimental method.  Flags are not applicable to this method
+will simply be ignored.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If no enitty could be found with the specified entity ID.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEngine_FindInterestingEntities_" data-uid="Senzing.Sdk.SzEngine.FindInterestingEntities*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindInterestingEntities_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindInterestingEntities(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  FindInterestingEntities(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L610"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>An <b>experimental</b> method to obtain interesting entities pertaining
+to the entity that contains a specific record that is identified by the
+specified data source code and record ID using the specified flags.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindInterestingEntities(string dataSourceCode, string recordID, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code that identifies the data source of the constiuent
+record belonging to the entity that is the focus for the interesting
+entities to be returned.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID (unique within the scope of the record's data source)
+identifying the constituent record belonging to the entity that is
+the focus for the interesting entities to be returned.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values for the operation,
+though no flags are currently defined for this experimental method.
+Omitting this parameter will default its value to
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specifying <code>null</code> is equivalent
+to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the interesting entities.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindInterestingEntities_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The result is returned as a JSON document describing the interesting
+entities.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values
+may contain any flags, but currenlty no flags are specifically defined
+for this experimental method.  Flags are not applicable to this method
+will simply be ignored.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If no record can be found for the specified record ID.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEngine_FindNetwork_" data-uid="Senzing.Sdk.SzEngine.FindNetwork*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_Int64__System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindNetwork(System.Collections.Generic.ISet{System.Int64},System.Int32,System.Int32,System.Int32,System.Nullable{Senzing.Sdk.SzFlag})">
+  FindNetwork(ISet&lt;long&gt;, int, int, int, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L868"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finds a network of entity relationships surrounding the paths between
+a set of entities identified by one or more <code>long</code> entity ID's
+included in the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindNetwork(ISet&lt;long&gt; entityIDs, int maxDegrees, int buildOutDegrees, int buildOutMaxEntities, SzFlag? flags = SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzFindNetworkIncludeMatchingInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityIDs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</dt>
+    <dd><p>The non-null <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of <code>long</code> entity ID's
+identifying the entities for which to build the network.</p>
+</dd>
+    <dt><code>maxDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of degrees for the path search between the specified
+entities.</p>
+</dd>
+    <dt><code>buildOutDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of relationship degrees to build out from each of the found
+entities on the network, or zero to prevent network build-out.</p>
+</dd>
+    <dt><code>buildOutMaxEntities</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of entities to build out for the entire network.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter will
+default its value to the default recommended flags
+(<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags">SzFindNetworkDefaultFlags</a>).  Specifying <code>null</code> is
+equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the resultant entity network
+and the entities on the network.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_Int64__System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Additionally, the maximum degrees of separation for the paths between
+entities must be specified so as to prevent the network growing beyond
+the desired size.  Further, a non-zero number of degrees to build out
+the network may be specified to find other related entities.  If build
+out is specified, it can be limited to a maximum total number of
+build-out entities for the whole network.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a> group
+will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored
+unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If any of the entities for the specified entity ID's cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags">SzFindNetworkDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag__">FindNetwork(ISet&lt;(string dataSourceCode, string recordID)&gt;, int, int, int, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_FindNetwork_" data-uid="Senzing.Sdk.SzEngine.FindNetwork*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindNetwork(System.Collections.Generic.ISet{System.ValueTuple{System.String,System.String}},System.Int32,System.Int32,System.Int32,System.Nullable{Senzing.Sdk.SzFlag})">
+  FindNetwork(ISet&lt;(string dataSourceCode, string recordID)&gt;, int, int, int, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L947"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finds a network of entity relationships surrounding the paths between
+a set of entities having the constiuent records identified by the tuples
+of data source code and record ID pairs included in the specified
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindNetwork(ISet&lt;(string dataSourceCode, string recordID)&gt; recordKeys, int maxDegrees, int buildOutDegrees, int buildOutMaxEntities, SzFlag? flags = SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzFindNetworkIncludeMatchingInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>recordKeys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.datasourcecode">dataSourceCode</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.recordid">recordID</a>)&gt;</dt>
+    <dd><p>The non-null  <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of tuples of data source code and
+record ID pairs identifying the constiuent records of the entities for
+which to build the network.</p>
+</dd>
+    <dt><code>maxDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of degrees for the path search between the specified
+entities.</p>
+</dd>
+    <dt><code>buildOutDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of relationship degrees to build out from each of the found
+entities on the network, or zero to prevent network build-out.</p>
+</dd>
+    <dt><code>buildOutMaxEntities</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of entities to build out for the entire network.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter will
+default its value to the default recommended flags
+(<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags">SzFindNetworkDefaultFlags</a>).  Specifying
+<code>null</code> is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the resultant entity network
+and the entities on the network.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Additionally, the maximum degrees of separation for the paths between
+entities must be specified so as to prevent the network growing beyond
+the desired size.  Further, a non-zero number of degrees to build out
+the network may be specified to find other related entities.  If build
+out is specified, it can be limited to a maximum total number of
+build-out entities for the whole network.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a> group
+will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored
+unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If any of the records for the specified data source code and
+record ID pairs cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags">SzFindNetworkDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FindNetwork_System_Collections_Generic_ISet_System_Int64__System_Int32_System_Int32_System_Int32_System_Nullable_Senzing_Sdk_SzFlag__">FindNetwork(ISet&lt;long&gt;, int, int, int, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_FindPath_" data-uid="Senzing.Sdk.SzEngine.FindPath*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindPath_System_Int64_System_Int64_System_Int32_System_Collections_Generic_ISet_System_Int64__System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindPath(System.Int64,System.Int64,System.Int32,System.Collections.Generic.ISet{System.Int64},System.Collections.Generic.ISet{System.String},System.Nullable{Senzing.Sdk.SzFlag})">
+  FindPath(long, long, int, ISet&lt;long&gt;, ISet&lt;string&gt;, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L693"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finds a relationship path between two entities identified by their
+entity ID's.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindPath(long startEntityID, long endEntityID, int maxDegrees, ISet&lt;long&gt; avoidEntityIDs, ISet&lt;string&gt; requiredDataSources, SzFlag? flags = SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzFindPathIncludeMatchingInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>startEntityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID of the first entity.</p>
+</dd>
+    <dt><code>endEntityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID of the second entity.</p>
+</dd>
+    <dt><code>maxDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of degrees for the path search.</p>
+</dd>
+    <dt><code>avoidEntityIDs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</dt>
+    <dd><p>The optional <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of <code>long</code>
+entity ID's identifying entities to be avoided when finding the path, or
+<code>null</code> if no entities are to be avoided.</p>
+</dd>
+    <dt><code>requiredDataSources</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>The optional <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of non-null
+<code>string</code> data source codes identifying the data sources for
+which at least one record must be included on the path, or <code>null</code>
+if none are required.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a> group to control how the
+operation is performed and the content of the response.  Omitting this
+parameter will default its value to the default recommended flags
+(<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindPathDefaultFlags">SzFindPathDefaultFlags</a>).  Specifying
+<code>null</code> is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the resultant entity path which
+may be an empty path if no path exists between the two entities
+given the path parameters.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindPath_System_Int64_System_Int64_System_Int32_System_Collections_Generic_ISet_System_Int64__System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Entities to be avoided when finding the path may optionally be specified
+as a non-null <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of <code>long</code> entity ID's identifying
+entities to be avoided.  By default the specified entities will be avoided
+unless absolutely neccessary to find the path.  To strictly avoid the
+specified entities specify the <a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzFindPathStrictAvoid">SzFindPathStrictAvoid</a> flag.</p>
+<p>
+Further, a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of <code>string</code> data source codes may
+optionally be specified to identify required data sources.  If specified
+as non-null, then the required data sources <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">set</a>
+contains non-null <code>string</code> data source codes that identify data
+sources for which a record from <b>at least one</b> must exist on the path.
+</p><p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the level of
+detail provided for the entity path and those entities on the path.
+Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only flags
+belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a> group will be recognized
+(other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have
+equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If either the path-start or path-end entities for the specified entity
+ID's cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized required data source is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindPathDefaultFlags">SzFindPathDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FindPath_System_String_System_String_System_String_System_String_System_Int32_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag__">FindPath(string, string, string, string, int, ISet&lt;(string dataSourceCode, string recordID)&gt;, ISet&lt;string&gt;, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_FindPath_" data-uid="Senzing.Sdk.SzEngine.FindPath*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_FindPath_System_String_System_String_System_String_System_String_System_Int32_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.FindPath(System.String,System.String,System.String,System.String,System.Int32,System.Collections.Generic.ISet{System.ValueTuple{System.String,System.String}},System.Collections.Generic.ISet{System.String},System.Nullable{Senzing.Sdk.SzFlag})">
+  FindPath(string, string, string, string, int, ISet&lt;(string dataSourceCode, string recordID)&gt;, ISet&lt;string&gt;, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L793"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finds a relationship path between two entities identified by the
+specified data source codes and record ID's of their constituent records.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string FindPath(string startDataSourceCode, string startRecordID, string endDataSourceCode, string endRecordID, int maxDegrees, ISet&lt;(string dataSourceCode, string recordID)&gt; avoidRecordKeys, ISet&lt;string&gt; requiredDataSources, SzFlag? flags = SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzFindPathIncludeMatchingInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>startDataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identiyfing the data source for the starting record
+of the requested path.</p>
+</dd>
+    <dt><code>startRecordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the starting record of the requested
+path within the scope of its associated data source.</p>
+</dd>
+    <dt><code>endDataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identiyfing the data source for the ending record
+of the requested path.</p>
+</dd>
+    <dt><code>endRecordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the ending record of the requested
+path within the scope of its associated data source.</p>
+</dd>
+    <dt><code>maxDegrees</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum number of degrees for the path search.</p>
+</dd>
+    <dt><code>avoidRecordKeys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.datasourcecode">dataSourceCode</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.recordid">recordID</a>)&gt;</dt>
+    <dd><p>The optional <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of tuples containing data source code
+and record ID pairs identifying records whose entities are to be avoided
+when finding the path, or <code>null</code> if no entities are to be avoided.</p>
+</dd>
+    <dt><code>requiredDataSources</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>The optional<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of non-null <code>string</code> data source
+codes identifying the data sources for which at least one record must
+be included on the path, or <code>null</code> if none are required.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter will
+default its value to the default recommended flags
+(<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindPathDefaultFlags">SzFindPathDefaultFlags</a>).  Specifying <code>null</code> is
+equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the resultant entity path which
+may be an empty path if no path exists between the two entities
+given the path parameters.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_FindPath_System_String_System_String_System_String_System_String_System_Int32_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Entities to be avoided when finding the path may optionally be specified
+as a non-null <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of tuples of data source code and
+record ID pairs identifying the constituent records of entities to be
+avoided.  By default the associated entities will be avoided unless
+absolutely neccessary to find the path.  To strictly avoid the associated
+entities specify the <a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzFindPathStrictAvoid">SzFindPathStrictAvoid</a> flag.</p>
+<p>
+Further, a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of <code>string</code> data source codes may
+optionally be specified to identify required data sources.  If specified
+as non-null, then the required data sources <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">set</a>
+contains non-null <code>string</code> data source codes that identify data
+sources for which a record from <b>at least one</b> must exist on the path.
+</p><p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values may
+contain any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value, but only flags belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a> group will be recognized (other
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have equivalent
+bit flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If either the path-start or path-end records for the specified data source
+code and record ID pairs cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzFindPathDefaultFlags">SzFindPathDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_FindPath_System_Int64_System_Int64_System_Int32_System_Collections_Generic_ISet_System_Int64__System_Collections_Generic_ISet_System_String__System_Nullable_Senzing_Sdk_SzFlag__">FindPath(long, long, int, ISet&lt;long&gt;, ISet&lt;string&gt;, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_GetEntity_" data-uid="Senzing.Sdk.SzEngine.GetEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.GetEntity(System.Int64,System.Nullable{Senzing.Sdk.SzFlag})">
+  GetEntity(long, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L460"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This method is used to retrieve information about a specific resolved
+entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetEntity(long entityID, SzFlag? flags = SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID identifying the entity to retrieve.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> group to control how the
+operation is performed and the content of the response.  Omitting this
+parameter defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityDefaultFlags">SzEntityDefaultFlags</a>
+for the default recommended flags.  Specifying <code>null</code> is equivalent
+to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the entity.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_GetEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The result is returned as a JSON document describing the entity.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a>
+group will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be
+ignored unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If no enitty could be found with the specified entity ID.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityDefaultFlags">SzEntityDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityBriefDefaultFlags">SzEntityBriefDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_GetEntity_" data-uid="Senzing.Sdk.SzEngine.GetEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.GetEntity(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  GetEntity(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L515"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This method is used to retrieve information about the resolved entity
+that contains a specific record that is identified by the specified
+data source code and record ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetEntity(string dataSourceCode, string recordID, SzFlag? flags = SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code that identifies the data source of the constiuent
+record belonging to the entity to be retrieved.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID (unique within the scope of the record's data source)
+identifying the constituent record belonging to the entity to be retrieved.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> group to control how the
+operation is performed and the content of the response.  Omitting this
+parameter defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityDefaultFlags">SzEntityDefaultFlags</a>
+for the default recommended flags.  Specifying <code>null</code> is equivalent
+to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the entity.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_GetEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The result is returned as a JSON document describing the entity.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a>
+group will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be
+ignored unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If no enitty could be found with the specified entity ID.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityDefaultFlags">SzEntityDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityBriefDefaultFlags">SzEntityBriefDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_GetRecord_" data-uid="Senzing.Sdk.SzEngine.GetRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.GetRecord(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  GetRecord(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1258"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the record identified by the specified data source code
+and record ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetRecord(string dataSourceCode, string recordID, SzFlag? flags = SzFlag.SzEntityIncludeRecordJsonData)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identiyfing the data source for the record.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the record within the
+scope of its associated data source.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzRecordDefaultFlags">SzRecordDefaultFlags</a> for the default
+recommended flags.  Specifying <code>null</code> is equivalent to specifying
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the record.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_GetRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If the record for the specified data source code and record ID pairs
+cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzRecordDefaultFlags">SzRecordDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_GetRedoRecord_" data-uid="Senzing.Sdk.SzEngine.GetRedoRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetRedoRecord" data-uid="Senzing.Sdk.SzEngine.GetRedoRecord">
+  GetRedoRecord()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1456"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves a pending redo record from the reevaluation queue.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetRedoRecord()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The retrieved redo record or <code>null</code> if there were no pending
+redo records.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_GetRedoRecord_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If no redo records are availbale then this returns an <code>null</code>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_ProcessRedoRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag__">ProcessRedoRecord(string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CountRedoRecords">CountRedoRecords()</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_GetStats_" data-uid="Senzing.Sdk.SzEngine.GetStats*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetStats" data-uid="Senzing.Sdk.SzEngine.GetStats">
+  GetStats()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the current internal engine workload statistics for the process.
+The counters are reset after each call.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetStats()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> describing the statistics as JSON.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEngine_GetVirtualEntity_" data-uid="Senzing.Sdk.SzEngine.GetVirtualEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_GetVirtualEntity_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.GetVirtualEntity(System.Collections.Generic.ISet{System.ValueTuple{System.String,System.String}},System.Nullable{Senzing.Sdk.SzFlag})">
+  GetVirtualEntity(ISet&lt;(string dataSourceCode, string recordID)&gt;, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Describes a hypothetically entity that would be composed of the one or
+more records identified by the tuples of data source code and record ID
+pairs in the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetVirtualEntity(ISet&lt;(string dataSourceCode, string recordID)&gt; recordKeys, SzFlag? flags = SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>recordKeys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.datasourcecode">dataSourceCode</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.string-.recordid">recordID</a>)&gt;</dt>
+    <dd><p>The non-null non-empty <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.iset-1">ISet&lt;T&gt;</a> of tuples of data source
+code and record ID pairs identifying the records to use to build the
+virtual entity.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzVirtualEntityFlags">SzVirtualEntityFlags</a> group to control how the
+operation is performed and the content of the response.  Omitting this
+parameter defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyEntitiesDefaultFlags">SzWhyEntitiesDefaultFlags</a>
+for the default recommended flags.  Specifying <code>null</code> is equivalent
+to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the virtual entity having
+the specified constituent records.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_GetVirtualEntity_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzVirtualEntityFlags">SzVirtualEntityFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they
+have equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If any of the records for the specified data source code and
+record ID pairs cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzVirtualEntityDefaultFlags">SzVirtualEntityDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_HowEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__">HowEntity(long, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_HowEntity_" data-uid="Senzing.Sdk.SzEngine.HowEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_HowEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.HowEntity(System.Int64,System.Nullable{Senzing.Sdk.SzFlag})">
+  HowEntity(long, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1160"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deterimes how an entity identified by the specified entity ID was
+constructed from its constituent records.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string HowEntity(long entityID, SzFlag? flags = SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID of the entity.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzHowEntityDefaultFlags">SzHowEntityDefaultFlags</a> for the
+default recommended flags.  Specifying <code>null</code> is equivalent to
+specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the how the entity was constructed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_HowEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a> group will be recognized
+(other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have
+equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If the entity for the specified entity ID could not be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzHowEntityDefaultFlags">SzHowEntityDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_GetVirtualEntity_System_Collections_Generic_ISet_System_ValueTuple_System_String_System_String___System_Nullable_Senzing_Sdk_SzFlag__">GetVirtualEntity(ISet&lt;(string dataSourceCode, string recordID)&gt;, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_PreprocessRecord_" data-uid="Senzing.Sdk.SzEngine.PreprocessRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_PreprocessRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.PreprocessRecord(System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  PreprocessRecord(string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs a hypothetical load of a the record described by the specified
+<code>string</code> record definition using the specified bitwise-OR'd
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string PreprocessRecord(string recordDefinition, SzFlag? flags = SzFlag.SzEntityIncludeRecordJsonData)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>recordDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> that defines the record, typically in JSON format.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a> group to control how the operation
+is performed and the content of the response.  Omitting this parameter
+will default its value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzRecordDefaultFlags">SzRecordDefaultFlags</a>.  Specifying
+<code>null</code> is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by preprocessing the record
+(depending on the specified flags).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_PreprocessRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeInternalFeatures">SzEntityIncludeInternalFeatures</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordFeatureDetails">SzEntityIncludeRecordFeatureDetails</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordFeatureStats">SzEntityIncludeRecordFeatureStats</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_PrimeEngine_" data-uid="Senzing.Sdk.SzEngine.PrimeEngine*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_PrimeEngine" data-uid="Senzing.Sdk.SzEngine.PrimeEngine">
+  PrimeEngine()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>May optionally be called to pre-initialize some of the heavier weight
+internal resources of the <code>SzEngine</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void PrimeEngine()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEngine_ProcessRedoRecord_" data-uid="Senzing.Sdk.SzEngine.ProcessRedoRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_ProcessRedoRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.ProcessRedoRecord(System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  ProcessRedoRecord(string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1437"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Processes the specified redo record using the specified flags.
+The redo record can be retrieved from <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_GetRedoRecord">GetRedoRecord()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string ProcessRedoRecord(string redoRecord, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>redoRecord</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The redo record to be processed.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group to control how the operation
+is performed and the content of the response.  Omitting this parameter
+will default its value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specify
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> for an INFO response.  Specifying
+<code>null</code> is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by processing the redo record,
+or <code>null</code> if the specified flags do not indicate that an INFO
+message should be returned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_ProcessRedoRecord_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_GetRedoRecord">GetRedoRecord()</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_CountRedoRecords">CountRedoRecords()</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_ReevaluateEntity_" data-uid="Senzing.Sdk.SzEngine.ReevaluateEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_ReevaluateEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.ReevaluateEntity(System.Int64,System.Nullable{Senzing.Sdk.SzFlag})">
+  ReevaluateEntity(long, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L310"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reevaluate a resolved entity identified by the specified entity ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string ReevaluateEntity(long entityID, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The ID of the resolved entity to reevaluate.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group to control
+how the operation is performed and the content of the response.
+Omitting this parameter will default its value to
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.  Specify
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> for an INFO response.  Specifying
+<code>null</code> is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by reevaluating the entity,
+or <code>null</code> if the specified flags do not indicate that an INFO
+message should be returned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_ReevaluateEntity_System_Int64_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the entity for the entity ID is not found, then the operation
+silently does nothing with no exception.  This is to ensure consistent
+behavior in case of a race condition with entity re-resolve or unresolve.
+To ensure that the entity was found, specify the
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> flag and check the returned INFO document
+for affected entities.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a>
+group will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be
+ignored unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_ReevaluateRecord_" data-uid="Senzing.Sdk.SzEngine.ReevaluateRecord*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_ReevaluateRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.ReevaluateRecord(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  ReevaluateRecord(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reevaluate the record identified by the specified data source code
+and record ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string ReevaluateRecord(string dataSourceCode, string recordID, SzFlag? flags = (SzFlag)0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identifying the data source for the record to
+reevaluate.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the record to reevaluate within
+the scope of its associated data source.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group to control how the operation
+is performed and the content of the response.  Omitting this parameter
+will default its value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.   Specify
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> for an INFO response.  Specifying <code>null</code>
+is equivalent to specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> result produced by reevaluating the record,
+or <code>null</code> if the specified flags do not indicate that an INFO
+message should be returned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_ReevaluateRecord_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the data source code is not recognized then an
+<a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a> is thrown but if the record
+for the record ID is not found, then the operation silently does nothing
+with no exception.  This is to ensure consistent behavior in case of a
+race condition with record deletion.  To ensure that the record was
+found, specify the <a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a> flag and check the returned
+INFO document for affected entities.</p>
+<p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only controls how the operation is performed, but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a> group will be
+recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless
+they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzWithInfo">SzWithInfo</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzModifyFlags">SzModifyFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_SearchByAttributes_" data-uid="Senzing.Sdk.SzEngine.SearchByAttributes*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.SearchByAttributes(System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  SearchByAttributes(string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L415"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This method is equivalent to calling
+<a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">SearchByAttributes(string, string, SzFlag?)</a>
+with a <code>null</code> value for the search profile parameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SearchByAttributes(string attributes, SzFlag? flags = SzFlag.SzExportIncludeMultiRecordEntities | SzFlag.SzExportIncludePossiblySame | SzFlag.SzExportIncludePossiblyRelated | SzFlag.SzExportIncludeNameOnly | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The search attributes defining the hypothetical record to match and/or
+relate to in order to obtain the search results.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a> group to control
+how the operation is performed and the content of the response,
+omitting this parameter will default its value to
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags">SzSearchByAttributesDefaultFlags</a> for the default
+recommended flags.  Specifying <code>null</code> is equivalent to specifying
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The resulting JSON <code>string</code> describing the result of the search.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>See <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">SearchByAttributes(string, string, SzFlag?)</a>
+documentation for details.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">SearchByAttributes(string, string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags">SzSearchByAttributesDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesAll">SzSearchByAttributesAll</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesStrong">SzSearchByAttributesStrong</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalAll">SzSearchByAttributesMinimalAll</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalStrong">SzSearchByAttributesMinimalStrong</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_SearchByAttributes_" data-uid="Senzing.Sdk.SzEngine.SearchByAttributes*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.SearchByAttributes(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  SearchByAttributes(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L372"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This method searches for entities that match or relate to the provided
+search attributes using the optionally specified search profile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SearchByAttributes(string attributes, string searchProfile, SzFlag? flags = SzFlag.SzExportIncludeMultiRecordEntities | SzFlag.SzExportIncludePossiblySame | SzFlag.SzExportIncludePossiblyRelated | SzFlag.SzExportIncludeNameOnly | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>attributes</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The search attributes defining the hypothetical record to match and/or
+relate to in order to obtain the search results.</p>
+</dd>
+    <dt><code>searchProfile</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional search profile identifier, or <code>null</code> if the default
+search profile should be used for the search.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging
+to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a> group to control
+how the operation is performed and the content of the response,
+omitting this parameter will default its value to
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags">SzSearchByAttributesDefaultFlags</a> for the default
+recommended flags.  Specifying <code>null</code> is equivalent to specifying
+<a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The resulting JSON <code>string</code> describing the result of the search.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The specified search attributes are treated as a hypothetical record and
+the search results are those entities that would match or relate to
+that hypothetical record on some level (depending on the specified flags).</p>
+<p>
+If the specified search profile is <code>null</code> then the default
+generic thresholds from the default search profile will be used for the
+search (alternatively, use <a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_Nullable_Senzing_Sdk_SzFlag__">SearchByAttributes(string, SzFlag?)</a>
+to omit the parameter).  If your search requires different behavior using
+alternate generic thresholds, please contact 
+<a href="mailto:support@senzing.com">support@senzing.com</a> for
+details on configuring a custom search profile.
+</p><p>
+The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the search is performed but also the content of the
+response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a>
+group will be recognized (other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be
+ignored unless they have equivalent bit flags to recognized flags).
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_SearchByAttributes_System_String_System_Nullable_Senzing_Sdk_SzFlag__">SearchByAttributes(string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags">SzSearchByAttributesDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesAll">SzSearchByAttributesAll</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesStrong">SzSearchByAttributesStrong</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalAll">SzSearchByAttributesMinimalAll</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalStrong">SzSearchByAttributesMinimalStrong</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_WhyEntities_" data-uid="Senzing.Sdk.SzEngine.WhyEntities*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_WhyEntities_System_Int64_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.WhyEntities(System.Int64,System.Int64,System.Nullable{Senzing.Sdk.SzFlag})">
+  WhyEntities(long, long, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines the ways in which two entities identified by the specified
+entity ID's are related to each other.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string WhyEntities(long entityID1, long entityID2, SzFlag? flags = SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary | SzFlag.SzEntityIncludeInternalFeatures | SzFlag.SzEntityIncludeFeatureStats | SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entityID1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID of the first entity.</p>
+</dd>
+    <dt><code>entityID2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The entity ID of the second entity.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyEntitiesDefaultFlags">SzWhyEntitiesDefaultFlags</a> for the
+default recommended flags.  Specifying <code>null</code> is equivalent to
+specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the ways in which the records are
+related to one another.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_WhyEntities_System_Int64_System_Int64_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group will be recognized
+(other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have
+equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If either of the entities for the specified entity ID's could not be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyEntitiesDefaultFlags">SzWhyEntitiesDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyRecords_System_String_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">WhyRecords(string, string, string, string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyRecordInEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">WhyRecordInEntity(string, string, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_WhyRecordInEntity_" data-uid="Senzing.Sdk.SzEngine.WhyRecordInEntity*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_WhyRecordInEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.WhyRecordInEntity(System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  WhyRecordInEntity(string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1005"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines why the record identified by the specified data source
+code and record ID is included in its respective entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string WhyRecordInEntity(string dataSourceCode, string recordID, SzFlag? flags = SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary | SzFlag.SzEntityIncludeInternalFeatures | SzFlag.SzEntityIncludeFeatureStats | SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code that identifies the data source of the record.</p>
+</dd>
+    <dt><code>recordID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that identifies the record within the scope of the record's
+data source.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyRecordInEntityDefaultFlags">SzWhyRecordInEntityDefaultFlags</a> for
+the default recommended flags.  Specifying <code>null</code> is equivalent to
+specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing why the record is included in its
+respective entity.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_WhyRecordInEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group will be recognized
+(other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have
+equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If any of the records for the specified data source code and record
+ID pairs cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyRecordInEntityDefaultFlags">SzWhyRecordInEntityDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyEntities_System_Int64_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__">WhyEntities(long, long, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyRecords_System_String_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">WhyRecords(string, string, string, string, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzEngine_WhyRecords_" data-uid="Senzing.Sdk.SzEngine.WhyRecords*"></a>
+
+  <h3 id="Senzing_Sdk_SzEngine_WhyRecords_System_String_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzEngine.WhyRecords(System.String,System.String,System.String,System.String,System.Nullable{Senzing.Sdk.SzFlag})">
+  WhyRecords(string, string, string, string, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L1071"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines ways in which two records identified by their data source
+code and record IDs are related to each other.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string WhyRecords(string dataSourceCode1, string recordID1, string dataSourceCode2, string recordID2, SzFlag? flags = SzFlag.SzEntityIncludePossiblySameRelations | SzFlag.SzEntityIncludePossiblyRelatedRelations | SzFlag.SzEntityIncludeNameOnlyRelations | SzFlag.SzEntityIncludeDisclosedRelations | SzFlag.SzEntityIncludeRepresentativeFeatures | SzFlag.SzEntityIncludeEntityName | SzFlag.SzEntityIncludeRecordSummary | SzFlag.SzEntityIncludeRecordData | SzFlag.SzEntityIncludeRecordMatchingInfo | SzFlag.SzEntityIncludeRelatedEntityName | SzFlag.SzEntityIncludeRelatedMatchingInfo | SzFlag.SzEntityIncludeRelatedRecordSummary | SzFlag.SzEntityIncludeInternalFeatures | SzFlag.SzEntityIncludeFeatureStats | SzFlag.SzIncludeFeatureScores)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identiyfing the data source for the first record.</p>
+</dd>
+    <dt><code>recordID1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the first record within the
+scope of its associated data source.</p>
+</dd>
+    <dt><code>dataSourceCode2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code identiyfing the data source for the second record.</p>
+</dd>
+    <dt><code>recordID2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The record ID that uniquely identifies the second record within the
+scope of its associated data source.</p>
+</dd>
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The optional bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values belonging to
+the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group to control how the operation is
+performed and the content of the response.  Omitting this parameter
+defaults it value to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyRecordsDefaultFlags">SzWhyRecordsDefaultFlags</a> for the
+default recommended flags.  Specifying <code>null</code> is equivalent to
+specifying <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the ways in which the records are
+related to one another.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEngine_WhyRecords_System_String_System_String_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The optionally specified bitwise-OR'd <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values not
+only control how the operation is performed but also the content of
+the response.  Any <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value may be included, but only
+flags belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a> group will be recognized
+(other <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values will be ignored unless they have
+equivalent bit flags to recognized flags).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzUnknownDataSourceException.html">SzUnknownDataSourceException</a></dt>
+    <dd><p>If an unrecognized data source code is specified.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzNotFoundException.html">SzNotFoundException</a></dt>
+    <dd><p>If either of the records for the specified data source code and
+record ID pairs cannot be found.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzWhyRecordsDefaultFlags">SzWhyRecordsDefaultFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyFlags">SzWhyFlags</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyRecordInEntity_System_String_System_String_System_Nullable_Senzing_Sdk_SzFlag__">WhyRecordInEntity(string, string, SzFlag?)</a></div>
+    <div><a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_WhyEntities_System_Int64_System_Int64_System_Nullable_Senzing_Sdk_SzFlag__">WhyEntities(long, long, SzFlag?)</a></div>
+    </dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.0.0-beta.2.0/Senzing.Sdk/SzEngine.cs/#L18" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
