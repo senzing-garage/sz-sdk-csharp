@@ -4,10 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AnalysisMode>All</AnalysisMode>
-    <AnalysisModeSecurity>All</AnalysisModeSecurity>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <!--CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors-->
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -15,7 +11,6 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
@@ -27,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Senzing.Sdk.Tests\Senzing.Sdk.Tests.csproj" />
     <ProjectReference Include="..\Senzing.Sdk\Senzing.Sdk.csproj" />
-    <InternalsVisibleTo Include="Senzing.Sdk.Demo" />
   </ItemGroup>
 
 </Project>

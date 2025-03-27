@@ -414,7 +414,7 @@ internal abstract class AbstractTest
     /// </remarks>
     /// 
     /// <returns>The instance name with which to initialize the API.</returns>
-    protected string GetInstanceName()
+    protected virtual string GetInstanceName()
     {
         return this.GetInstanceName(null);
     }
@@ -436,7 +436,7 @@ internal abstract class AbstractTest
     /// <returns>
     /// The instance name with which to initialize the API.
     /// </returns>
-    protected string GetInstanceName(string? suffix)
+    protected virtual string GetInstanceName(string? suffix)
     {
         if (suffix != null && suffix.Trim().Length > 0)
         {

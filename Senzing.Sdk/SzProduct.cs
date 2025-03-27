@@ -9,6 +9,10 @@ namespace Senzing.Sdk
     /// The Senzing product functions provide information regarding the Senzing product
     /// installation and user license.
     /// </remarks>
+    /// 
+    /// <example>
+    /// For example:
+    /// </example>
     public interface SzProduct
     {
         ///
