@@ -12,6 +12,7 @@ namespace Senzing.Sdk
     /// 
     /// <example>
     /// For example:
+    /// <include file="../target/examples/SzProductDemo.GetProduct.xml" path="/*"/>
     /// </example>
     public interface SzProduct
     {
