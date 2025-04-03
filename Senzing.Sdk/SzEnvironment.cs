@@ -28,26 +28,6 @@ namespace Senzing.Sdk
         SzProduct GetProduct();
 
         /// <summary>
-        /// Provides a reference to the <see cref="SzConfig"/>
-        /// instance associated with this <c>SzEnvironment</c>.
-        /// </summary>
-        ///
-        /// <returns>
-        /// The <see cref="SzConfig"/> instance associated with
-        /// this <c>SzEnvironment</c>.
-        /// </returns>
-        ///
-        /// <exception cref="System.InvalidOperationException">
-        /// If this <c>SzEnvironment</c> instance has been destroyed.
-        /// </exception>
-        /// 
-        /// <exception cref="SzException">
-        /// If there was a failure in obtaining or initializing the
-        /// <see cref="SzConfig"/> instance.
-        /// </exception>
-        SzConfig GetConfig();
-
-        /// <summary>
         /// Provides a reference to the <see cref="SzEngine"/> instance associated
         /// with this <c>SzEnvironment</c>.
         /// </summary>

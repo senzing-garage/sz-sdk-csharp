@@ -241,11 +241,6 @@ namespace Senzing.Sdk.Core
         private SzCoreProduct coreProduct = null;
 
         /// <summary>
-        /// The <see cref="SzCoreConfig"/> instance to use.
-        /// </summary>
-        private SzCoreConfig coreConfig = null;
-
-        /// <summary>
         /// The <see cref="SzCoreEngine"/> intance to use.
         /// </summary>
         private SzCoreEngine coreEngine = null;
@@ -567,29 +562,6 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Implemented to return the <see cref="SzCoreConfig"/> associated
-        /// with this instance.
-        /// </summary>
-        /// 
-        /// <returns>
-        /// The <see cref="SzCoreConfig"/> associated with this instance.
-        /// </returns>
-        public SzConfig GetConfig()
-        {
-            lock (this.monitor)
-            {
-                this.EnsureActive();
-                if (this.coreConfig == null)
-                {
-                    this.coreConfig = new SzCoreConfig(this);
-                }
-
-                // return the configured instance
-                return this.coreConfig;
-            }
-        }
-
-        /// <summary>
         /// Implemented to return the <see cref="SzCoreConfigManager"/>
         /// associated with this instance.
         /// </summary>
@@ -734,11 +706,6 @@ namespace Senzing.Sdk.Core
                 {
                     this.coreConfigMgr.Destroy();
                     this.coreConfigMgr = null;
-                }
-                if (this.coreConfig != null)
-                {
-                    this.coreConfig.Destroy();
-                    this.coreConfig = null;
                 }
                 if (this.coreProduct != null)
                 {

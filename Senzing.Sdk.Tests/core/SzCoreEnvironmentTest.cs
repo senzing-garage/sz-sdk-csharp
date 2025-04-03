@@ -782,57 +782,6 @@ internal class SzCoreEnvironmentTest : AbstractTest
     }
 
     [Test]
-    public void TestGetConfig()
-    {
-        this.PerformTest(() =>
-        {
-            string settings = this.GetRepoSettings();
-
-            SzCoreEnvironment? env = null;
-
-            try
-            {
-                env = SzCoreEnvironment.NewBuilder()
-                                        .InstanceName("GetConfig Instance")
-                                        .Settings(settings)
-                                        .VerboseLogging(false)
-                                        .Build();
-
-                SzConfig config1 = env.GetConfig();
-                SzConfig config2 = env.GetConfig();
-
-                Assert.IsNotNull(config1, "SzConfig was null");
-                Assert.IsTrue((config1 == config2), "SzConfig not returning the same object");
-                Assert.IsInstanceOf(typeof(SzCoreConfig), config1,
-                                    "SzConfig instance is not an instance of SzCoreConfig: "
-                                    + config1.GetType().FullName);
-                Assert.IsFalse(((SzCoreConfig)config1).IsDestroyed(),
-                                   "SzConfig instance reporting that it is destroyed");
-
-                env.Destroy();
-                env = null;
-
-                // ensure we can call destroy twice
-                ((SzCoreConfig)config1).Destroy();
-
-                Assert.IsTrue(((SzCoreConfig)config1).IsDestroyed(),
-                                  "SzConfig instance reporting that it is NOT destroyed");
-
-            }
-            catch (SzException e)
-            {
-                Fail("Got SzException during test", e);
-
-            }
-            finally
-            {
-                if (env != null) env.Destroy();
-            }
-        });
-
-    }
-
-    [Test]
     public void TestGetConfigManager()
     {
         this.PerformTest(() =>
