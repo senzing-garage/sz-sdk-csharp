@@ -1263,6 +1263,38 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
+        /// Implemented to call the <c>Sz_whySearch_helper</c>
+        /// external native helper function via
+        /// <see cref="NativeEngineExtern.WhySearch(string, long, string, out string)"/> 
+        /// or <c>Sz_whySearch_V2_helper</c> external native function via
+        /// <see cref="NativeEngineExtern.WhySearch(string, long, string, long, out string)"/>.
+        /// </summary>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        public string WhySearch(
+            string attributes,
+            long entityID,
+            string searchProfile,
+            SzFlag? flags = SzWhySearchDefaultFlags)
+        {
+            return this.env.Execute(() =>
+            {
+                // clear out the SDK-specific flags
+                long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
+
+                // call the underlying native function
+                long returnCode = this.nativeApi.WhySearch(
+                    attributes, entityID, searchProfile, downstreamFlags, out string result);
+
+                // check the return code
+                this.env.HandleReturnCode(returnCode, this.nativeApi);
+
+                // return the result
+                return result;
+            });
+        }
+
+        /// <summary>
         /// Implemented to call the <c>Sz_whyEntities_V2_helper</c>
         /// external native helper function via
         /// <see cref="NativeEngineExtern.WhyEntities(long, long, long, out string)"/>.

@@ -384,6 +384,74 @@ namespace Senzing.Sdk.Core
                                 out string response);
 
         /// <summary>
+        /// Compares the entity identified by the specified entity ID against the
+        /// search criteria attributes, typically to determine why the entity was
+        /// <b>not</b> included in the search results.
+        /// </summary>
+        ///
+        /// <param name="jsonData">
+        /// A JSON document containing the attribute information definining
+        /// the criteria for the search.
+        /// </param>
+        ///
+        /// <param name="entityID">
+        /// The entity ID of the entity to compare against the search criteria.
+        /// </param>
+        /// 
+        /// <param name="searchProfile">
+        /// The search-profile identifier identifying the search profile to use
+        /// for the search operation.
+        /// </param>
+        ///
+        /// <param name="response">
+        /// The <c>string</c> response out parameter that will be set to the JSON
+        /// response document describing the search results.
+        /// </param>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        long WhySearch(string jsonData,
+                       long entityID,
+                       string searchProfile,
+                       out string response);
+
+        /// <summary>
+        /// Compares the entity identified by the specified entity ID against the
+        /// search criteria attributes, typically to determine why the entity was
+        /// <b>not</b> included in the search results.
+        /// </summary>
+        ///
+        /// <param name="jsonData">
+        /// A JSON document containing the attribute information definining
+        /// the criteria for the search.
+        /// </param>
+        ///
+        /// <param name="entityID">
+        /// The entity ID of the entity to compare against the search criteria.
+        /// </param>
+        /// 
+        /// <param name="searchProfile">
+        /// The search-profile identifier identifying the search profile to use
+        /// for the search operation.
+        /// </param>
+        ///
+        /// <param name="flags">
+        /// The flags to control how the operation is performed and specifically
+        /// the content of the response JSON document.
+        /// </param>
+        ///
+        /// <param name="response">
+        /// The <c>string</c> response out parameter that will be set to the JSON
+        /// response document describing the search results.
+        /// </param>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        long WhySearch(string jsonData,
+                       long entityID,
+                       string searchProfile,
+                       long flags,
+                       out string response);
+
+        /// <summary>
         /// Retrieves information about a specific resolved entity identified
         /// by its entity ID.
         /// </summary>
