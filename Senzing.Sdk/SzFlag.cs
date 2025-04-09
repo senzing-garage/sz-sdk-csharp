@@ -709,7 +709,9 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhySearchFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzHowFlags"/></description>
         ///    </item>
         /// </list>
@@ -727,10 +729,13 @@ namespace Senzing.Sdk
         ///    <item>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhySearchFlags"/></description>
+        ///    </item>
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzWhySearchSet)]
         SzSearchIncludeStats = (1L << 27),
 
         /// <summary>
@@ -828,10 +833,13 @@ namespace Senzing.Sdk
         ///    <item>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhySearchFlags"/></description>
+        ///    </item>
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzWhySearchSet)]
         SzSearchIncludeRequest = (1L << 37),
 
         /// <summary>
@@ -850,11 +858,14 @@ namespace Senzing.Sdk
         ///    <item>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhySearchFlags"/></description>
+        ///    </item>
         /// </list>
         /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzSearchSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzWhySearchSet)]
         SzSearchIncludeRequestDetails = (1L << 38)
     }
 }

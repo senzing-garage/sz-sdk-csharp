@@ -317,31 +317,19 @@ namespace Senzing.Sdk.Core
         /// The default recommended bitwise flag values for why-entities analysis 
         /// on entities.
         /// </summary>
-        public const long SzWhyEntitiesDefaultFlags
-          = (SzEntityDefaultFlags
-             | SzEntityIncludeInternalFeatures
-             | SzEntityIncludeFeatureStats
-             | SzIncludeFeatureScores);
+        public const long SzWhyEntitiesDefaultFlags = SzIncludeFeatureScores;
 
         /// <summary>
         /// The default recommended bitwise flag values for why-records analysis 
         /// on entities.
         /// </summary>
-        public const long SzWhyRecordsDefaultFlags
-          = (SzEntityDefaultFlags
-             | SzEntityIncludeInternalFeatures
-             | SzEntityIncludeFeatureStats
-             | SzIncludeFeatureScores);
+        public const long SzWhyRecordsDefaultFlags = SzIncludeFeatureScores;
 
         /// <summary>
         /// The default recommended bitwise flag values for why-record-in analysis
         /// on entities.
         /// </summary>
-        public const long SzWhyRecordInEntityDefaultFlags
-          = (SzEntityDefaultFlags
-             | SzEntityIncludeInternalFeatures
-             | SzEntityIncludeFeatureStats
-             | SzIncludeFeatureScores);
+        public const long SzWhyRecordInEntityDefaultFlags = SzIncludeFeatureScores;
 
         /// <summary>
         /// The default recommended bitwise flag values for how-analysis on entities.
@@ -361,6 +349,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         public const long SzSearchByAttributesAll
           = (SzSearchIncludeAllEntities
+             | SzSearchIncludeStats
              | SzEntityIncludeRepresentativeFeatures
              | SzEntityIncludeEntityName
              | SzEntityIncludeRecordSummary
@@ -373,6 +362,7 @@ namespace Senzing.Sdk.Core
         public const long SzSearchByAttributesStrong
           = (SzSearchIncludeResolved
              | SzSearchIncludePossiblySame
+             | SzSearchIncludeStats
              | SzEntityIncludeRepresentativeFeatures
              | SzEntityIncludeEntityName
              | SzEntityIncludeRecordSummary
@@ -383,14 +373,16 @@ namespace Senzing.Sdk.Core
         /// returning minimal data with all matches.
         /// </summary>
         public const long SzSearchByAttributesMinimalAll
-          = (SzSearchIncludeAllEntities);
+          = (SzSearchIncludeAllEntities | SzSearchIncludeStats);
 
         /// <summary>
         /// The default recommended bitwise flag values for searching by attributes,
         /// returning the minimal data, and returning only the strongest matches.
         /// </summary>
         public const long SzSearchByAttributesMinimalStrong
-          = (SzSearchIncludeResolved | SzSearchIncludePossiblySame);
+          = (SzSearchIncludeResolved
+             | SzSearchIncludeStats
+             | SzSearchIncludePossiblySame);
 
         /// <summary>
         /// The default recommended bitwise flag values for searching by attributes.
@@ -425,5 +417,14 @@ namespace Senzing.Sdk.Core
         /// <see cref="SzSearchIncludeRequest"/> is also specified.
         /// </remarks>
         public const long SzSearchIncludeRequestDetails = (1L << 38);
+
+        /// <summary>
+        /// The default recommended bitwise flag values for performing 
+        /// "why search" operations.
+        /// </summary>
+        public const long SzWhySearchDefaultFlags
+          = (SzIncludeFeatureScores
+             | SzSearchIncludeRequestDetails
+             | SzSearchIncludeStats);
     }
 }

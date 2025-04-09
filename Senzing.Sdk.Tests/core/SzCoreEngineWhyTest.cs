@@ -75,6 +75,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
     private static readonly IList<(string, string)> RecordKeys;
     private static readonly IList<(string, string)> RelatedRecordKeys;
     private static readonly IList<SzFlag?> WhyEntitiesFlagSets;
+    private static readonly IList<SzFlag?> WhySearchFlagSets;
     private static readonly IList<SzFlag?> WhyRecordsFlagSets;
     private static readonly IList<SzFlag?> WhyRecordInEntityFlagSets;
 
@@ -136,6 +137,30 @@ internal class SzCoreEngineWhyTest : AbstractTest
         list = new List<SzFlag?>();
         list.Add(null);
         list.Add(SzNoFlags);
+        list.Add(SzWhySearchDefaultFlags);
+        list.Add(SzWhyAllFlags);
+        list.Add(SzSearchIncludeRequest
+                 | SzSearchIncludeRequestDetails
+                 | SzEntityIncludeEntityName
+                 | SzEntityIncludeRecordSummary
+                 | SzEntityIncludeRecordData
+                 | SzEntityIncludeRecordMatchingInfo);
+        list.Add(SzSearchIncludeRequestDetails
+                 | SzEntityIncludeEntityName
+                 | SzEntityIncludeRecordSummary
+                 | SzEntityIncludeRecordData
+                 | SzEntityIncludeRecordMatchingInfo);
+        list.Add(SzSearchIncludeRequest
+                 | SzEntityIncludeEntityName
+                 | SzEntityIncludeRecordSummary
+                 | SzEntityIncludeRecordData
+                 | SzEntityIncludeRecordMatchingInfo);
+        list.Add(SzSearchIncludeStats | SzEntityIncludeEntityName);
+        WhySearchFlagSets = list.AsReadOnly();
+
+        list = new List<SzFlag?>();
+        list.Add(null);
+        list.Add(SzNoFlags);
         list.Add(SzWhyRecordsDefaultFlags);
         list.Add(SzWhyAllFlags);
         list.Add(SzEntityIncludeEntityName
@@ -163,6 +188,9 @@ internal class SzCoreEngineWhyTest : AbstractTest
 
     private readonly Dictionary<long, ISet<(string, string)>> LoadedEntityMap
         = new Dictionary<long, ISet<(string, string)>>();
+
+    private readonly Dictionary<(string, string), string> AttributesMap
+        = new Dictionary<(string, string), string>();
 
     private SzCoreEnvironment? env;
 
@@ -248,7 +276,28 @@ internal class SzCoreEngineWhyTest : AbstractTest
                 ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
-            };
+
+                // lookup the record by record key
+                returnCode = nativeEngine.GetRecord(
+                    key.dataSourceCode, key.recordID,
+                    ((long)SzFlag.SzEntityIncludeRecordJsonData),
+                    out string recordResult);
+
+                if (returnCode != 0)
+                {
+                    throw new TestException(nativeEngine.GetLastException());
+                }
+
+                // parse the JSON
+                jsonObj = JsonNode.Parse(recordResult)?.AsObject();
+                jsonObj = jsonObj?["JSON_DATA"]?.AsObject();
+                jsonObj?.Remove("RECOORD_ID");
+                jsonObj?.Remove("DATA_SOURCE");
+                jsonObj?.Remove("RELATIONSHIP_LIST");
+                string attributes = jsonObj?.ToJsonString() ?? "";
+                this.AttributesMap.Add(key, attributes);
+            }
+            ;
 
         }
         finally
@@ -669,6 +718,115 @@ internal class SzCoreEngineWhyTest : AbstractTest
         return result;
     }
 
+    public static List<object?[]> GetWhySearchParameters()
+    {
+        Iterator<SzFlag?> flagSetIter = GetCircularIterator(WhySearchFlagSets);
+
+        List<string?> searchProfiles = new List<string?>();
+        searchProfiles.Add(null);
+        searchProfiles.Add("SEARCH");
+        searchProfiles.Add("INGEST");
+
+        Iterator<string?> profileIter = GetCircularIterator(searchProfiles);
+
+        List<object?[]> result = new List<object?[]>();
+
+        System.Collections.ArrayList relatedKeys
+            = new System.Collections.ArrayList(RelatedRecordKeys.Count);
+        foreach ((string, string) recordKey in RelatedRecordKeys)
+        {
+            relatedKeys.Add(recordKey);
+        }
+
+        IList<System.Collections.IList> recordKeyCombos
+            = GenerateCombinations(relatedKeys, relatedKeys);
+
+        IList<((string, string), (string, string))> comboTuples
+            = new List<((string, string), (string, string))>();
+
+        IEnumerator<System.Collections.IList> ienum
+             = recordKeyCombos.GetEnumerator();
+        while (ienum.MoveNext())
+        {
+            System.Collections.IList list = ienum.Current;
+            (string, string) key1 = (((string, string)?)list[0] ?? ("A", "B"));
+            (string, string) key2 = (((string, string)?)list[1] ?? ("B", "C"));
+
+            // thin the list out to reduce the number of tests
+            if (!key1.Equals(key2))
+            {
+                int index1 = RelatedRecordKeys.IndexOf(key1);
+                int index2 = RelatedRecordKeys.IndexOf(key2);
+                if (Math.Abs(index2 - index1) <= 4)
+                {
+                    comboTuples.Add((key1, key2));
+                }
+            }
+        }
+
+        Type? NotFound = typeof(SzNotFoundException);
+
+        foreach (((string, string), (string, string)) recordKeyPair in comboTuples)
+        {
+            (string, string) recordKey1 = recordKeyPair.Item1;
+            (string, string) recordKey2 = recordKeyPair.Item2;
+
+            if (result.Count == 0)
+            {
+                result.Add(new object?[] {
+                    (SzCoreEngineWhyTest t) => "Bad search profile test",
+                    (SzCoreEngineWhyTest t) => t.AttributesMap[recordKey1],
+                    recordKey2,
+                    (SzCoreEngineWhyTest t) => t.LoadedRecordMap[recordKey2],
+                    "BAD_SEARCH_PROFILE",
+                    flagSetIter.Next(),
+                    typeof(SzBadInputException)});
+            }
+            string? profile = profileIter.Next();
+
+            result.Add(new object?[] {
+                (SzCoreEngineWhyTest t) => "Test " + recordKey2 + " vs "
+                    + t.AttributesMap[recordKey1] + " with " + profile,
+                (SzCoreEngineWhyTest t) => t.AttributesMap[recordKey1],
+                recordKey2,
+                (SzCoreEngineWhyTest t) => t.LoadedRecordMap[recordKey2],
+                profile,
+                flagSetIter.Next(),
+                null});
+        }
+
+        result.Add(new object?[] {
+            (SzCoreEngineWhyTest t) => "Why search with entity against its own attributes: "
+                + t.GetEntityID(Company1),
+            (SzCoreEngineWhyTest t) => t.AttributesMap[Company1],
+            Company1,
+            (SzCoreEngineWhyTest t) => t.GetEntityID(Company1),
+            profileIter.Next(),
+            flagSetIter.Next(),
+            null
+        });
+
+        result.Add(new object?[] {
+            (SzCoreEngineWhyTest t) => "Not found entity ID test",
+            (SzCoreEngineWhyTest t) => t.AttributesMap[Company1],
+            (PassengersDataSource, "XXX000"),
+            (SzCoreEngineWhyTest t) => 10000000L,
+            null,
+            flagSetIter.Next(),
+            NotFound});
+
+        result.Add(new object?[] {
+            (SzCoreEngineWhyTest t) => "Illegal entity ID test",
+            (SzCoreEngineWhyTest t) => t.AttributesMap[Company1],
+            (PassengersDataSource, "XXX000"),
+            (SzCoreEngineWhyTest t) => -100L,
+            null,
+            flagSetIter.Next(),
+            NotFound});
+
+        return result;
+    }
+
     public virtual void ValidateWhyEntities(
         string whyEntitiesResult,
         string testData,
@@ -757,6 +915,184 @@ internal class SzCoreEngineWhyTest : AbstractTest
         Assert.IsTrue(entityIDs.SetEquals(detailEntityIDs),
                       "Entity detail entity ID's are not as expected: "
                       + testData);
+    }
+
+    public virtual void ValidateWhySearch(
+        string whySearchResult,
+        string testData,
+        string attributes,
+        (string, string) recordKey,
+        long entityID,
+        SzFlag? flags)
+    {
+        JsonObject? jsonObject = JsonNode.Parse(whySearchResult)?.AsObject();
+
+        JsonArray? whyResults = jsonObject?["WHY_RESULTS"]?.AsArray();
+
+        Assert.IsNotNull(whyResults,
+            "Missing WHY_RESULTS from whyEntities() result JSON: " + testData);
+
+        Assert.That(whyResults?.Count, Is.EqualTo(1),
+            "The WHY_RESULTS array is not of the expected size: " + testData);
+
+        JsonObject? whyResult = whyResults?[0]?.AsObject();
+
+        Assert.IsNotNull(whyResult,
+            "First WHY_RESULTS element was null: " + testData);
+
+        JsonObject? searchRequest = null;
+        if (jsonObject != null && jsonObject.ContainsKey("SEARCH_REQUEST"))
+        {
+            searchRequest = jsonObject["SEARCH_REQUEST"]?.AsObject();
+        }
+
+        if (flags != null
+            && (((flags & SzSearchIncludeRequest) == SzSearchIncludeRequest)
+                || ((flags & SzSearchIncludeRequestDetails) == SzSearchIncludeRequestDetails)))
+        {
+            Assert.That(searchRequest, Is.Not.Null,
+                "Missing SEARCH_REQUEST from whySearch() result JSON: " + testData
+                + " / " + (flags & SzSearchIncludeRequest) + " / "
+                + (flags & SzSearchIncludeRequestDetails) + " / " + whySearchResult);
+        }
+        else
+        {
+            Assert.That(searchRequest, Is.Null,
+                "Unexpected SEARCH_REQUEST in whySearch() result JSON: " + testData
+                + " / " + whySearchResult);
+        }
+
+        long? jsonID = whyResult?["ENTITY_ID"]?.GetValue<long>();
+
+        Assert.IsNotNull(jsonID, "First entity ID was null: whyResult=[ "
+                         + whyResult + " ], " + testData);
+
+        long whyID = jsonID ?? 0L;
+
+        Assert.That(whyID, Is.EqualTo(entityID),
+                    "The entity ID not found in why result: whyResult=[ "
+                    + whyResult + " ], " + testData);
+
+        JsonArray? entities = jsonObject?["ENTITIES"]?.AsArray();
+
+        Assert.IsNotNull(entities,
+                         "Entity details are missing: " + testData);
+
+        Assert.That(entities?.Count, Is.EqualTo(1),
+            "Unexpected number of entities in entity details. testData=[ "
+            + testData + " ]");
+
+        // check that the entities we found are those requested
+        ISet<long> detailEntityIDs = new HashSet<long>();
+
+        int count = entities?.Count ?? 0;
+        for (int index = 0; index < count; index++)
+        {
+            JsonObject? entity = entities?[index]?.AsObject();
+
+            Assert.IsNotNull(entity, "Entity detail was null: "
+                             + entities + ", " + testData);
+
+            entity = entity?["RESOLVED_ENTITY"]?.AsObject();
+
+            Assert.IsNotNull(entity, "Resolved entity in details was null: "
+                             + entities + ", " + testData);
+
+            // get the entity ID
+            long? id = entity?["ENTITY_ID"]?.GetValue<long>();
+            Assert.IsNotNull(
+                id, "The entity detail was missing or has a null "
+                + "ENTITY_ID: " + entity + ", " + testData);
+
+            // add to the ID set
+            detailEntityIDs.Add(id ?? 0L); // id cannot be null
+        }
+
+        Assert.That(detailEntityIDs.Count, Is.EqualTo(1),
+                    "Entity detail entity ID count is not as expected: "
+                    + testData);
+
+        Assert.True(detailEntityIDs.Contains(entityID),
+                    "Entity ID (" + entityID
+                    + ") not found in detail entity ID's: "
+                    + testData);
+    }
+
+    [Test, TestCaseSource(nameof(GetWhySearchParameters))]
+    public void TestWhySearch(
+        Func<SzCoreEngineWhyTest, string> testDescFunc,
+        Func<SzCoreEngineWhyTest, string> attrFunc,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineWhyTest, long> entityIDFunc,
+        string searchProfile,
+        SzFlag? flags,
+        Type? exceptionType)
+    {
+        string testDescription = testDescFunc(this);
+        string attributes = attrFunc(this);
+        long entityID = entityIDFunc(this);
+
+        StringBuilder sb = new StringBuilder(
+            "description=[ " + testDescription + " ], attributes=[ "
+            + attributes + " ], recordKey=[ " + recordKey
+            + " ], entityID=[ " + entityID + " ], searchProfile=[ "
+            + searchProfile + " ], flags=[ "
+            + SzWhyFlags.FlagsToString(flags)
+            + " ], expectedException=[ " + exceptionType + " ]");
+
+        string testData = sb.ToString();
+
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzEngine engine = this.Env.GetEngine();
+
+                string result = engine.WhySearch(
+                    attributes, entityID, searchProfile, flags);
+
+                if (exceptionType != null)
+                {
+                    Fail("Unexpectedly succeeded WhySearch(): " + testData);
+                }
+
+                this.ValidateWhySearch(result,
+                                       testData,
+                                       attributes,
+                                       recordKey,
+                                       entityID,
+                                       flags);
+
+            }
+            catch (Exception e)
+            {
+                string description = "";
+                if (e is SzException)
+                {
+                    SzException sze = (SzException)e;
+                    description = "errorCode=[ " + sze.ErrorCode
+                        + " ], exception=[ " + e.ToString() + " ]";
+                }
+                else
+                {
+                    description = "exception=[ " + e.ToString() + " ]";
+                }
+
+                if (exceptionType == null)
+                {
+                    Fail("Unexpectedly failed WhySearch(): "
+                         + testData + ", " + description, e);
+
+                }
+                else if (exceptionType != e.GetType())
+                {
+                    Assert.IsInstanceOf(
+                        exceptionType, e,
+                        "WhySearch() failed with an unexpected exception type: "
+                        + testData + ", " + description);
+                }
+            }
+        });
     }
 
     [Test, TestCaseSource(nameof(GetWhyEntitiesParameters))]

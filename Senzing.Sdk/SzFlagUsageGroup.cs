@@ -840,6 +840,134 @@ namespace Senzing.Sdk
         SzWhyFlags = (1L << 7),
 
         /// <summary>
+        /// Flags in this usage group can be used for operations that search for 
+        /// entities to control how the entities are qualified for inclusion
+        /// in the search results and the level of detail for the entities
+        /// returned in the search results.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="SzFlag"/> instances included in this usage group are:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludePossiblyRelatedRelations"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeNameOnlyRelations"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeDisclosedRelations"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeAllFeatures"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRepresentativeFeatures"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeEntityName"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordSummary"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordTypes"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordData"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordMatchingInfo"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordJsonData"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordUnmappedData"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatures"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatureStats"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRelatedEntityName"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRelatedMatchingInfo"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRelatedRecordSummary"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRelatedRecordTypes"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRelatedRecordData"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeInternalFeatures"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeFeatureStats"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzIncludeMatchKeyDetails"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeStats"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeRequest"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzSearchIncludeRequestDetails"/></description>
+        ///   </item>
+        /// </list>
+        /// <para>
+        /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
+        /// group and are defined for "search" operations are:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzWhySearchDefaultFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
+        /// support this group for definining entity or record detail levels are:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzEntityIncludeAllRelations"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzEntityDefaultFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzEntityBriefDefaultFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        SzWhySearchFlags = (1L << 8),
+
+        /// <summary>
         /// Flags in this usage group can be used to control the methodology for
         /// performing "how analysis", what details to include for the analysis
         /// and the level of detail for the entities in the network that are 
@@ -891,7 +1019,7 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-        SzHowFlags = (1L << 8),
+        SzHowFlags = (1L << 9),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve
@@ -954,7 +1082,7 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
-        SzVirtualEntityFlags = (1L << 9)
+        SzVirtualEntityFlags = (1L << 10)
     }
 
     [System.AttributeUsage(System.AttributeTargets.Field)]
@@ -985,7 +1113,8 @@ namespace Senzing.Sdk
         internal const SzFlagUsageGroup SzRelationSet
             = SzFlagUsageGroup.SzEntityFlags | SzFlagUsageGroup.SzSearchFlags
             | SzFlagUsageGroup.SzExportFlags | SzFlagUsageGroup.SzFindPathFlags
-            | SzFlagUsageGroup.SzFindNetworkFlags | SzFlagUsageGroup.SzWhyFlags;
+            | SzFlagUsageGroup.SzFindNetworkFlags | SzFlagUsageGroup.SzWhyFlags
+            | SzFlagUsageGroup.SzWhySearchFlags;
 
         /// <summary>
         /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply
@@ -1026,7 +1155,17 @@ namespace Senzing.Sdk
         /// "why analysis" operations.
         /// </summary>
         internal const SzFlagUsageGroup SzHowWhySet
-            = SzFlagUsageGroup.SzWhyFlags | SzFlagUsageGroup.SzHowFlags;
+            = SzFlagUsageGroup.SzWhyFlags
+            | SzFlagUsageGroup.SzWhySearchFlags
+            | SzFlagUsageGroup.SzHowFlags;
+
+        /// <summary>
+        /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
+        /// <see cref="SzFlag"/> instances that can be used only for "why search"
+        /// and "search" operations.
+        /// </summary>
+        internal const SzFlagUsageGroup SzWhySearchSet
+            = SzFlagUsageGroup.SzSearchFlags | SzFlagUsageGroup.SzWhySearchFlags;
 
         /// <summary>
         /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
