@@ -15,13 +15,84 @@ namespace Senzing.Sdk
     public interface SzConfigManager
     {
         /// <summary>
-        /// Adds the configuration described by the specified JSON to the repository
-        /// with the specified comment and returns the identifier for referencing the
-        /// the config in the entity repository.
+        /// Creates a new <see cref="SzConfig"/> instance using the default 
+        /// configuraiton template and returns the <see cref="SzConfig"/>
+        /// representing that configuration.
         /// </summary>
         ///
+        /// <returns>
+        /// A newly created <see cref="SzConfig"/> instance representing the
+        /// template configuration definition.
+        /// </returns>
+        ///
+        /// <exception cref="Senzing.Sdk.SzException">
+        /// If a failure occurs.
+        /// </exception>
+        SzConfig CreateConfig();
+
+        /// <summary>
+        /// Creates a new <see cref="SzConfig"/> instance using the specified
+        /// configuration definition and returns the <see cref="SzConfig"/> 
+        /// representing that configuration.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Depending upon implementation of this interface, the specified definition
+        /// may allow other forms, but it is typically a JSON-formatted Senzing
+        /// configuration (an example template JSON configuration ships with the 
+        /// Senzing product).
+        /// </remarks>
+        ///
         /// <param name="configDefinition">
-        /// The JSON text describing the configuration.
+        /// The definition for the Senzing configuration.
+        /// </param>
+        /// 
+        /// <returns>
+        /// A newly created <see cref="SzConfig"/> representing the specified
+        /// configuration definition.
+        /// </returns>
+        ///
+        /// <exception cref="Senzing.Sdk.SzException">
+        /// If a failure occurs.
+        /// </exception>
+        SzConfig CreateConfig(string configDefinition);
+
+        /// <summary>
+        /// Gets the configuration definition that is registered with the
+        /// specified config ID and returns a new <see cref="SzConfig"/>
+        /// instance representing that configuration.
+        /// </summary>
+        ///
+        /// <param name="configID">
+        /// The configuration ID of the configuration to retrieve.
+        /// </param>
+        ///
+        /// <returns>
+        /// A newly created <see cref="SzConfig"/> instance representing the 
+        /// configuration definition that is reigistered with the specified 
+        /// config ID.
+        /// </returns>
+        /// 
+        /// <exception cref="Senzing.Sdk.SzException">
+        /// If a failure occurs.
+        /// </exception>
+        SzConfig CreateConfig(long configID);
+
+        /// <summary>
+        /// Registers the configuration described by the specified configuration
+        /// definition in the repository with the specified comment and returns
+        /// the identifier for referencing the the config in the entity repository.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Depending upon implementation of this interface, the specified definition
+        /// may allow other forms, but it is typically a JSON-formatted Senzing
+        /// configuration (an example template JSON configuration ships with the 
+        /// Senzing product).
+        /// </remarks>
+        /// 
+        /// <param name="configDefinition">
+        /// The configuration definition to register.
         /// </param>
         ///
         /// <param name="configComment">
@@ -35,23 +106,34 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
-        long AddConfig(string configDefinition, string configComment);
+        long RegisterConfig(string configDefinition, string configComment);
 
         /// <summary>
-        /// Gets the configuration with the specified config ID and returns the 
-        /// configuration defintion as a <c>string</c>.
+        /// Registers the configuration described by the specified configuration
+        /// definition in the repository with an auto-generated comment and
+        /// returns the identifier for referencing the the config in the entity
+        /// repository.
         /// </summary>
         ///
-        /// <param name="configID">
-        /// The configuration ID of the configuration to retrieve.
+        /// <remarks>
+        /// Depending upon implementation of this interface, the specified definition
+        /// may allow other forms, but it is typically a JSON-formatted Senzing
+        /// configuration (an example template JSON configuration ships with the 
+        /// Senzing product).
+        /// </remarks>
+        /// 
+        /// <param name="configDefinition">
+        /// The configuration definition to register.
         /// </param>
         ///
-        /// <returns>The configuration definition as a <c>string</c></returns>
+        /// <returns>
+        /// The identifier for referncing the config in the entity repository.
+        /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
-        string GetConfig(long configID);
+        long RegisterConfig(string configDefinition);
 
         /// <summary>
         /// Gets the list of saved configuration ID's with their comments and
@@ -96,8 +178,8 @@ namespace Senzing.Sdk
         string GetConfigs();
 
         /// <summary>
-        /// Gets the configuration ID of the default configuration for the repository
-        /// and returns it.
+        /// Gets the configuration ID of the default configuration for the
+        /// repository and returns it.
         /// </summary>
         ///
         /// <remarks>
@@ -165,5 +247,81 @@ namespace Senzing.Sdk
         /// </exception>
         void SetDefaultConfigID(long configID);
 
+        /// <summary>
+        /// Registers the specified config definition with the specified comment
+        /// and then sets the default configuration ID for the repository to the
+        /// configuration ID that is the result of that registration, returning
+        /// the config ID under which the configuration was registered.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// <para>
+        /// Depending upon implementation of this interface, the specified definition
+        /// may allow other forms, but it is typically a JSON-formatted Senzing
+        /// configuration (an example template JSON configuration ships with the 
+        /// Senzing product).
+        /// </para>
+        /// <para>
+        /// <b>NOTE:</b> This is best used when initializing the Senzing repository
+        /// with a registered default config ID the first time (i.e.: when there is
+        /// no existing default config ID registered).  When there is already a
+        /// default config ID registered, you should consider using 
+        /// <see cref="ReplaceDefaultConfigID(long,long)"/> especially if you want
+        /// to handle race conditions in setting the default config ID.
+        /// </para>
+        /// </remarks>
+        ///
+        /// <param name="configDefinition">
+        /// The configuration definition to register as the default.
+        /// </param>
+        ///
+        /// <param name="configComment">
+        /// The comments for the configuration.
+        /// </param>
+        ///
+        /// <returns>
+        /// The identifier for referncing the config in the entity repository.
+        /// </returns>
+        /// 
+        /// <exception cref="Senzing.Sdk.SzException">
+        /// If a failure occurs.
+        /// </exception>
+        long SetDefaultConfig(string configDefinition, string configComment);
+
+        /// <summary>
+        /// Registers the specified config definition with an auto-generated
+        /// comment and then sets the default configuration ID for the repository
+        /// to the configuration ID that is the result of that registration.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// <para>
+        /// Depending upon implementation of this interface, the specified definition
+        /// may allow other forms, but it is typically a JSON-formatted Senzing
+        /// configuration (an example template JSON configuration ships with the 
+        /// Senzing product).
+        /// </para>
+        /// <para>
+        /// <b>NOTE:</b> This is best used when initializing the Senzing repository
+        /// with a registered default config ID the first time (i.e.: when there is
+        /// no existing default config ID registered).  When there is already a
+        /// default config ID registered, you should consider using
+        /// <see cref="ReplaceDefaultConfigID(long,long)"/> especially if you want
+        /// to handle race conditions in setting the default config ID.
+        /// </para>
+        /// </remarks>
+        ///
+        /// <param name="configDefinition">
+        /// The configuration definition to register as the default.
+        /// </param>
+        ///
+        /// <returns>
+        /// The identifier for referncing the config in the entity repository.
+        /// </returns>
+        /// 
+        /// <exception cref="Senzing.Sdk.SzException">
+        /// If a failure occurs.
+        /// </exception>
+        long SetDefaultConfig(string configDefinition);
     }
 }

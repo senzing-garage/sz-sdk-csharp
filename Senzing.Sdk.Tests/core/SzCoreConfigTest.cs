@@ -143,7 +143,8 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzCoreConfig config = (SzCoreConfig)this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzCoreConfig config = (SzCoreConfig)configMgr.CreateConfig();
 
                 Assert.IsNotNull(config.GetNativeApi(),
                       "Underlying native API is unexpectedly null");
@@ -156,41 +157,31 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testGetNativeApi test with exception", e);
+                Fail("Failed TestGetNativeApi test with exception", e);
                 throw;
             }
         });
     }
 
     [Test]
-    public void TestCreateConfig()
+    public void TestCreateConfigFromTemplate()
     {
         this.PerformTest(() =>
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig();
 
-                IntPtr configHandle = 0;
+                Assert.That(config, Is.Not.Null, "SzConfig should not be null");
 
-                try
-                {
-                    configHandle = config.CreateConfig();
+                Assert.That(((SzCoreConfig)config).GetNativeApi(), Is.Not.Null,
+                            "Underlying native API is unexpectedly null");
 
-                    Assert.That(configHandle, Is.Not.EqualTo(0),
-                                 "Config handle was zero (0)");
+                string configJson = config.Export();
 
-                    string configJson = config.ExportConfig(configHandle);
-
-                    Assert.That(configJson, Is.EqualTo(this.defaultConfig),
-                                "Unexpected configuration definition.");
-
-                }
-                finally
-                {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
-                }
-
+                Assert.That(configJson, Is.EqualTo(this.defaultConfig),
+                            "Unexpected configuration definition.");
             }
             catch (AssertionException)
             {
@@ -199,41 +190,31 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testCreateConfig test with exception", e);
+                Fail("Failed TestCreateConfigFromTemplate test with exception", e);
                 throw;
             }
         });
     }
 
     [Test]
-    public void TestImportConfig()
+    public void TestCreateConfigFromDefinition()
     {
         this.PerformTest(() =>
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                IntPtr configHandle = 0;
+                Assert.That(config, Is.Not.Null, "SzConfig should not be null");
 
-                try
-                {
-                    configHandle = config.ImportConfig(this.modifiedConfig);
+                Assert.That(((SzCoreConfig)config).GetNativeApi(), Is.Not.Null,
+                            "Underlying native API is unexpectedly null");
 
-                    Assert.That(configHandle, Is.Not.EqualTo(0),
-                                "Config handle was zero (0)");
+                string configJson = config.Export();
 
-                    string configJson = config.ExportConfig(configHandle);
-
-                    Assert.That(configJson, Is.EqualTo(this.modifiedConfig),
-                                "Unexpected configuration definition.");
-
-                }
-                finally
-                {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
-                }
-
+                Assert.That(configJson, Is.EqualTo(this.modifiedConfig),
+                            "Unexpected configuration definition.");
             }
             catch (AssertionException)
             {
@@ -242,7 +223,7 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testImportConfig test with exception", e);
+                Fail("Failed TestCreateConfigFromDefinition test with exception", e);
                 throw;
             }
         });
@@ -255,47 +236,36 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                IntPtr configHandle = 0;
+                string configJson = config.Export();
 
-                try
-                {
-                    configHandle = config.ImportConfig(this.modifiedConfig);
-                    string configJson = config.ExportConfig(configHandle);
+                Assert.That(configJson, Is.EqualTo(this.modifiedConfig),
+                            "Unexpected configuration definition.");
 
-                    Assert.That(configJson, Is.EqualTo(this.modifiedConfig),
-                                "Unexpected configuration definition.");
+                JsonObject jsonObj = ParseJsonObject(configJson);
 
-                    JsonObject jsonObj = ParseJsonObject(configJson);
+                Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
+                                "Config JSON is missing G2_CONFIG property: "
+                                + configJson);
 
-                    Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
-                                  "Config JSON is missing G2_CONFIG property: "
-                                  + configJson);
+                JsonObject? g2Config = (JsonObject?)jsonObj["G2_CONFIG"];
 
-                    JsonObject? g2Config = (JsonObject?)jsonObj["G2_CONFIG"];
+                Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
+                                "Config JSON is missing CFG_DSRC property: "
+                                + configJson);
 
-                    Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
-                                  "Config JSON is missing CFG_DSRC property: "
-                                  + configJson);
+                JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
 
-                    JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
+                Assert.That(cfgDsrc?.Count, Is.EqualTo(3),
+                            "Data source array is wrong size");
 
-                    Assert.That(cfgDsrc?.Count, Is.EqualTo(3),
-                                "Data source array is wrong size");
+                JsonObject? customerDataSource = (JsonObject?)cfgDsrc?[2];
+                string? dsrcCode = (string?)customerDataSource?["DSRC_CODE"];
 
-                    JsonObject? customerDataSource = (JsonObject?)cfgDsrc?[2];
-                    string? dsrcCode = (string?)customerDataSource?["DSRC_CODE"];
-
-                    Assert.That(dsrcCode, Is.EqualTo(CUSTOMERS_DATA_SOURCE),
-                                "Third data source is not as expected");
-
-                }
-                finally
-                {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
-                }
-
+                Assert.That(dsrcCode, Is.EqualTo(CUSTOMERS_DATA_SOURCE),
+                            "Third data source is not as expected");
             }
             catch (AssertionException)
             {
@@ -304,62 +274,9 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testExportConfig test with exception", e);
+                Fail("Failed TestExportConfig test with exception", e);
             }
         });
-    }
-
-    [Test]
-    public void TestCloseConfig()
-    {
-        try
-        {
-            SzConfig config = this.Env.GetConfig();
-
-            IntPtr configHandle = 0;
-
-            try
-            {
-                configHandle = config.CreateConfig();
-
-                config.CloseConfig(configHandle);
-
-                // now try to use the handle that has been closed
-                try
-                {
-                    config.ExportConfig(configHandle);
-                    Fail("The configuration handle was still valid after closing");
-
-                }
-                catch (SzException)
-                {
-                    // success if we get here
-
-                }
-                finally
-                {
-                    // clear the config handle
-                    configHandle = 0;
-                }
-
-            }
-            finally
-            {
-                if (configHandle != 0) config.CloseConfig(configHandle);
-            }
-
-        }
-        catch (AssertionException)
-        {
-            throw;
-
-        }
-        catch (Exception e)
-        {
-            Fail("Failed testCloseConfig test with exception", e);
-            throw;
-        }
-
     }
 
     [Test]
@@ -369,63 +286,51 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig();
 
-                IntPtr configHandle = 0;
+                string result = config.AddDataSource(EMPLOYEES_DATA_SOURCE);
 
+                JsonObject? resultObj = null;
                 try
                 {
-                    configHandle = config.CreateConfig();
-
-                    string result = config.AddDataSource(configHandle, EMPLOYEES_DATA_SOURCE);
-
-                    JsonObject? resultObj = null;
-                    try
-                    {
-                        resultObj = ParseJsonObject(result);
-                    }
-                    catch (Exception e)
-                    {
-                        Fail("The AddDataSource() result did not parse as JSON: " + result, e);
-                    }
-
-                    int? resultId = (int?)resultObj?["DSRC_ID"];
-
-                    Assert.IsNotNull(resultId,
-                                     "The DSRC_ID was missing or null in the result: "
-                                     + result);
-
-                    string configJson = config.ExportConfig(configHandle);
-
-                    JsonObject jsonObj = ParseJsonObject(configJson);
-
-                    Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
-                                  "Config JSON is missing G2_CONFIG property: "
-                                  + configJson);
-
-                    JsonObject? g2Config = (JsonObject?)jsonObj?["G2_CONFIG"];
-
-                    Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
-                                  "Config JSON is missing CFG_DSRC property: "
-                                  + configJson);
-
-                    JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
-
-                    Assert.That(cfgDsrc?.Count, Is.EqualTo(3),
-                                "Data source array is wrong size");
-
-                    JsonObject? customerDataSource = (JsonObject?)cfgDsrc?[2];
-                    string? dsrcCode = (string?)customerDataSource?["DSRC_CODE"];
-
-                    Assert.That(dsrcCode, Is.EqualTo(EMPLOYEES_DATA_SOURCE),
-                                "Third data source is not as expected");
-
+                    resultObj = ParseJsonObject(result);
                 }
-                finally
+                catch (Exception e)
                 {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
+                    Fail("The AddDataSource() result did not parse as JSON: " + result, e);
                 }
 
+                int? resultId = (int?)resultObj?["DSRC_ID"];
+
+                Assert.IsNotNull(resultId,
+                                    "The DSRC_ID was missing or null in the result: "
+                                    + result);
+
+                string configJson = config.Export();
+
+                JsonObject jsonObj = ParseJsonObject(configJson);
+
+                Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
+                                "Config JSON is missing G2_CONFIG property: "
+                                + configJson);
+
+                JsonObject? g2Config = (JsonObject?)jsonObj?["G2_CONFIG"];
+
+                Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
+                                "Config JSON is missing CFG_DSRC property: "
+                                + configJson);
+
+                JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
+
+                Assert.That(cfgDsrc?.Count, Is.EqualTo(3),
+                            "Data source array is wrong size");
+
+                JsonObject? customerDataSource = (JsonObject?)cfgDsrc?[2];
+                string? dsrcCode = (string?)customerDataSource?["DSRC_CODE"];
+
+                Assert.That(dsrcCode, Is.EqualTo(EMPLOYEES_DATA_SOURCE),
+                            "Third data source is not as expected");
             }
             catch (AssertionException)
             {
@@ -446,53 +351,41 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                IntPtr configHandle = 0;
+                config.DeleteDataSource("CUSTOMERS");
 
-                try
-                {
-                    configHandle = config.ImportConfig(this.modifiedConfig);
+                string configJson = config.Export();
 
-                    config.DeleteDataSource(configHandle, "CUSTOMERS");
+                JsonObject jsonObj = ParseJsonObject(configJson);
 
-                    string configJson = config.ExportConfig(configHandle);
+                Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
+                                "Config JSON is missing G2_CONFIG property: "
+                                + configJson);
 
-                    JsonObject jsonObj = ParseJsonObject(configJson);
+                JsonObject? g2Config = (JsonObject?)jsonObj?["G2_CONFIG"];
 
-                    Assert.IsTrue(jsonObj.ContainsKey("G2_CONFIG"),
-                                  "Config JSON is missing G2_CONFIG property: "
-                                  + configJson);
+                Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
+                                "Config JSON is missing CFG_DSRC property: "
+                                + configJson);
 
-                    JsonObject? g2Config = (JsonObject?)jsonObj?["G2_CONFIG"];
+                JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
 
-                    Assert.IsTrue(g2Config?.ContainsKey("CFG_DSRC"),
-                                  "Config JSON is missing CFG_DSRC property: "
-                                  + configJson);
+                Assert.That(cfgDsrc?.Count, Is.EqualTo(2),
+                            "Data source array is wrong size");
 
-                    JsonArray? cfgDsrc = (JsonArray?)g2Config?["CFG_DSRC"];
+                JsonObject? dataSource1 = (JsonObject?)cfgDsrc?[0];
+                string? dsrcCode1 = (string?)dataSource1?["DSRC_CODE"];
 
-                    Assert.That(cfgDsrc?.Count, Is.EqualTo(2),
-                                "Data source array is wrong size");
+                Assert.That(dsrcCode1, Is.EqualTo("TEST"),
+                            "First data source is not as expected");
 
-                    JsonObject? dataSource1 = (JsonObject?)cfgDsrc?[0];
-                    string? dsrcCode1 = (string?)dataSource1?["DSRC_CODE"];
+                JsonObject? dataSource2 = (JsonObject?)cfgDsrc?[1];
+                string? dsrcCode2 = (string?)dataSource2?["DSRC_CODE"];
 
-                    Assert.That(dsrcCode1, Is.EqualTo("TEST"),
-                                "First data source is not as expected");
-
-                    JsonObject? dataSource2 = (JsonObject?)cfgDsrc?[1];
-                    string? dsrcCode2 = (string?)dataSource2?["DSRC_CODE"];
-
-                    Assert.That(dsrcCode2, Is.EqualTo("SEARCH"),
-                                "Second data source is not as expected");
-
-                }
-                finally
-                {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
-                }
-
+                Assert.That(dsrcCode2, Is.EqualTo("SEARCH"),
+                            "Second data source is not as expected");
             }
             catch (AssertionException)
             {
@@ -501,7 +394,7 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testDeleteDataSource test with exception", e);
+                Fail("Failed TestDeleteDataSource test with exception", e);
             }
         });
 
@@ -514,53 +407,41 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzConfig config = this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                IntPtr configHandle = 0;
+                string dataSources = config.GetDataSources();
 
-                try
-                {
-                    configHandle = config.ImportConfig(this.modifiedConfig);
+                Assert.IsNotNull(dataSources, "Data sources result was null");
 
-                    string dataSources = config.GetDataSources(configHandle);
+                JsonObject jsonObj = ParseJsonObject(dataSources);
 
-                    Assert.IsNotNull(dataSources, "Data sources result was null");
+                Assert.IsTrue(jsonObj.ContainsKey("DATA_SOURCES"),
+                                "JSON is missing DATA_SOURCES property: "
+                                + dataSources);
 
-                    JsonObject jsonObj = ParseJsonObject(dataSources);
+                JsonArray? jsonArray = (JsonArray?)jsonObj?["DATA_SOURCES"];
 
-                    Assert.IsTrue(jsonObj.ContainsKey("DATA_SOURCES"),
-                                  "JSON is missing DATA_SOURCES property: "
-                                  + dataSources);
+                Assert.That(jsonArray?.Count, Is.EqualTo(3),
+                            "Data sources JSON array is wrong size.");
 
-                    JsonArray? jsonArray = (JsonArray?)jsonObj?["DATA_SOURCES"];
+                JsonObject? dataSource1 = (JsonObject?)jsonArray?[0];
+                string? dsrcCode1 = (string?)dataSource1?["DSRC_CODE"];
 
-                    Assert.That(jsonArray?.Count, Is.EqualTo(3),
-                                "Data sources JSON array is wrong size.");
+                Assert.That(dsrcCode1, Is.EqualTo("TEST"),
+                            "First data source is not as expected");
 
-                    JsonObject? dataSource1 = (JsonObject?)jsonArray?[0];
-                    string? dsrcCode1 = (string?)dataSource1?["DSRC_CODE"];
+                JsonObject? dataSource2 = (JsonObject?)jsonArray?[1];
+                string? dsrcCode2 = (string?)dataSource2?["DSRC_CODE"];
 
-                    Assert.That(dsrcCode1, Is.EqualTo("TEST"),
-                                "First data source is not as expected");
+                Assert.That(dsrcCode2, Is.EqualTo("SEARCH"),
+                            "Second data source is not as expected");
 
-                    JsonObject? dataSource2 = (JsonObject?)jsonArray?[1];
-                    string? dsrcCode2 = (string?)dataSource2?["DSRC_CODE"];
+                JsonObject? dataSource3 = (JsonObject?)jsonArray?[2];
+                string? dsrcCode3 = (string?)dataSource3?["DSRC_CODE"];
 
-                    Assert.That(dsrcCode2, Is.EqualTo("SEARCH"),
-                                "Second data source is not as expected");
-
-                    JsonObject? dataSource3 = (JsonObject?)jsonArray?[2];
-                    string? dsrcCode3 = (string?)dataSource3?["DSRC_CODE"];
-
-                    Assert.That(dsrcCode3, Is.EqualTo(CUSTOMERS_DATA_SOURCE),
-                                "Third data source is not as expected");
-
-                }
-                finally
-                {
-                    if (configHandle != 0) config.CloseConfig(configHandle);
-                }
-
+                Assert.That(dsrcCode3, Is.EqualTo(CUSTOMERS_DATA_SOURCE),
+                            "Third data source is not as expected");
             }
             catch (AssertionException)
             {
@@ -569,7 +450,7 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed getDataSources test with exception", e);
+                Fail("Failed GetDataSources test with exception", e);
             }
         });
     }
@@ -581,13 +462,14 @@ internal class SzCoreConfigTest : AbstractTest
         {
             try
             {
-                SzCoreConfig config = (SzCoreConfig)this.Env.GetConfig();
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+                SzCoreConfig config = (SzCoreConfig)configMgr.CreateConfig();
 
                 NativeConfig nativeApi = config.GetNativeApi();
 
                 nativeApi.ClearLastException();
 
-                config.CloseConfig(config.CreateConfig());
+                config.GetDataSources();
 
                 string message = nativeApi.GetLastException();
                 long errorCode = nativeApi.GetLastExceptionCode();

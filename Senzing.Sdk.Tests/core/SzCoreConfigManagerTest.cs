@@ -1,6 +1,7 @@
 namespace Senzing.Sdk.Tests.Core;
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Nodes;
 
 using NUnit.Framework;
@@ -11,21 +12,33 @@ using Senzing.Sdk.Core;
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreConfigManagerTest : AbstractTest
 {
-    private const string CUSTOMERS_DATA_SOURCE = "CUSTOMERS";
+    private const string CustomersDataSource = "CUSTOMERS";
+
+    private const string EmployeesDataSource = "EMPLOYEES";
+
+    private const string WatchlistDataSource = "WATCHLIST";
 
     private SzCoreEnvironment? env;
 
     private string? defaultConfig;
 
-    private string? modifiedConfig;
+    private string? modifiedConfig1;
+
+    private string? modifiedConfig2;
+
+    private string? modifiedConfig3;
 
     private long defaultConfigID;
 
-    private long modifiedConfigID;
+    private long modifiedConfigID1;
 
-    private const string DEFAULT_COMMENT = "Default";
+    private long modifiedConfigID2;
 
-    private const string MODIFIED_COMMENT = "Modified";
+    private long modifiedConfigID3;
+
+    private const string ModifiedComment1 = "Modified: CUSTOMERS";
+
+    private const string ModifiedComment3 = "Modified: CUSTOMERS, EMPLOYEES, WATCHLIST";
 
     private SzCoreEnvironment Env
     {
@@ -83,24 +96,62 @@ internal class SzCoreConfigManagerTest : AbstractTest
             // set the default config
             this.defaultConfig = config;
 
-            // add the data source
+            // add the CUSTOMERS data source
             returnCode = nativeConfig.AddDataSource(configHandle,
-                "{\"DSRC_CODE\": \"" + CUSTOMERS_DATA_SOURCE + "\"}",
-                out string result);
+                "{\"DSRC_CODE\": \"" + CustomersDataSource + "\"}",
+                out string result1);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
             }
 
             // export the modified config JSON
-            returnCode = nativeConfig.Save(configHandle, out string modConfig);
+            returnCode = nativeConfig.Save(configHandle, out string modConfig1);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
             }
 
             // set the modified config
-            this.modifiedConfig = modConfig;
+            this.modifiedConfig1 = modConfig1;
+
+            // add the EMPLOYEES data source
+            returnCode = nativeConfig.AddDataSource(configHandle,
+                "{\"DSRC_CODE\": \"" + EmployeesDataSource + "\"}",
+                out string result2);
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeConfig.GetLastException());
+            }
+
+            // export the modified config JSON
+            returnCode = nativeConfig.Save(configHandle, out string modConfig2);
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeConfig.GetLastException());
+            }
+
+            // set the modified config
+            this.modifiedConfig2 = modConfig2;
+
+            // add the WATCHLIST data source
+            returnCode = nativeConfig.AddDataSource(configHandle,
+                "{\"DSRC_CODE\": \"" + WatchlistDataSource + "\"}",
+                out string result3);
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeConfig.GetLastException());
+            }
+
+            // export the modified config JSON
+            returnCode = nativeConfig.Save(configHandle, out string modConfig3);
+            if (returnCode != 0)
+            {
+                throw new TestException(nativeConfig.GetLastException());
+            }
+
+            // set the modified config
+            this.modifiedConfig3 = modConfig3;
 
             // close the config handle
             returnCode = nativeConfig.Close(configHandle);
@@ -144,7 +195,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
     }
 
     [Test, Order(5)]
-    public void TestGetNativeApi()
+    public void TestGetConfigApi()
     {
         this.PerformTest(() =>
         {
@@ -153,8 +204,8 @@ internal class SzCoreConfigManagerTest : AbstractTest
                 SzCoreConfigManager configMgr
                     = (SzCoreConfigManager)this.Env.GetConfigManager();
 
-                Assert.IsNotNull(configMgr.GetNativeApi(),
-                                 "Underlying native API is unexpectedly null");
+                Assert.IsNotNull(configMgr.GetConfigApi(),
+                                 "Underlying config API is unexpectedly null");
 
             }
             catch (AssertionException)
@@ -164,14 +215,14 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testGetNativeApi test with exception", e);
+                Fail("Failed TestGetConfigApi test with exception", e);
                 throw;
             }
         });
     }
 
     [Test, Order(10)]
-    public void TestAddConfigDefault()
+    public void TestRegisterConfigDefault()
     {
         this.PerformTest(() =>
         {
@@ -179,28 +230,20 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                this.defaultConfigID = configMgr.AddConfig(this.defaultConfig,
-                                                           DEFAULT_COMMENT);
+                this.defaultConfigID = configMgr.RegisterConfig(this.defaultConfig);
 
-                Assert.That(this.defaultConfigID, Is.Not.EqualTo(0L),
-                            "Config ID is zero (0)");
-
-            }
-            catch (AssertionException)
-            {
-                throw;
+                Assert.That(this.defaultConfigID, Is.Not.EqualTo(0L), "Config ID is zero (0)");
 
             }
             catch (Exception e)
             {
-                Fail("Failed testAddConfigDefault test with exception", e);
-                throw;
+                Fail("Failed TestRegisterConfigDefault test with exception", e);
             }
         });
     }
 
     [Test, Order(20)]
-    public void TestAddConfigModified()
+    public void TestRegisterConfigDefaultWithComment()
     {
         this.PerformTest(() =>
         {
@@ -208,28 +251,40 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                this.modifiedConfigID = configMgr.AddConfig(this.modifiedConfig,
-                                                            MODIFIED_COMMENT);
+                this.modifiedConfigID1 = configMgr.RegisterConfig(this.modifiedConfig1, ModifiedComment1);
 
-                Assert.That(this.modifiedConfigID, Is.Not.EqualTo(0L),
-                            "Config ID is zero (0)");
-
-            }
-            catch (AssertionException)
-            {
-                throw;
+                Assert.That(this.modifiedConfigID1, Is.Not.EqualTo(0L), "Config ID is zero (0)");
 
             }
             catch (Exception e)
             {
-                Fail("Failed testAddConfigModified test with exception", e);
-                throw;
+                Fail("Failed TestRegisterConfigDefaultWithComment test with exception", e);
+            }
+        });
+    }
+
+    [Test, Order(25)]
+    public void TestGetConfigManagerApi()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreConfigManager configMgr = (SzCoreConfigManager)this.Env.GetConfigManager();
+
+                Assert.That(configMgr.GetConfigManagerApi(), Is.Not.Null,
+                            "Underlying native config manager API is unexpectedly null");
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed testGetConfigManagerApi test with exception", e);
             }
         });
     }
 
     [Test, Order(30)]
-    public void TestGetConfigDefault()
+    public void TestRegisterConfigModified()
     {
         this.PerformTest(() =>
         {
@@ -237,27 +292,20 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                string configDefinition = configMgr.GetConfig(this.defaultConfigID);
+                this.modifiedConfigID2 = configMgr.RegisterConfig(this.modifiedConfig2);
 
-                Assert.That(configDefinition, Is.EqualTo(this.defaultConfig),
-                             "Configuration retrieved is not as expected");
-
-            }
-            catch (AssertionException)
-            {
-                throw;
+                Assert.That(this.modifiedConfigID2, Is.Not.EqualTo(0L), "Config ID is zero (0)");
 
             }
             catch (Exception e)
             {
-                Fail("Failed testGetConfigDefault test with exception", e);
-                throw;
+                Fail("Failed testAddConfigModified test with exception", e);
             }
         });
     }
 
     [Test, Order(40)]
-    public void TestGetConfigModified()
+    public void TestRegisterConfigModifiedWithComment()
     {
         this.PerformTest(() =>
         {
@@ -265,26 +313,72 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                string configDefinition = configMgr.GetConfig(this.modifiedConfigID);
+                this.modifiedConfigID3 = configMgr.RegisterConfig(this.modifiedConfig3, ModifiedComment3);
 
-                Assert.That(configDefinition, Is.EqualTo(this.modifiedConfig),
-                             "Configuration retrieved is not as expected");
-
-            }
-            catch (AssertionException)
-            {
-                throw;
+                Assert.That(this.modifiedConfigID3, Is.Not.EqualTo(0L), "Config ID is zero (0)");
 
             }
             catch (Exception e)
             {
-                Fail("Failed testGetConfigModified test with exception", e);
-                throw;
+                Fail("Failed testAddConfigModified test with exception", e);
             }
         });
     }
 
-    [Test, Order(50)]
+    private static List<object?[]> CreateConfigFromConfigIDParameters()
+    {
+        List<object?[]> result = new List<object?[]>(4);
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.defaultConfigID,
+            (SzCoreConfigManagerTest t) => t.defaultConfig });
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfigID1,
+            (SzCoreConfigManagerTest t) => t.modifiedConfig1 });
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfigID2,
+            (SzCoreConfigManagerTest t) => t.modifiedConfig2 });
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfigID3,
+            (SzCoreConfigManagerTest t) => t.modifiedConfig3 });
+        return result;
+    }
+
+    [Test, Order(50), TestCaseSource(nameof(CreateConfigFromConfigIDParameters))]
+    public void TestCreateConfigFromConfigID(
+        Func<SzCoreConfigManagerTest, long> configIDFunc,
+        Func<SzCoreConfigManagerTest, string> expectedDefFunc)
+    {
+        long configID = configIDFunc(this);
+        string expectedDefinition = expectedDefFunc(this);
+
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+
+                SzConfig config = configMgr.CreateConfig(configID);
+
+                Assert.That(config, Is.Not.Null, "SzConfig should not be null");
+
+                Assert.That(((SzCoreConfig)config).GetNativeApi(), Is.Not.Null,
+                            "Underlying native API is unexpectedly null");
+
+                string configDefinition = config.Export();
+
+                Assert.That(configDefinition, Is.EqualTo(expectedDefinition),
+                             "Configuration retrieved is not as expected: configId=[ "
+                             + configID + " ]");
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed TestCreateConfigFromConfigID test with exception", e);
+            }
+        });
+    }
+
+    [Test, Order(60)]
     public void TestGetConfigs()
     {
         this.PerformTest(() =>
@@ -302,7 +396,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
 
                 JsonArray? configs = (JsonArray?)jsonObj?["CONFIGS"];
 
-                Assert.That(configs?.Count, Is.EqualTo(2),
+                Assert.That(configs?.Count, Is.EqualTo(4),
                             "CONFIGS array not of expected size");
 
                 ValidateJsonDataMapArray(configs, true,
@@ -316,23 +410,41 @@ internal class SzCoreConfigManagerTest : AbstractTest
                 long? configID2 = (long?)config1?["CONFIG_ID"];
                 string? comments2 = (string?)config1?["CONFIG_COMMENTS"];
 
+                List<long> actualConfigIDs = new List<long>(4);
+                List<string> actualComments = new List<string>(4);
+
+                for (int index = 0; index < 4; index++)
+                {
+                    JsonObject? config = (JsonObject?)configs?[index];
+                    actualConfigIDs.Add((long?)config?["CONFIG_ID"] ?? 0L);
+                    actualComments.Add((string?)config?["CONFIG_COMMENTS"] ?? "BAD");
+                }
+
                 ISet<long> configIDs = new SortedSet<long>();
-                configIDs.Add(defaultConfigID);
-                configIDs.Add(modifiedConfigID);
+                configIDs.Add(this.defaultConfigID);
+                configIDs.Add(this.modifiedConfigID1);
+                configIDs.Add(this.modifiedConfigID2);
+                configIDs.Add(this.modifiedConfigID3);
+
                 ISet<string> comments = new SortedSet<string>();
-                comments.Add(DEFAULT_COMMENT);
-                comments.Add(MODIFIED_COMMENT);
+                comments.Add("Data Sources: [ ONLY DEFAULT ]");
+                comments.Add(ModifiedComment1);
+                comments.Add("Data Sources: CUSTOMERS, EMPLOYEES");
+                comments.Add(ModifiedComment3);
 
-                Assert.IsTrue(configID1 != null && configIDs.Contains((long)configID1),
-                              "First config ID not as expected");
-                Assert.IsTrue(comments1 != null && comments.Contains((string)comments1),
-                              "First config comment not as expected");
+                for (int index = 0; index < actualConfigIDs.Count; index++)
+                {
+                    long configID = actualConfigIDs[index];
+                    string comment = actualComments[index];
 
-                Assert.IsTrue(configID2 != null && configIDs.Contains((long)configID2),
-                              "Second config ID not as expected");
-                Assert.IsTrue(comments2 != null && comments.Contains((string)comments2),
-                              "Second config comment not as expected");
+                    Assert.That(configIDs.Contains(configID),
+                        "Config ID (" + index + ") not as expected: actual=[ "
+                        + configID + " ], expected=[ " + configIDs + " ]");
 
+                    Assert.That(comments.Contains(comment),
+                        "Comments (" + index + ") not as expecte: actual=[ "
+                        + comment + " ], expected=[ " + comments + " ]");
+                }
             }
             catch (AssertionException)
             {
@@ -341,13 +453,13 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testGetConfigs test with exception", e);
+                Fail("Failed TestGetConfigs test with exception", e);
                 throw;
             }
         });
     }
 
-    [Test, Order(60)]
+    [Test, Order(70)]
     public void TestGetDefaultConfigIDInitial()
     {
         this.PerformTest(() =>
@@ -369,13 +481,13 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testGetDefaultConfigIDInitial test with exception", e);
+                Fail("Failed TestGetDefaultConfigIDInitial test with exception", e);
                 throw;
             }
         });
     }
 
-    [Test, Order(70)]
+    [Test, Order(80)]
     public void TestSetDefaultConfigID()
     {
         this.PerformTest(() =>
@@ -399,13 +511,13 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testSetDefaultConfigID test with exception", e);
+                Fail("Failed TestSetDefaultConfigID test with exception", e);
                 throw;
             }
         });
     }
 
-    [Test, Order(80)]
+    [Test, Order(90)]
     public void TestReplaceDefaultConfigID()
     {
         this.PerformTest(() =>
@@ -414,11 +526,11 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                configMgr.ReplaceDefaultConfigID(this.defaultConfigID, this.modifiedConfigID);
+                configMgr.ReplaceDefaultConfigID(this.defaultConfigID, this.modifiedConfigID1);
 
                 long configID = configMgr.GetDefaultConfigID();
 
-                Assert.That(configID, Is.EqualTo(this.modifiedConfigID),
+                Assert.That(configID, Is.EqualTo(this.modifiedConfigID1),
                             "Replaced default config ID is not as expected");
 
             }
@@ -429,14 +541,14 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testReplaceDefaultConfigID test with exception", e);
+                Fail("Failed TestReplaceDefaultConfigID test with exception", e);
                 throw;
             }
         });
 
     }
 
-    [Test, Order(90)]
+    [Test, Order(100)]
     public void TestNotReplaceDefaultConfigID()
     {
         this.PerformTest(() =>
@@ -445,7 +557,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                configMgr.ReplaceDefaultConfigID(this.defaultConfigID, this.modifiedConfigID);
+                configMgr.ReplaceDefaultConfigID(this.defaultConfigID, this.modifiedConfigID1);
 
                 Fail("Replaced default config ID when it should not have been possible");
 
@@ -469,6 +581,306 @@ internal class SzCoreConfigManagerTest : AbstractTest
 
     }
 
+    [Test, Order(110)]
+    public void TestSetDefaultConfig()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+
+                long configId = configMgr.SetDefaultConfig(this.modifiedConfig1);
+
+                Assert.That(configId, Is.EqualTo(this.modifiedConfigID1),
+                            "Default config ID is not as expected");
+
+            }
+            catch (SzReplaceConflictException)
+            {
+                // expected exception
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed TestSetDefaultConfig test with exception", e);
+            }
+        });
+
+    }
+
+    [Test, Order(120)]
+    public void TestSetDefaultConfigWithComment()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+
+                long configID = configMgr.SetDefaultConfig(this.modifiedConfig3, ModifiedComment3);
+
+                Assert.That(configID, Is.EqualTo(this.modifiedConfigID3),
+                            "Default config ID is not as expected");
+
+            }
+            catch (SzReplaceConflictException)
+            {
+                // expected exception
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed TestSetDefaultConfigWithComment test with exception", e);
+            }
+        });
+    }
+
+    private String ConfigWithout(params string[] dataSources)
+    {
+        SzConfigManager configMgr = this.Env.GetConfigManager();
+        SzConfig config = configMgr.CreateConfig();
+        foreach (string dataSource in dataSources)
+        {
+            config.DeleteDataSource(dataSource);
+        }
+        return config.Export();
+    }
+
+    public static List<object?[]> ConfigCommentParameters()
+    {
+        List<object?[]> result = new List<object?[]>();
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.defaultConfig,
+            "Data Sources: [ ONLY DEFAULT ]"});
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfig1,
+            "Data Sources: CUSTOMERS" });
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfig2,
+            "Data Sources: CUSTOMERS, EMPLOYEES"});
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.modifiedConfig3,
+            "Data Sources: CUSTOMERS, EMPLOYEES, WATCHLIST"});
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.ConfigWithout("TEST"),
+            "Data Sources: [ SOME DEFAULT (SEARCH) ]"});
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.ConfigWithout("TEST", "SEARCH"),
+            "Data Sources: [ NONE ]"});
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => t.ConfigWithout("SEARCH"),
+            "Data Sources: [ SOME DEFAULT (TEST) ]"});
+
+        String missingDataSources = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_ATTR": [ ]
+                    }
+                }
+                """;
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingDataSources, ""});
+
+        String missingColon = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_DSRC" [ 
+
+                        ]
+                    }
+                }
+                """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingColon, ""});
+
+        String missingColonEnd = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_DSRC"
+                """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingColonEnd, ""});
+
+        String missingBracket = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_DSRC"  :  
+                            { }
+                        ]
+                    }
+                }
+                """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingBracket, ""});
+
+        String missingEndBracket = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_DSRC"  :  [
+                            { }
+                    }
+                }
+                """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingEndBracket, ""});
+
+        String missingBracketEnd = """
+                {
+                    "G2_CONFIG": {
+                        "CFG_DSRC"  :
+                """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingBracketEnd, ""});
+
+        String missingSubcolon = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE"  "TEST"
+                        }
+                    ]
+                }
+            }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingSubcolon, ""});
+
+        String missingSubcolonEnd = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE"
+                    ]
+                }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingSubcolonEnd, ""});
+
+        String missingQuote = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE" : TEST"
+                        }
+                    ]
+                }
+            }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingQuote, ""});
+
+        String missingQuoteEnd = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE" : 
+                    ]
+                }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingQuoteEnd, ""});
+
+        String missingEndQuote = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE" : "TEST
+                        }
+                    ]
+                }
+            }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingEndQuote, ""});
+
+        String missingEndQuoteEnd = """
+            {
+                "G2_CONFIG": {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE" : "TEST
+                    ]
+                }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => missingEndQuoteEnd, ""});
+
+        String minimalConfig = """
+            {
+                "G2_CONFIG" : {
+                    "CFG_DSRC" : [ 
+                        {
+                            "DSRC_CODE" : "TEST"
+                        },
+                        {
+                            "DSRC_CODE" : "SEARCH"
+                        },
+                        {
+                            "DSRC_CODE" : "CUSTOMERS"
+                        }
+                    ]
+                }
+            }
+            """;
+
+        result.Add(new object?[] {
+            (SzCoreConfigManagerTest t) => minimalConfig, "Data Sources: CUSTOMERS"});
+
+        return result;
+    }
+
+    [Test, Order(130), TestCaseSource(nameof(ConfigCommentParameters))]
+    public void TestCreateConfigComment(
+        Func<SzCoreConfigManagerTest, string> configDefFunc,
+        string expected)
+    {
+        String configDefinition = configDefFunc(this);
+
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreConfigManager configMgr
+                    = (SzCoreConfigManager)this.Env.GetConfigManager();
+
+                String comment = configMgr.CreateConfigComment(configDefinition);
+
+                Assert.That(comment, Is.EqualTo(expected),
+                            "Comment not as expected: " + configDefinition);
+
+            }
+            catch (SzReplaceConflictException)
+            {
+                // expected exception
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed TestCreateConfigComment test with exception", e);
+            }
+        });
+    }
 
     [Test]
     public void TestExceptionFunctions()
@@ -480,7 +892,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
                 SzCoreConfigManager configManager = (SzCoreConfigManager)
                     this.Env.GetConfigManager();
 
-                NativeConfigManager nativeApi = configManager.GetNativeApi();
+                NativeConfigManager nativeApi = configManager.GetConfigManagerApi();
 
                 nativeApi.ClearLastException();
 

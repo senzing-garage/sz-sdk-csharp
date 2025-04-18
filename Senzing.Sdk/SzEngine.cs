@@ -417,6 +417,79 @@ namespace Senzing.Sdk
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
         /// <summary>
+        /// Compares the specified search attribute critiera against the entity
+        /// identified by the specified entity ID to determine why that entity was
+        /// or was not included in the results of a "search by attributes" operation.
+        /// </summary>
+        /// <remarks>
+        /// The specified search attributes are treated as a hypothetical
+        ///  single-record entity and the result of this operation is the
+        /// "why analysis" of the entity identified by the specified entity ID
+        /// against that hypothetical entity.  The details included in the response
+        /// are determined by the specified flags.
+        /// <para>
+        /// If the specified search profile is <c>null</c> then the default
+        /// generic thresholds from the default search profile will be used for
+        /// the search candidate determination.  If your search requires different
+        /// behavior using alternate generic thresholds, please contact 
+        /// <see href="mailto:support@senzing.com">support@senzing.com</see> for
+        /// details on configuring a custom search profile.
+        /// </para>
+        /// <para>
+        /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
+        /// only control how the search is performed but also the content of the
+        /// response.  Any <see cref="SzFlag"/> value may be included, but only
+        /// flags belonging to the <see cref="SzFlagUsageGroup.SzWhySearchFlags"/>
+        /// group will be recognized (other <see cref="SzFlag"/> values will be
+        /// ignored unless they have equivalent bit flags to recognized flags).
+        /// </para>
+        /// </remarks>
+        ///
+        /// <param name="attributes">
+        /// The search attributes defining the hypothetical record to match
+        /// and/or relate to in order to obtain the search results.
+        /// </param>
+        ///
+        /// <param name="entityID">
+        /// The entity ID identifying the entity to analyze against the
+        /// search attribute criteria.
+        /// </param>
+        ///
+        /// <param name="searchProfile">
+        /// The optional search profile identifier, or <c>null</c> if the default
+        /// search profile should be used for the search.
+        /// </param>
+        ///
+        /// <param name="flags">
+        /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
+        /// to the <see cref="SzFlagUsageGroup.SzWhySearchFlags"/> group to control
+        /// how the operation is performed and the content of the response,
+        /// omitting this parameter will default its value to 
+        /// <see cref="SzFlags.SzWhySearchDefaultFlags"/> for the default
+        /// recommended flags.  Specifying <c>null</c> is equivalent to specifying
+        /// <see cref="SzFlags.SzNoFlags"/>.
+        /// </param>
+        ///
+        /// <returns>
+        /// The resulting JSON <c>string</c> describing the result of the
+        /// why analysis against the search critieria.
+        /// </returns>
+        ///
+        /// <exception cref="SzNotFoundException">
+        /// If no enitty could be found with the specified entity ID.
+        /// </exception>
+        /// 
+        /// <exception cref="SzException">If a failure occurs.</exception>
+        ///
+        /// <seealso cref="SzFlags.SzWhySearchDefaultFlags"/>
+        /// <seealso cref="SzFlagUsageGroup.SzWhySearchFlags"/>
+        string WhySearch(
+            string attributes,
+            long entityID,
+            string searchProfile,
+            SzFlag? flags = SzWhySearchDefaultFlags);
+
+        /// <summary>
         /// This method is used to retrieve information about a specific resolved
         /// entity.
         /// </summary>

@@ -565,6 +565,78 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
+        private static extern SzPointerResult Sz_whySearch_helper(
+            byte[] jsonData, long entityID, byte[] searchProfile);
+
+        /// <summary>
+        /// Implemented to call the external native helper function 
+        /// <see cref="Sz_whySearch_helper"/>. 
+        /// </summary>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        public long WhySearch(string jsonData,
+                             long entityID,
+                             string searchProfile,
+                             out string response)
+        {
+            SzPointerResult result;
+            result.response = IntPtr.Zero;
+            result.returnCode = 0L;
+            try
+            {
+                byte[] jsonBytes = Utilities.StringToUTF8Bytes(jsonData);
+                byte[] profBytes = Utilities.StringToUTF8Bytes(searchProfile);
+
+                result = Sz_whySearch_helper(jsonBytes, entityID, profBytes);
+
+                response = Utilities.UTF8BytesToString(result.response);
+                return result.returnCode;
+
+            }
+            finally
+            {
+                Utilities.FreeSzBuffer(result.response);
+            }
+        }
+
+        [DllImport("Sz")]
+        private static extern SzPointerResult Sz_whySearch_V2_helper(
+            byte[] jsonData, long entityID, byte[] searchProfile, long flags);
+
+        /// <summary>
+        /// Implemented to call the external native helper function 
+        /// <see cref="Sz_whySearch_V2_helper"/>. 
+        /// </summary>
+        ///
+        /// <returns>Zero (0) on success and non-zero on failure.</returns>
+        public long WhySearch(string jsonData,
+                              long entityID,
+                              string searchProfile,
+                              long flags,
+                              out string response)
+        {
+            SzPointerResult result;
+            result.response = IntPtr.Zero;
+            result.returnCode = 0L;
+            try
+            {
+                byte[] jsonBytes = Utilities.StringToUTF8Bytes(jsonData);
+                byte[] profBytes = Utilities.StringToUTF8Bytes(
+                    searchProfile == null ? "" : searchProfile);
+
+                result = Sz_whySearch_V2_helper(jsonBytes, entityID, profBytes, flags);
+
+                response = Utilities.UTF8BytesToString(result.response);
+                return result.returnCode;
+
+            }
+            finally
+            {
+                Utilities.FreeSzBuffer(result.response);
+            }
+        }
+
+        [DllImport("Sz")]
         private static extern SzPointerResult Sz_getEntityByEntityID_helper(long entityID);
 
         /// <summary>
