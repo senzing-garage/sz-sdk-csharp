@@ -46,23 +46,56 @@ matches the native library version.
 
 ### Building
 
+1. Generating the Example Documentation Snippets
+
+    ```console
+    dotnet build Senzing.Sdk -p:GeneratePackageOnBuild=false
+    dotnet test Senzing.Sdk.Demo
+    ```
+
+    Alternatively, via `Makefile`:
+
+    ```console
+    gmake demo
+    ```
+
 1. Building with Debug:
 
     ```console
-    dotnet build Senzing.Sdk
+    dotnet build Senzing.Sdk -p:GenerateDocumentationFile=true
+    ```
+
+    **NOTE:** This will produce warnings if you have **NOT** generated the
+    example documentation snippets.
+
+    Alternatively, via `Makefile` it will always generate the documentation
+    example snippets first:
+
+    ```console
+    gmake debug
     ```
 
     The DLL will be found in `Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be ound in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
+    The NuGet package will be found in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
 
 1. Building with Release:
 
     ```console
-    dotnet build -c Release Senzing.Sdk
+    dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
     ```
 
+    Alternatively, via `Makefile` it will always generate the documentation
+    example snippets first:
+
+    ```console
+    gmake release
+    ```
+
+    **NOTE:** This will produce warnings if you have **NOT** generated the
+    example documentation snippets.
+
     The DLL will be found in `Senzing.Sdk/bin/Release/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be ound in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
+    The NuGet package will be found in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
 
 1. Running unit tests:
 
@@ -70,17 +103,44 @@ matches the native library version.
     dotnet test Senzing.Sdk.Tests
     ```
 
+    Alternatively, via `Makefile`:
+
+    ```console
+    gmake release
+    ```
+
 1. Verifying the code formatting:
 
     ```console
     dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk
     dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Tests
+    dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Demo
+    ```
+
+    Alternative, via `Makefile`:
+
+    ```console
+    gmake format
+    ```
+
+    Or for each module individually:
+
+    ```console
+    gmake format-sdk
+    gmake format-test
+    gmake format-demo
     ```
 
 1. Generate documentation:
 
     ```console
     dotnet docfx docfx.json
+    ```
+
+    Alternatively, via `Makefile`:
+
+    ```console
+    gmake docs
     ```
 
     The generated documentation will reside in `target/apidocs/_site/`
@@ -91,7 +151,20 @@ matches the native library version.
     dotnet clean Senzing.Sdk
     dotnet clean -c Release Senzing.Sdk
     dotnet clean Senzing.Sdk.Tests
+    dotnet clean Senzing.Sdk.Demo
+    rm -rf Senzing.Sdk/bin
+    rm -rf Senzing.Sdk/obj
+    rm -rf Senzing.Sdk.Tests/bin
+    rm -rf Senzing.Sdk.Tests/obj
+    rm -rf Senzing.Sdk.Demo/bin
+    rm -rf Senzing.Sdk.Demo/obj
     rm -rf target
+    ```
+
+    Alternative, via `Makefile`:
+
+    ```console
+    gmake clean
     ```
 
 ### Usage

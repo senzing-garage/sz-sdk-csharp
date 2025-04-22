@@ -31,11 +31,13 @@ internal class SzProductDemo : AbstractTest
     }
 
 
-    protected override string GetInstanceName() {
+    protected override string GetInstanceName()
+    {
         return this.GetType().Name;
     }
 
-    private string GetSettings() {
+    private string GetSettings()
+    {
         return this.GetRepoSettings();
     }
 
@@ -91,15 +93,19 @@ internal class SzProductDemo : AbstractTest
         }
     }
 
-    protected SzEnvironment GetEnvironment() {
-        if (this.env != null) {
+    protected SzEnvironment GetEnvironment()
+    {
+        if (this.env != null)
+        {
             return this.env;
-        } else {
+        }
+        else
+        {
             throw new InvalidOperationException("Environment is null");
         }
     }
 
-    protected static void LogError(string message, Exception e) 
+    protected static void LogError(string message, Exception e)
     {
         Console.Error.WriteLine();
         Console.Error.WriteLine("**********************************");
@@ -108,28 +114,118 @@ internal class SzProductDemo : AbstractTest
         Console.Error.WriteLine();
         throw e;
     }
-    
+
 
     [Test]
-    public void GetProductDemo() {
-        try {
+    public void GetProductDemo()
+    {
+        try
+        {
+            // @start GetProduct
             // How to obtain an SzProduct instance
-            try {
+            try
+            {
                 // obtain the SzEnvironment (varies by application)
                 SzEnvironment env = GetEnvironment();
 
+                // get the product from the environment
                 SzProduct product = env.GetProduct();
 
-                // . . .
+                product.GetLicense(); // @replace . . .
 
-            } catch (SzException e) {
+            }
+            catch (SzException e)
+            {
                 // handle or rethrow the exception (varies by application)
                 LogError("Failed to get SzProduct.", e);
             }
+            // @end
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Fail("Failed", e);
         }
     }
+
+    [Test]
+    public void GetLicenseDemo()
+    {
+        try
+        {
+            // @start GetLicense
+            // How to obtain the Senzing product license JSON 
+            try
+            {
+                // obtain the SzEnvironment (varies by application)
+                SzEnvironment env = GetEnvironment();
+
+                // get the SzProduct instance
+                SzProduct product = env.GetProduct();
+
+                // obtain the license JSON
+                string license = product.GetLicense();
+
+                // do something with the returned JSON (e.g.: parse it and extract values)
+                JsonObject? jsonObj = JsonNode.Parse(license)?.AsObject();
+
+                string? expiration = jsonObj?["expireDate"]?.GetValue<string>();
+                int? recordLimit = jsonObj?["recordLimit"]?.GetValue<int>();
+
+                if (expiration == "" + recordLimit) { throw new Exception(); } // @replace . . .
+
+            }
+            catch (SzException e)
+            {
+                // handle or rethrow the exception
+                LogError("Failed to get license information.", e);
+            }
+            // @end
+        }
+        catch (Exception e)
+        {
+            Fail(e);
+        }
+    }
+
+    [Test]
+    public void GetVersionDemo()
+    {
+        try
+        {
+            // @start GetVersion
+            // How to obtain the Senzing product version JSON 
+            try
+            {
+                // obtain the SzEnvironment (varies by application)
+                SzEnvironment env = GetEnvironment();
+
+                // get the SzProduct instance
+                SzProduct product = env.GetProduct();
+
+                // obtain the version JSON
+                String versionJson = product.GetVersion();
+
+                // do something with the returned JSON (e.g.: parse it and extract values)
+                JsonObject? jsonObj = JsonNode.Parse(versionJson)?.AsObject();
+
+                string? version = jsonObj?["VERSION"]?.GetValue<string>();
+                string? buildDate = jsonObj?["BUILD_DATE"]?.GetValue<string>();
+
+                if (version == buildDate) { throw new Exception(); } // @replace . . .
+
+            }
+            catch (SzException e)
+            {
+                LogError("Failed to get version information.", e);
+            }
+            // @end
+        }
+        catch (Exception e)
+        {
+            Fail(e);
+        }
+    }
+
 
 }

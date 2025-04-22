@@ -1749,11 +1749,24 @@ internal abstract class AbstractTest
     /// Triggers the failure of a test with an optional message and optional
     /// exception
     /// </summary>
+    protected static void Fail(Exception? e = null)
+    {
+        Fail(null, e);
+    }
+
+    /// <summary>
+    /// Triggers the failure of a test with an optional message and optional
+    /// exception
+    /// </summary>
     protected static void Fail(string? message, Exception? e = null)
     {
         if (message == null && e == null)
         {
             Assert.Fail();
+        }
+        else if (message == null && e != null)
+        {
+            Assert.Fail(LoggingUtilities.FormatException(e.Message, e));
         }
         else if (e != null)
         {
