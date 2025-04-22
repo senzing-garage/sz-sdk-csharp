@@ -5,7 +5,7 @@ namespace Senzing.Sdk
     /// <summary>
     /// Extends <see cref="SzUnrecoverableException"/> to define an exceptional
     /// condition triggered by a database error from which we cannot recover
-    /// (e.g.: missing or unexpected schema defintion).
+    /// (e.g.: missing or unexpected schema definition).
     /// </summary>
     public class SzDatabaseException : SzUnrecoverableException
     {
