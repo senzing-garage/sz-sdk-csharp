@@ -49,8 +49,7 @@ matches the native library version.
 1. Generating the Example Documentation Snippets
 
     ```console
-    dotnet build Senzing.Sdk -p:GeneratePackageOnBuild=false
-    dotnet test Senzing.Sdk.Demo
+    dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
     ```
 
     Alternatively, via `Makefile`:

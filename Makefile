@@ -11,8 +11,7 @@ default: help
 # -----------------------------------------------------------------------------
 .PHONY: demo
 demo:
-	dotnet build Senzing.Sdk -p:GeneratePackageOnBuild=false
-	dotnet test Senzing.Sdk.Demo
+	dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
 
 # -----------------------------------------------------------------------------
 # Builds Senzing.Sdk for debug including the documentation XML and the NuGet
@@ -37,7 +36,7 @@ release: demo
 # "debug" target to generate the Senzing.Sdk binaries.
 # -----------------------------------------------------------------------------
 .PHONY: test
-test: debug
+test:
 	dotnet test Senzing.Sdk.Tests
 
 # -----------------------------------------------------------------------------
