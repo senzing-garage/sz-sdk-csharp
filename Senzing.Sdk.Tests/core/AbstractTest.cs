@@ -414,7 +414,7 @@ internal abstract class AbstractTest
     /// </remarks>
     /// 
     /// <returns>The instance name with which to initialize the API.</returns>
-    protected string GetInstanceName()
+    protected virtual string GetInstanceName()
     {
         return this.GetInstanceName(null);
     }
@@ -436,7 +436,7 @@ internal abstract class AbstractTest
     /// <returns>
     /// The instance name with which to initialize the API.
     /// </returns>
-    protected string GetInstanceName(string? suffix)
+    protected virtual string GetInstanceName(string? suffix)
     {
         if (suffix != null && suffix.Trim().Length > 0)
         {
@@ -1749,11 +1749,24 @@ internal abstract class AbstractTest
     /// Triggers the failure of a test with an optional message and optional
     /// exception
     /// </summary>
+    protected static void Fail(Exception? e = null)
+    {
+        Fail(null, e);
+    }
+
+    /// <summary>
+    /// Triggers the failure of a test with an optional message and optional
+    /// exception
+    /// </summary>
     protected static void Fail(string? message, Exception? e = null)
     {
         if (message == null && e == null)
         {
             Assert.Fail();
+        }
+        else if (message == null && e != null)
+        {
+            Assert.Fail(LoggingUtilities.FormatException(e.Message, e));
         }
         else if (e != null)
         {
