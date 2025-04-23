@@ -12,6 +12,13 @@ namespace Senzing.Sdk
     /// that are stored in the Senzing repository including the default configuration
     /// that will be loaded if no config ID is specified during initialization.
     /// </remarks>
+    /// 
+    /// <example>
+    /// An <c>SzConfigManager</c> instance is typically obtained from an 
+    /// <see cref="SzEnvironment"/> instance via the <see cref="SzEnvironment.GetConfigManager"/>
+    /// method as follows:
+    /// <include file="../target/examples/SzConfigManagerDemo_GetConfigManager.xml" path="/*"/>
+    /// </example>
     public interface SzConfigManager
     {
         /// <summary>
@@ -19,6 +26,11 @@ namespace Senzing.Sdk
         /// configuration template and returns the <see cref="SzConfig"/>
         /// representing that configuration.
         /// </summary>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_CreateConfigFromTemplate.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// A newly created <see cref="SzConfig"/> instance representing the
@@ -46,6 +58,11 @@ namespace Senzing.Sdk
         /// <param name="configDefinition">
         /// The definition for the Senzing configuration.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_CreateConfigFromDefinition.xml" path="/*"/>
+        /// </example>
         /// 
         /// <returns>
         /// A newly created <see cref="SzConfig"/> representing the specified
@@ -66,6 +83,11 @@ namespace Senzing.Sdk
         /// <param name="configID">
         /// The configuration ID of the configuration to retrieve.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_CreateConfigFromConfigID.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// A newly created <see cref="SzConfig"/> instance representing the 
@@ -99,6 +121,11 @@ namespace Senzing.Sdk
         /// The comments for the configuration.
         /// </param>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_RegisterConfigWithComment.xml" path="/*"/>
+        /// </example>
+        ///
         /// <returns>
         /// The identifier for referencing the config in the entity repository.
         /// </returns>
@@ -125,6 +152,11 @@ namespace Senzing.Sdk
         /// <param name="configDefinition">
         /// The configuration definition to register.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_RegisterConfig.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The identifier for referencing the config in the entity repository.
@@ -166,6 +198,11 @@ namespace Senzing.Sdk
         /// </code>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_GetConfigs.xml" path="/*"/>
+        /// </example>
+        ///
         /// <returns>
         /// The JSON <c>string</c> describing the configurations registered
         /// in the entity repository with their identifiers, timestamps and 
@@ -186,6 +223,11 @@ namespace Senzing.Sdk
         /// If the entity repository is in the initial state and the default
         /// configuration ID has not yet been set, then zero (0) is returned.
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_GetDefaultConfigID.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The current default configuration ID in the repository, or zero (0)
@@ -220,6 +262,11 @@ namespace Senzing.Sdk
         /// The new configuration ID for the repository.
         /// </param>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_ReplaceDefaultConfigID.xml" path="/*"/>
+        /// </example>
+        ///
         /// <exception cref="SzReplaceConflictException">
         /// If the default configuration ID was not updated to the specified
         /// new value because the current default configuration ID found in
@@ -241,6 +288,11 @@ namespace Senzing.Sdk
         /// <param name="configID">
         /// The configuration ID to set as the default configuration.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_SetDefaultConfigID.xml" path="/*"/>
+        /// </example>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
@@ -279,6 +331,11 @@ namespace Senzing.Sdk
         /// The comments for the configuration.
         /// </param>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_SetDefaultConfigWithComment.xml" path="/*"/>
+        /// </example>
+        ///
         /// <returns>
         /// The identifier for referencing the config in the entity repository.
         /// </returns>
@@ -314,6 +371,11 @@ namespace Senzing.Sdk
         /// <param name="configDefinition">
         /// The configuration definition to register as the default.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_SetDefaultConfig.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The identifier for referencing the config in the entity repository.

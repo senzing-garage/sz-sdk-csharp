@@ -1388,7 +1388,7 @@ internal abstract class AbstractTest
         // populate the file as a CSV
         try
         {
-            fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            fs = File.Open(filePath, FileMode.Create, FileAccess.Write);
 
             using (StreamWriter sw = new StreamWriter(fs, UTF8))
             {
