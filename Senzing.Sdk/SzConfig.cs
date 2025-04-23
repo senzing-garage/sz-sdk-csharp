@@ -30,6 +30,21 @@ namespace Senzing.Sdk
     /// </list>
     /// </para>
     /// </remarks>
+    ///
+    /// <example>
+    /// Create from template configuration:
+    /// <include file="../target/examples/SzConfigDemo_CreateConfigFromTemplate.xml" path="/*"/>
+    /// </example>
+    /// 
+    /// <example>
+    /// Create from configuration definition:
+    /// <include file="../target/examples/SzConfigDemo_CreateConfigFromDefinition.xml" path="/*"/>
+    /// </example>
+    /// 
+    /// <example>
+    /// Create from registered configuration ID:
+    /// <include file="../target/examples/SzConfigManagerDemo_CreateConfigFromConfigID.xml" path="/*"/>
+    /// </example>
     public interface SzConfig
     {
         /// <summary>
@@ -42,7 +57,12 @@ namespace Senzing.Sdk
         /// will be implemented to return the result from this function.
         /// </remarks>
         /// 
-        /// <returns>The configuration defininition (typically formatted as JSON).</returns>
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_ExportConfig.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <returns>The configuration definition (typically formatted as JSON).</returns>
         ///
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
@@ -72,6 +92,11 @@ namespace Senzing.Sdk
         /// </code>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_GetDataSources.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>
         /// The JSON <c>string</c> describing the data sources found in
         /// the configuration.
@@ -92,6 +117,11 @@ namespace Senzing.Sdk
         /// The data source code for the new data source.
         /// </param>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_AddDataSource.xml" path="/*"/>
+        /// </example>
+        ///
         /// <returns>
         /// The JSON <c>string</c> describing the data source was 
         /// added to the configuration.
@@ -111,6 +141,11 @@ namespace Senzing.Sdk
         /// The data source code that identifies the data source to delete from
         /// the configuration.
         /// </param>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigDemo_DeleteDataSource.xml" path="/*"/>
+        /// </example>
         ///
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.

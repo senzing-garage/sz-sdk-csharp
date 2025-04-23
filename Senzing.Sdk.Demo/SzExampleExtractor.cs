@@ -77,7 +77,7 @@ internal class SzExampleExtractor
             // check if we are in-between snippets
             if (sw == null)
             {
-                // check for snippett start
+                // check for snippet start
                 index = line.IndexOf("// @start ");
                 if (index >= 0)
                 {
@@ -85,7 +85,7 @@ internal class SzExampleExtractor
                     snippet = snippet.Trim();
                     string snippetPath = Path.Combine(
                         targetDir.FullName, prefix + snippet + ".xml");
-                    FileStream fs2 = new FileStream(snippetPath, FileMode.OpenOrCreate, FileAccess.Write);
+                    FileStream fs2 = new FileStream(snippetPath, FileMode.Create, FileAccess.Write);
                     sw = new StreamWriter(fs2, Encoding.UTF8);
                     sw.WriteLine("<code><![CDATA[");
                 }
