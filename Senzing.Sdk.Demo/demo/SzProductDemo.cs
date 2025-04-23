@@ -172,7 +172,8 @@ internal class SzProductDemo : AbstractTest
                 string? expiration = jsonObj?["expireDate"]?.GetValue<string>();
                 int? recordLimit = jsonObj?["recordLimit"]?.GetValue<int>();
 
-                if (expiration == "" + recordLimit) { throw new Exception(); } // @replace . . .
+                Assert.That(expiration, Is.Not.Null, "Expiration is null"); // @omit
+                Assert.That(recordLimit, Is.Not.Null, "Record limit is null"); // @replace . . .
 
             }
             catch (SzException e)
@@ -212,7 +213,8 @@ internal class SzProductDemo : AbstractTest
                 string? version = jsonObj?["VERSION"]?.GetValue<string>();
                 string? buildDate = jsonObj?["BUILD_DATE"]?.GetValue<string>();
 
-                if (version == buildDate) { throw new Exception(); } // @replace . . .
+                Assert.That(version, Is.Not.Null, "Version is null"); // @omit
+                Assert.That(buildDate, Is.Not.Null, "Build date is null"); // @replace . . .
 
             }
             catch (SzException e)
