@@ -36,7 +36,7 @@ public static class LoggingUtilities
     private const string LogDatePattern = "yyyy-MM-dd HH:mm:ss,SSS";
 
     /// <summary>
-    /// The base product ID to log with if the calling package is not overidden.
+    /// The base product ID to log with if the calling package is not overridden.
     /// </summary>
     public const string BaseProductID = "5025";
 
@@ -498,7 +498,7 @@ public static class LoggingUtilities
     }
 
     /// <summary>
-    /// Formats the specified excpeption as a <c>string</c>.
+    /// Formats the specified exception as a <c>string</c>.
     /// </summary>
     public static string FormatException(string? msg, Exception e)
     {

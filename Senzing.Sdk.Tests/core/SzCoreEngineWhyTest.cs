@@ -291,7 +291,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
                 // parse the JSON
                 jsonObj = JsonNode.Parse(recordResult)?.AsObject();
                 jsonObj = jsonObj?["JSON_DATA"]?.AsObject();
-                jsonObj?.Remove("RECOORD_ID");
+                jsonObj?.Remove("RECORD_ID");
                 jsonObj?.Remove("DATA_SOURCE");
                 jsonObj?.Remove("RELATIONSHIP_LIST");
                 string attributes = jsonObj?.ToJsonString() ?? "";

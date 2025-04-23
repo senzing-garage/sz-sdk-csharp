@@ -150,7 +150,7 @@ internal class NativeApiFactory
             {
                 throw new InvalidOperationException(
                     "The specified access token is not the expected access "
-                    + "token to authorize unintalling the provider.");
+                    + "token to authorize uninstalling the provider.");
             }
             current_token = null;
             api_provider = null;
@@ -241,7 +241,7 @@ internal class NativeApiFactory
     /// Provides a new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
     /// If a <see cref="Senzing.Sdk.Tests.Core.NativeApiProvider"/> is installed then
     /// it is used to create the instance, otherwise a new instance of
-    /// <see cref="NariveProductJni"/> is constructed and returned.
+    /// <see cref="NativeProductJni"/> is constructed and returned.
     ///
     /// @return A new instance of <see cref="Senzing.Sdk.Core.NativeProduct"/> to use.
     ///

@@ -16,7 +16,7 @@ namespace Senzing.Sdk
     {
         /// <summary>
         /// Creates a new <see cref="SzConfig"/> instance using the default 
-        /// configuraiton template and returns the <see cref="SzConfig"/>
+        /// configuration template and returns the <see cref="SzConfig"/>
         /// representing that configuration.
         /// </summary>
         ///
@@ -69,7 +69,7 @@ namespace Senzing.Sdk
         ///
         /// <returns>
         /// A newly created <see cref="SzConfig"/> instance representing the 
-        /// configuration definition that is reigistered with the specified 
+        /// configuration definition that is registered with the specified 
         /// config ID.
         /// </returns>
         /// 
@@ -100,7 +100,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The identifier for referncing the config in the entity repository.
+        /// The identifier for referencing the config in the entity repository.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
@@ -127,7 +127,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The identifier for referncing the config in the entity repository.
+        /// The identifier for referencing the config in the entity repository.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
@@ -188,7 +188,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <returns>
-        /// The current default cofiguration ID in the repository, or zero (0)
+        /// The current default configuration ID in the repository, or zero (0)
         /// if the entity repository is in the initial state with no default
         /// configuration ID having yet been set.
         /// </returns>
@@ -280,7 +280,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The identifier for referncing the config in the entity repository.
+        /// The identifier for referencing the config in the entity repository.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
@@ -316,7 +316,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <returns>
-        /// The identifier for referncing the config in the entity repository.
+        /// The identifier for referencing the config in the entity repository.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">

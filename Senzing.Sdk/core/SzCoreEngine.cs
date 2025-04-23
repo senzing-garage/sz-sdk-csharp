@@ -1059,7 +1059,7 @@ namespace Senzing.Sdk.Core
         /// Implemented to call the <c>Sz_processRedoRecord</c>
         /// external native helper function via
         /// <see cref="NativeEngineExtern.ProcessRedoRecord(string)"/>
-        /// or <c>Sz_processRedoRecordWithInfo_helper</c> funtion via
+        /// or <c>Sz_processRedoRecordWithInfo_helper</c> function via
         /// <see cref="NativeEngineExtern.ProcessRedoRecordWithInfo(string, out string)"/>.
         /// </summary>
         ///
@@ -1236,7 +1236,7 @@ namespace Senzing.Sdk.Core
                     returnCode = this.nativeApi.SearchByAttributes(
                         attributes, searchProfile, downstreamFlags, out string entities);
 
-                    // se thte result
+                    // see the result
                     result = entities;
                 }
 

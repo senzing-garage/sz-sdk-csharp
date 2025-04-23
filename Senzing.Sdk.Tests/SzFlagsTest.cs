@@ -978,13 +978,13 @@ internal class SzFlagsTest : AbstractTest
                         "SzFlagInfo for " + fieldInfo.Name + " unexpectedly reverse compared "
                         + "equal to SzFlagInfo for " + previous.name + "via CompareTo()");
                     Assert.That(compare, Is.Not.EqualTo(reverseCompare),
-                        "Reverse comparision for " + flagInfo1.name + " versus "
+                        "Reverse comparison for " + flagInfo1.name + " versus "
                         + previous.name + " unexpectedly equal to forward comparison");
                     Assert.That((compare < 0), Is.EqualTo(expectedCompare < 0),
                         "Comparison ordering for " + flagInfo1.name + " versus "
                         + previous.name + "not as expected");
                     Assert.That((compare < 0), Is.Not.EqualTo(reverseCompare < 0),
-                        "Reverse comparision ordering for " + flagInfo1.name
+                        "Reverse comparison ordering for " + flagInfo1.name
                         + " versus " + previous.name
                         + " unexpectedly equal to forward comparison");
                 }

@@ -257,7 +257,7 @@ public class RecordReader
                 // if whitespace then skip it
                 if (Char.IsWhiteSpace((char)nextChar))
                 {
-                    // read the charater if it is whitespace since we need to 
+                    // read the character if it is whitespace since we need to 
                     // read the next character on the next iteration of the loop
                     nextChar = reader.Read();
                     continue;

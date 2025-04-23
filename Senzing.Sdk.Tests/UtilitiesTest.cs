@@ -14,7 +14,7 @@ using Senzing.Sdk.Tests.Core;
 internal class UtilitiesTest : AbstractTest
 {
     [OneTimeSetUp]
-    public void Initialze()
+    public void Initialize()
     {
         this.BeginTests();
     }

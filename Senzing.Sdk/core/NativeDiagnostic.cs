@@ -83,7 +83,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Gathers database information and sets the specified out parameter
-        /// to the JSON <c>string</c> desribing the details.
+        /// to the JSON <c>string</c> describing the details.
         /// </summary>
         ///
         /// <param name="response">

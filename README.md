@@ -14,7 +14,7 @@ NuGet package file (`Senzing.Sdk.4.0.0-beta.2.0.nupkg`) that you use should be
 obtained from Senzing product installation to ensure that the C# code version
 matches the native library version.
 
-### Preequisites
+### Prerequisites
 
 1. Microsoft .NET for your platform: <https://dotnet.microsoft.com/en-us/download>
 
@@ -85,7 +85,7 @@ matches the native library version.
 
     The generated documentation will reside in `target/apidocs/_site/`
 
-1. Clean up build artfiacts:
+1. Clean up build artifacts:
 
     ```console
     dotnet clean Senzing.Sdk

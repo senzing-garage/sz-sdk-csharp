@@ -42,7 +42,7 @@ namespace Senzing.Sdk
         /// will be implemented to return the result from this function.
         /// </remarks>
         /// 
-        /// <returns>The configuration defininition (typically formatted as JSON).</returns>
+        /// <returns>The configuration definition (typically formatted as JSON).</returns>
         ///
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.

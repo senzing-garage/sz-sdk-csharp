@@ -16,7 +16,7 @@ public class TestException : Exception
     }
 
     /// <summary>
-    /// Constructs with a message explaing the reason for the exception.
+    /// Constructs with a message explaining the reason for the exception.
     /// </summary>
     /// 
     /// <param name="message">The message explaining the reason for the exception.</param>
@@ -39,7 +39,7 @@ public class TestException : Exception
     }
 
     /// <summary>
-    /// Constructs with a message explaing the reason for the exception and
+    /// Constructs with a message explaining the reason for the exception and
     /// the <c>Exception</c> that is the underlying cause for the exception.
     /// </summary>
     /// 

@@ -161,7 +161,7 @@ namespace Senzing.Sdk.Core
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);
 
-                    // store the new confg definition
+                    // store the new config definition
                     this.configDefinition = configDef;
 
                     // return null
@@ -214,7 +214,7 @@ namespace Senzing.Sdk.Core
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);
 
-                    // store the new confg definition
+                    // store the new config definition
                     this.configDefinition = configDef;
 
                     // return null

@@ -148,7 +148,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         /// 
         /// <remarks>
-        /// The response out parameter is set to the JSON <c>string</c> desribing the
+        /// The response out parameter is set to the JSON <c>string</c> describing the
         /// data source ID that was added.
         /// 
         /// <para>

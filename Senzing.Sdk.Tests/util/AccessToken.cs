@@ -34,7 +34,7 @@ internal sealed class AccessToken : Object
     }
 
     /// <summary>
-    /// The thread-local instance to make avaialble via <see cref="GetThreadAccessToken"/> 
+    /// The thread-local instance to make available via <see cref="GetThreadAccessToken"/> 
     /// and <see cref="ClaimThreadAccessToken"/>. 
     /// </summary>
     /// 

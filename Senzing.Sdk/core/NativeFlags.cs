@@ -263,7 +263,7 @@ namespace Senzing.Sdk.Core
         public const long SzRecordDefaultFlags = (SzEntityIncludeRecordJsonData);
 
         /// <summary>
-        /// The default recommended bitwise flag values for basic enitty output.
+        /// The default recommended bitwise flag values for basic entity output.
         /// </summary>
         public const long SzEntityCoreFlags
           = (SzEntityIncludeRepresentativeFeatures

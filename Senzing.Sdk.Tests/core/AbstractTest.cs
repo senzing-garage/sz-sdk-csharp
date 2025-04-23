@@ -82,7 +82,7 @@ internal abstract class AbstractTest
 
     /// <summary>
     /// Protected constructor allowing the derived class to specify the
-    /// location for the entity respository.
+    /// location for the entity repository.
     /// </summary>
     /// 
     /// <param name="repoDirectory">
@@ -672,7 +672,7 @@ internal abstract class AbstractTest
     ///
     /// <remarks>
     /// It will delete the entity repository that was created for the tests if
-    /// there are no test failures recorded via <see cref="InrementFailureCount"/>.
+    /// there are no test failures recorded via <see cref="IncrementFailureCount"/>.
     /// </remarks>
     protected void TeardownTestEnvironment()
     {

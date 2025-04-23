@@ -5,7 +5,7 @@ namespace Senzing.Sdk
     /// <summary>
     /// Extends <see cref="SzUnrecoverableException"/> to define an exceptional
     /// condition triggered by a database error from which we cannot recover
-    /// (e.g.: missing or unexpected schema defintion).
+    /// (e.g.: missing or unexpected schema definition).
     /// </summary>
     public class SzDatabaseException : SzUnrecoverableException
     {
@@ -17,7 +17,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Constructs with a message explaing the reason for the exception.
+        /// Constructs with a message explaining the reason for the exception.
         /// </summary>
         /// 
         /// <param name="message">
@@ -30,7 +30,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Constructs with a message explaing the reason for the exception.
+        /// Constructs with a message explaining the reason for the exception.
         /// </summary>
         /// 
         /// <param name="errorCode">The underlying Senzing error code.</param>
@@ -57,7 +57,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Constructs with a message explaing the reason for the exception and
+        /// Constructs with a message explaining the reason for the exception and
         /// the <c>Exception</c> that is the underlying cause for the exception.
         /// </summary>
         /// 
@@ -73,7 +73,7 @@ namespace Senzing.Sdk
         }
 
         /// <summary>
-        /// Constructs with the Senzing error code, the message explaing the reason
+        /// Constructs with the Senzing error code, the message explaining the reason
         /// for the exception and the <c>Exception</c> that is the underlying cause
         /// for the exception.
         /// </summary>
