@@ -49,6 +49,7 @@
       "SFCALL",
       "SFUNC",
       "SOPIN",
+      "Senzing",
       "USERPROFILE",
       "UTYPE",
       "Uninitializes",
@@ -66,9 +67,9 @@
       "locklist",
       "netstandard",
       "ound",
+      "smod",
       "stackoverflow",
       "unresolve",
-      "Senzing"
     ],
     "ignorePaths": [
       "CHANGELOG.md",
