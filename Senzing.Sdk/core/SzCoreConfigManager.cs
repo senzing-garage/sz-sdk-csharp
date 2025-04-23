@@ -324,7 +324,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Produce an auto-generated configuration comment for the 
-        /// configuration maanger registry.  This does a psuedo-JSON 
+        /// configuration manager registry.  This does a pseudo-JSON 
         /// parse to avoid a third-party JSON parser dependency.
         /// </summary>
         /// 
@@ -564,7 +564,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the <see cref="RegisterConfig(string)"/> and
-        /// <see cref="SetDefaultConfigID(long)"/> funtions.
+        /// <see cref="SetDefaultConfigID(long)"/> functions.
         /// </summary>
         public long SetDefaultConfig(String configDefinition)
         {

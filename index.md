@@ -8,7 +8,7 @@ This is the Senzing SDK for C#.  After adding the `Senzing.Sdk.dll` to your
 project you can leverage the Senzing SDK via the `SzCoreEnvironment` class:
 
 ```
-using Sening.Sdk;
+using Senzing.Sdk;
 using Senzing.Sdk.Core;
 using System.Text.Json.Nodes;
 

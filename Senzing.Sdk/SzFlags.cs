@@ -112,7 +112,7 @@ namespace Senzing.Sdk
                 if (this.infoByFlag.ContainsKey(flagInfo.value))
                 {
                     throw new ArgumentException(
-                        "Cannot have the same flag by differnet names in the same group: "
+                        "Cannot have the same flag by different names in the same group: "
                             + "group=[ " + this.group + " ], flag=[ " + flagInfo
                             + " ], existing=[ " + this.infoByFlag[flagInfo.value] + " ]");
                 }
@@ -1030,7 +1030,7 @@ namespace Senzing.Sdk
         /// <summary>
         /// The aggregate <see cref="SzFlag"/> indicating that search results
         /// should only include strongly matching entities while returning 
-        /// miniaml data for those matching entities.
+        /// minimal data for those matching entities.
         /// </summary>
         /// <remarks>
         /// The included <see cref="SzFlag"/> values are:
@@ -1206,7 +1206,7 @@ namespace Senzing.Sdk
         /// Obtains the flags belonging to an <b>individual</b> 
         /// <see cref="SzFlagUsageGroup"/> as an aggregate
         /// <see cref="SzFlag"/> value for all flags associated with
-        /// the specfied group.
+        /// the specified group.
         /// </summary>
         ///
         /// <param name="group">
@@ -1221,7 +1221,7 @@ namespace Senzing.Sdk
         /// </returns>
         ///
         /// <exception cref="System.ArgumentException">
-        /// If the specfied <see cref="SzFlagUsageGroup"/> is itself an aggregate
+        /// If the specified <see cref="SzFlagUsageGroup"/> is itself an aggregate
         /// value of multiple groups or equal to <see cref="SzNoFlagUsageGroups"/>
         /// (i.e.: zero).
         /// </exception>
@@ -1255,7 +1255,7 @@ namespace Senzing.Sdk
         /// (e.g.: <see cref="SzSearchIncludePossiblySame"/> and
         /// <see cref="SzExportIncludePossiblySame"/>) so the actual flag name can 
         /// be obtained with respect to a specific <see cref="SzFlagUsageGroup"/>
-        /// since there is no ambiguiuty within a group.
+        /// since there is no ambiguity within a group.
         /// </remarks>
         ///
         /// <param name="group">
@@ -1270,7 +1270,7 @@ namespace Senzing.Sdk
         /// </returns>
         ///
         /// <exception cref="System.ArgumentException">
-        /// If the specfied <see cref="SzFlagUsageGroup"/> is itself an aggregate
+        /// If the specified <see cref="SzFlagUsageGroup"/> is itself an aggregate
         /// value of multiple groups or equal to <see cref="SzNoFlagUsageGroups"/>
         /// (i.e.: zero).
         /// </exception>
@@ -1318,7 +1318,7 @@ namespace Senzing.Sdk
         /// </returns>
         ///
         /// <exception cref="System.ArgumentException">
-        /// If the specfied <see cref="SzFlagUsageGroup"/> is itself an aggregate
+        /// If the specified <see cref="SzFlagUsageGroup"/> is itself an aggregate
         /// value of multiple groups or equal to <see cref="SzNoFlagUsageGroups"/>
         /// (i.e.: zero).
         /// </exception>

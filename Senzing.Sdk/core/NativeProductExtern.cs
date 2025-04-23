@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Senzing.Sdk.Core
 {
     /// <summary>
-    /// Provides the extnerl native implementation of <see cref="NativeProduct"/>.
+    /// Provides the external native implementation of <see cref="NativeProduct"/>.
     /// </summary>
     internal class NativeProductExtern : NativeProduct
     {
@@ -61,12 +61,12 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to return the last exception message associated
-        /// with the Senzing product funtions.
+        /// with the Senzing product functions.
         /// </summary>
         ///
         /// <remarks>
         /// This is most commonly called after a Senzing product function
-        /// returnbs a failure code (non-zero or NULL).
+        /// returns a failure code (non-zero or NULL).
         /// </remarks>
         ///
         /// <returns>An error message</returns>
@@ -86,7 +86,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to return the last error code associated with the 
-        /// Senzing product funtions.
+        /// Senzing product functions.
         /// </summary>
         ///
         /// <remarks>
@@ -106,7 +106,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to clear the information pertaining to the last
-        /// error encountered with the Senzing product funtions.
+        /// error encountered with the Senzing product functions.
         /// </summary>
         public void ClearLastException()
         {

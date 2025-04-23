@@ -159,7 +159,7 @@ namespace Senzing.Sdk
         /// </example>
         ///
         /// <returns>
-        /// The identifier for referncing the config in the entity repository.
+        /// The identifier for referencing the config in the entity repository.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">

@@ -965,7 +965,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                     // do a negative entity ID
                     func = (SzCoreEngineWriteTest t) => -1 & Math.Abs(paramKey.GetHashCode());
 
-                    // Per decision, reevaluate entity silently does nothing if enitty ID not found
+                    // Per decision, reevaluate entity silently does nothing if entity ID not found
                     // exceptionType = SzNotFoundException.class;
 
                     break;
@@ -973,7 +973,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                     // do a large entity that does not exist
                     func = (SzCoreEngineWriteTest t) => 1000000000L;
 
-                    // Per decision, reevaluate entity silently does nothing if enitty ID not found
+                    // Per decision, reevaluate entity silently does nothing if entity ID not found
                     // exceptionType = SzNotFoundException.class;
 
                     break;

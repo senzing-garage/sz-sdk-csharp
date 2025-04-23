@@ -2021,7 +2021,7 @@ public static class RepositoryManager
     }
 
     /// <summary>
-    /// Adds the config associated witht he specified handle using the specified
+    /// Adds the config associated with he specified handle using the specified
     /// comment and returns the <see cref="System.Text.Json.Nodes.JsonObject"/>
     /// for the config along with setting the config's ID in the specified result
     /// parameter.

@@ -417,7 +417,7 @@ namespace Senzing.Sdk
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
         /// <summary>
-        /// Compares the specified search attribute critiera against the entity
+        /// Compares the specified search attribute criteria against the entity
         /// identified by the specified entity ID to determine why that entity was
         /// or was not included in the results of a "search by attributes" operation.
         /// </summary>
@@ -472,11 +472,11 @@ namespace Senzing.Sdk
         ///
         /// <returns>
         /// The resulting JSON <c>string</c> describing the result of the
-        /// why analysis against the search critieria.
+        /// why analysis against the search criteria.
         /// </returns>
         ///
         /// <exception cref="SzNotFoundException">
-        /// If no enitty could be found with the specified entity ID.
+        /// If no entity could be found with the specified entity ID.
         /// </exception>
         /// 
         /// <exception cref="SzException">If a failure occurs.</exception>
@@ -522,7 +522,7 @@ namespace Senzing.Sdk
         /// <returns>The JSON <c>string</c> describing the entity.</returns>
         ///
         /// <exception cref="SzNotFoundException">
-        /// If no enitty could be found with the specified entity ID.
+        /// If no entity could be found with the specified entity ID.
         /// </exception>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
@@ -552,7 +552,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
-        /// The data source code that identifies the data source of the constiuent
+        /// The data source code that identifies the data source of the constituent
         /// record belonging to the entity to be retrieved.
         /// </param>
         ///
@@ -577,7 +577,7 @@ namespace Senzing.Sdk
         /// </exception>
         ///
         /// <exception cref="SzNotFoundException">
-        /// If no enitty could be found with the specified entity ID.
+        /// If no entity could be found with the specified entity ID.
         /// </exception>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
@@ -600,7 +600,7 @@ namespace Senzing.Sdk
         /// entities.
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
-        /// may contain any flags, but currenlty no flags are specifically defined
+        /// may contain any flags, but currently no flags are specifically defined
         /// for this experimental method.  Flags are not applicable to this method
         /// will simply be ignored.
         /// </para>
@@ -624,7 +624,7 @@ namespace Senzing.Sdk
         /// </returns>
         ///
         /// <exception cref="SzNotFoundException">
-        /// If no enitty could be found with the specified entity ID.
+        /// If no entity could be found with the specified entity ID.
         /// </exception>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
@@ -641,14 +641,14 @@ namespace Senzing.Sdk
         /// entities.
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
-        /// may contain any flags, but currenlty no flags are specifically defined
+        /// may contain any flags, but currently no flags are specifically defined
         /// for this experimental method.  Flags are not applicable to this method
         /// will simply be ignored.
         /// </para>
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
-        /// The data source code that identifies the data source of the constiuent
+        /// The data source code that identifies the data source of the constituent
         /// record belonging to the entity that is the focus for the interesting
         /// entities to be returned.
         /// </param>
@@ -693,7 +693,7 @@ namespace Senzing.Sdk
         /// Entities to be avoided when finding the path may optionally be specified
         /// as a non-null <see cref="ISet{T}"/> of <c>long</c> entity ID's identifying
         /// entities to be avoided.  By default the specified entities will be avoided
-        /// unless absolutely neccessary to find the path.  To strictly avoid the
+        /// unless absolutely necessary to find the path.  To strictly avoid the
         /// specified entities specify the <see cref="SzFindPathStrictAvoid"/> flag.
         /// <para>
         /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
@@ -780,7 +780,7 @@ namespace Senzing.Sdk
         /// as a non-null <see cref="ISet{T}"/> of tuples of data source code and
         /// record ID pairs identifying the constituent records of entities to be
         /// avoided.  By default the associated entities will be avoided unless
-        /// absolutely neccessary to find the path.  To strictly avoid the associated
+        /// absolutely necessary to find the path.  To strictly avoid the associated
         /// entities specify the <see cref="SzFindPathStrictAvoid"/> flag. 
         /// <para>
         /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
@@ -799,7 +799,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <param name="startDataSourceCode">
-        /// The data source code identiyfing the data source for the starting record
+        /// The data source code identifying the data source for the starting record
         /// of the requested path.
         /// </param>
         ///
@@ -809,7 +809,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="endDataSourceCode">
-        /// The data source code identiyfing the data source for the ending record
+        /// The data source code identifying the data source for the ending record
         /// of the requested path.
         /// </param>
         ///
@@ -947,7 +947,7 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// Finds a network of entity relationships surrounding the paths between
-        /// a set of entities having the constiuent records identified by the tuples
+        /// a set of entities having the constituent records identified by the tuples
         /// of data source code and record ID pairs included in the specified 
         /// <see cref="ISet{T}"/>.
         /// </summary>
@@ -971,7 +971,7 @@ namespace Senzing.Sdk
         ///
         /// <param name="recordKeys">
         /// The non-null  <see cref="ISet{T}"/> of tuples of data source code and
-        /// record ID pairs identifying the constiuent records of the entities for
+        /// record ID pairs identifying the constituent records of the entities for
         /// which to build the network.
         /// </param>
         ///
@@ -1095,7 +1095,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code identiyfing the data source for the first record.
+        /// The data source code identifying the data source for the first record.
         /// </param>
         ///
         /// <param name="recordID1">
@@ -1104,7 +1104,7 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="dataSourceCode2">
-        /// The data source code identiyfing the data source for the second record.
+        /// The data source code identifying the data source for the second record.
         /// </param>
         ///
         /// <param name="recordID2">
@@ -1193,7 +1193,7 @@ namespace Senzing.Sdk
                            SzFlag? flags = SzWhyEntitiesDefaultFlags);
 
         /// <summary>
-        /// Deterimes how an entity identified by the specified entity ID was
+        /// Determines how an entity identified by the specified entity ID was
         /// constructed from its constituent records.
         /// </summary>
         ///
@@ -1296,7 +1296,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <param name="dataSourceCode">
-        /// The data source code identiyfing the data source for the record.
+        /// The data source code identifying the data source for the record.
         /// </param>
         ///
         /// <param name="recordID">
@@ -1333,7 +1333,7 @@ namespace Senzing.Sdk
                          SzFlag? flags = SzRecordDefaultFlags);
 
         /// <summary>
-        /// Iniitiates an export of entity data as JSON-lines format and returns an
+        /// Initiates an export of entity data as JSON-lines format and returns an
         /// "export handle" that can be used to <see cref="FetchNext">read
         /// the export data</see> and must be <see cref="CloseExport">closed</see>
         /// when complete.
@@ -1373,7 +1373,7 @@ namespace Senzing.Sdk
         IntPtr ExportJsonEntityReport(SzFlag? flags = SzExportDefaultFlags);
 
         /// <summary>
-        /// Iniitiates an export of entity data in CSV format and returns an
+        /// Initiates an export of entity data in CSV format and returns an
         /// "export handle" that can be used to <see cref="FetchNext">read
         /// the export data</see> and must be <see cref="CloseExport">closed</see>
         /// when complete.
@@ -1394,7 +1394,7 @@ namespace Senzing.Sdk
         ///
         /// <param name="csvColumnList">
         /// Specify <c>"*"</c> to indicate "all columns", specify empty-string to
-        /// indicate the "standard columns", otherwise specify a comma-sepatated
+        /// indicate the "standard columns", otherwise specify a comma-separated
         /// list of column names.
         /// </param>
         ///
@@ -1514,7 +1514,7 @@ namespace Senzing.Sdk
         /// </summary>
         ///
         /// <remarks>
-        /// If no redo records are availbale then this returns an <c>null</c>.
+        /// If no redo records are available then this returns an <c>null</c>.
         /// </remarks>
         ///
         /// <returns>

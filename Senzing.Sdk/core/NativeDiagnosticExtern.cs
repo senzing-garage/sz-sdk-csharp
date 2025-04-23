@@ -73,12 +73,12 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to return the last exception message associated
-        /// with the Senzing config funtions.
+        /// with the Senzing config functions.
         /// </summary>
         ///
         /// <remarks>
         /// This is most commonly called after a Senzing config function
-        /// returnbs a failure code (non-zero or NULL).
+        /// returns a failure code (non-zero or NULL).
         /// </remarks>
         ///
         /// <returns>An error message</returns>
@@ -98,7 +98,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to return the last error code associated with the 
-        /// Senzing config funtions.
+        /// Senzing config functions.
         /// </summary>
         ///
         /// <remarks>
@@ -118,7 +118,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to clear the information pertaining to the last
-        /// error encountered with the Senzing config funtions.
+        /// error encountered with the Senzing config functions.
         /// </summary>
         public void ClearLastException()
         {

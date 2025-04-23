@@ -446,7 +446,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 catch (SzException e)
                 {
                     Assert.That(e.Message, Is.EqualTo(expected),
-                                "Unexpected exception messasge");
+                                "Unexpected exception message");
 
                 }
                 catch (AssertionException)
@@ -660,7 +660,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
 
             SzCoreEnvironment active = SzCoreEnvironment.GetActiveInstance();
 
-            Assert.IsNull(active, "Active instrance was NOT null when destroying");
+            Assert.IsNull(active, "Active instance was NOT null when destroying");
 
             // try to execute after destroy
             try
@@ -1260,7 +1260,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                                                      .Build();
 
                 Assert.IsNull(env.GetConfigID(),
-                    "The initialziation starting config ID is not null: " + info);
+                    "The initialization starting config ID is not null: " + info);
 
                 // get the active config
                 long activeConfigID = env.GetActiveConfigID();
@@ -1310,7 +1310,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
             catch (Exception e)
             {
                 Console.Error.WriteLine(e);
-                Fail("Caught an unexpected exeption", e);
+                Fail("Caught an unexpected exception", e);
                 throw;
             }
             finally
@@ -1497,7 +1497,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                                                      .Build();
 
                 Assert.IsNull(env.GetConfigID(),
-                    "The initialziation starting config ID is not null: " + info);
+                    "The initialization starting config ID is not null: " + info);
 
                 // check if we should initialize the engine first
                 if (initEngine) env.GetEngine();
@@ -1514,7 +1514,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                 // reinitialize
                 env.Reinitialize(configID);
 
-                // check the initialziation config ID again
+                // check the initialization config ID again
                 Assert.That(env.GetConfigID(), Is.EqualTo(configID),
                             "The initialization config ID is not the "
                             + "reinitialized one: " + info);

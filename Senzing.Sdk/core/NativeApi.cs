@@ -23,7 +23,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <remarks>
-        /// This is most commonly called after a Senzing funtion returns
+        /// This is most commonly called after a Senzing function returns
         /// a failure code (non-zero or NULL).
         /// </remarks>
         ///

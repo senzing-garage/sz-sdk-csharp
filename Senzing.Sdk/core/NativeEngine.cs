@@ -174,7 +174,7 @@ namespace Senzing.Sdk.Core
                                out string response);
 
         /// <summary>
-        /// Peforms a hypothetical load of the specified JSON record without
+        /// Performs a hypothetical load of the specified JSON record without
         /// actually loading the record responding with a JSON document describing
         /// how the record would be loaded and how the repository would be changed.
         /// </summary>
@@ -316,7 +316,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="jsonData">
-        /// A JSON document containing the attribute information definining
+        /// A JSON document containing the attribute information defining
         /// the criteria for the search.
         /// </param>
         ///
@@ -334,7 +334,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="jsonData">
-        /// A JSON document containing the attribute information definining
+        /// A JSON document containing the attribute information defining
         /// the criteria for the search.
         /// </param>
         ///
@@ -358,7 +358,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="jsonData">
-        /// A JSON document containing the attribute information definining
+        /// A JSON document containing the attribute information defining
         /// the criteria for the search.
         /// </param>
         ///
@@ -390,7 +390,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="jsonData">
-        /// A JSON document containing the attribute information definining
+        /// A JSON document containing the attribute information defining
         /// the criteria for the search.
         /// </param>
         ///
@@ -421,7 +421,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <param name="jsonData">
-        /// A JSON document containing the attribute information definining
+        /// A JSON document containing the attribute information defining
         /// the criteria for the search.
         /// </param>
         ///
@@ -648,20 +648,20 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Finds a relationship path between entities that are identified
-        /// by the data soure and record ID pairs of their constituent records.
+        /// by the data source and record ID pairs of their constituent records.
         /// </summary>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -681,20 +681,20 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Finds a relationship path between entities that are identified
-        /// by the data soure and record ID pairs of their constituent records.
+        /// by the data source and record ID pairs of their constituent records.
         /// </summary>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -806,7 +806,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Finds a relationship path between entities that are identified
-        /// by the data soure and record ID pairs of their constituent records
+        /// by the data source and record ID pairs of their constituent records
         /// with the avoidance (preferred or strict) of specific entities
         /// (also identified by the data source code and record ID pairs of
         /// their constituent records).
@@ -838,16 +838,16 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -872,7 +872,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Finds a relationship path between entities that are identified
-        /// by the data soure and record ID pairs of their constituent records
+        /// by the data source and record ID pairs of their constituent records
         /// with the avoidance (preferred or strict) of specific entities
         /// (also identified by the data source code and record ID pairs of
         /// their constituent records).
@@ -904,16 +904,16 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -1115,16 +1115,16 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -1201,16 +1201,16 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="dataSourceCode1">
-        /// The data source code for the consituent record of the first entity.
+        /// The data source code for the constituent record of the first entity.
         /// </param>
         /// <param name="recordID1">
-        /// The record ID for the consituent record of the first entity.
+        /// The record ID for the constituent record of the first entity.
         /// </param>
         /// <param name="dataSourceCode2">
-        /// The data source code for the consituent record of the second entity.
+        /// The data source code for the constituent record of the second entity.
         /// </param>
         /// <param name="recordID2">
-        /// The record ID for the consituent record of the second entity.
+        /// The record ID for the constituent record of the second entity.
         /// </param>
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search.
@@ -1264,7 +1264,7 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="entityList">
-        /// The JSON document specififying the entity ID's of the desired entities.
+        /// The JSON document specifying the entity ID's of the desired entities.
         /// </param>
         ///
         /// <param name="maxDegrees">
@@ -1314,7 +1314,7 @@ namespace Senzing.Sdk.Core
         /// </remarks>
         ///
         /// <param name="entityList">
-        /// The JSON document specififying the entity ID's of the desired entities.
+        /// The JSON document specifying the entity ID's of the desired entities.
         /// </param>
         ///
         /// <param name="maxDegrees">
@@ -1757,7 +1757,7 @@ namespace Senzing.Sdk.Core
                        out string response);
 
         /// <summary>
-        /// Begins an export of entity data from the respository, returning an
+        /// Begins an export of entity data from the repository, returning an
         /// export-handle that can be used to fetch the data in single-entity
         /// chunks in JSON format.
         /// </summary>
@@ -1782,7 +1782,7 @@ namespace Senzing.Sdk.Core
         long ExportJSONEntityReport(long flags, out IntPtr exportHandle);
 
         /// <summary>
-        /// Begins an export of entity data from the respository, returning an
+        /// Begins an export of entity data from the repository, returning an
         /// export-handle that can be used to fetch the data in single entity
         /// rows in CSV format.
         /// </summary>
@@ -1800,7 +1800,7 @@ namespace Senzing.Sdk.Core
         ///
         /// <param name="csvColumnList">
         /// Specify <c>"*"</c> to indicate "all columns", specify empty-string to
-        /// indicate the "standard columns", otherwise specify a comma-sepatated
+        /// indicate the "standard columns", otherwise specify a comma-separated
         /// list of column names.
         /// </param>
         ///

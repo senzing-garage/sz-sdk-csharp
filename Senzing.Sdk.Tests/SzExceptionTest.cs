@@ -160,7 +160,7 @@ internal class SzExceptionTest : AbstractTest
 
         Assert.That(sze.InnerException, Is.EqualTo(cause),
                     "Exception cause not as expected: " + exceptionType);
-        Assert.IsTrue(cause == sze.InnerException, "Exception cause is not referrentially equal: " + exceptionType);
+        Assert.IsTrue(cause == sze.InnerException, "Exception cause is not referentially equal: " + exceptionType);
         Assert.IsNull(sze.ErrorCode, "Exception error code is not null: " + exceptionType);
         Assert.IsNotNull(sze.ToString(), "Exception string is null: " + exceptionType);
     }
@@ -192,7 +192,7 @@ internal class SzExceptionTest : AbstractTest
         Assert.That(sze.InnerException, Is.EqualTo(cause),
                     "Exception cause not as expected: " + exceptionType);
         Assert.IsTrue(cause == sze.InnerException,
-                      "Exception cause is not referrentially equal: " + exceptionType);
+                      "Exception cause is not referentially equal: " + exceptionType);
         Assert.IsNull(sze.ErrorCode, "Exception error code is not null: " + exceptionType);
         Assert.IsNotNull(sze.ToString(), "Exception string is null: " + exceptionType);
         string text = sze.ToString();
@@ -228,7 +228,7 @@ internal class SzExceptionTest : AbstractTest
         Assert.That(sze.InnerException, Is.EqualTo(cause),
                     "Exception cause not as expected: " + exceptionType);
         Assert.IsTrue(cause == sze.InnerException,
-                      "Exception cause is not referrentially equal: " + exceptionType);
+                      "Exception cause is not referentially equal: " + exceptionType);
         Assert.That(sze.ErrorCode, Is.EqualTo(errorCode),
                     "Exception error code is not as expected: " + exceptionType);
         Assert.IsNotNull(sze.ToString(), "Exception string is null: " + exceptionType);

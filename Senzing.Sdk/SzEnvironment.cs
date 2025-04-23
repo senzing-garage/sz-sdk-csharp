@@ -108,7 +108,7 @@ namespace Senzing.Sdk
         /// </summary>
         ///
         /// <param name="configID">
-        /// The configuraiton ID with which to initialize.
+        /// The configuration ID with which to initialize.
         /// </param>
         /// 
         /// <exception cref="System.InvalidOperationException">

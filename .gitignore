@@ -40,3 +40,9 @@ Senzing.Sdk.Demo/bin/
 Senzing.Sdk.Demo/obj/
 target/
 coverage.cobertura.xml
+
+# Visual Studio code
+.vscode/*
+!.vscode/cspell.json
+*.code-workspace
+.history

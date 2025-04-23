@@ -39,7 +39,7 @@ namespace Senzing.Sdk
         private const int HexNibbleSize = 4;
 
         /// <summary>
-        /// The radix used for hexadecmial (16).
+        /// The radix used for hexadecimal (16).
         /// </summary>
         private const int HexRadix = 16;
 
@@ -56,7 +56,7 @@ namespace Senzing.Sdk
         private const int JsonEscapeBasicCount = 1;
 
         /// <summary>
-        /// The numeber of additional characters required to escape non-basic
+        /// The number of additional characters required to escape non-basic
         /// control characters (i.e.: those without shortcut escape sequences).
         /// </summary>
         private const int JsonEscapeControlCount = 6;

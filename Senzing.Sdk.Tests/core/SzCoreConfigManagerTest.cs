@@ -905,7 +905,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
                             "Unexpected exception message: " + message);
 
                 Assert.That(errorCode, Is.EqualTo(0),
-                            "Unexpeted error code: " + errorCode);
+                            "Unexpected error code: " + errorCode);
             }
             catch (AssertionException)
             {

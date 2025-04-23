@@ -15,7 +15,7 @@ namespace Senzing.Sdk.Core
     public class SzCoreEnvironment : SzEnvironment
     {
         /// <summary>
-        ///  The defaut instance name to use for the Senzing initialization.
+        ///  The default instance name to use for the Senzing initialization.
         ///  The value is <c>"Senzing Instance"</c>.
         /// </summary>
         /// <remarks>
@@ -241,7 +241,7 @@ namespace Senzing.Sdk.Core
         private SzCoreProduct coreProduct = null;
 
         /// <summary>
-        /// The <see cref="SzCoreEngine"/> intance to use.
+        /// The <see cref="SzCoreEngine"/> instance to use.
         /// </summary>
         private SzCoreEngine coreEngine = null;
 
@@ -444,7 +444,7 @@ namespace Senzing.Sdk.Core
             ReaderWriterLockSlim localLock = null;
             try
             {
-                // acquire a wrie lock while checking if acive 
+                // acquire a write lock while checking if active 
                 localLock = this.AcquireReadLock();
                 lock (this.monitor)
                 {
@@ -688,7 +688,7 @@ namespace Senzing.Sdk.Core
                 {
                     throw new InvalidOperationException(
                         "Acquired write lock for destroying environment while tasks "
-                        + "still exuecting: " + exeCount);
+                        + "still executing: " + exeCount);
                 }
 
                 // once we get here we can really shut things down
@@ -807,7 +807,7 @@ namespace Senzing.Sdk.Core
                     // check if we have already initialized the engine or diagnostic
                     if (this.coreEngine != null)
                     {
-                        // engine already initialized so we need to reinitalize
+                        // engine already initialized so we need to reinitialize
                         this.Execute<object>(() =>
                         {
                             long returnCode = this.coreEngine.GetNativeApi().Reinit(configID);
@@ -818,7 +818,7 @@ namespace Senzing.Sdk.Core
                     }
                     else if (this.coreDiagnostic != null)
                     {
-                        // diagnostic already initialized so we need to reinitalize
+                        // diagnostic already initialized so we need to reinitialize
                         // NOTE: we do not need to do this if we reinitialized the
                         // engine since the configuration ID is globally set
                         this.Execute<object>(() =>
@@ -891,7 +891,7 @@ namespace Senzing.Sdk.Core
             /// <remarks>
             /// If this is set to <c>null</c> or empty-string then
             /// <see cref="SzCoreEnvironment.DefaultSettings" /> will be used to provide
-            /// limited funtionality.
+            /// limited functionality.
             /// </remarks>
             /// 
             /// <param name="settings">

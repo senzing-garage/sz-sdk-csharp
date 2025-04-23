@@ -216,7 +216,7 @@ internal class SzRecord
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("\"PHONE_MUMBER\":" + JsonEscape(this.Phone));
+            sb.Append("\"PHONE_NUMBER\":" + JsonEscape(this.Phone));
             if (this.PhoneType != null)
             {
                 sb.Append(",\"PHONE_TYPE\":" + JsonEscape(this.PhoneType));

@@ -166,7 +166,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -279,7 +279,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -398,7 +398,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -556,7 +556,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -691,7 +691,7 @@ namespace Senzing.Sdk
         /// </list>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -816,7 +816,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -944,7 +944,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
@@ -998,7 +998,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
-        /// support this group for definining entity or record detail levels are:
+        /// support this group for defining entity or record detail levels are:
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
