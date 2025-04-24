@@ -14,8 +14,8 @@ using static System.StringComparison;
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreDiagnosticTest : AbstractTest
 {
-    private const string TESTData_SOURCE = "TEST";
-    private const string TEST_RECORD_ID = "ABC123";
+    private const string TestDataSource = "TEST";
+    private const string TestRecordID = "ABC123";
 
     private const long FLAGS
         = NativeFlags.SzEntityIncludeAllFeatures
@@ -38,8 +38,8 @@ internal class SzCoreDiagnosticTest : AbstractTest
     private static string AddAndGetTestEntity(NativeEngine nativeEngine)
     {
         JsonObject jsonObj = new JsonObject();
-        jsonObj.Add("DATA_SOURCE", JsonValue.Create(TESTData_SOURCE));
-        jsonObj.Add("RECORD_ID", JsonValue.Create(TEST_RECORD_ID));
+        jsonObj.Add("DATA_SOURCE", JsonValue.Create(TestDataSource));
+        jsonObj.Add("RECORD_ID", JsonValue.Create(TestRecordID));
         jsonObj.Add("NAME_FULL", JsonValue.Create("Joe Schmoe"));
         jsonObj.Add("EMAIL_ADDRESS", JsonValue.Create("joeschmoe@nowhere.com"));
         jsonObj.Add("PHONE_NUMBER", JsonValue.Create("702-555-1212"));
@@ -47,7 +47,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
 
         // add a record
         long returnCode = nativeEngine.AddRecord(
-            TESTData_SOURCE, TEST_RECORD_ID, recordDefinition);
+            TestDataSource, TestRecordID, recordDefinition);
 
         if (returnCode != 0)
         {
@@ -56,7 +56,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
 
         // get the entity 
         returnCode = nativeEngine.GetEntityByRecordID(
-            TESTData_SOURCE, TEST_RECORD_ID, FLAGS, out string result);
+            TestDataSource, TestRecordID, FLAGS, out string result);
 
         // return the result
         return result;
@@ -91,7 +91,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
 
                 // parse the entity and get the feature ID's
                 JsonObject? entity = ParseJsonObject(result);
-                entity = (JsonObject?)entity?["RESOLVED_ENTITY"];
+                entity = entity?["RESOLVED_ENTITY"]?.AsObject();
                 JsonObject features = ((JsonObject?)entity?["FEATURES"]) ?? new JsonObject();
                 IDictionary<string, JsonNode?> dictionary
                     = ((IDictionary<string, JsonNode?>)features);
@@ -100,7 +100,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
                     JsonArray? featureArr = (JsonArray?)features[featureName];
                     for (int index = 0; index < (featureArr?.Count ?? 0); index++)
                     {
-                        JsonObject? feature = (JsonObject?)featureArr?[index];
+                        JsonObject? feature = featureArr?[index]?.AsObject();
                         string featureDesc = ((string?)feature?["FEAT_DESC"]) ?? "";
                         this.featureDescriptions.Add(featureDesc);
                     }
@@ -218,8 +218,8 @@ internal class SzCoreDiagnosticTest : AbstractTest
                                     .Build();
 
         NativeEngine engine = ((SzCoreEngine)this.Env.GetEngine()).GetNativeApi();
-        engine.GetEntityByRecordID(TESTData_SOURCE,
-                                   TEST_RECORD_ID,
+        engine.GetEntityByRecordID(TestDataSource,
+                                   TestRecordID,
                                    FLAGS,
                                    out string entityJSON);
         string dataStoreInfo = this.Env.GetDiagnostic().GetDatastoreInfo();
@@ -350,8 +350,8 @@ internal class SzCoreDiagnosticTest : AbstractTest
             {
                 String dataStoreInfo = this.Env.GetDiagnostic().GetDatastoreInfo();
                 NativeEngine engine = ((SzCoreEngine)this.Env.GetEngine()).GetNativeApi();
-                long returnCode = engine.GetEntityByRecordID(TESTData_SOURCE,
-                                                             TEST_RECORD_ID,
+                long returnCode = engine.GetEntityByRecordID(TestDataSource,
+                                                             TestRecordID,
                                                              FLAGS,
                                                              out string entityJSON);
                 string message = (returnCode != 0) ? engine.GetLastException() : "";
