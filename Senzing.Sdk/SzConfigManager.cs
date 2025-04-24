@@ -40,6 +40,9 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         SzConfig CreateConfig();
 
         /// <summary>
@@ -133,6 +136,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
         long RegisterConfig(string configDefinition, string configComment);
 
         /// <summary>
@@ -165,6 +170,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
         long RegisterConfig(string configDefinition);
 
         /// <summary>
@@ -238,6 +245,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
         long GetDefaultConfigID();
 
         /// <summary>
@@ -277,6 +286,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
         void ReplaceDefaultConfigID(long currentDefaultConfigID,
                                     long newDefaultConfigID);
 
@@ -297,6 +308,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         void SetDefaultConfigID(long configID);
 
         /// <summary>
@@ -343,6 +356,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         long SetDefaultConfig(string configDefinition, string configComment);
 
         /// <summary>
@@ -384,6 +399,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         long SetDefaultConfig(string configDefinition);
     }
 }

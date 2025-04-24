@@ -15,6 +15,15 @@ namespace Senzing.Sdk
     /// The Senzing engine functions primarily provide means of working with
     /// identity data records, entities and their relationships.
     /// </remarks>
+    /// 
+    /// <example>
+    /// An `SzEngine` instance is typically obtained from an
+    /// <see cref="SzEnvironment"/> instance via the
+    /// <see cref="SzEnvironment.GetEngine"/> method as follows.
+    /// 
+    /// For example:
+    /// <include file="../target/examples/SzEngineDemo_GetEngine.xml" path="/*"/>
+    /// </example>
     public interface SzEngine
     {
         /// <summary>
@@ -22,7 +31,14 @@ namespace Senzing.Sdk
         /// internal resources of the <c>SzEngine</c>.
         /// </summary>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_PrimeEngine.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <exception cref="SzException">If a failure occurs.</exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/initialization/EnginePriming/Program.cs">Code Snippet: Engine Priming</seealso>
         void PrimeEngine();
 
         /// <summary>
@@ -30,9 +46,16 @@ namespace Senzing.Sdk
         /// The counters are reset after each call.
         /// </summary>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetStats.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>The <c>string</c> describing the statistics as JSON.</returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadWithStatsViaLoop/Program.cs">Code Snippet: Load with Stats</seealso>
         string GetStats();
 
         /// <summary>
@@ -59,6 +82,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_AddRecord.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="dataSourceCode">
         /// The data source code identifying the data source for the record being
         /// added.
@@ -102,6 +130,14 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzFlag.SzWithInfo"/>
         /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadRecords/Program.cs">Code Snippet: Load Records</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadTruthSetWithInfoViaLoop/Program.cs">Code Snippet: Load Truth Set "With Info"</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadViaFutures/Program.cs">Code Snippet: Load via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadViaLoop/Program.cs">Code Snippet: Load via Loop</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadViaQueue/Program.cs">Code Snippet: Load via Queue</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadWithInfoViaFutures/Program.cs">Code Snippet: Load "With Info" via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadWithStatsViaLoop/Program.cs">Code Snippet: Load "With Stats" Via Loop</seealso>
         string AddRecord(string dataSourceCode,
                          string recordID,
                          string recordDefinition,
@@ -122,6 +158,11 @@ namespace Senzing.Sdk
         /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_PreprocessRecord.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="recordDefinition">
         /// The <c>string</c> that defines the record, typically in JSON format.
         /// </param>
@@ -133,7 +174,7 @@ namespace Senzing.Sdk
         /// will default its value to <see cref="SzRecordDefaultFlags"/>.  Specifying
         /// <c>null</c> is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
-        ///
+        /// 
         /// <returns>
         /// The JSON <c>string</c> result produced by preprocessing the record
         /// (depending on the specified flags).
@@ -167,6 +208,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_DeleteRecord.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="dataSourceCode">
         /// The data source code identifying the data source for the record being
         /// deleted.
@@ -200,6 +246,9 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzWithInfo"/>
         /// <seealso cref="SzModifyFlags"/>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteViaLoop/Program.cs">Code Snippet: Delete via Loop</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteViaFutures/Program.cs">Code Snippet: Delete via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteWithInfoViaFutures/Program.cs">Code Snippet: Delete "With Info" via Futures</seealso>
         string DeleteRecord(string dataSourceCode,
                             string recordID,
                             SzFlag? flags = SzNoFlags);
@@ -226,6 +275,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ReevaluateRecord.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="dataSourceCode">
         /// The data source code identifying the data source for the record to
         /// reevaluate.
@@ -283,6 +337,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ReevaluateEntity.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityID">
         /// The ID of the resolved entity to reevaluate.
         /// </param>
@@ -336,6 +395,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_SearchByAttributesWithProfile.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="attributes">
         /// The search attributes defining the hypothetical record to match and/or
         /// relate to in order to obtain the search results.
@@ -369,6 +433,9 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzSearchByAttributesMinimalAll"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesMinimalStrong"/>
         /// <seealso cref="SzFlagUsageGroup.SzSearchFlags"/>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchRecords/Program.cs">Code Snippet: Search Records</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchViaFutures/Program.cs">Code Snippet: Search via Futures</seealso>
         string SearchByAttributes(
             string attributes,
             string searchProfile,
@@ -383,6 +450,11 @@ namespace Senzing.Sdk
         /// See <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// documentation for details.
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_SearchByAttributes.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="attributes">
         /// The search attributes defining the hypothetical record to match and/or
@@ -412,6 +484,9 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzSearchByAttributesMinimalAll"/>
         /// <seealso cref="SzFlags.SzSearchByAttributesMinimalStrong"/>
         /// <seealso cref="SzFlagUsageGroup.SzSearchFlags"/>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchRecords/Program.cs">Code Snippet: Search Records</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchViaFutures/Program.cs">Code Snippet: Search via Futures</seealso>
         string SearchByAttributes(
             string attributes,
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
@@ -444,6 +519,11 @@ namespace Senzing.Sdk
         /// ignored unless they have equivalent bit flags to recognized flags).
         /// </para>
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_WhySearch.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="attributes">
         /// The search attributes defining the hypothetical record to match
@@ -506,6 +586,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetEntityByEntityID.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityID">
         /// The entity ID identifying the entity to retrieve.
         /// </param>
@@ -550,6 +635,11 @@ namespace Senzing.Sdk
         /// ignored unless they have equivalent bit flags to recognized flags).
         /// </para>
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetEntityByRecordKey.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="dataSourceCode">
         /// The data source code that identifies the data source of the constituent
@@ -606,6 +696,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindInterestingByEntityID.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityID">
         /// The entity ID identifying the entity that will be the focus for the
         /// interesting entities to be returned.
@@ -646,6 +741,11 @@ namespace Senzing.Sdk
         /// will simply be ignored.
         /// </para>
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindInterestingByRecordKey.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="dataSourceCode">
         /// The data source code that identifies the data source of the constituent
@@ -712,6 +812,11 @@ namespace Senzing.Sdk
         /// equivalent bit flags to recognized flags).
         /// </para>
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindPathByEntityID.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="startEntityID">The entity ID of the first entity.</param>
         ///
@@ -797,6 +902,11 @@ namespace Senzing.Sdk
         /// bit flags).
         /// </para>
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindPathByRecordKey.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="startDataSourceCode">
         /// The data source code identifying the data source for the starting record
@@ -896,6 +1006,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindNetworkByEntityID.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityIDs">
         /// The non-null <see cref="ISet{T}"/> of <c>long</c> entity ID's
         /// identifying the entities for which to build the network.
@@ -969,6 +1084,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_FindNetworkByRecordKey.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="recordKeys">
         /// The non-null  <see cref="ISet{T}"/> of tuples of data source code and
         /// record ID pairs identifying the constituent records of the entities for
@@ -1037,6 +1157,11 @@ namespace Senzing.Sdk
         /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_WhyRecordInEntity.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="dataSourceCode">
         /// The data source code that identifies the data source of the record.
         /// </param>
@@ -1093,6 +1218,11 @@ namespace Senzing.Sdk
         /// (other <see cref="SzFlag"/> values will be ignored unless they have
         /// equivalent bit flags to recognized flags).
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_WhyRecords.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="dataSourceCode1">
         /// The data source code identifying the data source for the first record.
@@ -1160,6 +1290,11 @@ namespace Senzing.Sdk
         /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_WhyEntities.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
         ///
         /// <param name="entityID2">The entity ID of the second entity.</param>
@@ -1206,6 +1341,11 @@ namespace Senzing.Sdk
         /// equivalent bit flags to recognized flags).
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_HowEntity.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="entityID">The entity ID of the entity.</param>
         ///
         /// <param name="flags">
@@ -1246,6 +1386,11 @@ namespace Senzing.Sdk
         /// recognized (other <see cref="SzFlag"/> values will be ignored unless they
         /// have equivalent bit flags to recognized flags).
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetVirtualEntity.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="recordKeys">
         /// The non-null non-empty <see cref="ISet{T}"/> of tuples of data source
@@ -1294,6 +1439,11 @@ namespace Senzing.Sdk
         /// recognized (other <see cref="SzFlag"/> values will be ignored unless
         /// they have equivalent bit flags to recognized flags).
         /// </remarks>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetRecord.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="dataSourceCode">
         /// The data source code identifying the data source for the record.
@@ -1352,6 +1502,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ExportJson.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="flags">
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging to
         /// the <see cref="SzExportFlags"/> group to control how the operation is
@@ -1392,6 +1547,11 @@ namespace Senzing.Sdk
         /// </para>
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ExportCsv.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="csvColumnList">
         /// Specify <c>"*"</c> to indicate "all columns", specify empty-string to
         /// indicate the "standard columns", otherwise specify a comma-separated
@@ -1431,6 +1591,16 @@ namespace Senzing.Sdk
         /// <see cref="ExportCsvEntityReport"/>.
         /// </remarks>
         ///
+        /// <example>
+        /// Usage (JSON Export):
+        /// <include file="../target/examples/SzEngineDemo_ExportJson.xml" path="/*"/>
+        /// </example>
+        ///
+        /// <example>
+        /// Usage (CSV Export):
+        /// <include file="../target/examples/SzEngineDemo_ExportCsv.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="exportHandle">
         /// The export handle to identify the export from which to retrieve
         /// the next line of data.
@@ -1459,6 +1629,16 @@ namespace Senzing.Sdk
         /// that has already been closed.
         /// </remarks>
         ///
+        /// <example>
+        /// Usage (JSON Export):
+        /// <include file="../target/examples/SzEngineDemo_ExportJson.xml" path="/*"/>
+        /// </example>
+        ///
+        /// <example>
+        /// Usage (CSV Export):
+        /// <include file="../target/examples/SzEngineDemo_ExportCsv.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="exportHandle">
         /// The export handle of the export to close.
         /// </param>
@@ -1484,6 +1664,11 @@ namespace Senzing.Sdk
         /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
+        /// </example>
+        ///
         /// <param name="redoRecord">The redo record to be processed.</param>
         ///
         /// <param name="flags">
@@ -1507,6 +1692,11 @@ namespace Senzing.Sdk
         /// <seealso cref="SzModifyFlags"/>
         /// <seealso cref="GetRedoRecord"/>
         /// <seealso cref="CountRedoRecords"/> 
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/LoadWithRedoViaLoop/Program.cs">Code Snippet: Processing Redos while Loading</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuous/Program.cs">Code Snippet: Continuous Redo Processing</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuousViaFutures/Program.cs">Code Snippet: Continuous Redo Processing via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoWithInfoContinuous/Program.cs">Code Snippet: Continuous Redo "With Info" Processing</seealso>
         string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzNoFlags);
 
         /// <summary>
@@ -1517,6 +1707,11 @@ namespace Senzing.Sdk
         /// If no redo records are available then this returns an <c>null</c>.
         /// </remarks>
         ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
+        /// </example>
+        ///
         /// <returns>
         /// The retrieved redo record or <c>null</c> if there were no pending
         /// redo records.
@@ -1526,11 +1721,21 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="ProcessRedoRecord"/>
         /// <seealso cref="CountRedoRecords"/>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/LoadWithRedoViaLoop/Program.cs">Code Snippet: Processing Redos while Loading</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuous/Program.cs">Code Snippet: Continuous Redo Processing</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuousViaFutures/Program.cs">Code Snippet: Continuous Redo Processing via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoWithInfoContinuous/Program.cs">Code Snippet: Continuous Redo "With Info" Processing</seealso>
         string GetRedoRecord();
 
         /// <summary>
         /// Gets the number of redo records pending to be processed.
         /// </summary>
+        ///
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The number of redo records pending to be processed.
@@ -1540,6 +1745,11 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="ProcessRedoRecord"/>
         /// <seealso cref="GetRedoRecord"/>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/LoadWithRedoViaLoop/Program.cs">Code Snippet: Processing Redos while Loading</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuous/Program.cs">Code Snippet: Continuous Redo Processing</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuousViaFutures/Program.cs">Code Snippet: Continuous Redo Processing via Futures</seealso>
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoWithInfoContinuous/Program.cs">Code Snippet: Continuous Redo "With Info" Processing</seealso>
         long CountRedoRecords();
     }
 }
