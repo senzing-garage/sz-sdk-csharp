@@ -11,6 +11,10 @@ namespace Senzing.Sdk
     /// </remarks>
     /// 
     /// <example>
+    /// An `SzProduct` instance is typically obtained from an
+    /// <see cref="SzEnvironment"/> instance via the
+    /// <see cref="SzEnvironment.GetProduct"/> method as follows.
+    /// 
     /// For example:
     /// <include file="../target/examples/SzProductDemo_GetProduct.xml" path="/*"/>
     /// </example>

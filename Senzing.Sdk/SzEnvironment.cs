@@ -5,12 +5,23 @@ namespace Senzing.Sdk
     /// Provides a factory interface for obtaining the references to the Senzing SDK 
     /// singleton instances that have been initialized.
     /// </summary>
+    /// 
+    /// <example>
+    /// Usage:
+    /// <include file="../target/examples/SzProductDemo_SzEnvironment.xml" path="/*"/>
+    /// </example>
+    /// 
     public interface SzEnvironment
     {
         /// <summary>
         /// Provides a reference to the <see cref="SzProduct" /> singleton associated
         /// with this <c>SzEnvironment</c>.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzProductDemo_GetProduct.xml" path="/*"/>
+        /// </example>
         /// 
         /// <returns>
         /// The <see cref="SzProduct" /> instance associated with this <c>SzEnvironment</c>
@@ -31,6 +42,11 @@ namespace Senzing.Sdk
         /// Provides a reference to the <see cref="SzEngine"/> instance associated
         /// with this <c>SzEnvironment</c>.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzEngineDemo_GetEngine.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The <see cref="SzEngine"/> instance associated with
@@ -51,6 +67,11 @@ namespace Senzing.Sdk
         /// Provides a reference to the <see cref="SzConfigManager"/> instance
         /// associated with this <c>SzEnvironment</c>.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_GetConfigManager.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The <see cref="SzConfigManager"/> instance associated with
@@ -71,6 +92,11 @@ namespace Senzing.Sdk
         /// Provides a reference to the <see cref="SzDiagnostic"/> instance
         /// associated with this <c>SzEnvironment</c>.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzDiagnosticDemo_GetDiagnostic.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// The <see cref="SzDiagnostic"/> instance associated with
@@ -91,6 +117,11 @@ namespace Senzing.Sdk
         /// Gets the currently active configuration ID for this <c>SzEnvironment</c>.
         /// </summary>
         /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_GetActiveConfigID.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>The currently active configuration ID.</returns>
         ///
         /// <exception cref="System.InvalidOperationException">
@@ -106,6 +137,11 @@ namespace Senzing.Sdk
         /// Reinitializes the <c>SzEnvironment</c> with the specified
         /// configuration ID.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzConfigManagerDemo_GetActiveConfigID.xml" path="/*"/>
+        /// </example>
         ///
         /// <param name="configID">
         /// The configuration ID with which to initialize.
@@ -125,6 +161,11 @@ namespace Senzing.Sdk
         /// references that has previously provided.
         /// </summary>
         /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzProductDemo_DestroyEnvironment.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <remarks>
         /// If this instance has already been destroyed then this method has no effect.
         /// </remarks>
@@ -133,6 +174,11 @@ namespace Senzing.Sdk
         /// <summary>
         /// Checks if this instance has had its <see cref="Destroy" /> method called.
         /// </summary>
+        /// 
+        /// <example>
+        /// Usage:
+        /// <include file="../target/examples/SzProductDemo_DestroyEnvironment.xml" path="/*"/>
+        /// </example>
         ///
         /// <returns>
         /// <c>true</c> if this instance has had its <see cref="Destroy"/>  

@@ -71,6 +71,8 @@ namespace Senzing.Sdk
         /// </example>
         ///
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
+        ///
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/initialization/PurgeRepository/Program.cs">Purge Repository Code Snippet</seealso> 
         void PurgeRepository();
 
         /// <summary>

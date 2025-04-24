@@ -67,6 +67,9 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         string Export();
 
         /// <summary>
@@ -130,6 +133,8 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
+        /// 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
         string AddDataSource(string dataSourceCode);
 
         /// <summary>

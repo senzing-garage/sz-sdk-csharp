@@ -48,7 +48,7 @@ internal class SzProductDemo : AbstractTest
         this.BeginTests();
         this.InitializeTestEnvironment();
 
-
+        // @start SzEnvironment
         // get the settings (varies by application)
         string settings = GetSettings();
 
@@ -63,10 +63,11 @@ internal class SzProductDemo : AbstractTest
                                              .Build();
 
         // use the environment for some time (usually as long as the application is running)
-        // . . .
+        Assert.That(env, Is.Not.Null); // @replace . . .
 
         // destroy the environment when done (sometimes in a finally block)
         env.Destroy();
+        // @end
 
         this.env = SzCoreEnvironment.NewBuilder()
                                     .InstanceName(instanceName)
@@ -82,7 +83,16 @@ internal class SzProductDemo : AbstractTest
         {
             if (this.env != null)
             {
-                this.env.Destroy();
+                // @start DestroyEnvironment
+                // obtain the SzEnvironment (varies by application)
+                SzEnvironment env = GetEnvironment();
+
+                // check if already destroyed
+                if (!env.IsDestroyed()) {
+                    // destroy the environment
+                    env.Destroy();
+                }
+                // @end
                 this.env = null;
             }
             this.TeardownTestEnvironment();
