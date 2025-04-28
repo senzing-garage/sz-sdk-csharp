@@ -38,7 +38,8 @@ jobs:
 
       - name: Build with DotNet
         run: |
-          dotnet build Senzing.Sdk
+          dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
+          dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
 
       - name: Validate tests compile
         run: |
@@ -66,4 +67,4 @@ jobs:
       pull-requests: write
     uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
     with:
-      thresholds: "49 90"
+      thresholds: "85 90"

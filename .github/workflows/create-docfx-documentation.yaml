@@ -31,6 +31,8 @@ jobs:
       - name: Run docfx
         run: |
           dotnet tool restore
+          dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
+          dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
           dotnet docfx docfx.json
 
       - name: Deploy to GitHub Pages

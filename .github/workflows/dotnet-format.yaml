@@ -30,4 +30,6 @@ jobs:
       - name: dotnet format all
         run: |
           dotnet restore
-          dotnet format --verify-no-changes --verbosity diagnostic
+          dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk
+          dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Tests
+          dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Demo
