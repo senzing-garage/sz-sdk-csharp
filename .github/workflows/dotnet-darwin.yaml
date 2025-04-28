@@ -32,6 +32,13 @@ jobs:
         with:
           senzingsdk-repository-path: ${{ secrets.SENZING_OSX_BETA_REPOSITORY }}
 
+      - name: configure environment
+        run: |
+          SENZING_PATH="${HOME}/senzing"
+          {
+            echo "DYLD_LIBRARY_PATH=${SENZING_PATH}/er/lib"
+          } >> "$GITHUB_ENV"
+
       - name: Build with DotNet
         run: |
           dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
@@ -40,13 +47,6 @@ jobs:
       - name: Validate tests compile
         run: |
           dotnet build Senzing.Sdk.Tests
-
-      - name: configure environment
-        run: |
-          SENZING_PATH="${HOME}/senzing"
-          {
-            echo "DYLD_LIBRARY_PATH=${SENZING_PATH}/er/lib"
-          } >> "$GITHUB_ENV"
 
       - name: Run DotNet tests
         run: |

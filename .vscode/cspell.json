@@ -72,6 +72,8 @@
       "locklist",
       "netstandard",
       "ound",
+      "pwsh",
+      "senzingsdk",
       "smod",
       "stackoverflow",
       "unresolve",
