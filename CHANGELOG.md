@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [4.0.0-beta.3.0] - 2025-04-30
+
+### Changed in 4.0.0-beta.3.0
+
+- Added compiled examples in API documentation with `Senzing.Sdk.Demo` module.
+- Refactored `SzConfig` and `SzConfigManager` so that `SzConfig` now
+  represents a configuration and is subordinate to `SzConfigManager`.
+- Added `WhySearch()` funtionality and updated flags
+- Updated `SzExceptionMapper` with latest exception mappings.
+
 ## [4.0.0-beta.2.0] - 2025-02-14
 
 ### Changed in 4.0.0-beta.2.0

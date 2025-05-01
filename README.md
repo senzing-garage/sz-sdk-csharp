@@ -227,5 +227,12 @@ matches the native library version.
         dotnet add [your-project-name] package Senzing.Sdk
         ```
 
+## Using Example Code
+
+Senzing encourages and allows you to freely copy the provided example code and modify it to your own
+needs as you see fit.  However, please refer to the [Global Suppression Notes] to understand how to
+best adapt the example code to your own coding project.
+
 [Senzing]: https://senzing.com/
 [Senzing Quick Start guides]: https://docs.senzing.com/quickstart/
+[Global Suppression Notes]: https://github.com/Senzing/code-snippets-v4/blob/main/csharp/GlobalSuppressions.md
