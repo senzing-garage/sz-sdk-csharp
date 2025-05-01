@@ -88,7 +88,8 @@ internal class SzProductDemo : AbstractTest
                 SzEnvironment env = GetEnvironment();
 
                 // check if already destroyed
-                if (!env.IsDestroyed()) {
+                if (!env.IsDestroyed())
+                {
                     // destroy the environment
                     env.Destroy();
                 }
