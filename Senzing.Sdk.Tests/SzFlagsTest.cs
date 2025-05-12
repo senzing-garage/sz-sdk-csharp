@@ -12,6 +12,8 @@ using Senzing.Sdk.Core;
 using Senzing.Sdk.Tests.Core;
 
 using static System.StringComparison;
+using static Senzing.Sdk.Tests.SzFlagsMetaData;
+using static Senzing.Sdk.Utilities;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
@@ -36,6 +38,11 @@ internal class SzFlagsTest : AbstractTest
     /// actual aggregate <see cref="SzFlag"/> value.
     /// </summary>
     private readonly Dictionary<string, SzFlag> flagsMap = new Dictionary<string, SzFlag>();
+
+    /// <summary>
+    /// The <see cref="SzFlagsMetaData"/> describing all the flags. 
+    /// </summary>
+    private SzFlagsMetaData? flagsMetaData;
 
     [OneTimeSetUp]
     public void ReflectFlags()
@@ -64,6 +71,18 @@ internal class SzFlagsTest : AbstractTest
             if (!fieldInfo.Name.StartsWith("Sz", Ordinal)) continue;
 
             this.flagsMap.Add(fieldInfo.Name, ((SzFlag?)fieldInfo.GetValue(null)) ?? SzFlags.SzNoFlags);
+        }
+
+        // get the flags meta data
+        try
+        {
+            this.flagsMetaData = new SzFlagsMetaData();
+
+        }
+        catch (Exception e)
+        {
+            Fail(e);
+            throw;
         }
     }
 
@@ -116,6 +135,41 @@ internal class SzFlagsTest : AbstractTest
 
     }
 
+    private static IList<(string, long)> GetMetaMappings()
+    {
+        List<(string, long)> results = new List<(string, long)>();
+        SzFlagsMetaData flagsMetaData = new SzFlagsMetaData();
+
+        IReadOnlyDictionary<string, SzFlagMetaData> metaMap = flagsMetaData.Flags;
+
+        foreach (SzFlagMetaData metaData in metaMap.Values)
+        {
+            results.Add((metaData.Symbol, metaData.Value));
+        }
+        return results;
+    }
+
+    private static IList<SzFlagUsageGroup> GetEnumGroups()
+    {
+        List<SzFlagUsageGroup> results = new List<SzFlagUsageGroup>();
+        foreach (SzFlagUsageGroup group in Enum.GetValues(typeof(SzFlagUsageGroup)))
+        {
+            results.Add(group);
+        }
+        return results;
+    }
+
+    private static IList<string> GetMetaGroups()
+    {
+        List<string> results = new List<string>();
+        SzFlagsMetaData flagsMetaData = new SzFlagsMetaData();
+        foreach (string group in flagsMetaData.Groups)
+        {
+            results.Add(group);
+        }
+        return results;
+    }
+
     [Test, TestCaseSource(nameof(GetNativeFlagMappings))]
     public void TestNativeFlag((string flagName, long value) args)
     {
@@ -128,14 +182,29 @@ internal class SzFlagsTest : AbstractTest
                         || this.flagsMap.ContainsKey(flagName),
                 "SDK flag constant (" + flagName + ") not found for "
                 + "native flag constant.");
+            SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(flagName);
+            Assert.That(metaData, Is.Not.Null,
+                "SDK flag constant (" + flagName + ") not found in meta data");
+
+            Assert.That(value, Is.EqualTo(metaData?.Value),
+                "SDK flag constant (" + flagName + ") has different value ("
+                + HexFormat(value) + ") than value found in meta-data: "
+                + HexFormat(metaData.Value));
+
             if (this.enumsMap.TryGetValue(flagName, out SzFlag enumValue))
             {
                 Assert.That(value, Is.EqualTo((long)enumValue),
                             "Enum flag constant (" + flagName
                             + ") has different value ("
-                            + Utilities.HexFormat((long)enumValue)
+                            + HexFormat((long)enumValue)
                             + ") than native flag constant: "
-                            + Utilities.HexFormat((long)value));
+                            + HexFormat((long)value));
+
+                Assert.That(((long)enumValue), Is.EqualTo(metaData?.Value),
+                    "Enum flag constant (" + flagName + ") has different "
+                    + "value (" + HexFormat((long)enumValue)
+                    + ") than value found in meta-data: "
+                    + HexFormat(metaData.Value));
             }
             else
             {
@@ -143,9 +212,15 @@ internal class SzFlagsTest : AbstractTest
                 Assert.That(value, Is.EqualTo((long)flagsValue),
                             "Flag set constant (" + flagName
                             + ") has different value ("
-                            + Utilities.HexFormat((long)flagsValue)
+                            + HexFormat((long)flagsValue)
                             + ") than native flag constant: "
-                            + Utilities.HexFormat((long)value));
+                            + HexFormat((long)value));
+
+                Assert.That(((long)flagsValue), Is.EqualTo(metaData?.Value),
+                    "Flag set constant (" + flagName + ") has different "
+                    + "value (" + HexFormat((long)flagsValue)
+                    + ") than value found in meta-data: "
+                    + HexFormat(metaData.Value));
             }
         });
     }
@@ -179,27 +254,62 @@ internal class SzFlagsTest : AbstractTest
                 }
                 SzFlagUsageGroup group = (parsedGroup ?? ((SzFlagUsageGroup)0L));
 
+
+                IReadOnlyDictionary<string, SzFlagMetaData>? metaMap
+                    = this.flagsMetaData?.GetBaseFlagsByGroup("" + group);
+
+                Assert.That(metaMap, Is.Not.Null,
+                    "No meta group found for group name: " + group);
+                long metaGroupValue = 0L;
+                StringBuilder sb = new StringBuilder();
+                string conjunction = "";
+                foreach (SzFlagMetaData metaData in metaMap.Values)
+                {
+                    metaGroupValue |= metaData.Value;
+                    sb.Append(conjunction);
+                    sb.Append(metaData.Symbol);
+                    conjunction = " | ";
+                }
+
                 SzFlag groupFlagsValue = SzFlags.GetFlags(group);
+
+
+                Assert.That(((long)value), Is.EqualTo(metaGroupValue),
+                         "Meta value for group (" + group + ") has a different "
+                        + "primitive long value (" + HexFormat(metaGroupValue)
+                        + " / " + sb.ToString()
+                        + ") than expected (" + HexFormat((long)value)
+                        + " / " + group.FlagsToString(value) + "): " + name);
+
                 Assert.That(groupFlagsValue, Is.EqualTo(value),
                             "Value for group (" + group + ") has a different "
                             + "primitive long value ("
-                            + Utilities.HexFormat((long)groupFlagsValue)
+                            + HexFormat((long)groupFlagsValue)
                             + " / " + group.FlagsToString(SzFlags.GetFlags(group))
-                            + ") than expected (" + Utilities.HexFormat((long)value)
+                            + ") than expected (" + HexFormat((long)value)
                             + "): " + name);
 
             }
             else if (!nameof(SzFlags.SzNoFlags).Equals(name, Ordinal))
             {
+                SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+                Assert.That(metaData, Is.Not.Null,
+                            "Aggregate flag constant (" + name + ") not found "
+                            + "in meta-data.");
+                Assert.That((long)value, Is.EqualTo(metaData?.Value),
+                    "Aggregate flag constant (" + name + ") has a different "
+                    + "value (" + HexFormat((long)value) + ") than found in "
+                    + "meta-data: " + HexFormat(metaData?.Value ?? 0L));
+
                 Assert.IsTrue(this.nativeFlagsMap.ContainsKey(name),
                     "Primitive long flag constant not found for "
                     + "aggregate enum constant: " + name);
                 long nativeValue = this.nativeFlagsMap[name];
                 Assert.That(nativeValue, Is.EqualTo((long)value),
                     "Native flag constant (" + name + ") has a different primitive "
-                    + "long value (" + Utilities.HexFormat(nativeValue)
+                    + "long value (" + HexFormat(nativeValue)
                     + ") than enum flag constant (" + name + "): "
-                    + Utilities.HexFormat((long)value));
+                    + HexFormat((long)value));
             }
         });
     }
@@ -212,6 +322,16 @@ internal class SzFlagsTest : AbstractTest
             string name = args.name;
             SzFlag value = args.value;
 
+            SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+
+            Assert.That(metaData, Is.Not.Null,
+                "Enum flag constant (" + name + ") not found in meta-data");
+
+            Assert.That((long)value, Is.EqualTo(metaData?.Value),
+                "Enum flag constant (" + name + ") has different value ("
+                + HexFormat((long)value) + ") than found in meta-data: "
+                + HexFormat(metaData?.Value ?? 0L));
+
             if (name.Equals(nameof(SzFlag.SzWithInfo), Ordinal)) return;
 
             Assert.IsTrue(this.nativeFlagsMap.ContainsKey(name),
@@ -221,11 +341,55 @@ internal class SzFlagsTest : AbstractTest
             long nativeValue = this.nativeFlagsMap[name];
             Assert.That(nativeValue, Is.EqualTo((long)value),
                         "Flag constant (" + name + ") has a different primitive "
-                        + "long value (" + Utilities.HexFormat(nativeValue)
+                        + "long value (" + HexFormat(nativeValue)
                         + ") than enum flag constant (" + name + "): "
-                        + Utilities.HexFormat((long)value));
+                        + HexFormat((long)value));
         });
     }
+
+    [Test, TestCaseSource(nameof(GetMetaMappings))]
+    public void TestMetaFlag((string name, long value) args)
+    {
+        this.PerformTest(() =>
+        {
+            string name = args.name;
+            long value = args.value;
+
+            SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+
+            if (metaData?.BaseFlags == null)
+            {
+                bool enumFound = this.enumsMap.TryGetValue(name, out SzFlag enumValue);
+                Assert.IsTrue(enumFound, "SDK Enum Flag constant not found for "
+                    + "meta-data flag: " + name);
+                Assert.That((long)enumValue, Is.EqualTo(value),
+                            "SDK Enum Flag constant (" + name + ") has differnet value ("
+                            + HexFormat((long)enumValue) + ") than found in meta-data: "
+                            + HexFormat(value));
+            }
+            else
+            {
+                bool flagsFound = this.flagsMap.TryGetValue(name, out SzFlag flagsValue);
+                Assert.IsTrue(flagsFound, "SDK Aggregate Enum Flag constant not found for "
+                              + "meta-data flag: " + name);
+                Assert.That((long)flagsValue, Is.EqualTo(value),
+                            "SDK Aggregate Enum Flag constant (" + name + ") has differnet"
+                            + "value (" + HexFormat((long)flagsValue) + ") than found in "
+                            + "meta-data: " + HexFormat(value));
+            }
+
+            if (name.Equals(nameof(SzFlag.SzWithInfo), Ordinal)) return;
+
+            bool nativeFound = this.nativeFlagsMap.TryGetValue(name, out long nativeValue);
+            Assert.IsTrue(nativeFound, "SDK Native Flag constant not found for "
+                          + "meta-data flag: " + name);
+            Assert.That(nativeValue, Is.EqualTo(value),
+                        "SDK Native Flag constant (" + name + ") has differnet"
+                        + "value (" + HexFormat(nativeValue) + ") than found in "
+                        + "meta-data: " + HexFormat(value));
+        });
+    }
+
 
     [Test, TestCaseSource(nameof(GetEnumMappings))]
     public void TestNamedMappings((string name, SzFlag value) args)
@@ -242,9 +406,9 @@ internal class SzFlagsTest : AbstractTest
 
             Assert.That(flagsByName[name], Is.EqualTo(value),
                         "Flag constant (" + name + ") has a different value  ("
-                        + Utilities.HexFormat((long)flagsByName[name])
+                        + HexFormat((long)flagsByName[name])
                         + ") than enum flag constant (" + name + "): "
-                        + Utilities.HexFormat((long)value));
+                        + HexFormat((long)value));
         });
     }
 
@@ -282,10 +446,57 @@ internal class SzFlagsTest : AbstractTest
             string name = args.name;
             SzFlag flag = args.flag;
 
+            SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+            if (metaData == null)
+            {
+                Fail("Meta data not found for SDK enum flag: " + name);
+                throw new InvalidOperationException();
+            }
+
+            IReadOnlyList<string> metaGroupNames = metaData.Groups;
+
             SzFlagUsageGroup groups = SzFlags.GetGroups(name);
+
+            ISet<string> groupNames = new HashSet<string>();
+            foreach (SzFlagUsageGroup group in Enum.GetValues(typeof(SzFlagUsageGroup)))
+            {
+                if ((group & groups) != 0L)
+                {
+                    groupNames.Add("" + group);
+                }
+            }
+
+            SzFlagUsageGroup metaGroups = (SzFlagUsageGroup)0L;
+            foreach (string groupName in metaGroupNames)
+            {
+                SzFlagUsageGroup? parsedGroup = (SzFlagUsageGroup?)
+                    Enum.Parse(typeof(SzFlagUsageGroup), groupName, false);
+                if (parsedGroup == null)
+                {
+                    Fail("Group (" + groupName + ") found in meta-data for "
+                         + "flag (" + name + ") is not found in SDK groups: "
+                         + metaGroupNames);
+                }
+                else
+                {
+                    metaGroups |= (SzFlagUsageGroup)parsedGroup;
+                }
+            }
+
+            Assert.That(groups, Is.EqualTo(metaGroups),
+                "SDK flag (" + name + ") has different groups (" + groups
+                + " / " + groupNames + ") than is found in meta-data groups "
+                + "for flag: " + metaGroups + " / " + metaGroupNames);
 
             foreach (SzFlagUsageGroup group in Enum.GetValues(typeof(SzFlagUsageGroup)))
             {
+                IReadOnlyDictionary<string, SzFlagMetaData>? metaFlags
+                    = this.flagsMetaData?.GetBaseFlagsByGroup("" + group);
+                if (metaFlags == null)
+                {
+                    Fail("Group name not found in meta-data: " + group);
+                    throw new InvalidOperationException();
+                }
                 IDictionary<string, SzFlag> flagsByName = SzFlags.GetFlagsByName(group);
                 IDictionary<SzFlag, string> namesByFlag = SzFlags.GetNamesByFlag(group);
                 SzFlag flags = SzFlags.GetFlags(group);
@@ -293,6 +504,13 @@ internal class SzFlagsTest : AbstractTest
                 // check if this group is included in groups by flags
                 if ((group & groups) == 0L)
                 {
+                    Assert.IsFalse(metaFlags.ContainsKey(name),
+                                "Groups by flag name (" + name
+                                    + ") does not contain group ("
+                                    + group + ") but meta data has flags "
+                                    + " for group containing flag ("
+                                    + name + " / " + debug(metaFlags.Keys) + ")");
+
                     Assert.IsFalse(flagsByName.ContainsKey(name),
                                 "Groups by flag name (" + name
                                     + ") does not contain group ("
@@ -302,6 +520,12 @@ internal class SzFlagsTest : AbstractTest
                 }
                 else
                 {
+                    Assert.IsTrue(metaFlags.ContainsKey(name),
+                                "Groups by flag name (" + name
+                                    + ") contains group ("
+                                    + group + ") but meta data has flags "
+                                    + " for group NOT containing flag ("
+                                    + name + " / " + debug(metaFlags.Keys) + ")");
                     Assert.IsTrue(flagsByName.ContainsKey(name),
                                 "Groups by flag name (" + name
                                 + ") contains group ("
@@ -320,6 +544,64 @@ internal class SzFlagsTest : AbstractTest
                                 + " ) but group does not contain flag ("
                                 + name + " / " + group.FlagsToString(flag) + ")");
                 }
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetEnumGroups))]
+    public void TestEnumGroup(SzFlagUsageGroup group)
+    {
+        this.PerformTest(() =>
+        {
+            IReadOnlyList<string>? metaGroups = this.flagsMetaData?.Groups;
+            if (metaGroups == null)
+            {
+                Fail("Flags meta data was null");
+                throw new InvalidOperationException();
+            }
+
+            string groupName = "" + group;
+            Assert.That(metaGroups.Contains(groupName),
+                        "SDK group not found in meta data: " + groupName);
+
+            IReadOnlyDictionary<string, SzFlagMetaData>? metaFlags
+                = this.flagsMetaData?.GetBaseFlagsByGroup(groupName);
+
+            if (metaFlags == null)
+            {
+                Fail("Meta data flags not found for group: " + group);
+                throw new InvalidOperationException();
+            }
+            ReadOnlyDictionary<string, SzFlag> flagsByName = SzFlags.GetFlagsByName(group);
+            foreach (string flagName in metaFlags.Keys)
+            {
+                Assert.That(flagsByName.ContainsKey(flagName),
+                         "SDK flags for group name (" + group + ") does not contain "
+                         + "flag (" + flagName + ") found in meta data: "
+                         + debug(metaFlags.Keys));
+            }
+            foreach (string flagName in flagsByName.Keys)
+            {
+                Assert.That(metaFlags.ContainsKey(flagName),
+                         "SDK flags for group name (" + group + ") contains flag ("
+                         + flagName + ") NOT found in meta data: "
+                         + debug(metaFlags.Keys));
+            }
+        });
+    }
+
+    [Test, TestCaseSource(nameof(GetMetaGroups))]
+    public void TestMetaGroup(string groupName)
+    {
+        this.PerformTest(() =>
+        {
+            SzFlagUsageGroup? parsedGroup = (SzFlagUsageGroup?)
+                        Enum.Parse(typeof(SzFlagUsageGroup), groupName, false);
+
+            if (parsedGroup == null)
+            {
+                Fail("Group found in meta data was not found in SDK "
+                     + "enumerated groups: " + groupName);
             }
         });
     }
@@ -419,7 +701,7 @@ internal class SzFlagsTest : AbstractTest
                     }
                     else if ((flag & allFlags) == SzFlags.SzNoFlags)
                     {
-                        sb.Append(Utilities.HexFormat((long)flag));
+                        sb.Append(HexFormat((long)flag));
                     }
                     else
                     {
@@ -428,7 +710,7 @@ internal class SzFlagsTest : AbstractTest
                     prefix = " | ";
                 }
                 sb.Append(" [");
-                sb.Append(Utilities.HexFormat((long)aggregateFlags));
+                sb.Append(HexFormat((long)aggregateFlags));
                 sb.Append(']');
 
                 String expected = sb.ToString();
@@ -654,7 +936,7 @@ internal class SzFlagsTest : AbstractTest
                     "Flag value not found in names by flag map for group, "
                     + "but flag is present in flags by name map for group.  "
                     + "group=[ " + group + " ], flagName=[ " + pair.Key
-                    + " ], flagValue=[ " + Utilities.HexFormat((long)pair.Value)
+                    + " ], flagValue=[ " + HexFormat((long)pair.Value)
                     + " ], flagsByName=[ " + flagsByName + " ], namesByFlag=[ "
                     + namesByFlag + " ]");
                 Assert.That(namesByFlag[pair.Value], Is.EqualTo(pair.Key),
@@ -662,7 +944,7 @@ internal class SzFlagsTest : AbstractTest
                     + "does not match the association in the flags by name map "
                     + "for the group.  group=[ " + group + " ], flagName=[ "
                     + pair.Key + " ], flagValue=[ "
-                    + Utilities.HexFormat((long)pair.Value) + " ], flagsByName=[ "
+                    + HexFormat((long)pair.Value) + " ], flagsByName=[ "
                     + flagsByName + " ], namesByFlag=[ " + namesByFlag + " ]");
             }
 
@@ -672,7 +954,7 @@ internal class SzFlagsTest : AbstractTest
                     "Flag name not found in flags by name map for group, "
                     + "but flag is present in names by flag map for group.  "
                     + "group=[ " + group + " ], flagName=[ " + pair.Value
-                    + " ], flagValue=[ " + Utilities.HexFormat((long)pair.Key)
+                    + " ], flagValue=[ " + HexFormat((long)pair.Key)
                     + " ], flagsByName=[ " + flagsByName + " ], namesByFlag=[ "
                     + namesByFlag + " ]");
                 Assert.That(flagsByName[pair.Value], Is.EqualTo(pair.Key),
@@ -680,7 +962,7 @@ internal class SzFlagsTest : AbstractTest
                     + "does not match the association in the names by flag map "
                     + "for the group.  group=[ " + group + " ], flagName=[ "
                     + pair.Value + " ], flagValue=[ "
-                    + Utilities.HexFormat((long)pair.Key) + " ], flagsByName=[ "
+                    + HexFormat((long)pair.Key) + " ], flagsByName=[ "
                     + flagsByName + " ], namesByFlag=[ " + namesByFlag + " ]");
             }
 
@@ -704,7 +986,8 @@ internal class SzFlagsTest : AbstractTest
                     Assert.That((long)(groups & group), Is.Not.EqualTo(0L),
                         "Group (" + group + ") has flag (" + name + ") but the "
                         + "flag does not have the group.  flagsForGroup=[ "
-                        + flagsByName.Keys + " / " + SzFlags.FlagsToString(flags)
+                        + debug(flagsByName.Keys) + " / "
+                        + SzFlags.FlagsToString(flags)
                         + " ], groupsForFlag=[ " + groups + "]");
                 }
                 else
@@ -712,7 +995,8 @@ internal class SzFlagsTest : AbstractTest
                     Assert.That((long)(groups & group), Is.EqualTo(0L),
                         "Group (" + group + ") has flag (" + name + ") but the "
                         + "flag does not have the group.  flagsForGroup=[ "
-                        + flagsByName.Keys + " / " + SzFlags.FlagsToString(flags)
+                        + debug(flagsByName.Keys) + " / "
+                        + SzFlags.FlagsToString(flags)
                         + " ], groupsForFlag=[ " + groups + "]");
                 }
             }
@@ -760,13 +1044,13 @@ internal class SzFlagsTest : AbstractTest
 
         result.Add((SzFlags.SzNoFlagUsageGroups,
                     (SzFlag.SzEntityIncludeAllFeatures | SzFlag.SzIncludeFeatureScores),
-                    SetOf(Utilities.HexFormat((long)SzFlag.SzEntityIncludeAllFeatures),
-                         Utilities.HexFormat((long)SzFlag.SzIncludeFeatureScores))));
+                    SetOf(HexFormat((long)SzFlag.SzEntityIncludeAllFeatures),
+                         HexFormat((long)SzFlag.SzIncludeFeatureScores))));
 
         result.Add(((SzFlagUsageGroup.SzEntityFlags | SzFlagUsageGroup.SzSearchFlags),
                     (SzFlag.SzEntityIncludeEntityName | SzFlag.SzSearchIncludeNameOnly),
-                    SetOf(Utilities.HexFormat((long)SzFlag.SzEntityIncludeEntityName),
-                         Utilities.HexFormat((long)SzFlag.SzSearchIncludeNameOnly))));
+                    SetOf(HexFormat((long)SzFlag.SzEntityIncludeEntityName),
+                         HexFormat((long)SzFlag.SzSearchIncludeNameOnly))));
 
         foreach (SzFlagUsageGroup group in Enum.GetValues(groupType))
         {
@@ -821,7 +1105,7 @@ internal class SzFlagsTest : AbstractTest
                         }
                         else
                         {
-                            expected.Add(Utilities.HexFormat((long)flag));
+                            expected.Add(HexFormat((long)flag));
                         }
                     }
                     result.Add((group, aggregateFlags, expected));
@@ -859,7 +1143,7 @@ internal class SzFlagsTest : AbstractTest
                 .Split(separators, StringSplitOptions.None);
 
             Assert.That(tokens[tokens.Length - 1],
-                        Is.EqualTo(Utilities.HexFormat((long)(flags ?? SzFlags.SzNoFlags))),
+                        Is.EqualTo(HexFormat((long)(flags ?? SzFlags.SzNoFlags))),
                         "Hex flag representation is not as expected: " + testData);
 
             ISet<string> actualSet = new HashSet<string>();
@@ -928,7 +1212,7 @@ internal class SzFlagsTest : AbstractTest
                     "SzFlagInfo.ToString() returned null for field: " + fieldInfo.Name);
 
                 string expectedString = fieldInfo.Name + " ("
-                    + Utilities.HexFormat((long)(((SzFlag?)fieldInfo.GetValue(null)) ?? SzFlags.SzNoFlags))
+                    + HexFormat((long)(((SzFlag?)fieldInfo.GetValue(null)) ?? SzFlags.SzNoFlags))
                     + ")";
 
                 Assert.That(flagInfo1.ToString(), Is.EqualTo(expectedString),
@@ -1004,7 +1288,7 @@ internal class SzFlagsTest : AbstractTest
             try
             {
                 SzFlagUsageGroupInfo badGroup = new SzFlagUsageGroupInfo(
-                    SzFlagUsageGroup.SzModifyFlags,
+                    SzFlagUsageGroup.SzAddRecordFlags,
                     ListOf(new SzFlagInfo(
                         enumType.GetField(
                             nameof(SzFlag.SzEntityIncludeEntityName)))));
@@ -1043,5 +1327,18 @@ internal class SzFlagsTest : AbstractTest
                 // expected
             }
         });
+    }
+
+    private static string debug(IEnumerable<string> strings)
+    {
+        StringBuilder sb = new StringBuilder();
+        string prefix = "[ ";
+        foreach (string s in strings)
+        {
+            sb.Append(prefix).Append(s);
+            prefix = ", ";
+        }
+        sb.Append(" ]");
+        return sb.ToString();
     }
 }

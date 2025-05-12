@@ -161,12 +161,39 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
-        /// constants belonging to the <see cref="SzFlagUsageGroup.SzModifyFlags"/>
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzAddRecordFlags"/>
         /// usage group.
         /// </summary>
         ///
-        /// <seealso cref="SzFlagUsageGroup.SzModifyFlags"/>
-        public const SzFlag SzModifyAllFlags = SzFlag.SzWithInfo;
+        /// <seealso cref="SzFlagUsageGroup.SzAddRecordFlags"/>
+        public const SzFlag SzAddRecordAllFlags = SzFlag.SzWithInfo;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzDeleteRecordFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzDeleteRecordFlags"/>
+        public const SzFlag SzDeleteRecordAllFlags = SzFlag.SzWithInfo;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzReevaluateFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzDeleteRecordFlags"/>
+        public const SzFlag SzReevaluateAllFlags = SzFlag.SzWithInfo;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzRedoFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzDeleteRecordFlags"/>
+        public const SzFlag SzRedoAllFlags = SzFlag.SzWithInfo;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -248,6 +275,8 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlagUsageGroup.SzSearchFlags"/>
         public const SzFlag SzSearchAllFlags
             = SzEntityAllFlags
+                | SzFlag.SzIncludeMatchKeyDetails
+                | SzFlag.SzIncludeFeatureScores
                 | SzFlag.SzSearchIncludeStats
                 | SzFlag.SzSearchIncludeResolved
                 | SzFlag.SzSearchIncludePossiblySame
@@ -289,12 +318,32 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
-        /// constants belonging to the <see cref="SzFlagUsageGroup.SzWhyFlags"/>
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/>
         /// usage group.
         /// </summary>
         ///
-        /// <seealso cref="SzFlagUsageGroup.SzWhyFlags"/>
-        public const SzFlag SzWhyAllFlags
+        /// <seealso cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/>
+        public const SzFlag SzWhyRecordInEntityAllFlags
+            = SzEntityAllFlags | SzFlag.SzIncludeFeatureScores;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/>
+        public const SzFlag SzWhyRecordsAllFlags
+            = SzEntityAllFlags | SzFlag.SzIncludeFeatureScores;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/>
+        public const SzFlag SzWhyEntitiesAllFlags
             = SzEntityAllFlags | SzFlag.SzIncludeFeatureScores;
 
         /// <summary>
@@ -435,7 +484,13 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -519,7 +574,13 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -576,7 +637,13 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -636,7 +703,13 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -687,7 +760,13 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
         ///   </item>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -804,7 +883,7 @@ namespace Senzing.Sdk
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -827,7 +906,7 @@ namespace Senzing.Sdk
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
@@ -850,7 +929,7 @@ namespace Senzing.Sdk
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
