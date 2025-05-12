@@ -29,6 +29,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzAddRecordFlags = (1L << 0),
@@ -50,6 +51,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzDeleteRecordFlags = (1L << 1),
@@ -71,6 +73,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzReevaluateFlags = (1L << 2),
@@ -92,6 +95,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
         SzRedoFlags = (1L << 3),
@@ -130,6 +134,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzEntityIncludeRecordUnmappedData"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
@@ -228,6 +233,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeMatchKeyDetails"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
@@ -352,6 +358,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzFindPathIncludeMatchingInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
@@ -477,6 +484,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzFindNetworkIncludeMatchingInfo"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
@@ -626,6 +634,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzSearchIncludeRequestDetails"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "search" operations are:
@@ -778,6 +787,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzExportIncludeSingleRecordEntities"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "export" operations are:
         /// <list>
@@ -906,6 +916,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
@@ -1030,6 +1041,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
@@ -1154,6 +1166,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
@@ -1287,6 +1300,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzSearchIncludeRequestDetails"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "search" operations are:
@@ -1346,6 +1360,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzIncludeFeatureScores"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "how" operations are:
@@ -1436,6 +1451,7 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzEntityIncludeFeatureStats"/></description>
         ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>

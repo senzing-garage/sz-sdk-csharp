@@ -158,7 +158,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///    </item>
         /// </list>
         /// </remarks>
@@ -178,7 +180,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///    </item>
         /// </list>
         /// </remarks>
@@ -198,7 +202,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///    </item>
         /// </list>
         /// </remarks>
@@ -218,7 +224,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///    </item>
         /// </list>
         /// </remarks>
@@ -238,7 +246,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -259,7 +269,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -280,7 +292,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -301,7 +315,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -323,7 +339,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -345,7 +363,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -368,7 +388,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -391,7 +413,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
@@ -414,7 +438,9 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
         ///    </item>
         /// </list>
