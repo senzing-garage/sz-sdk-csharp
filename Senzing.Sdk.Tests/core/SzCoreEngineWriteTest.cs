@@ -697,7 +697,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
     {
         String testData = "recordKey=[ " + recordKey
             + " ], record=[ " + record + " ], withFlags=[ "
-            + SzModifyFlags.FlagsToString(flags)
+            + SzAddRecordFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>
@@ -864,7 +864,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
         Type? expectedExceptionType)
     {
         String testData = "recordKey=[ " + recordKey
-            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags)
+            + " ], withFlags=[ " + SzReevaluateFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>
@@ -1006,7 +1006,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
         String testData = "entityID=[ " + entityID + " ], havingRecords=[ "
             + recordKeys + " ], withFlags=[ "
-            + SzModifyFlags.FlagsToString(flags)
+            + SzReevaluateFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>
@@ -1130,7 +1130,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
         Type? expectedExceptionType)
     {
         String testData = "recordKey=[ " + recordKey
-            + " ], withFlags=[ " + SzModifyFlags.FlagsToString(flags)
+            + " ], withFlags=[ " + SzDeleteRecordFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>

@@ -2,12 +2,12 @@
 _layout: landing
 ---
 
-# Senzing.Sdk for C#
+# Senzing.Sdk for C #
 
 This is the Senzing SDK for C#.  After adding the `Senzing.Sdk.dll` to your
 project you can leverage the Senzing SDK via the `SzCoreEnvironment` class:
 
-```
+```c#
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
 using System.Text.Json.Nodes;
@@ -36,17 +36,17 @@ try {
 }
 ```
 
-## See the "API" tab above for API reference documentation.
+## See the "API" tab above for API reference documentation
+
 - A good starting place is the `Senzing.Sdk.SzEnvironment` interface and
   its "core" implementation `Senzing.Sdk.Core.SzCoreEnvironment`.
 
 - The `SzEnvironment` breaks down the functionality into 5 interfaces:
-    - `Senzing.Sdk.SzProduct`
-    - `Senzing.Sdk.SzConfig`
-    - `Senzing.Sdk.SzConfigManager`
-    - `Senzing.Sdk.SzDiagnostic`
-    - `Senzing.Sdk.SzEngine`
-
+  - `Senzing.Sdk.SzProduct`
+  - `Senzing.Sdk.SzConfig`
+  - `Senzing.Sdk.SzConfigManager`
+  - `Senzing.Sdk.SzDiagnostic`
+  - `Senzing.Sdk.SzEngine`
 
 - The bulk of the Senzing functionality is contained in the `SzEngine` interface.
 - The `SzProduct` interface provides basic functions pertaining to the Senzing product installation.

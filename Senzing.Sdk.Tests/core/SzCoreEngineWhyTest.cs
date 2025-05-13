@@ -126,7 +126,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
         list.Add(null);
         list.Add(SzNoFlags);
         list.Add(SzWhyEntitiesDefaultFlags);
-        list.Add(SzWhyAllFlags);
+        list.Add(SzWhyEntitiesAllFlags);
         list.Add(SzEntityIncludeEntityName
                  | SzEntityIncludeRecordSummary
                  | SzEntityIncludeRecordData
@@ -138,7 +138,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
         list.Add(null);
         list.Add(SzNoFlags);
         list.Add(SzWhySearchDefaultFlags);
-        list.Add(SzWhyAllFlags);
+        list.Add(SzWhySearchAllFlags);
         list.Add(SzSearchIncludeRequest
                  | SzSearchIncludeRequestDetails
                  | SzEntityIncludeEntityName
@@ -162,7 +162,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
         list.Add(null);
         list.Add(SzNoFlags);
         list.Add(SzWhyRecordsDefaultFlags);
-        list.Add(SzWhyAllFlags);
+        list.Add(SzWhyRecordsAllFlags);
         list.Add(SzEntityIncludeEntityName
                  | SzEntityIncludeRecordSummary
                  | SzEntityIncludeRecordData
@@ -174,7 +174,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
         list.Add(null);
         list.Add(SzNoFlags);
         list.Add(SzWhyRecordInEntityDefaultFlags);
-        list.Add(SzWhyAllFlags);
+        list.Add(SzWhyRecordInEntityAllFlags);
         list.Add(SzEntityIncludeEntityName
                  | SzEntityIncludeRecordSummary
                  | SzEntityIncludeRecordData
@@ -1037,7 +1037,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
             + attributes + " ], recordKey=[ " + recordKey
             + " ], entityID=[ " + entityID + " ], searchProfile=[ "
             + searchProfile + " ], flags=[ "
-            + SzWhyFlags.FlagsToString(flags)
+            + SzWhySearchFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
@@ -1112,7 +1112,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
             "description=[ " + testDescription + " ], recordKey1=[ "
             + recordKey1 + " ], entityID1=[ " + entityID1
             + " ], recordKey2=[ " + recordKey2 + " ], entityID2=[ "
-            + entityID2 + " ], flags=[ " + SzWhyFlags.FlagsToString(flags)
+            + entityID2 + " ], flags=[ " + SzWhyEntitiesFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
@@ -1378,7 +1378,8 @@ internal class SzCoreEngineWhyTest : AbstractTest
     {
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKey=[ "
-            + recordKey + " ], flags=[ " + SzWhyFlags.FlagsToString(flags)
+            + recordKey + " ], flags=[ "
+            + SzWhyRecordInEntityFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
@@ -1712,7 +1713,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
         StringBuilder sb = new StringBuilder(
             "description=[ " + testDescription + " ], recordKey1=[ "
             + recordKey1 + " ], recordKey2=[ " + recordKey2
-            + " ], flags=[ " + SzWhyFlags.FlagsToString(flags)
+            + " ], flags=[ " + SzWhyRecordsFlags.FlagsToString(flags)
             + " ], expectedException=[ " + exceptionType + " ]");
 
         string testData = sb.ToString();
