@@ -142,7 +142,7 @@ internal class SzExampleExtractor
                 continue;
             }
 
-            // check for snippett end
+            // check for snippet end
             index = line.IndexOf("// @end");
             if (index >= 0)
             {
