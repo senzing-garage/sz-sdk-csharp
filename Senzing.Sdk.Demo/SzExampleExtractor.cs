@@ -30,9 +30,11 @@ internal class SzExampleExtractor
         if (moduleDir != null && repoDir != null)
         {
             Assert.That(moduleDir.Name, Is.EqualTo("Senzing.Sdk.Demo"),
-                        "Bad module directory");
+                        "Bad module directory.  Current directory: "
+                        + currentDirectory);
             Assert.That(repoDir.Name, Is.EqualTo("sz-sdk-csharp"),
-                        "Bad repository directory name");
+                        "Bad repository directory name.  Current directory: "
+                        + currentDirectory);
 
             string demoPath = Path.Combine(moduleDir.FullName, "demo");
             DirectoryInfo demoDir = new DirectoryInfo(demoPath);
@@ -48,9 +50,14 @@ internal class SzExampleExtractor
             }
             return result;
         }
-        Assert.That(moduleDir, Is.Not.Null, "Failed to get module directory");
-        Assert.That(repoDir, Is.Not.Null, "Failed to get the repository directory");
-        throw new Exception("Failed to get directories");
+        Assert.That(moduleDir, Is.Not.Null,
+            "Failed to get module directory.  Current directory: "
+            + currentDirectory);
+        Assert.That(repoDir, Is.Not.Null,
+            "Failed to get the repository directory.  Current directory: "
+            + currentDirectory);
+        throw new Exception(
+            "Failed to get directories.  Current directory: " + currentDirectory);
     }
 
     [Test, TestCaseSource(nameof(GetExtractParameters))]
