@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 
 using NUnit.Framework;
+using static System.StringComparison;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
@@ -25,7 +26,14 @@ internal class SzExampleExtractor
     {
         string currentDirectory = Directory.GetCurrentDirectory();
         DirectoryInfo dirInfo = new DirectoryInfo(currentDirectory);
-        DirectoryInfo? moduleDir = dirInfo?.Parent?.Parent?.Parent;
+
+        // find the bin directory
+        DirectoryInfo? binDir = dirInfo.Parent;
+        while (binDir != null && !"bin".Equals(binDir?.Name, Ordinal))
+        {
+            binDir = binDir?.Parent;
+        }
+        DirectoryInfo? moduleDir = binDir?.Parent;
         DirectoryInfo? repoDir = moduleDir?.Parent;
         if (moduleDir != null && repoDir != null)
         {
