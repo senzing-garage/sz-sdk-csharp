@@ -36,6 +36,10 @@ jobs:
         with:
           senzingsdk-repository-path: ${{ secrets.SENZING_WIN_BETA_REPOSITORY }}
 
+      - name: Add to "Path" environment variable
+        run: |
+          Add-Content $env:GITHUB_PATH "$Env:USERPROFILE\Senzing\er\lib"
+
       - name: Build with DotNet
         run: |
           dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
@@ -47,10 +51,6 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.Tests
           if ( $? -eq $false ) { exit 1 }
-
-      - name: Add to "Path" environment variable
-        run: |
-          Add-Content $env:GITHUB_PATH "$Env:USERPROFILE\Senzing\er\lib"
 
       - name: Run DotNet tests
         run: |
