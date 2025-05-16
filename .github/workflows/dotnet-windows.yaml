@@ -36,22 +36,26 @@ jobs:
         with:
           senzingsdk-repository-path: ${{ secrets.SENZING_WIN_BETA_REPOSITORY }}
 
-      - name: Build with DotNet
-        run: |
-          dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
-          dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
-
-      - name: Validate tests compile
-        run: |
-          dotnet build Senzing.Sdk.Tests
-
       - name: Add to "Path" environment variable
         run: |
           Add-Content $env:GITHUB_PATH "$Env:USERPROFILE\Senzing\er\lib"
 
+      - name: Build with DotNet
+        run: |
+          dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
+          if ( $? -eq $false ) { exit 1 }
+          dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
+          if ( $? -eq $false ) { exit 1 }
+
+      - name: Validate tests compile
+        run: |
+          dotnet build Senzing.Sdk.Tests
+          if ( $? -eq $false ) { exit 1 }
+
       - name: Run DotNet tests
         run: |
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          if ( $? -eq $false ) { exit 1 }
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
       - name: Store coverage file
