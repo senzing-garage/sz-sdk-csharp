@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 
 using NUnit.Framework;
+
 using static System.StringComparison;
 
 [TestFixture]
