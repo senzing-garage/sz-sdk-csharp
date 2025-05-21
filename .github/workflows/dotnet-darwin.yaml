@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   dotnet-darwin:
+    outputs:
+      status: ${{ job.status }}
     runs-on: macos-latest
     strategy:
       matrix:

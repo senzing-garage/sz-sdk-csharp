@@ -16,6 +16,8 @@ permissions:
 
 jobs:
   dotnet-windows:
+    outputs:
+      status: ${{ job.status }}
     runs-on: windows-latest
     strategy:
       matrix:

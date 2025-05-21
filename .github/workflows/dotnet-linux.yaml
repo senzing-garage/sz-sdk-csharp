@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   dotnet-linux:
+    outputs:
+      status: ${{ job.status }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
