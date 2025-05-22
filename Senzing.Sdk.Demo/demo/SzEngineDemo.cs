@@ -507,12 +507,9 @@ internal class SzEngineDemo : AbstractTest
                         }
                         """;
 
-                // set up flags for the preprocess call (varies by application)
-                SzFlag flags = SzEntityIncludeRecordFeatureDetails
-                             | SzEntityIncludeRecordFeatureStats;
-
                 // preprocess the record
-                string responseJson = engine.PreprocessRecord(recordDefinition, flags);
+                string responseJson = engine.PreprocessRecord(
+                    recordDefinition, SzPreprocessRecordDefaultFlags);
 
                 // do something with the response JSON (varies by application)                
                 JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
@@ -1021,7 +1018,8 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetEntityID();
 
                 // find the interesting entities by entity ID
-                string responseJson = engine.FindInterestingEntities(entityID, SzNoFlags);
+                string responseJson = engine.FindInterestingEntities(
+                    entityID, SzFindInterestingEntitiesDefaultFlags);
 
                 // do something with the response JSON (varies by application)                
                 JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
@@ -1065,7 +1063,8 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // retrieve the entity by record key                
-                string responseJson = engine.FindInterestingEntities("TEST", "ABC123", SzNoFlags);
+                string responseJson = engine.FindInterestingEntities(
+                    "TEST", "ABC123", SzFindInterestingEntitiesDefaultFlags);
 
                 // do something with the response JSON (varies by application)                
                 JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
