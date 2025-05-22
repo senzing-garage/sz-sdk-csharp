@@ -179,12 +179,21 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
-        /// constants belonging to the <see cref="SzFlagUsageGroup.SzReevaluateFlags"/>
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzReevaluateRecordFlags"/>
         /// usage group.
         /// </summary>
         ///
-        /// <seealso cref="SzFlagUsageGroup.SzDeleteRecordFlags"/>
-        public const SzFlag SzReevaluateAllFlags = SzFlag.SzWithInfo;
+        /// <seealso cref="SzFlagUsageGroup.SzReevaluateRecordFlags"/>
+        public const SzFlag SzReevaluateRecordAllFlags = SzFlag.SzWithInfo;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the <see cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/>
+        /// usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/>
+        public const SzFlag SzReevaluateEntityAllFlags = SzFlag.SzWithInfo;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -204,10 +213,23 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
         public const SzFlag SzRecordAllFlags
             = SzFlag.SzEntityIncludeInternalFeatures
-                | SzFlag.SzEntityIncludeRecordTypes
                 | SzFlag.SzEntityIncludeRecordFeatureDetails
                 | SzFlag.SzEntityIncludeRecordFeatureStats
-                | SzFlag.SzEntityIncludeRecordMatchingInfo
+                | SzFlag.SzEntityIncludeRecordDates
+                | SzFlag.SzEntityIncludeRecordJsonData
+                | SzFlag.SzEntityIncludeRecordUnmappedData;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the
+        /// <see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/> usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/>
+        public const SzFlag SzPreprocessRecordAllFlags
+            = SzFlag.SzEntityIncludeInternalFeatures
+                | SzFlag.SzEntityIncludeRecordFeatureDetails
+                | SzFlag.SzEntityIncludeRecordFeatureStats
                 | SzFlag.SzEntityIncludeRecordJsonData
                 | SzFlag.SzEntityIncludeRecordUnmappedData;
 
@@ -230,6 +252,7 @@ namespace Senzing.Sdk
                 | SzFlag.SzEntityIncludeRecordTypes
                 | SzFlag.SzEntityIncludeRecordData
                 | SzFlag.SzEntityIncludeRecordMatchingInfo
+                | SzFlag.SzEntityIncludeRecordDates
                 | SzFlag.SzEntityIncludeRecordJsonData
                 | SzFlag.SzEntityIncludeRecordUnmappedData
                 | SzFlag.SzEntityIncludeRecordFeatures
@@ -265,6 +288,16 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlagUsageGroup.SzFindNetworkFlags"/>
         public const SzFlag SzFindNetworkAllFlags
             = SzEntityAllFlags | SzFlag.SzFindNetworkIncludeMatchingInfo;
+
+        /// <summary>
+        /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
+        /// constants belonging to the
+        /// <see cref="SzFlagUsageGroup.SzFindInterestingEntitiesFlags"/> usage group.
+        /// </summary>
+        ///
+        /// <seealso cref="SzFlagUsageGroup.SzFindInterestingEntitiesFlags"/>
+        public const SzFlag SzFindInterestingEntitiesAllFlags
+            = SzNoFlags;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -372,6 +405,7 @@ namespace Senzing.Sdk
                   | SzFlag.SzEntityIncludeRecordTypes
                   | SzFlag.SzEntityIncludeRecordData
                   | SzFlag.SzEntityIncludeRecordMatchingInfo
+                  | SzFlag.SzEntityIncludeRecordDates
                   | SzFlag.SzEntityIncludeRecordJsonData
                   | SzFlag.SzEntityIncludeRecordUnmappedData
                   | SzFlag.SzEntityIncludeRecordFeatures
@@ -1193,6 +1227,138 @@ namespace Senzing.Sdk
             = SzIncludeFeatureScores
             | SzSearchIncludeRequestDetails
             | SzSearchIncludeStats;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "add record" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzAddRecordFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzAddRecordDefaultFlags = SzNoFlags;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "delete record" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzDeleteRecordFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzDeleteRecordDefaultFlags = SzNoFlags;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "preprocess record" operations.
+        /// </summary>
+        /// <remarks>
+        /// The included <see cref="SzFlag"/> values are:
+        /// <list>
+        ///   <item>
+        ///      <description><see cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/></description>
+        ///   </item>
+        /// </list>
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzPreprocessRecordDefaultFlags
+            = SzEntityIncludeRecordFeatureDetails;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "reevaluate record" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzReevaluateRecordFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzReevaluateRecordDefaultFlags = SzNoFlags;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "reevaluate entity" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzReevaluateEntityDefaultFlags = SzReevaluateRecordDefaultFlags;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "find interesting entities" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzFindInterestingEntitiesFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzFindInterestingEntitiesDefaultFlags = SzNoFlags;
+
+        /// <summary>
+        /// The aggregate <see cref="SzFlag"/> representing the default flags for
+        /// "process redo" operations.
+        /// </summary>
+        /// <remarks>
+        /// Currently, this is equivalent to <see cref="SzFlags.SzNoFlags"/>.
+        /// <para>
+        /// All the flags in this constant belong to the following usage groups:
+        /// <list>
+        ///   <item>
+        ///     <description><see cref="SzFlagUsageGroup.SzRedoFlags"/></description>
+        ///   </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        public const SzFlag SzRedoDefaultFlags = SzNoFlags;
 
         /// <summary>
         /// Mapping of individual flag values to the possible names to which they belong.

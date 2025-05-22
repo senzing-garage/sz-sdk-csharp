@@ -22,12 +22,6 @@ internal class SzFlagsTest : AbstractTest
 {
     /// <summary>
     /// The dictionary of <c>string</c> constant names from
-    /// <see cref="Senzing.Sdk.Core.NativeFlags"/> to their values.
-    /// </summary>
-    private readonly Dictionary<string, long> nativeFlagsMap = new Dictionary<string, long>();
-
-    /// <summary>
-    /// The dictionary of <c>string</c> constant names from
     /// <see cref="Senzing.Sdk.SzFlag"/> to their values.
     /// </summary>
     private readonly Dictionary<string, SzFlag> enumsMap = new Dictionary<string, SzFlag>();
@@ -47,15 +41,8 @@ internal class SzFlagsTest : AbstractTest
     [OneTimeSetUp]
     public void ReflectFlags()
     {
-        Type nativeFlagsType = typeof(NativeFlags);
         Type flagsType = typeof(SzFlags);
         Type enumType = typeof(SzFlag);
-        foreach (FieldInfo fieldInfo in nativeFlagsType.GetFields())
-        {
-            if (fieldInfo.FieldType != typeof(long)) continue;
-            if (!fieldInfo.Name.StartsWith("Sz", Ordinal)) continue;
-            this.nativeFlagsMap.Add(fieldInfo.Name, ((long?)fieldInfo.GetValue(null)) ?? 0L);
-        }
 
         BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static;
         // populate the enums
@@ -84,22 +71,6 @@ internal class SzFlagsTest : AbstractTest
             Fail(e);
             throw;
         }
-    }
-
-    private static IList<(string, long)> GetNativeFlagMappings()
-    {
-        Type nativeFlagsType = typeof(NativeFlags);
-
-        IList<(string, long)> results = new List<(string, long)>();
-
-        foreach (FieldInfo fieldInfo in nativeFlagsType.GetFields(BindingFlags.Static))
-        {
-            if (fieldInfo.FieldType != typeof(long)) continue;
-            if (!fieldInfo.Name.StartsWith("Sz", Ordinal)) continue;
-
-            results.Add((fieldInfo.Name, ((long?)fieldInfo.GetValue(null)) ?? 0L));
-        }
-        return results;
     }
 
     private static IList<(string, SzFlag)> GetEnumMappings()
@@ -170,61 +141,6 @@ internal class SzFlagsTest : AbstractTest
         return results;
     }
 
-    [Test, TestCaseSource(nameof(GetNativeFlagMappings))]
-    public void TestNativeFlag((string flagName, long value) args)
-    {
-        this.PerformTest(() =>
-        {
-            string flagName = args.flagName;
-            long value = args.value;
-
-            Assert.That(this.enumsMap.ContainsKey(flagName)
-                        || this.flagsMap.ContainsKey(flagName),
-                "SDK flag constant (" + flagName + ") not found for "
-                + "native flag constant.");
-            SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(flagName);
-            Assert.That(metaData, Is.Not.Null,
-                "SDK flag constant (" + flagName + ") not found in meta data");
-
-            Assert.That(value, Is.EqualTo(metaData?.Value),
-                "SDK flag constant (" + flagName + ") has different value ("
-                + HexFormat(value) + ") than value found in meta-data: "
-                + HexFormat(metaData.Value));
-
-            if (this.enumsMap.TryGetValue(flagName, out SzFlag enumValue))
-            {
-                Assert.That(value, Is.EqualTo((long)enumValue),
-                            "Enum flag constant (" + flagName
-                            + ") has different value ("
-                            + HexFormat((long)enumValue)
-                            + ") than native flag constant: "
-                            + HexFormat((long)value));
-
-                Assert.That(((long)enumValue), Is.EqualTo(metaData?.Value),
-                    "Enum flag constant (" + flagName + ") has different "
-                    + "value (" + HexFormat((long)enumValue)
-                    + ") than value found in meta-data: "
-                    + HexFormat(metaData.Value));
-            }
-            else
-            {
-                SzFlag flagsValue = this.flagsMap[flagName];
-                Assert.That(value, Is.EqualTo((long)flagsValue),
-                            "Flag set constant (" + flagName
-                            + ") has different value ("
-                            + HexFormat((long)flagsValue)
-                            + ") than native flag constant: "
-                            + HexFormat((long)value));
-
-                Assert.That(((long)flagsValue), Is.EqualTo(metaData?.Value),
-                    "Flag set constant (" + flagName + ") has different "
-                    + "value (" + HexFormat((long)flagsValue)
-                    + ") than value found in meta-data: "
-                    + HexFormat(metaData.Value));
-            }
-        });
-    }
-
     [Test, TestCaseSource(nameof(GetFlagsMappings))]
     public void TestFlagsConstant((string name, SzFlag value) args)
     {
@@ -290,7 +206,8 @@ internal class SzFlagsTest : AbstractTest
                             + "): " + name);
 
             }
-            else if (!nameof(SzFlags.SzNoFlags).Equals(name, Ordinal))
+            else if (!nameof(SzFlags.SzNoFlags).Equals(name, Ordinal)
+                     && !nameof(SzFlags.SzRedoDefaultFlags).Equals(name, Ordinal))
             {
                 SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
                 Assert.That(metaData, Is.Not.Null,
@@ -300,16 +217,6 @@ internal class SzFlagsTest : AbstractTest
                     "Aggregate flag constant (" + name + ") has a different "
                     + "value (" + HexFormat((long)value) + ") than found in "
                     + "meta-data: " + HexFormat(metaData?.Value ?? 0L));
-
-                Assert.IsTrue(this.nativeFlagsMap.ContainsKey(name),
-                    "Primitive long flag constant not found for "
-                    + "aggregate enum constant: " + name);
-                long nativeValue = this.nativeFlagsMap[name];
-                Assert.That(nativeValue, Is.EqualTo((long)value),
-                    "Native flag constant (" + name + ") has a different primitive "
-                    + "long value (" + HexFormat(nativeValue)
-                    + ") than enum flag constant (" + name + "): "
-                    + HexFormat((long)value));
             }
         });
     }
@@ -331,19 +238,6 @@ internal class SzFlagsTest : AbstractTest
                 "Enum flag constant (" + name + ") has different value ("
                 + HexFormat((long)value) + ") than found in meta-data: "
                 + HexFormat(metaData?.Value ?? 0L));
-
-            if (name.Equals(nameof(SzFlag.SzWithInfo), Ordinal)) return;
-
-            Assert.IsTrue(this.nativeFlagsMap.ContainsKey(name),
-                        "Primitive long flag constant not found for "
-                        + "enum flag constant: " + name);
-
-            long nativeValue = this.nativeFlagsMap[name];
-            Assert.That(nativeValue, Is.EqualTo((long)value),
-                        "Flag constant (" + name + ") has a different primitive "
-                        + "long value (" + HexFormat(nativeValue)
-                        + ") than enum flag constant (" + name + "): "
-                        + HexFormat((long)value));
         });
     }
 
@@ -357,7 +251,12 @@ internal class SzFlagsTest : AbstractTest
 
             SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
 
-            if (metaData?.BaseFlags == null)
+            if (metaData == null)
+            {
+                Fail("Meta data flag name not found in meta data: " + name);
+                throw new ArgumentNullException(nameof(args));
+            }
+            if (!metaData.Aggregate && metaData.Value != 0)
             {
                 bool enumFound = this.enumsMap.TryGetValue(name, out SzFlag enumValue);
                 Assert.IsTrue(enumFound, "SDK Enum Flag constant not found for "
@@ -377,16 +276,6 @@ internal class SzFlagsTest : AbstractTest
                             + "value (" + HexFormat((long)flagsValue) + ") than found in "
                             + "meta-data: " + HexFormat(value));
             }
-
-            if (name.Equals(nameof(SzFlag.SzWithInfo), Ordinal)) return;
-
-            bool nativeFound = this.nativeFlagsMap.TryGetValue(name, out long nativeValue);
-            Assert.IsTrue(nativeFound, "SDK Native Flag constant not found for "
-                          + "meta-data flag: " + name);
-            Assert.That(nativeValue, Is.EqualTo(value),
-                        "SDK Native Flag constant (" + name + ") has differnet"
-                        + "value (" + HexFormat(nativeValue) + ") than found in "
-                        + "meta-data: " + HexFormat(value));
         });
     }
 
@@ -907,8 +796,11 @@ internal class SzFlagsTest : AbstractTest
 
             SzFlag flags = SzFlags.GetFlags(group);
 
-            Assert.That(flags, Is.Not.EqualTo(SzFlags.SzNoFlags),
-                        "Flags for group should not be zero: " + group);
+            if (group != SzFlagUsageGroup.SzFindInterestingEntitiesFlags)
+            {
+                Assert.That(flags, Is.Not.EqualTo(SzFlags.SzNoFlags),
+                            "Flags for group should not be zero: " + group);
+            }
 
             SzFlag aggregateFlags = SzFlags.SzNoFlags;
             foreach (KeyValuePair<string, SzFlag> pair in flagsByName)

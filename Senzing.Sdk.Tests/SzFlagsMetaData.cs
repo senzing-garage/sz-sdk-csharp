@@ -30,6 +30,7 @@ internal class SzFlagsMetaData
         private readonly string symbol;
         private readonly IReadOnlyList<int> bits;
         private readonly long value;
+        private readonly bool aggregate;
         private readonly IReadOnlyList<string> definition;
         private readonly IReadOnlyList<string> groups;
         private readonly IReadOnlyList<string>? flags;
@@ -174,6 +175,10 @@ internal class SzFlagsMetaData
             {
                 this.flags = null;
             }
+            this.aggregate = (this.flags != null
+                              || (this.definition.Count == 1
+                                  && this.value == 0
+                                  && this.groups.Count == 1));
         }
 
         /// <summary>
@@ -199,6 +204,27 @@ internal class SzFlagsMetaData
             get
             {
                 return this.value;
+            }
+        }
+
+        /// <summary>
+        /// Checks if this represents an aggregate flag or a base flag.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Aggregate flags are bitmasks defined as pre-defined defaults and 
+        /// are meant to contain other flags even if the default sometimes 
+        /// contains no flags.
+        /// </remarks>
+        /// 
+        /// <returns>
+        /// <c>true</c> if this is an aggregate flag, otherwise <c>falce</c>
+        /// </returns>
+        public bool Aggregate
+        {
+            get
+            {
+                return this.aggregate;
             }
         }
 
@@ -380,13 +406,13 @@ internal class SzFlagsMetaData
 
         foreach (SzFlagMetaData fmd in this.flagsByName.Values)
         {
-            if (fmd.BaseFlags == null)
+            if (fmd.Aggregate)
             {
-                baseMap.Add(fmd.Symbol, fmd);
+                aggrMap.Add(fmd.Symbol, fmd);
             }
             else
             {
-                aggrMap.Add(fmd.Symbol, fmd);
+                baseMap.Add(fmd.Symbol, fmd);
             }
 
             // get the groups
@@ -403,7 +429,7 @@ internal class SzFlagsMetaData
                 groupFlags.Add(fmd.Symbol, fmd);
 
                 Dictionary<string, Dictionary<string, SzFlagMetaData>> parentMap
-                    = (fmd.BaseFlags == null) ? baseGroupMap : aggrGroupMap;
+                    = (fmd.Aggregate) ? aggrGroupMap : baseGroupMap;
 
                 parentMap.TryGetValue(
                     group, out Dictionary<string, SzFlagMetaData>? parentFlags);
@@ -425,6 +451,17 @@ internal class SzFlagsMetaData
                 }
 
             }
+        }
+
+        // handle the groups that have no flags
+        Dictionary<string, SzFlagMetaData> emptyDictionary
+            = new Dictionary<string, SzFlagMetaData>();
+
+        foreach (string group in groupSet)
+        {
+            groupMap.TryAdd(group, emptyDictionary);
+            baseGroupMap.TryAdd(group, emptyDictionary);
+            aggrGroupMap.TryAdd(group, emptyDictionary);
         }
 
         //  make all sub-maps unmodifiable

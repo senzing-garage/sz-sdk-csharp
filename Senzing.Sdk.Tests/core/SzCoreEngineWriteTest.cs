@@ -864,7 +864,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
         Type? expectedExceptionType)
     {
         String testData = "recordKey=[ " + recordKey
-            + " ], withFlags=[ " + SzReevaluateFlags.FlagsToString(flags)
+            + " ], withFlags=[ " + SzReevaluateRecordFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>
@@ -1006,7 +1006,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
         String testData = "entityID=[ " + entityID + " ], havingRecords=[ "
             + recordKeys + " ], withFlags=[ "
-            + SzReevaluateFlags.FlagsToString(flags)
+            + SzReevaluateEntityFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
 
         this.PerformTest(() =>
