@@ -10,6 +10,8 @@ using Senzing.Sdk.Core;
 
 using static System.StringComparison;
 
+using static Senzing.Sdk.SzFlag;
+
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreDiagnosticTest : AbstractTest
@@ -18,18 +20,18 @@ internal class SzCoreDiagnosticTest : AbstractTest
     private const string TestRecordID = "ABC123";
 
     private const long FLAGS
-        = NativeFlags.SzEntityIncludeAllFeatures
-        | NativeFlags.SzEntityIncludeEntityName
-        | NativeFlags.SzEntityIncludeRecordSummary
-        | NativeFlags.SzEntityIncludeRecordTypes
-        | NativeFlags.SzEntityIncludeRecordData
-        | NativeFlags.SzEntityIncludeRecordJsonData
-        | NativeFlags.SzEntityIncludeRecordMatchingInfo
-        | NativeFlags.SzEntityIncludeRecordUnmappedData
-        | NativeFlags.SzEntityIncludeRecordFeatures
-        | NativeFlags.SzEntityIncludeInternalFeatures
-        | NativeFlags.SzIncludeMatchKeyDetails
-        | NativeFlags.SzIncludeFeatureScores;
+        = (long)(SzEntityIncludeAllFeatures
+        | SzEntityIncludeEntityName
+        | SzEntityIncludeRecordSummary
+        | SzEntityIncludeRecordTypes
+        | SzEntityIncludeRecordData
+        | SzEntityIncludeRecordJsonData
+        | SzEntityIncludeRecordMatchingInfo
+        | SzEntityIncludeRecordUnmappedData
+        | SzEntityIncludeRecordFeatures
+        | SzEntityIncludeInternalFeatures
+        | SzIncludeMatchKeyDetails
+        | SzIncludeFeatureScores);
 
     private SzCoreEnvironment? env;
 

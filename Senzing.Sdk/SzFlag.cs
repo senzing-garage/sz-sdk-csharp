@@ -39,7 +39,10 @@ namespace Senzing.Sdk
         ///      <description><see cref="SzFlagUsageGroup.SzDeleteRecordFlags"/></description>
         ///    </item>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzReevaluateFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzReevaluateRecordFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/></description>
         ///    </item>
         ///    <item>
         ///      <description><see cref="SzFlagUsageGroup.SzRedoFlags"/></description>
@@ -333,7 +336,6 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
@@ -347,7 +349,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntitySet)]
         SzEntityIncludeRecordTypes = (1L << 28),
 
         /// <summary>
@@ -382,7 +384,6 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
@@ -396,36 +397,11 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntitySet)]
         SzEntityIncludeRecordMatchingInfo = (1L << 15),
 
         /// <summary>
-        /// The bitwise flag for including the record json data for the
-        /// entity or record.
-        /// </summary>
-        /// <remarks>
-        /// This flag belongs to the following usage groups:
-        /// <list>
-        ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
-        ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
-        ///    </item>
-        /// </list>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
-        SzEntityIncludeRecordJsonData = (1L << 16),
-
-        /// <summary>
-        /// The bitwise flag for including the record unmapped data for
+        /// The bitwise flag for including the record matching info for
         /// the entity or record.
         /// </summary>
         /// <remarks>
@@ -447,6 +423,58 @@ namespace Senzing.Sdk
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
         [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        SzEntityIncludeRecordDates = (1L << 39),
+
+        /// <summary>
+        /// The bitwise flag for including the record json data for the
+        /// entity or record.
+        /// </summary>
+        /// <remarks>
+        /// This flag belongs to the following usage groups:
+        /// <list>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        SzEntityIncludeRecordJsonData = (1L << 16),
+
+        /// <summary>
+        /// The bitwise flag for including the record unmapped data for
+        /// the entity or record.
+        /// </summary>
+        /// <remarks>
+        /// This flag belongs to the following usage groups:
+        /// <list>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </remarks>
+        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
         SzEntityIncludeRecordUnmappedData = (1L << 31),
 
         /// <summary>
@@ -481,6 +509,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -495,7 +524,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
         SzEntityIncludeRecordFeatureDetails = (1L << 35),
 
         /// <summary>
@@ -506,6 +535,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -520,7 +550,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
         SzEntityIncludeRecordFeatureStats = (1L << 36),
 
         /// <summary>
@@ -645,6 +675,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -659,7 +690,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzEntityRecordSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
         SzEntityIncludeInternalFeatures = (1L << 23),
 
         /// <summary>
