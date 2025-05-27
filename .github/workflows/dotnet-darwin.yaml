@@ -73,10 +73,10 @@ jobs:
       thresholds: "85 90"
 
   slack-notification:
-    needs: [dotnet-darwin, coverage]
-    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.dotnet-darwin.outputs.status ) && contains(fromJSON('["failure", "cancelled"]'), needs.coverage.outputs.job-status ) && github.event_name == 'schedule' }}
+    needs: [dotnet-darwin]
+    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.dotnet-darwin.outputs.status ) && github.event_name == 'schedule' }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v2
     with:
-      job-status: ${{ needs.dotnet-darwin.outputs.status && needs.coverage.outputs.job-status }}
+      job-status: ${{ needs.dotnet-darwin.outputs.status }}
