@@ -585,7 +585,8 @@ namespace Senzing.Sdk.Core
             try
             {
                 byte[] jsonBytes = Utilities.StringToUTF8Bytes(jsonData);
-                byte[] profBytes = Utilities.StringToUTF8Bytes(searchProfile);
+                byte[] profBytes = Utilities.StringToUTF8Bytes(
+                    searchProfile == null ? "" : searchProfile);
 
                 result = Sz_whySearch_helper(jsonBytes, entityID, profBytes);
 

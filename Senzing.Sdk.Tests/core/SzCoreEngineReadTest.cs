@@ -741,7 +741,6 @@ internal class SzCoreEngineReadTest : AbstractTest
         });
     }
 
-
     [Test, TestCaseSource(nameof(GetExportJsonParameters))]
     public void TestExportJsonEntityReport(SzFlag? flags,
                                            Type? expectedException)
@@ -1192,7 +1191,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                     dataSourceCode, recordID);
 
                 string explicitResult = engine.FindInterestingEntities(
-                    dataSourceCode, recordID, SzNoFlags);
+                    dataSourceCode, recordID, SzFindInterestingEntitiesDefaultFlags);
 
                 string nullResult = engine.FindInterestingEntities(
                     dataSourceCode, recordID, null);
@@ -1770,9 +1769,9 @@ internal class SzCoreEngineReadTest : AbstractTest
             object?[] args = searchParams[index];
 
             // skip parameters that expect exceptions
-            if (args[args.Length - 1] == null) continue;
+            if (args[args.Length - 1] != null) continue;
 
-            defaultParams.Add(new object?[] { args[0] });
+            defaultParams.Add(new object?[] { args[0], args[1] });
         }
 
         return defaultParams;
@@ -1911,7 +1910,8 @@ internal class SzCoreEngineReadTest : AbstractTest
     }
 
     [Test, TestCaseSource(nameof(GetSearchDefaultParameters))]
-    public void TestSearchByAttributesdDefaults(string attributes)
+    public void TestSearchByAttributesDefaults(string attributes,
+                                               string searchProfile)
     {
         this.PerformTest(() =>
         {
@@ -1919,10 +1919,16 @@ internal class SzCoreEngineReadTest : AbstractTest
             {
                 SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
-                string defaultResult = engine.SearchByAttributes(attributes);
+                string defaultResult = (searchProfile == null)
+                    ? engine.SearchByAttributes(attributes)
+                    : engine.SearchByAttributes(attributes, searchProfile);
 
-                string explicitResult = engine.SearchByAttributes(
-                    attributes, SzSearchByAttributesDefaultFlags);
+                string explicitResult = (searchProfile == null)
+                    ? engine.SearchByAttributes(attributes,
+                                                SzSearchByAttributesDefaultFlags)
+                    : engine.SearchByAttributes(attributes,
+                                                searchProfile,
+                                                SzSearchByAttributesDefaultFlags);
 
                 long returnCode = engine.GetNativeApi().SearchByAttributes(
                     attributes, out string nativeResult);
@@ -1944,7 +1950,7 @@ internal class SzCoreEngineReadTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Unexpectedly failed getting entity by record", e);
+                Fail("Unexpectedly failed searching by attributes", e);
             }
         });
     }
