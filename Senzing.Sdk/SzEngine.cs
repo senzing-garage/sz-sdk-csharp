@@ -374,7 +374,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzReevaluateEntityDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/>
         string ReevaluateEntity(long entityID,
-                                SzFlag? flags = SzEntityDefaultFlags);
+                                SzFlag? flags = SzReevaluateEntityDefaultFlags);
 
         /// <summary>
         /// This method searches for entities that match or relate to the provided
@@ -574,7 +574,7 @@ namespace Senzing.Sdk
         string WhySearch(
             string attributes,
             long entityID,
-            string searchProfile,
+            string searchProfile = null,
             SzFlag? flags = SzWhySearchDefaultFlags);
 
         /// <summary>
@@ -890,8 +890,8 @@ namespace Senzing.Sdk
         string FindPath(long startEntityID,
                         long endEntityID,
                         int maxDegrees,
-                        ISet<long> avoidEntityIDs,
-                        ISet<string> requiredDataSources,
+                        ISet<long> avoidEntityIDs = null,
+                        ISet<string> requiredDataSources = null,
                         SzFlag? flags = SzFindPathDefaultFlags);
 
         /// <summary>
@@ -998,8 +998,8 @@ namespace Senzing.Sdk
             string endDataSourceCode,
             string endRecordID,
             int maxDegrees,
-            ISet<(string dataSourceCode, string recordID)> avoidRecordKeys,
-            ISet<string> requiredDataSources,
+            ISet<(string dataSourceCode, string recordID)> avoidRecordKeys = null,
+            ISet<string> requiredDataSources = null,
             SzFlag? flags = SzFindPathDefaultFlags);
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// The mask for removing SDK-specific flags that don't go downstream.
         /// </summary>
-        private const long SdkFlagMask = ~((long)SzWithInfo);
+        internal const long SdkFlagMask = ~((long)SzWithInfo);
 
         /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
@@ -138,7 +138,7 @@ namespace Senzing.Sdk.Core
         public string AddRecord(string dataSourceCode,
                                 string recordID,
                                 string recordDefinition,
-                                SzFlag? flags)
+                                SzFlag? flags = SzAddRecordDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -191,7 +191,7 @@ namespace Senzing.Sdk.Core
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         public string PreprocessRecord(
             string recordDefinition,
-            SzFlag? flags = SzRecordDefaultFlags)
+            SzFlag? flags = SzPreprocessRecordDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -268,7 +268,7 @@ namespace Senzing.Sdk.Core
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
         public string DeleteRecord(string dataSourceCode,
                                    string recordID,
-                                   SzFlag? flags = SzNoFlags)
+                                   SzFlag? flags = SzDeleteRecordDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -625,8 +625,8 @@ namespace Senzing.Sdk.Core
             long startEntityId,
             long endEntityId,
             int maxDegrees,
-            ISet<long> avoidEntityIDs,
-            ISet<string> requiredDataSources,
+            ISet<long> avoidEntityIDs = null,
+            ISet<string> requiredDataSources = null,
             SzFlag? flags = SzFindPathDefaultFlags)
         {
             // clear out the SDK-specific flags
@@ -707,8 +707,8 @@ namespace Senzing.Sdk.Core
             string endDataSourceCode,
             string endRecordID,
             int maxDegrees,
-            ISet<(string dataSourceCode, string recordID)> avoidRecordKeys,
-            ISet<string> requiredDataSources,
+            ISet<(string dataSourceCode, string recordID)> avoidRecordKeys = null,
+            ISet<string> requiredDataSources = null,
             SzFlag? flags = SzFindPathDefaultFlags)
         {
             // clear out the SDK-specific flags
@@ -852,8 +852,9 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string FindInterestingEntities(long entityId,
-                                              SzFlag? flags = SzNoFlags)
+        public string FindInterestingEntities(
+            long entityId,
+            SzFlag? flags = SzFindInterestingEntitiesDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -879,9 +880,10 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string FindInterestingEntities(string dataSourceCode,
-                                              string recordID,
-                                              SzFlag? flags = SzEntityDefaultFlags)
+        public string FindInterestingEntities(
+            string dataSourceCode,
+            string recordID,
+            SzFlag? flags = SzFindInterestingEntitiesDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -1064,8 +1066,9 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string ProcessRedoRecord(string redoRecord,
-                                        SzFlag? flags = SzNoFlags)
+        public string ProcessRedoRecord(
+            string redoRecord,
+            SzFlag? flags = SzRedoDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -1102,8 +1105,9 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string ReevaluateEntity(long entityId,
-                                       SzFlag? flags = SzNoFlags)
+        public string ReevaluateEntity(
+            long entityId,
+            SzFlag? flags = SzReevaluateEntityDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -1148,9 +1152,10 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string ReevaluateRecord(string dataSourceCode,
-                                       string recordID,
-                                       SzFlag? flags = SzNoFlags)
+        public string ReevaluateRecord(
+            string dataSourceCode,
+            string recordID,
+            SzFlag? flags = SzReevaluateRecordDefaultFlags)
         {
             return this.env.Execute(() =>
             {
@@ -1274,7 +1279,7 @@ namespace Senzing.Sdk.Core
         public string WhySearch(
             string attributes,
             long entityID,
-            string searchProfile,
+            string searchProfile = null,
             SzFlag? flags = SzWhySearchDefaultFlags)
         {
             return this.env.Execute(() =>

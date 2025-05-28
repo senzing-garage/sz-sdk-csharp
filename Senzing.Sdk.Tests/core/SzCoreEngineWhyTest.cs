@@ -827,6 +827,25 @@ internal class SzCoreEngineWhyTest : AbstractTest
         return result;
     }
 
+    public static List<object?[]> GetWhySearchDefaultParameters()
+    {
+        List<object?[]> whySearchParams = GetWhySearchParameters();
+
+        List<object?[]> defaultParams = new List<object?[]>(whySearchParams.Count);
+
+        for (int index = 0; index < whySearchParams.Count; index++)
+        {
+            object?[] args = whySearchParams[index];
+
+            // skip the parameters that expect exceptions
+            if (args[args.Length - 1] != null) continue;
+
+            defaultParams.Add(new object?[] { args[1], args[2], args[3], args[4] });
+        }
+
+        return defaultParams;
+    }
+
     public virtual void ValidateWhyEntities(
         string whyEntitiesResult,
         string testData,
@@ -1095,6 +1114,62 @@ internal class SzCoreEngineWhyTest : AbstractTest
         });
     }
 
+    [Test, TestCaseSource(nameof(GetWhySearchDefaultParameters))]
+    public void TestWhySearchDefaults(
+        Func<SzCoreEngineWhyTest, string> attrFunc,
+        (string dataSourceCode, string recordID) recordKey,
+        Func<SzCoreEngineWhyTest, long> entityIDFunc,
+        string searchProfile)
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
+
+                String attributes = attrFunc(this);
+
+                long entityID = entityIDFunc(this);
+
+                string defaultResult = (searchProfile == null)
+                    ? engine.WhySearch(attributes, entityID)
+                    : engine.WhySearch(attributes, entityID, searchProfile);
+
+                string explicitResult = (searchProfile == null)
+                    ? engine.WhySearch(attributes,
+                                       entityID,
+                                       flags: SzWhySearchDefaultFlags)
+                    : engine.WhySearch(attributes,
+                                       entityID,
+                                       searchProfile,
+                                       SzWhySearchDefaultFlags);
+
+                long returnCode = engine.GetNativeApi().WhySearch(
+                    attributes, entityID, searchProfile, out string nativeResult);
+
+
+                if (returnCode != 0)
+                {
+                    Fail("Errant return code from native function: " +
+                         engine.GetNativeApi().GetLastExceptionCode()
+                         + " / " + engine.GetNativeApi().GetLastException());
+                }
+
+                Assert.That(defaultResult, Is.EqualTo(explicitResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the SDK function.");
+
+                Assert.That(defaultResult, Is.EqualTo(nativeResult),
+                    "Explicitly setting default flags yields a different result "
+                    + "than omitting the flags parameter to the native function.");
+            }
+            catch (Exception e)
+            {
+                Fail("Unexpectedly failed why-search operation", e);
+            }
+        });
+    }
+
     [Test, TestCaseSource(nameof(GetWhyEntitiesParameters))]
     public void TestWhyEntities(
         string testDescription,
@@ -1185,7 +1260,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
     }
 
     [Test, TestCaseSource(nameof(GetRecordCombinations))]
-    public void TestWhyEntitiesByRecordIDDefaults(
+    public void TestWhyEntitiesDefaults(
         (string dataSourceCode, string recordID) recordKey1,
         (string dataSourceCode, string recordID) recordKey2)
     {
@@ -1472,7 +1547,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Unexpectedly failed getting entity by record", e);
+                Fail("Unexpectedly failed analying why record in entity", e);
             }
         });
     }
