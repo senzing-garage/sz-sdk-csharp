@@ -64,7 +64,7 @@ format-test:
 # Runs formatting against all modules
 # -----------------------------------------------------------------------------
 .PHONY: format
-format: format-sdk format-demo format-tests
+format: format-sdk format-demo format-test
 
 # -----------------------------------------------------------------------------
 # Generates the HTML documentation. This depends on the "debug" target to 

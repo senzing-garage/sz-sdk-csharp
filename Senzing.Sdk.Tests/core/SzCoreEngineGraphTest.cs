@@ -175,7 +175,8 @@ internal class SzCoreEngineGraphTest : AbstractTest
                 }
                 ISet<(string, string)> recordKeySet = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
-            };
+            }
+            ;
 
         }
         finally
@@ -1296,7 +1297,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                         endDataSourceCode,
                         endRecordID,
                         maxDegrees,
-                        (long) flags,
+                        (long)flags,
                         out nativeResult);
 
                 if (returnCode != 0)
@@ -1369,7 +1370,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                         startEntityID,
                         endEntityID,
                         maxDegrees,
-                        (long) flags,
+                        (long)flags,
                         out nativeResult);
 
                 if (returnCode != 0)

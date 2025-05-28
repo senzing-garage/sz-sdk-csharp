@@ -358,7 +358,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
-            };
+            }
+            ;
 
         }
         finally
@@ -530,12 +531,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
         return result;
     }
 
-    public static List<object?[]> GetPreprocessRecordDefaultArguments() {
+    public static List<object?[]> GetPreprocessRecordDefaultArguments()
+    {
         List<object?[]> baseArgs = GetPreprocessRecordArguments();
 
         List<object?[]> defaultArgs = new List<object?[]>(baseArgs.Count);
 
-        for (int index = 0; index < baseArgs.Count; index++) {
+        for (int index = 0; index < baseArgs.Count; index++)
+        {
             object?[] arr = baseArgs[index];
 
             if (arr[arr.Length - 1] != null) continue;
@@ -853,9 +856,11 @@ internal class SzCoreEngineWriteTest : AbstractTest
         (string dataSourceCode, string recordID) recordKey,
         SzRecord record)
     {
-        this.PerformTest(() => {
-            try {
-                SzCoreEngine engine = (SzCoreEngine) this.Env.GetEngine();
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
                 string dataSourceCode = recordKey.dataSourceCode;
 
@@ -872,15 +877,16 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 string? nativeResult = null;
                 long returnCode = ((SzAddRecordDefaultFlags & SzWithInfo) != SzNoFlags)
                     ? engine.GetNativeApi().AddRecordWithInfo(dataSourceCode,
-                                                              recordID, 
+                                                              recordID,
                                                               record.ToString(),
-                                                              nativeFlags, 
+                                                              nativeFlags,
                                                               out nativeResult)
                     : engine.GetNativeApi().AddRecord(dataSourceCode,
                                                       recordID,
                                                       record.ToString());
 
-                if (returnCode != 0) {
+                if (returnCode != 0)
+                {
                     Fail("Errant return code from native function: " +
                          engine.GetNativeApi().GetLastExceptionCode()
                          + " / " + engine.GetNativeApi().GetLastException());
@@ -893,12 +899,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 Assert.That(defaultResult, Is.EqualTo(nativeResult),
                     "Explicitly setting default flags yields a different result "
                     + "than omitting the flags parameter to the native function.");
-            
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 Fail("Unexpectedly failed adding record", e);
             }
         });
-    }    
+    }
 
     [Test, Order(20)]
     public void TestGetStats()
@@ -969,7 +977,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
             }
             errorCase++;
             result.Add(new object?[] { paramKey, flagSet, exceptionType });
-        };
+        }
+        ;
 
         result.Add(new object?[] {
             (PassengersDataSource, "XXX000"),
@@ -1094,9 +1103,11 @@ internal class SzCoreEngineWriteTest : AbstractTest
     public void TestReevaluateRecordDefaults(
         (string dataSourceCode, string recordID) recordKey)
     {
-        this.PerformTest(() => {
-            try {
-                SzCoreEngine engine = (SzCoreEngine) this.Env.GetEngine();
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
                 string dataSourceCode = recordKey.dataSourceCode;
 
@@ -1104,7 +1115,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
                 string defaultResult = engine.ReevaluateRecord(
                     dataSourceCode, recordID);
-                    
+
                 String explicitResult = engine.ReevaluateRecord(
                     dataSourceCode, recordID, SzReevaluateRecordDefaultFlags);
 
@@ -1121,7 +1132,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
                                                              recordID,
                                                              nativeFlags);
 
-                if (returnCode != 0) {
+                if (returnCode != 0)
+                {
                     Fail("Errant return code from native function: " +
                          engine.GetNativeApi().GetLastExceptionCode()
                          + " / " + engine.GetNativeApi().GetLastException());
@@ -1134,12 +1146,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 Assert.That(defaultResult, Is.EqualTo(nativeResult),
                     "Explicitly setting default flags yields a different result "
                     + "than omitting the flags parameter to the native function.");
-            
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 Fail("Unexpectedly failed reevaluating record", e);
             }
         });
-    }    
+    }
 
     public static List<object?[]> GetReevaluateEntityArguments()
     {
@@ -1298,18 +1312,20 @@ internal class SzCoreEngineWriteTest : AbstractTest
         });
     }
 
-   [Test, TestCaseSource(nameof(GetReevaluateEntityDefaultArguments)), Order(51)]
+    [Test, TestCaseSource(nameof(GetReevaluateEntityDefaultArguments)), Order(51)]
     public void TestReevaluateEntityDefaults(
-        Func<SzCoreEngineWriteTest, long> entityIDFunc)
+         Func<SzCoreEngineWriteTest, long> entityIDFunc)
     {
-        this.PerformTest(() => {
-            try {
-                SzCoreEngine engine = (SzCoreEngine) this.Env.GetEngine();
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
                 long entityID = entityIDFunc(this);
 
                 string defaultResult = engine.ReevaluateEntity(entityID);
-                    
+
                 String explicitResult = engine.ReevaluateEntity(
                     entityID, SzReevaluateEntityDefaultFlags);
 
@@ -1324,7 +1340,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
                     : engine.GetNativeApi().ReevaluateEntity(entityID,
                                                              nativeFlags);
 
-                if (returnCode != 0) {
+                if (returnCode != 0)
+                {
                     Fail("Errant return code from native function: " +
                          engine.GetNativeApi().GetLastExceptionCode()
                          + " / " + engine.GetNativeApi().GetLastException());
@@ -1337,8 +1354,10 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 Assert.That(defaultResult, Is.EqualTo(nativeResult),
                     "Explicitly setting default flags yields a different result "
                     + "than omitting the flags parameter to the native function.");
-            
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 Fail("Unexpectedly failed reevaluating record", e);
             }
         });
@@ -1378,7 +1397,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
             }
             errorCase++;
             result.Add(new object?[] { paramKey, flagSet, exceptionType });
-        };
+        }
+        ;
 
         return result;
     }
@@ -1494,9 +1514,11 @@ internal class SzCoreEngineWriteTest : AbstractTest
     public void TestDeleteRecordDefaults(
         (string dataSourceCode, string recordID) recordKey)
     {
-        this.PerformTest(() => {
-            try {
-                SzCoreEngine engine = (SzCoreEngine) this.Env.GetEngine();
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
                 string dataSourceCode = recordKey.dataSourceCode;
 
@@ -1504,7 +1526,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
                 string defaultResult = engine.DeleteRecord(
                     dataSourceCode, recordID);
-                    
+
                 String explicitResult = engine.DeleteRecord(
                     dataSourceCode, recordID, SzDeleteRecordDefaultFlags);
 
@@ -1520,7 +1542,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
                     : engine.GetNativeApi().DeleteRecord(dataSourceCode,
                                                          recordID);
 
-                if (returnCode != 0) {
+                if (returnCode != 0)
+                {
                     Fail("Errant return code from native function: " +
                          engine.GetNativeApi().GetLastExceptionCode()
                          + " / " + engine.GetNativeApi().GetLastException());
@@ -1533,12 +1556,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 Assert.That(defaultResult, Is.EqualTo(nativeResult),
                     "Explicitly setting default flags yields a different result "
                     + "than omitting the flags parameter to the native function.");
-            
-            } catch (Exception e) {
+
+            }
+            catch (Exception e)
+            {
                 Fail("Unexpectedly failed deleting record", e);
             }
         });
-    }    
+    }
 
     [Test, Order(200)]
     public void TestCountRedoRecordsZero()

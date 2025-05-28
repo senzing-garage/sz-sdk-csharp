@@ -1137,8 +1137,8 @@ internal class SzCoreEngineWhyTest : AbstractTest
 
                 string explicitResult = (searchProfile == null)
                     ? engine.WhySearch(attributes,
-                                       entityID,   
-                                       flags:SzWhySearchDefaultFlags)
+                                       entityID,
+                                       flags: SzWhySearchDefaultFlags)
                     : engine.WhySearch(attributes,
                                        entityID,
                                        searchProfile,
@@ -1146,7 +1146,7 @@ internal class SzCoreEngineWhyTest : AbstractTest
 
                 long returnCode = engine.GetNativeApi().WhySearch(
                     attributes, entityID, searchProfile, out string nativeResult);
-                        
+
 
                 if (returnCode != 0)
                 {
