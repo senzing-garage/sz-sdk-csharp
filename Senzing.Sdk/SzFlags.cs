@@ -213,6 +213,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
         public const SzFlag SzRecordAllFlags
             = SzFlag.SzEntityIncludeInternalFeatures
+                | SzFlag.SzEntityIncludeRecordFeatures
                 | SzFlag.SzEntityIncludeRecordFeatureDetails
                 | SzFlag.SzEntityIncludeRecordFeatureStats
                 | SzFlag.SzEntityIncludeRecordDates
@@ -228,6 +229,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/>
         public const SzFlag SzPreprocessRecordAllFlags
             = SzFlag.SzEntityIncludeInternalFeatures
+                | SzFlag.SzEntityIncludeRecordFeatures
                 | SzFlag.SzEntityIncludeRecordFeatureDetails
                 | SzFlag.SzEntityIncludeRecordFeatureStats
                 | SzFlag.SzEntityIncludeRecordJsonData

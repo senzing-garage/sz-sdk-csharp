@@ -173,6 +173,9 @@ namespace Senzing.Sdk
         ///     <description><see cref="SzFlag.SzEntityIncludeInternalFeatures"/></description>
         ///   </item>
         ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatures"/></description>
+        ///   </item>
+        ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/></description>
         ///   </item>
         ///   <item>
@@ -215,6 +218,9 @@ namespace Senzing.Sdk
         /// <list>
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeInternalFeatures"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatures"/></description>
         ///   </item>
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeRecordFeatureDetails"/></description>
