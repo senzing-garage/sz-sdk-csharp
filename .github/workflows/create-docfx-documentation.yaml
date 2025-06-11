@@ -36,6 +36,8 @@ jobs:
           senzingsdk-repository-path: ${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_URL }}
 
       - name: Run docfx
+        env:
+          LD_LIBRARY_PATH: "/opt/senzing/er/lib"
         run: |
           dotnet tool restore
           dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
