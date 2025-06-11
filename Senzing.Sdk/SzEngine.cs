@@ -450,7 +450,7 @@ namespace Senzing.Sdk
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
         /// <summary>
-        /// This method is equivalent to calling
+        /// Convenience method for calling
         /// <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// with a <c>null</c> value for the search profile parameter.
         /// </summary>
