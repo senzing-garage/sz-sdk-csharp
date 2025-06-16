@@ -71,7 +71,7 @@ namespace Senzing.Sdk.Core
         /// The dictionary does not store entries that map to <see cref="SzException"/>
         /// since that is the default for any error code not otherwise mapped.
         /// </remarks>
-        private static readonly ReadOnlyDictionary<long, Type> ExceptionMap;
+        internal static readonly ReadOnlyDictionary<long, Type> ExceptionMap;
 
         /// <summary>
         /// The class initializer.
@@ -541,23 +541,48 @@ namespace Senzing.Sdk.Core
             string message = nativeApi.GetLastException();
             nativeApi.ClearLastException();
 
+            // create the appropriate exception
+            throw CreateSzException(errorCode, message);
+        }
+
+
+        /// <summary>
+        /// Creates the appropriate <see cref="SzException"/> instance for the
+        /// specified error code. 
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// If there is a failure in creating the <see cref="SzException"/> 
+        /// instance, then a generic <see cref="SzException"/> is created with 
+        /// the specified parameters and "caused by" exception describing the
+        /// failure.  
+        /// </remarks>
+        /// 
+        /// <param name="errorCode">
+        /// The error code to use to determine the specific type for the
+        /// <see cref="SzException"/> instance.
+        /// </param>
+        /// 
+        /// <param name="message">
+        /// The error message to associate with the exception.
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public static SzException CreateSzException(long errorCode, string message)
+        {
             // get the exception class
             Type exceptionType = ExceptionMap.ContainsKey(errorCode)
                 ? ExceptionMap[errorCode] : typeof(SzException);
 
             try
             {
-                throw (SzException)Activator.CreateInstance(exceptionType,
+                return (SzException)Activator.CreateInstance(exceptionType,
                                                              errorCode,
                                                              message);
             }
-            catch (SzException)
-            {
-                throw;
-            }
             catch (Exception e)
             {
-                throw new SzException(errorCode, message, e);
+                return new SzException(errorCode, message, e);
             }
         }
 

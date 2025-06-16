@@ -1,10 +1,72 @@
 namespace Senzing.Sdk.Tests.Util;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using System.Text;
 
 public static class TextUtilities
 {
+    /// <summary>
+    /// A list of alpha-numeric characters.
+    /// </summary>
+    private static readonly ReadOnlyCollection<char> AlphanumericChars;
+
+    static TextUtilities()
+    {
+        // round-about way to grab all ASCII alphanumeric characters without
+        // using literal constants which linters may flag as magic values
+        List<char> chars = new List<char>();
+        for (int index = 0; Char.IsAscii((char)index); index++)
+        {
+            char c = (char)index;
+            if (Char.IsAsciiLetterOrDigit(c))
+            {
+                chars.Add(c);
+            }
+        }
+        AlphanumericChars = new ReadOnlyCollection<char>(chars);
+    }
+
+    /// <summary>
+    /// Utility function to generate random ASCII alpha-numeric text of a
+    /// specified length.
+    /// </summary>
+    /// 
+    /// <param name="count">
+    /// The number of characters to generate.
+    /// </param>
+    /// 
+    /// <returns>The generated text</returns>
+    public static string RandomAlphanumericText(int count)
+    {
+        return RandomText(count, AlphanumericChars);
+    }
+
+    /// <summary>
+    /// Internal functions to generate random text given a list of allowed
+    /// characters and a count of the number of desired characters.
+    /// </summary>
+    /// 
+    /// <param name="count">
+    /// The numnber of characters to generate.
+    /// </param>
+    /// 
+    /// <param name="allowedChars">
+    /// The <see cref="List"/> of characters in the
+    /// </param>
+    private static string RandomText(int count, IList<char> allowedChars)
+    {
+        StringBuilder sb = new StringBuilder();
+        int max = allowedChars.Count;
+        for (int index = 0; index < count; index++)
+        {
+            sb.Append(allowedChars[RandomNumberGenerator.GetInt32(max)]);
+        }
+        return sb.ToString();
+    }
+
+
     /// <summary>
     /// Parses the CSV line.
     /// </summary>
