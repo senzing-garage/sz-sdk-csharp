@@ -4,12 +4,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
 
 using Senzing.Sdk.Core;
+
+using static Senzing.Sdk.Core.SzCoreEnvironment;
+using static Senzing.Sdk.Tests.Util.TextUtilities;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
@@ -1170,6 +1174,39 @@ internal class SzCoreEnvironmentTest : AbstractTest
             {
                 if (env != null) env.Destroy();
             }
+        });
+    }
+
+    public static List<object?[]> GetCreateSzExceptionParameters() {
+
+        List<object?[]> result = new List<object?[]>(ExceptionMap.Count);
+        foreach (KeyValuePair<long, Type> pair in ExceptionMap) {
+            string randomMessage = RandomAlphanumericText(20);
+            long errorCode = pair.Key;
+            Type exceptionType = pair.Value;
+            result.Add(new object?[] { errorCode, exceptionType, randomMessage });
+        }
+        return result;
+    }
+
+
+    [Test, TestCaseSource(nameof(GetCreateSzExceptionParameters))]
+    public void TestCreateSzException(long      errorCode,
+                                      Type      exceptionType,
+                                      String    errorMessage)
+    {
+        this.PerformTest(() =>
+        {
+            
+            SzException e = SzCoreEnvironment.CreateSzException(errorCode, errorMessage);
+            
+            Assert.IsInstanceOf(exceptionType, e,
+                                "Type of exception is not as expected");
+            SzException sze = (SzException)e;
+            Assert.That(sze.ErrorCode, Is.EqualTo(errorCode),
+                        "Error code of exception is not as expected");
+            Assert.That(e.Message, Is.EqualTo(errorMessage),
+                        "Error message of exception is not as expected");
         });
     }
 
