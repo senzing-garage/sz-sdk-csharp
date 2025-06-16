@@ -1177,10 +1177,12 @@ internal class SzCoreEnvironmentTest : AbstractTest
         });
     }
 
-    public static List<object?[]> GetCreateSzExceptionParameters() {
+    public static List<object?[]> GetCreateSzExceptionParameters()
+    {
 
         List<object?[]> result = new List<object?[]>(ExceptionMap.Count);
-        foreach (KeyValuePair<long, Type> pair in ExceptionMap) {
+        foreach (KeyValuePair<long, Type> pair in ExceptionMap)
+        {
             string randomMessage = RandomAlphanumericText(20);
             long errorCode = pair.Key;
             Type exceptionType = pair.Value;
@@ -1191,15 +1193,15 @@ internal class SzCoreEnvironmentTest : AbstractTest
 
 
     [Test, TestCaseSource(nameof(GetCreateSzExceptionParameters))]
-    public void TestCreateSzException(long      errorCode,
-                                      Type      exceptionType,
-                                      String    errorMessage)
+    public void TestCreateSzException(long errorCode,
+                                      Type exceptionType,
+                                      String errorMessage)
     {
         this.PerformTest(() =>
         {
-            
+
             SzException e = SzCoreEnvironment.CreateSzException(errorCode, errorMessage);
-            
+
             Assert.IsInstanceOf(exceptionType, e,
                                 "Type of exception is not as expected");
             SzException sze = (SzException)e;

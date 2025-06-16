@@ -55,10 +55,12 @@ public static class TextUtilities
     /// <param name="allowedChars">
     /// The <see cref="List"/> of characters in the
     /// </param>
-    private static string RandomText(int count, IList<char> allowedChars) {
+    private static string RandomText(int count, IList<char> allowedChars)
+    {
         StringBuilder sb = new StringBuilder();
         int max = allowedChars.Count;
-        for (int index = 0; index < count; index++) {
+        for (int index = 0; index < count; index++)
+        {
             sb.Append(allowedChars[RandomNumberGenerator.GetInt32(max)]);
         }
         return sb.ToString();
