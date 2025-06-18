@@ -6,7 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## [4.0.0-beta.3.0] - 2025-04-30
 
 ### Changed in 4.0.0-beta.3.0
@@ -14,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added compiled examples in API documentation with `Senzing.Sdk.Demo` module.
 - Refactored `SzConfig` and `SzConfigManager` so that `SzConfig` now
   represents a configuration and is subordinate to `SzConfigManager`.
-- Added `WhySearch()` funtionality and updated flags
+- Added `WhySearch()` functionality and updated flags
 - Updated `SzExceptionMapper` with latest exception mappings.
 
 ## [4.0.0-beta.2.0] - 2025-02-14
@@ -30,25 +29,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed versioning to match major version of Senzing 4.0 product with beta suffix.
 - Made changes to return `null` when INFO is **not** requested.
-- Added full 
+- Added full
 - Patched `SzCoreEngine.ReevaluateEntity()` to return place-holder `NoInfo` when
   INFO requested, but entity not found (pending fix to native engine function).
 - Added new engine flags:
-    - `SzSearchIncludeAllCandidates`
-    - `SzSearchIncludeRequest`
-    - `SzSearchIncludeRequestDetails`
+  - `SzSearchIncludeAllCandidates`
+  - `SzSearchIncludeRequest`
+  - `SzSearchIncludeRequestDetails`
 - Added full exception hierarchy:
-    - `SzConfigurationException`
-    - `SzRetryableException`
-        - `SzDatabaseConnectionLostException`
-        - `SzRetryTimeoutExceededException`
-    - `SzUnrecoverableException`
-        - `SzDatabaseException`
-        - `SzLicenseException`
-        - `SzNotInitializedException`
-        - `SzUnhandledException`
-- Added full error code to exception mapping from `szerrors.json`    
-    
+  - `SzConfigurationException`
+  - `SzRetryableException`
+    - `SzDatabaseConnectionLostException`
+    - `SzRetryTimeoutExceededException`
+  - `SzUnrecoverableException`
+    - `SzDatabaseException`
+    - `SzLicenseException`
+    - `SzNotInitializedException`
+    - `SzUnhandledException`
+- Added full error code to exception mapping from `szerrors.json`  
+
+
 ## [0.9.1] - 2025-01-10
 
 ### Changed in 0.9.1

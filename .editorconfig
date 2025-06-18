@@ -380,7 +380,7 @@ dotnet_diagnostic.CA1031.severity = none;
 # Test suite code is not really published so "externally visible" nested classes are fine
 dotnet_diagnostic.CA1034.severity = none;
 
-# No plans to localize strings in test sutie -- literal strings used for output
+# No plans to localize strings in test suite -- literal strings used for output
 dotnet_diagnostic.CA1303.severity = none
 
 # sometimes you want a static constructor to initialize static fields
@@ -399,6 +399,6 @@ dotnet_diagnostic.CA1854.severity = NONE
 # is used rather than allowing access to non-interface methods.
 dotnet_diagnostic.CA1859.severity = NONE
 
-# Nobody cares about the miniscual performance improvement gained by marking 
+# Nobody cares about the miniscule performance improvement gained by marking 
 # some test classes as "sealed" -- in fact it causes problems for later development
 dotnet_diagnostic.CA1852.severity = NONE
