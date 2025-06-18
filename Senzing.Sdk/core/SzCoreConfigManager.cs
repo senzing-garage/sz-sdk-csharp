@@ -456,7 +456,7 @@ namespace Senzing.Sdk.Core
         /// <c>SzConfigMgr_getConfigList_helper"</c> via
         /// <see cref="NativeConfigManager.GetConfigList(out string)"/>. 
         /// </summary>
-        public string GetConfigs()
+        public string GetConfigRegistry()
         {
             return this.env.Execute(() =>
             {
