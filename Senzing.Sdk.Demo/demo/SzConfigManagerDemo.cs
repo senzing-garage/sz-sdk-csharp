@@ -299,11 +299,11 @@ internal class SzConfigManagerDemo : AbstractTest
     }
 
     [Test]
-    public void GetConfigsDemo()
+    public void GetConfigRegistryDemo()
     {
         try
         {
-            // @start GetConfigs
+            // @start GetConfigRegistry
             // How to get a JSON document describing all registered configs
             try
             {
@@ -314,10 +314,10 @@ internal class SzConfigManagerDemo : AbstractTest
                 SzConfigManager configMgr = env.GetConfigManager();
 
                 // get the config definition for the config ID
-                string configsJson = configMgr.GetConfigs();
+                string configRegistry = configMgr.GetConfigRegistry();
 
                 // do something with the returned JSON (e.g.: parse it and extract values)
-                JsonObject? jsonObj = JsonNode.Parse(configsJson)?.AsObject();
+                JsonObject? jsonObj = JsonNode.Parse(configRegistry)?.AsObject();
 
                 JsonArray? jsonArr = jsonObj?["CONFIGS"]?.AsArray();
 

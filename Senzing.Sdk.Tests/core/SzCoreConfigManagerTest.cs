@@ -387,7 +387,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             {
                 SzConfigManager configMgr = this.Env.GetConfigManager();
 
-                string result = configMgr.GetConfigs();
+                string result = configMgr.GetConfigRegistry();
 
                 JsonObject jsonObj = ParseJsonObject(result);
 

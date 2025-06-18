@@ -207,7 +207,7 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzConfigManagerDemo_GetConfigs.xml" path="/*"/>
+        /// <include file="../target/examples/SzConfigManagerDemo_GetConfigRegistry.xml" path="/*"/>
         /// </example>
         ///
         /// <returns>
@@ -219,7 +219,7 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
-        string GetConfigs();
+        string GetConfigRegistry();
 
         /// <summary>
         /// Gets the configuration ID of the default configuration for the
