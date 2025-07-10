@@ -27,13 +27,13 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzDiagnosticDemo_GetDatastoreInfo.xml" path="/*"/>
+        /// <include file="../target/examples/SzDiagnosticDemo_GetRepositoryInfo.xml" path="/*"/>
         /// </example>
         ///
         /// <returns>A JSON <c>string</c> describing the datastore.</returns>
         ///
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
-        string GetDatastoreInfo();
+        string GetRepositoryInfo();
 
         /// <summary>
         /// Runs non-destruction DB performance tests and returns detail of the 
@@ -46,7 +46,7 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzDiagnosticDemo_CheckDatastorePerformance.xml" path="/*"/>
+        /// <include file="../target/examples/SzDiagnosticDemo_CheckRepositoryPerformance.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>
@@ -54,7 +54,7 @@ namespace Senzing.Sdk
         /// </returns>
         ///
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
-        string CheckDatastorePerformance(int secondsToRun);
+        string CheckRepositoryPerformance(int secondsToRun);
 
         /// <summary>
         /// Purges all data in the configured repository.

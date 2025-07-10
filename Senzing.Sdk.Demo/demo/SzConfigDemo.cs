@@ -221,12 +221,12 @@ internal class SzConfigDemo : AbstractTest
     }
 
     [Test]
-    public void getDataSourcesDemo()
+    public void getDataSourceRegistryDemo()
     {
         try
         {
-            // @start GetDataSources
-            // How to get the data sources from an in-memory config
+            // @start GetDataSourceRegistry
+            // How to get the data source registry from an in-memory config
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -239,7 +239,7 @@ internal class SzConfigDemo : AbstractTest
                 SzConfig config = configMgr.CreateConfig();
 
                 // get the data sources
-                String sourcesJson = config.GetDataSources();
+                String sourcesJson = config.GetDataSourceRegistry();
 
                 // do something with the returned JSON (e.g.: parse it and extract values)
                 JsonObject? jsonObj = JsonNode.Parse(sourcesJson)?.AsObject();
@@ -276,12 +276,12 @@ internal class SzConfigDemo : AbstractTest
     }
 
     [Test]
-    public void AddDataSourceDemo()
+    public void RegisterDataSourceDemo()
     {
         try
         {
-            // @start AddDataSource
-            // How to add data sources to an in-memory config
+            // @start RegisterDataSource
+            // How to register data sources with an in-memory config
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -294,9 +294,9 @@ internal class SzConfigDemo : AbstractTest
                 SzConfig config = configMgr.CreateConfig();
 
                 // add data sources to the config
-                config.AddDataSource("CUSTOMERS");
-                config.AddDataSource("EMPLOYEES");
-                config.AddDataSource("WATCHLIST");
+                config.RegisterDataSource("CUSTOMERS");
+                config.RegisterDataSource("EMPLOYEES");
+                config.RegisterDataSource("WATCHLIST");
 
                 Assert.That(config, Is.Not.Null); // @replace . . .
 
@@ -306,7 +306,7 @@ internal class SzConfigDemo : AbstractTest
                 // handle or rethrow the exception
                 LogError("Failed to add data sources.", e);
             }
-            // @end region = "addDataSource"
+            // @end
 
         }
         catch (Exception e)
@@ -316,12 +316,12 @@ internal class SzConfigDemo : AbstractTest
     }
 
     [Test]
-    public void DeleteDataSourceDemo()
+    public void UnregisterDataSourceDemo()
     {
         try
         {
-            // @start DeleteDataSource
-            // How to delete a data source from an in-memory config
+            // @start UnregisterDataSource
+            // How to unregister a data source from an in-memory config
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -334,7 +334,7 @@ internal class SzConfigDemo : AbstractTest
                 SzConfig config = configMgr.CreateConfig();
 
                 // delete the data source from the config
-                config.DeleteDataSource("CUSTOMERS");
+                config.UnregisterDataSource("CUSTOMERS");
 
                 Assert.That(config, Is.Not.Null); // @replace . . .
 
@@ -344,7 +344,7 @@ internal class SzConfigDemo : AbstractTest
                 // handle or rethrow the exception
                 LogError("Failed to delete data source.", e);
             }
-            // @end region = "deleteDataSource"
+            // @end
 
         }
         catch (Exception e)

@@ -90,6 +90,8 @@
         "UTYPE",
         "WATCHLIST",
         "XLITERATOR",
+        "UNREGISTER",
+        "UNREGISTERS"
     ],
     "ignorePaths": [
         ".git",

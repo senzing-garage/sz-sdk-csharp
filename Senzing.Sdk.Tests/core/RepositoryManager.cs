@@ -604,13 +604,13 @@ public static class RepositoryManager
                     long returnCode = ConfigApi.Create(out IntPtr configHandle);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfig.create()", ConfigApi);
+                        String msg = LogError("NativeConfig.Create()", ConfigApi);
                         throw new InvalidOperationException(msg);
                     }
-                    returnCode = ConfigApi.Save(configHandle, out string configJsonText);
+                    returnCode = ConfigApi.Export(configHandle, out string configJsonText);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfig.save()", ConfigApi);
+                        String msg = LogError("NativeConfig.Export()", ConfigApi);
                         throw new InvalidOperationException(msg);
                     }
                     ConfigApi.Close(configHandle);
@@ -622,12 +622,12 @@ public static class RepositoryManager
                     }
                     JsonObject resultConfig = ((JsonNode)node).AsObject();
 
-                    returnCode = ConfigManagerApi.AddConfig(configJsonText,
+                    returnCode = ConfigManagerApi.RegisterConfig(configJsonText,
                                                           "Initial Config",
                                                           out long resultConfigID);
                     if (returnCode != 0)
                     {
-                        String msg = LogError("NativeConfigManager.AddConfig()",
+                        String msg = LogError("NativeConfigManager.RegisterConfig()",
                                                 ConfigManagerApi);
                         throw new InvalidOperationException(msg);
                     }
@@ -843,7 +843,7 @@ public static class RepositoryManager
 
     private static ISet<string> DoGetDataSources(IntPtr configHandle)
     {
-        long returnCode = ConfigApi.ListDataSources(
+        long returnCode = ConfigApi.GetDataSourceRegistry(
             configHandle, out string resultJson);
         if (returnCode != 0)
         {
@@ -1781,10 +1781,10 @@ public static class RepositoryManager
 
         long returnCode = 0;
         string configJsonText = configJson.ToJsonString();
-        returnCode = ConfigManagerApi.AddConfig(configJsonText, comment, out long resultConfigID);
+        returnCode = ConfigManagerApi.RegisterConfig(configJsonText, comment, out long resultConfigID);
         if (returnCode != 0)
         {
-            LogError("NativeConfigManager.AddConfig()", ConfigManagerApi);
+            LogError("NativeConfigManager.RegisterConfig()", ConfigManagerApi);
             return null;
         }
         returnCode = ConfigManagerApi.SetDefaultConfigID(resultConfigID);
@@ -1926,12 +1926,12 @@ public static class RepositoryManager
                 JsonObject jsonObj = new JsonObject();
                 JsonValue jsonVal = JsonValue.Create(dataSourceCode);
                 jsonObj.Add("DSRC_CODE", jsonVal);
-                returnCode = ConfigApi.AddDataSource(
+                returnCode = ConfigApi.RegisterDataSource(
                     handle, jsonObj.ToJsonString(), out string addResult);
                 if (returnCode != 0)
                 {
-                    LogError("NativeConfig.AddDataSource()", ConfigApi);
-                    throw new TestException("NativeConfig.AddDataSource() failed");
+                    LogError("NativeConfig.RegisterDataSource()", ConfigApi);
+                    throw new TestException("NativeConfig.RegisterDataSource() failed");
                 }
                 dataSourceActions.Add(dataSourceCode, true);
                 addedDataSources.Add(dataSourceCode);
@@ -2031,19 +2031,19 @@ public static class RepositoryManager
     {
         // write the modified config to a string buffer
         string? configJsonText = null;
-        long returnCode = ConfigApi.Save(configHandle, out configJsonText);
+        long returnCode = ConfigApi.Export(configHandle, out configJsonText);
         if (returnCode != 0)
         {
-            LogError("NativeConfig.Save()", ConfigApi);
-            throw new TestException("NativeConfig.Save() failed");
+            LogError("NativeConfig.Export()", ConfigApi);
+            throw new TestException("NativeConfig.Export() failed");
         }
 
-        returnCode = ConfigManagerApi.AddConfig(configJsonText, comment, out resultConfig);
+        returnCode = ConfigManagerApi.RegisterConfig(configJsonText, comment, out resultConfig);
 
         if (returnCode != 0)
         {
-            LogError("NativeConfigManager.AddConfig()", ConfigManagerApi);
-            throw new TestException("NativeConfigManager.AddConfig() failed");
+            LogError("NativeConfigManager.RegisterConfig()", ConfigManagerApi);
+            throw new TestException("NativeConfigManager.RegisterConfig() failed");
         }
 
         returnCode = ConfigManagerApi.SetDefaultConfigID(resultConfig);

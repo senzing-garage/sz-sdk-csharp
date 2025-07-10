@@ -208,12 +208,12 @@ internal class SzDiagnosticDemo : AbstractTest
     }
 
     [Test, Order(20)]
-    public void GetDatastoreInfoDemo()
+    public void GetRepositoryInfoDemo()
     {
         try
         {
-            // @start GetDatastoreInfo
-            // How to get datastore info via SzDiagnostic
+            // @start GetRepositoryInfo
+            // How to get repository info via SzDiagnostic
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -222,17 +222,17 @@ internal class SzDiagnosticDemo : AbstractTest
                 // get the diagnostic instance
                 SzDiagnostic diagnostic = env.GetDiagnostic();
 
-                // get the datastore info
-                string datastoreJson = diagnostic.GetDatastoreInfo();
+                // get the repository info
+                string repositoryJson = diagnostic.GetRepositoryInfo();
 
                 // do something with the returned JSON (varies by application)
-                Log(datastoreJson);
+                Log(repositoryJson);
 
             }
             catch (SzException e)
             {
                 // handle or rethrow the exception
-                LogError("Failed to get the datastore info.", e);
+                LogError("Failed to get the repository info.", e);
             }
             // @end
 
@@ -244,12 +244,12 @@ internal class SzDiagnosticDemo : AbstractTest
     }
 
     [Test, Order(30)]
-    public void CheckDatastorePerformanceDemo()
+    public void CheckRepositoryPerformanceDemo()
     {
         try
         {
-            // @start CheckDatastorePerformance
-            // How to get datastore info via SzDiagnostic
+            // @start CheckRepositoryPerformance
+            // How to get repository info via SzDiagnostic
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -258,8 +258,8 @@ internal class SzDiagnosticDemo : AbstractTest
                 // get the diagnostic instance
                 SzDiagnostic diagnostic = env.GetDiagnostic();
 
-                // check the datastore performance
-                string performanceJson = diagnostic.CheckDatastorePerformance(10);
+                // check the repository performance
+                string performanceJson = diagnostic.CheckRepositoryPerformance(10);
 
                 // do something with the returned JSON (varies by application)
                 Log(performanceJson);
@@ -268,7 +268,7 @@ internal class SzDiagnosticDemo : AbstractTest
             catch (SzException e)
             {
                 // handle or rethrow the exception
-                LogError("Failed to check the datastore performance.", e);
+                LogError("Failed to check the repository performance.", e);
             }
             // @end
 

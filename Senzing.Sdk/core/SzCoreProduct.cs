@@ -102,7 +102,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the native <c>G2Product_license()</c>
-        /// function via <see cref="NativeProductExtern.License"/> 
+        /// function via <see cref="NativeProductExtern.GetLicense"/> 
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>
@@ -110,13 +110,13 @@ namespace Senzing.Sdk.Core
         {
             return this.env.Execute(() =>
             {
-                return this.nativeApi.License();
+                return this.nativeApi.GetLicense();
             });
         }
 
         /// <summary>
         /// Implemented to call the native <c>G2Product_version()</c>
-        /// function via <see cref="NativeProductExtern.Version"/>.
+        /// function via <see cref="NativeProductExtern.GetVersion"/>.
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>
@@ -124,7 +124,7 @@ namespace Senzing.Sdk.Core
         {
             return this.env.Execute(() =>
             {
-                return this.nativeApi.Version();
+                return this.nativeApi.GetVersion();
             });
         }
     }

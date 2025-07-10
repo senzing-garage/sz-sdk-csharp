@@ -433,7 +433,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -448,7 +448,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeRecordJsonData = (1L << 16),
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -474,7 +474,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeRecordUnmappedData = (1L << 31),
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -500,7 +500,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeRecordFeatures = (1L << 18),
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -526,7 +526,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeRecordFeatureDetails = (1L << 35),
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -552,7 +552,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeRecordFeatureStats = (1L << 36),
 
         /// <summary>
@@ -677,7 +677,7 @@ namespace Senzing.Sdk
         /// This flag belongs to the following usage groups:
         /// <list>
         ///    <item>
-        ///      <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
         ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
@@ -692,7 +692,7 @@ namespace Senzing.Sdk
         /// </list>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzPreprocessSet)]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
         SzEntityIncludeInternalFeatures = (1L << 23),
 
         /// <summary>

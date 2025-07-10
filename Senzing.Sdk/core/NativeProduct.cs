@@ -43,13 +43,13 @@ namespace Senzing.Sdk.Core
         /// </summary>
         ///
         /// <returns>The JSON document describing the license details.</returns>
-        string License();
+        string GetLicense();
 
         /// <summary>
         /// Returns the currently installed version details.
         /// </summary>
         ///
         /// <returns>A JSON document describing version details.</returns>
-        string Version();
+        string GetVersion();
     }
 }

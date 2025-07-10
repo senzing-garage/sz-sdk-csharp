@@ -58,7 +58,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long AddConfig(string configStr, string configComments, out long configID);
+        long RegisterConfig(string configStr, string configComments, out long configID);
 
         /// <summary>
         /// Gets the configuration with the specified config ID and sets the 
@@ -113,7 +113,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long GetConfigList(out string response);
+        long GetConfigRegistry(out string response);
 
         /// <summary>
         /// Sets the default configuration for the repository to the specified

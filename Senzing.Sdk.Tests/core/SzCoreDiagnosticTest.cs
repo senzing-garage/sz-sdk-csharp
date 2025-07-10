@@ -224,7 +224,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
                                    TestRecordID,
                                    FLAGS,
                                    out string entityJSON);
-        string dataStoreInfo = this.Env.GetDiagnostic().GetDatastoreInfo();
+        string dataStoreInfo = this.Env.GetDiagnostic().GetRepositoryInfo();
     }
 
     [OneTimeTearDown]
@@ -276,7 +276,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
             {
                 SzDiagnostic diagnostic = this.Env.GetDiagnostic();
 
-                string result = diagnostic.GetDatastoreInfo();
+                string result = diagnostic.GetRepositoryInfo();
 
                 // parse the result as JSON and check that it parses
                 ParseJsonObject(result);
@@ -299,7 +299,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
             {
                 SzDiagnostic diagnostic = this.Env.GetDiagnostic();
 
-                string result = diagnostic.CheckDatastorePerformance(5);
+                string result = diagnostic.CheckRepositoryPerformance(5);
 
                 // parse the result as JSON and check that it parses
                 ParseJsonObject(result);
@@ -350,7 +350,7 @@ internal class SzCoreDiagnosticTest : AbstractTest
             }
             catch (Exception e)
             {
-                String dataStoreInfo = this.Env.GetDiagnostic().GetDatastoreInfo();
+                String dataStoreInfo = this.Env.GetDiagnostic().GetRepositoryInfo();
                 NativeEngine engine = ((SzCoreEngine)this.Env.GetEngine()).GetNativeApi();
                 long returnCode = engine.GetEntityByRecordID(TestDataSource,
                                                              TestRecordID,

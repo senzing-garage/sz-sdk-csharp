@@ -68,7 +68,7 @@ namespace Senzing.Sdk
         /// If a failure occurs.
         /// </exception>
         /// 
-        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</seealso> 
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</seealso> 
         string Export();
 
@@ -97,7 +97,7 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzConfigDemo_GetDataSources.xml" path="/*"/>
+        /// <include file="../target/examples/SzConfigDemo_GetDataSourceRegistry.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>
@@ -108,10 +108,10 @@ namespace Senzing.Sdk
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
-        string GetDataSources();
+        string GetDataSourceRegistry();
 
         /// <summary>
-        /// Adds a new data source that is identified by the specified data source
+        /// Registers a new data source that is identified by the specified data source
         /// code to this configuration.  An exception is thrown if the data source
         /// already exists in the configuration.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzConfigDemo_AddDataSource.xml" path="/*"/>
+        /// <include file="../target/examples/SzConfigDemo_RegisterDataSource.xml" path="/*"/>
         /// </example>
         ///
         /// <returns>
@@ -134,11 +134,11 @@ namespace Senzing.Sdk
         /// If a failure occurs.
         /// </exception>
         /// 
-        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/AddDataSources/Program.cs">Code Snippet: Add Data Sources</seealso> 
-        string AddDataSource(string dataSourceCode);
+        /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</seealso> 
+        string RegisterDataSource(string dataSourceCode);
 
         /// <summary>
-        /// Deletes the data source identified by the specified data source code
+        /// Unregisters the data source identified by the specified data source code
         /// from this configuration.
         /// </summary>
         ///
@@ -149,13 +149,13 @@ namespace Senzing.Sdk
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzConfigDemo_DeleteDataSource.xml" path="/*"/>
+        /// <include file="../target/examples/SzConfigDemo_UnregisterDataSource.xml" path="/*"/>
         /// </example>
         ///
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
-        void DeleteDataSource(string dataSourceCode);
+        void UnregisterDataSource(string dataSourceCode);
 
     }
 }

@@ -89,9 +89,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_listDataSources_helper"</c> via 
-        /// <see cref="NativeConfigExtern.ListDataSources(IntPtr, out string)"/>.
+        /// <see cref="NativeConfigExtern.GetDataSourceRegistry(IntPtr, out string)"/>.
         /// </summary>
-        public string GetDataSources()
+        public string GetDataSourceRegistry()
         {
             return this.env.Execute(() =>
             {
@@ -105,7 +105,7 @@ namespace Senzing.Sdk.Core
                 try
                 {
                     // call the underlying C function
-                    returnCode = this.nativeApi.ListDataSources(configHandle,
+                    returnCode = this.nativeApi.GetDataSourceRegistry(configHandle,
                                                                 out string result);
 
                     // handle any error code if there is one
@@ -128,10 +128,10 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <c>SzConfig_addDataSource_helper"</c> via
-        /// <see cref="NativeConfigExtern.AddDataSource(IntPtr, string, out string)"/>. 
+        /// <c>SzConfig_registerDataSource_helper"</c> via
+        /// <see cref="NativeConfigExtern.RegisterDataSource(IntPtr, string, out string)"/>. 
         /// </summary>
-        public string AddDataSource(string dataSourceCode)
+        public string RegisterDataSource(string dataSourceCode)
         {
             return this.env.Execute(() =>
             {
@@ -149,14 +149,14 @@ namespace Senzing.Sdk.Core
                                     + Utilities.JsonEscape(dataSourceCode) + "}";
 
                     // call the underlying C function
-                    returnCode = this.nativeApi.AddDataSource(
+                    returnCode = this.nativeApi.RegisterDataSource(
                         configHandle, inputJson, out string result);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);
 
                     // export the new config
-                    returnCode = this.nativeApi.Save(configHandle, out string configDef);
+                    returnCode = this.nativeApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);
@@ -181,10 +181,10 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <c>SzConfig_deleteDataSource_helper"</c> via
-        /// <see cref="NativeConfigExtern.DeleteDataSource(IntPtr, string)"/>. 
+        /// <c>SzConfig_unregisterDataSource_helper"</c> via
+        /// <see cref="NativeConfigExtern.UnregisterDataSource(IntPtr, string)"/>. 
         /// </summary>
-        public void DeleteDataSource(string dataSourceCode)
+        public void UnregisterDataSource(string dataSourceCode)
         {
             this.env.Execute<object>(() =>
             {
@@ -202,14 +202,14 @@ namespace Senzing.Sdk.Core
                         + Utilities.JsonEscape(dataSourceCode) + "}";
 
                     // call the underlying C function
-                    returnCode = this.nativeApi.DeleteDataSource(
+                    returnCode = this.nativeApi.UnregisterDataSource(
                         configHandle, inputJson);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);
 
                     // export the new config
-                    returnCode = this.nativeApi.Save(configHandle, out string configDef);
+                    returnCode = this.nativeApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.nativeApi);

@@ -122,14 +122,14 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_getDatastoreInfo_helper"</c> via
-        /// <see cref="NativeDiagnosticExtern.GetDatastoreInfo(out string)"/>. 
+        /// <see cref="NativeDiagnosticExtern.GetRepositoryInfo(out string)"/>. 
         /// </summary>
-        public string GetDatastoreInfo()
+        public string GetRepositoryInfo()
         {
             return this.env.Execute(() =>
             {
                 // call the underlying C function
-                long returnCode = this.nativeApi.GetDatastoreInfo(out string info);
+                long returnCode = this.nativeApi.GetRepositoryInfo(out string info);
 
                 // handle any error code if there is one
                 this.env.HandleReturnCode(returnCode, this.nativeApi);
@@ -142,14 +142,14 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_checkDatastorePerformance_helper"</c> via
-        /// <see cref="NativeDiagnosticExtern.CheckDatastorePerformance(int, out string)"/>.
+        /// <see cref="NativeDiagnosticExtern.CheckRepositoryPerformance(int, out string)"/>.
         /// </summary>
-        public string CheckDatastorePerformance(int secondsToRun)
+        public string CheckRepositoryPerformance(int secondsToRun)
         {
             return this.env.Execute(() =>
             {
                 // call the underlying C function
-                long returnCode = this.nativeApi.CheckDatastorePerformance(
+                long returnCode = this.nativeApi.CheckRepositoryPerformance(
                     secondsToRun, out string result);
 
                 // handle any error code if there is one

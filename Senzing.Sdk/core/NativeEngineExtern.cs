@@ -279,16 +279,16 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult Sz_preprocessRecord_helper(
+        private static extern SzPointerResult Sz_getRecordPreview_helper(
             byte[] jsonData, long flags);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="Sz_preprocessRecord_helper"/>. 
+        /// <see cref="Sz_getRecordPreview_helper"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public long PreprocessRecord(string jsonData,
+        public long GetRecordPreview(string jsonData,
                                      long flags,
                                      out string response)
         {
@@ -299,7 +299,7 @@ namespace Senzing.Sdk.Core
             {
                 byte[] jsonBytes = Utilities.StringToUTF8Bytes(jsonData);
 
-                result = Sz_preprocessRecord_helper(jsonBytes, flags);
+                result = Sz_getRecordPreview_helper(jsonBytes, flags);
 
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
@@ -2068,19 +2068,19 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern long Sz_closeExport_helper(IntPtr exportHandle);
+        private static extern long Sz_closeExportReport_helper(IntPtr exportHandle);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="Sz_closeExport_helper"/>.
+        /// <see cref="Sz_closeExportReport_helper"/>.
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long CloseExport(IntPtr exportHandle)
+        public long CloseExportReport(IntPtr exportHandle)
         {
-            return Sz_closeExport_helper(exportHandle);
+            return Sz_closeExportReport_helper(exportHandle);
         }
 
         [DllImport("Sz")]

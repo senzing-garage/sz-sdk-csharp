@@ -146,24 +146,24 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzConfig_save_helper(IntPtr handle);
+        private static extern SzPointerResult SzConfig_export_helper(IntPtr handle);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_save_helper"/>. 
+        /// <see cref="SzConfig_export_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long Save(IntPtr configHandle, out string response)
+        public long Export(IntPtr configHandle, out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
             result.returnCode = 0L;
             try
             {
-                result = SzConfig_save_helper(configHandle);
+                result = SzConfig_export_helper(configHandle);
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
             }
@@ -190,25 +190,25 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzConfig_listDataSources_helper(
+        private static extern SzPointerResult SzConfig_getDataSourceRegistry_helper(
             IntPtr handle);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_listDataSources_helper"/>. 
+        /// <see cref="SzConfig_getDataSourceRegistry_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long ListDataSources(IntPtr configHandle, out string response)
+        public long GetDataSourceRegistry(IntPtr configHandle, out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
             result.returnCode = 0L;
             try
             {
-                result = SzConfig_listDataSources_helper(configHandle);
+                result = SzConfig_getDataSourceRegistry_helper(configHandle);
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
             }
@@ -219,20 +219,20 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzConfig_addDataSource_helper(
+        private static extern SzPointerResult SzConfig_registerDataSource_helper(
             IntPtr handle, byte[] bytes);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_addDataSource_helper"/>.
+        /// <see cref="SzConfig_registerDataSource_helper"/>.
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long AddDataSource(IntPtr configHandle,
-                                  string inputJson,
-                                  out string response)
+        public long RegisterDataSource(IntPtr configHandle,
+                                       string inputJson,
+                                       out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
@@ -240,7 +240,7 @@ namespace Senzing.Sdk.Core
             try
             {
                 byte[] bytes = Utilities.StringToUTF8Bytes(inputJson);
-                result = SzConfig_addDataSource_helper(configHandle, bytes);
+                result = SzConfig_registerDataSource_helper(configHandle, bytes);
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
             }
@@ -251,21 +251,21 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern long SzConfig_deleteDataSource_helper(IntPtr handle,
+        private static extern long SzConfig_unregisterDataSource_helper(IntPtr handle,
                                                                     byte[] bytes);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfig_deleteDataSource_helper"/>.
+        /// <see cref="SzConfig_unregisterDataSource_helper"/>.
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long DeleteDataSource(IntPtr configHandle, string inputJson)
+        public long UnregisterDataSource(IntPtr configHandle, string inputJson)
         {
             byte[] bytes = Utilities.StringToUTF8Bytes(inputJson);
-            return SzConfig_deleteDataSource_helper(configHandle, bytes);
+            return SzConfig_unregisterDataSource_helper(configHandle, bytes);
         }
 
     }
