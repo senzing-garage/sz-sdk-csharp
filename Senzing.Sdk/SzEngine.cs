@@ -155,14 +155,14 @@ namespace Senzing.Sdk
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
-        /// flags belonging to the <see cref="SzPreprocessRecordFlags"/> group will
+        /// flags belonging to the <see cref="SzRecordPreviewFlags"/> group will
         /// be recognized (other <see cref="SzFlag"/> values will be ignored unless
         /// they have equivalent bit flags to recognized flags).
         /// </remarks>
         ///
         /// <example>
         /// Usage:
-        /// <include file="../target/examples/SzEngineDemo_PreprocessRecord.xml" path="/*"/>
+        /// <include file="../target/examples/SzEngineDemo_GetRecordPreview.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="recordDefinition">
@@ -173,21 +173,21 @@ namespace Senzing.Sdk
         /// The optional bitwise-OR'd <see cref="SzFlag"/> values belonging
         /// to the <see cref="SzRecordFlags"/> group to control how the operation
         /// is performed and the content of the response.  Omitting this parameter
-        /// will default its value to <see cref="SzPreprocessRecordDefaultFlags"/>.
+        /// will default its value to <see cref="SzRecordPreviewDefaultFlags"/>.
         /// Specifying <c>null</c> is equivalent to specifying <see cref="SzNoFlags"/>.
         /// </param>
         /// 
         /// <returns>
-        /// The JSON <c>string</c> result produced by preprocessing the record
+        /// The JSON <c>string</c> result produced by getting a record preview
         /// (depending on the specified flags).
         /// </returns>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="SzPreprocessRecordDefaultFlags"/>
-        /// <seealso cref="SzPreprocessRecordFlags"/>
-        string PreprocessRecord(string recordDefinition,
-                                SzFlag? flags = SzPreprocessRecordDefaultFlags);
+        /// <seealso cref="SzRecordPreviewDefaultFlags"/>
+        /// <seealso cref="SzRecordPreviewFlags"/>
+        string GetRecordPreview(string recordDefinition,
+                                SzFlag? flags = SzRecordPreviewDefaultFlags);
 
         /// <summary>
         /// Delete a previously loaded record identified by the specified 
@@ -1504,8 +1504,8 @@ namespace Senzing.Sdk
         /// <summary>
         /// Initiates an export of entity data as JSON-lines format and returns an
         /// "export handle" that can be used to <see cref="FetchNext">read
-        /// the export data</see> and must be <see cref="CloseExport">closed</see>
-        /// when complete.
+        /// the export data</see> and must be 
+        /// <see cref="CloseExportReport">closed</see> when complete.
         /// </summary>
         ///
         /// <remarks>
@@ -1542,15 +1542,15 @@ namespace Senzing.Sdk
         /// <seealso cref="SzExportDefaultFlags"/>
         /// <seealso cref="SzExportFlags"/>
         /// <seealso cref="FetchNext"/>
-        /// <seealso cref="CloseExport"/>
+        /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
         IntPtr ExportJsonEntityReport(SzFlag? flags = SzExportDefaultFlags);
 
         /// <summary>
         /// Initiates an export of entity data in CSV format and returns an
         /// "export handle" that can be used to <see cref="FetchNext">read
-        /// the export data</see> and must be <see cref="CloseExport">closed</see>
-        /// when complete.
+        /// the export data</see> and must be
+        /// <see cref="CloseExportReport">closed</see> when complete.
         /// </summary>
         ///
         /// <remarks>
@@ -1593,7 +1593,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzExportDefaultFlags"/>
         /// <seealso cref="SzExportFlags"/>
         /// <seealso cref="FetchNext"/>
-        /// <seealso cref="CloseExport"/>
+        /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportJsonEntityReport(SzFlag?)"/>
         IntPtr ExportCsvEntityReport(
             string csvColumnList,
@@ -1633,7 +1633,7 @@ namespace Senzing.Sdk
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
-        /// <seealso cref="CloseExport"/>
+        /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportJsonEntityReport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
         string FetchNext(IntPtr exportHandle);
@@ -1667,7 +1667,7 @@ namespace Senzing.Sdk
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="ExportJsonEntityReport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
-        void CloseExport(IntPtr exportHandle);
+        void CloseExportReport(IntPtr exportHandle);
 
         /// <summary>
         /// Processes the specified redo record using the specified flags.

@@ -92,7 +92,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long GetDatastoreInfo(out string response);
+        long GetRepositoryInfo(out string response);
 
         /// <summary>
         /// Runs non-destructive DB performance tests and sets the specified
@@ -110,7 +110,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long CheckDatastorePerformance(int secondsToRun, out string response);
+        long CheckRepositoryPerformance(int secondsToRun, out string response);
 
         /// <summary>
         /// Purges all data in the configured repository.

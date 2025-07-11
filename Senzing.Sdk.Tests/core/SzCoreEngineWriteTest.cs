@@ -564,7 +564,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
             {
                 SzEngine engine = this.Env.GetEngine();
 
-                String result = engine.PreprocessRecord(record.ToString(),
+                String result = engine.GetRecordPreview(record.ToString(),
                                                         flags);
 
                 if (expectedExceptionType != null)
@@ -650,14 +650,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
             {
                 SzCoreEngine engine = (SzCoreEngine)this.Env.GetEngine();
 
-                string defaultResult = engine.PreprocessRecord(record.ToString());
+                string defaultResult = engine.GetRecordPreview(record.ToString());
 
-                string explicitResult = engine.PreprocessRecord(
-                    record.ToString(), SzPreprocessRecordDefaultFlags);
+                string explicitResult = engine.GetRecordPreview(
+                    record.ToString(), SzRecordPreviewDefaultFlags);
 
-                long nativeFlags = (long)SzPreprocessRecordDefaultFlags;
+                long nativeFlags = (long)SzRecordPreviewDefaultFlags;
 
-                long returnCode = engine.GetNativeApi().PreprocessRecord(
+                long returnCode = engine.GetNativeApi().GetRecordPreview(
                     record.ToString(), nativeFlags, out string nativeResult);
 
                 if (returnCode != 0)

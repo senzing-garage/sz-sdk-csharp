@@ -543,7 +543,7 @@ internal class SzCoreEngineReadTest : AbstractTest
         {
             sb.AppendLine(data);
         }
-        engine.CloseExport(exportHandle);
+        engine.CloseExportReport(exportHandle);
         return sb.ToString();
     }
 
@@ -581,7 +581,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 IntPtr invalidHandle = handle;
                 try
                 {
-                    engine.CloseExport(handle);
+                    engine.CloseExportReport(handle);
                 }
                 finally
                 {
@@ -605,7 +605,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 try
                 {
                     // try closing the handle twice (should succeed)
-                    engine.CloseExport(invalidHandle);
+                    engine.CloseExportReport(invalidHandle);
 
                     // should not be able to close an invalid handle
                     Fail("Unexpectedly succeeded in closing an invalid export handle.");
@@ -698,7 +698,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 {
                     try
                     {
-                        engine.CloseExport(handle);
+                        engine.CloseExportReport(handle);
                     }
                     catch (SzException e)
                     {
@@ -773,7 +773,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 IntPtr invalidHandle = handle;
                 try
                 {
-                    engine.CloseExport(handle);
+                    engine.CloseExportReport(handle);
                 }
                 finally
                 {
@@ -798,7 +798,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 try
                 {
                     // try closing the handle twice (should succeed)
-                    engine.CloseExport(invalidHandle);
+                    engine.CloseExportReport(invalidHandle);
 
                 }
                 catch (Exception)
@@ -864,7 +864,7 @@ internal class SzCoreEngineReadTest : AbstractTest
                 {
                     try
                     {
-                        engine.CloseExport(handle);
+                        engine.CloseExportReport(handle);
 
                     }
                     catch (SzException e)

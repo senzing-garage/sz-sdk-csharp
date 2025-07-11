@@ -138,24 +138,24 @@ namespace Senzing.Sdk.Core
 
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzDiagnostic_getDatastoreInfo_helper();
+        private static extern SzPointerResult SzDiagnostic_getRepositoryInfo_helper();
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_getDatastoreInfo_helper"/>. 
+        /// <see cref="SzDiagnostic_getRepositoryInfo_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long GetDatastoreInfo(out string response)
+        public long GetRepositoryInfo(out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
             result.returnCode = 0L;
             try
             {
-                result = SzDiagnostic_getDatastoreInfo_helper();
+                result = SzDiagnostic_getRepositoryInfo_helper();
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
 
@@ -167,25 +167,25 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzDiagnostic_checkDatastorePerformance_helper(
+        private static extern SzPointerResult SzDiagnostic_checkRepositoryPerformance_helper(
             long secondsToRun);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+        /// <see cref="SzDiagnostic_checkRepositoryPerformance_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long CheckDatastorePerformance(int secondsToRun, out string response)
+        public long CheckRepositoryPerformance(int secondsToRun, out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
             result.returnCode = 0L;
             try
             {
-                result = SzDiagnostic_checkDatastorePerformance_helper(secondsToRun);
+                result = SzDiagnostic_checkRepositoryPerformance_helper(secondsToRun);
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
 
@@ -217,7 +217,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzDiagnostic_checkDatastorePerformance_helper"/>. 
+        /// <see cref="SzDiagnostic_checkRepositoryPerformance_helper"/>. 
         /// </summary>
         ///
         /// <returns>

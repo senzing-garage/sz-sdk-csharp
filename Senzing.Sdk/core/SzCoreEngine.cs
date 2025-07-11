@@ -183,22 +183,22 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Implemented to call the <c>Sz_preprocessRecord_helper</c>
+        /// Implemented to call the <c>Sz_getRecordPreview_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.PreprocessRecord(string, long, out string)"/>.
+        /// <see cref="NativeEngineExtern.GetRecordPreview(string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        public string PreprocessRecord(
+        public string GetRecordPreview(
             string recordDefinition,
-            SzFlag? flags = SzPreprocessRecordDefaultFlags)
+            SzFlag? flags = SzRecordPreviewDefaultFlags)
         {
             return this.env.Execute(() =>
             {
                 // clear out the SDK-specific flags
                 long downstreamFlags = FlagsToLong(flags) & SdkFlagMask;
 
-                long returnCode = this.nativeApi.PreprocessRecord(
+                long returnCode = this.nativeApi.GetRecordPreview(
                         recordDefinition, downstreamFlags, out string result);
 
                 // check the return code
@@ -212,17 +212,17 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_closeExport_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.CloseExport(IntPtr)"/>.
+        /// <see cref="NativeEngineExtern.CloseExportReport(IntPtr)"/>.
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public void CloseExport(IntPtr exportHandle)
+        public void CloseExportReport(IntPtr exportHandle)
         {
             this.env.Execute<object>(() =>
             {
-                long returnCode = this.nativeApi.CloseExport(exportHandle);
+                long returnCode = this.nativeApi.CloseExportReport(exportHandle);
 
                 this.env.HandleReturnCode(returnCode, this.nativeApi);
 

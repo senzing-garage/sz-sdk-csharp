@@ -33,27 +33,27 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern IntPtr SzProduct_license();
+        private static extern IntPtr SzProduct_getLicense();
 
         /// <summary>
-        /// Implemented to call the external native function <c>SzProduct_license()</c>.
+        /// Implemented to call the external native function <c>SzProduct_getLicense()</c>.
         /// </summary>
-        public string License()
+        public string GetLicense()
         {
-            return Utilities.UTF8BytesToString(SzProduct_license());
+            return Utilities.UTF8BytesToString(SzProduct_getLicense());
         }
 
         [DllImport("Sz")]
-        private static extern IntPtr SzProduct_version();
+        private static extern IntPtr SzProduct_getVersion();
 
         /// <summary>
         /// Returns the currently installed version details.
         /// </summary>
         ///
         /// <returns>A JSON document describing version details.</returns>
-        public string Version()
+        public string GetVersion()
         {
-            return Utilities.UTF8BytesToString(SzProduct_version());
+            return Utilities.UTF8BytesToString(SzProduct_getVersion());
         }
 
         [DllImport("Sz")]

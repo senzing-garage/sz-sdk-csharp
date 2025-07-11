@@ -223,11 +223,11 @@ namespace Senzing.Sdk
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
         /// constants belonging to the
-        /// <see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/> usage group.
+        /// <see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/> usage group.
         /// </summary>
         ///
-        /// <seealso cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/>
-        public const SzFlag SzPreprocessRecordAllFlags
+        /// <seealso cref="SzFlagUsageGroup.SzRecordPreviewFlags"/>
+        public const SzFlag SzRecordPreviewAllFlags
             = SzFlag.SzEntityIncludeInternalFeatures
                 | SzFlag.SzEntityIncludeRecordFeatures
                 | SzFlag.SzEntityIncludeRecordFeatureDetails
@@ -1268,7 +1268,8 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// The aggregate <see cref="SzFlag"/> representing the default flags for
-        /// "preprocess record" operations.
+        /// <see cref="SzEngine.GetRecordPreview(string, SzFlag?)">record preview</see>
+        /// operations.
         /// </summary>
         /// <remarks>
         /// The included <see cref="SzFlag"/> values are:
@@ -1281,13 +1282,13 @@ namespace Senzing.Sdk
         /// All the flags in this constant belong to the following usage groups:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlagUsageGroup.SzPreprocessRecordFlags"/></description>
+        ///     <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        public const SzFlag SzPreprocessRecordDefaultFlags
+        public const SzFlag SzRecordPreviewDefaultFlags
             = SzEntityIncludeRecordFeatureDetails;
 
         /// <summary>

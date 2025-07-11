@@ -240,13 +240,13 @@ namespace Senzing.Sdk
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
         /// <list>
         ///   <item>
-        ///     <description><see cref="SzFlags.SzPreprocessRecordDefaultFlags"/></description>
+        ///     <description><see cref="SzFlags.SzRecordPreviewDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
         /// </remarks>
         /// <seealso href="https://docs.senzing.com/flags/index.html"/>
-        SzPreprocessRecordFlags = (1L << 6),
+        SzRecordPreviewFlags = (1L << 6),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve
@@ -1663,12 +1663,12 @@ namespace Senzing.Sdk
 
         /// <summary>
         /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to
-        /// <see cref="SzFlag"/> instances that are applicable to preprocessing a record.
-        /// These are subset of those records applicable to retrieving record data and 
-        /// therefore an be used by any group that can retrieve entity data.
+        /// <see cref="SzFlag"/> instances that are applicable to getting a record
+        /// preview.  These are subset of those records applicable to retrieving record
+        /// data and therefore an be used by any group that can retrieve entity data.
         /// </summary>
-        internal const SzFlagUsageGroup SzPreprocessSet
-            = SzEntityRecordSet | SzFlagUsageGroup.SzPreprocessRecordFlags;
+        internal const SzFlagUsageGroup SzRecordPreviewSet
+            = SzEntityRecordSet | SzFlagUsageGroup.SzRecordPreviewFlags;
 
         /// <summary>
         /// The internal aggregate <see cref="SzFlagUsageGroup"/> constant to apply to

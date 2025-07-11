@@ -114,18 +114,18 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzLongResult SzConfigMgr_addConfig_helper(
+        private static extern SzLongResult SzConfigMgr_registerConfig_helper(
             byte[] config, byte[] comments);
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_addConfig_helper"/>. 
+        /// <see cref="SzConfigMgr_registerConfig_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long AddConfig(string configStr, string configComments, out long configID)
+        public long RegisterConfig(string configStr, string configComments, out long configID)
         {
             SzLongResult result;
             result.response = 0L;
@@ -134,7 +134,7 @@ namespace Senzing.Sdk.Core
             byte[] configBytes = Utilities.StringToUTF8Bytes(configStr);
             byte[] commentBytes = Utilities.StringToUTF8Bytes(configComments);
 
-            result = SzConfigMgr_addConfig_helper(configBytes, commentBytes);
+            result = SzConfigMgr_registerConfig_helper(configBytes, commentBytes);
             configID = result.response;
             return result.returnCode;
         }
@@ -168,24 +168,24 @@ namespace Senzing.Sdk.Core
         }
 
         [DllImport("Sz")]
-        private static extern SzPointerResult SzConfigMgr_getConfigList_helper();
+        private static extern SzPointerResult SzConfigMgr_getConfigRegistry_helper();
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <see cref="SzConfigMgr_getConfigList_helper"/>. 
+        /// <see cref="SzConfigMgr_getConfigRegistry_helper"/>. 
         /// </summary>
         ///
         /// <returns>
         /// Zero (0) on success and non-zero on failure.
         /// </returns>
-        public long GetConfigList(out string response)
+        public long GetConfigRegistry(out string response)
         {
             SzPointerResult result;
             result.response = IntPtr.Zero;
             result.returnCode = 0L;
             try
             {
-                result = SzConfigMgr_getConfigList_helper();
+                result = SzConfigMgr_getConfigRegistry_helper();
                 response = Utilities.UTF8BytesToString(result.response);
                 return result.returnCode;
             }

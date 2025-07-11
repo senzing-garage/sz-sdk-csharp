@@ -252,7 +252,7 @@ internal abstract class AbstractTest
                                      string config,
                                      string comment)
     {
-        long returnCode = configMgr.AddConfig(
+        long returnCode = configMgr.RegisterConfig(
             config, comment, out long configID);
         if (returnCode != 0)
         {
@@ -328,15 +328,15 @@ internal abstract class AbstractTest
     /// <param name="dataSource">
     /// The data source code for the data source to add to the config.
     /// </param>
-    protected virtual void AddDataSource(NativeConfig config,
-                                         IntPtr configHandle,
-                                         string dataSource)
+    protected virtual void RegisterDataSource(NativeConfig config,
+                                              IntPtr configHandle,
+                                              string dataSource)
     {
         StringBuilder sb = new StringBuilder("{\"DSRC_CODE\": ");
         sb.Append(Utilities.JsonEscape(dataSource)).Append('}');
         string json = sb.ToString();
 
-        long returnCode = config.AddDataSource(
+        long returnCode = config.RegisterDataSource(
             configHandle, json, out string result);
         if (returnCode != 0)
         {
@@ -361,7 +361,7 @@ internal abstract class AbstractTest
     /// <returns>The JSON <c>string</c> for the config.</returns>
     protected virtual string ExportConfig(NativeConfig config, IntPtr configHandle)
     {
-        long returnCode = config.Save(configHandle, out string configJson);
+        long returnCode = config.Export(configHandle, out string configJson);
         if (returnCode != 0)
         {
             throw new TestException(config.GetLastException());
@@ -393,7 +393,7 @@ internal abstract class AbstractTest
         {
             foreach (string dataSource in dataSources)
             {
-                AddDataSource(config, configHandle, dataSource);
+                RegisterDataSource(config, configHandle, dataSource);
             }
             result = ExportConfig(config, configHandle);
         }

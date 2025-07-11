@@ -176,7 +176,7 @@ namespace Senzing.Sdk.Core
                 try
                 {
                     // export the config definition
-                    returnCode = this.configApi.Save(configHandle, out string configDef);
+                    returnCode = this.configApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.configApi);
@@ -215,7 +215,7 @@ namespace Senzing.Sdk.Core
                 try
                 {
                     // export the config definition
-                    returnCode = this.configApi.Save(configHandle, out string configDef);
+                    returnCode = this.configApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
                     this.env.HandleReturnCode(returnCode, this.configApi);
@@ -261,8 +261,8 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the external native helper function 
-        /// <c>SzConfigMgr_addConfig_helper"</c> via
-        /// <see cref="NativeConfigManagerExtern.AddConfig(string, string, out long)"/>. 
+        /// <c>SzConfigMgr_registerConfig_helper"</c> via
+        /// <see cref="NativeConfigManagerExtern.RegisterConfig(string, string, out long)"/>. 
         /// </summary>
         public long RegisterConfig(string configDefinition, string configComment)
         {
@@ -272,7 +272,7 @@ namespace Senzing.Sdk.Core
                 NativeConfigManager nativeApi = this.GetConfigManagerApi();
 
                 // call the underlying C function
-                long returnCode = nativeApi.AddConfig(
+                long returnCode = nativeApi.RegisterConfig(
                     configDefinition, configComment ?? "", out long configID);
 
                 // handle any error code if there is one
@@ -454,7 +454,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_getConfigList_helper"</c> via
-        /// <see cref="NativeConfigManager.GetConfigList(out string)"/>. 
+        /// <see cref="NativeConfigManager.GetConfigRegistry(out string)"/>. 
         /// </summary>
         public string GetConfigRegistry()
         {
@@ -464,7 +464,7 @@ namespace Senzing.Sdk.Core
                 NativeConfigManager nativeApi = this.GetConfigManagerApi();
 
                 // call the underlying C function
-                long returnCode = nativeApi.GetConfigList(out string configList);
+                long returnCode = nativeApi.GetConfigRegistry(out string configList);
 
                 // handle any error code if there is one
                 this.env.HandleReturnCode(returnCode, nativeApi);

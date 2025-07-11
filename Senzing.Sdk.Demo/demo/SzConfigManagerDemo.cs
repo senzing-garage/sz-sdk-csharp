@@ -148,7 +148,7 @@ internal class SzConfigManagerDemo : AbstractTest
         {
             foreach (string dataSource in dataSources)
             {
-                config.AddDataSource(dataSource);
+                config.RegisterDataSource(dataSource);
             }
         }
 
@@ -174,7 +174,7 @@ internal class SzConfigManagerDemo : AbstractTest
         {
             foreach (string dataSource in dataSources)
             {
-                config.AddDataSource(dataSource);
+                config.RegisterDataSource(dataSource);
             }
         }
         return config.Export();

@@ -87,7 +87,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             configHandle = handle;
 
             // export the default config JSON
-            returnCode = nativeConfig.Save(configHandle, out string config);
+            returnCode = nativeConfig.Export(configHandle, out string config);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -97,7 +97,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             this.defaultConfig = config;
 
             // add the CUSTOMERS data source
-            returnCode = nativeConfig.AddDataSource(configHandle,
+            returnCode = nativeConfig.RegisterDataSource(configHandle,
                 "{\"DSRC_CODE\": \"" + CustomersDataSource + "\"}",
                 out string result1);
             if (returnCode != 0)
@@ -106,7 +106,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
 
             // export the modified config JSON
-            returnCode = nativeConfig.Save(configHandle, out string modConfig1);
+            returnCode = nativeConfig.Export(configHandle, out string modConfig1);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -116,7 +116,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             this.modifiedConfig1 = modConfig1;
 
             // add the EMPLOYEES data source
-            returnCode = nativeConfig.AddDataSource(configHandle,
+            returnCode = nativeConfig.RegisterDataSource(configHandle,
                 "{\"DSRC_CODE\": \"" + EmployeesDataSource + "\"}",
                 out string result2);
             if (returnCode != 0)
@@ -125,7 +125,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
 
             // export the modified config JSON
-            returnCode = nativeConfig.Save(configHandle, out string modConfig2);
+            returnCode = nativeConfig.Export(configHandle, out string modConfig2);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -135,7 +135,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             this.modifiedConfig2 = modConfig2;
 
             // add the WATCHLIST data source
-            returnCode = nativeConfig.AddDataSource(configHandle,
+            returnCode = nativeConfig.RegisterDataSource(configHandle,
                 "{\"DSRC_CODE\": \"" + WatchlistDataSource + "\"}",
                 out string result3);
             if (returnCode != 0)
@@ -144,7 +144,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
 
             // export the modified config JSON
-            returnCode = nativeConfig.Save(configHandle, out string modConfig3);
+            returnCode = nativeConfig.Export(configHandle, out string modConfig3);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -299,7 +299,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testAddConfigModified test with exception", e);
+                Fail("Failed testRegisterConfigModified test with exception", e);
             }
         });
     }
@@ -320,7 +320,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testAddConfigModified test with exception", e);
+                Fail("Failed testRegisterConfigModified test with exception", e);
             }
         });
     }
@@ -642,7 +642,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
         SzConfig config = configMgr.CreateConfig();
         foreach (string dataSource in dataSources)
         {
-            config.DeleteDataSource(dataSource);
+            config.UnregisterDataSource(dataSource);
         }
         return config.Export();
     }

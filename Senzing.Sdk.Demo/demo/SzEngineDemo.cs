@@ -481,12 +481,12 @@ internal class SzEngineDemo : AbstractTest
     }
 
     [Test]
-    public void PreprocessRecordDemo()
+    public void GetRecordPreviewDemo()
     {
         try
         {
-            // @start PreprocessRecord
-            // How to pre-process a record
+            // @start GetRecordPreview
+            // How to get a record preview
             try
             {
                 // obtain the SzEnvironment (varies by application)
@@ -507,9 +507,9 @@ internal class SzEngineDemo : AbstractTest
                         }
                         """;
 
-                // preprocess the record
-                string responseJson = engine.PreprocessRecord(
-                    recordDefinition, SzPreprocessRecordDefaultFlags);
+                // get the record preview
+                string responseJson = engine.GetRecordPreview(
+                    recordDefinition, SzRecordPreviewDefaultFlags);
 
                 // do something with the response JSON (varies by application)                
                 JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
@@ -531,7 +531,7 @@ internal class SzEngineDemo : AbstractTest
             catch (SzException e)
             {
                 // handle or rethrow the exception
-                LogError("Failed to preprocess record.", e);
+                LogError("Failed to get a record preview.", e);
             }
             // @end
 
@@ -1979,7 +1979,7 @@ internal class SzEngineDemo : AbstractTest
                 finally
                 {
                     // close the export handle
-                    engine.CloseExport(exportHandle);
+                    engine.CloseExportReport(exportHandle);
                 }
 
             }
@@ -2056,7 +2056,7 @@ internal class SzEngineDemo : AbstractTest
                 finally
                 {
                     // close the export handle
-                    engine.CloseExport(exportHandle);
+                    engine.CloseExportReport(exportHandle);
                 }
 
             }

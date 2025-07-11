@@ -194,7 +194,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long PreprocessRecord(string jsonData,
+        long GetRecordPreview(string jsonData,
                               long flags,
                               out string response);
 
@@ -1764,8 +1764,8 @@ namespace Senzing.Sdk.Core
         ///
         /// <remarks>
         /// The exported data is read via the <see cref="FetchNext"/> function
-        /// and should be closed via the <see cref="CloseExport"/> function when
-        /// the export is complete.
+        /// and should be closed via the <see cref="CloseExportReport"/> function
+        /// when the export is complete.
         /// </remarks>
         ///
         /// <param name="flags">
@@ -1789,8 +1789,8 @@ namespace Senzing.Sdk.Core
         ///
         /// <remarks>
         /// The exported data is read via the <see cref="FetchNext"/> function
-        /// and should be closed via the <see cref="CloseExport"/> function when
-        /// the export is complete.
+        /// and should be closed via the <see cref="CloseExportReport"/> function
+        /// when the export is complete.
         /// <para>
         /// The first output row returned by the export-handle contains the
         /// column headers as a string.  Each following row contains the
@@ -1841,7 +1841,7 @@ namespace Senzing.Sdk.Core
         /// <param name="exportHandle">The export handle for the export.</param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long CloseExport(IntPtr exportHandle);
+        long CloseExportReport(IntPtr exportHandle);
 
         /// <summary>
         /// Processes a redo record.

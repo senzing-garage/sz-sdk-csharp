@@ -83,7 +83,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long Save(IntPtr configHandle, out string response);
+        long Export(IntPtr configHandle, out string response);
 
         /// <summary>
         /// Closes the in-memory configuration associated with the specified config
@@ -140,7 +140,7 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long ListDataSources(IntPtr configHandle, out string response);
+        long GetDataSourceRegistry(IntPtr configHandle, out string response);
 
         /// <summary>
         /// Adds a data source described by the specified JSON to the in-memory
@@ -194,9 +194,9 @@ namespace Senzing.Sdk.Core
         /// </param>
         /// 
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
-        long AddDataSource(IntPtr configHandle,
-                           string inputJson,
-                           out string response);
+        long RegisterDataSource(IntPtr configHandle,
+                                string inputJson,
+                                out string response);
 
         /// <summary>
         /// Deletes the data source described by the specified JSON from the
@@ -222,7 +222,6 @@ namespace Senzing.Sdk.Core
         /// </param>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns> 
-        long DeleteDataSource(IntPtr configHandle, string inputJson);
-
+        long UnregisterDataSource(IntPtr configHandle, string inputJson);
     }
 }

@@ -67,7 +67,7 @@ internal class SzCoreConfigTest : AbstractTest
             configHandle = handle;
 
             // export the default config JSON
-            returnCode = nativeConfig.Save(configHandle, out string config);
+            returnCode = nativeConfig.Export(configHandle, out string config);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -76,8 +76,8 @@ internal class SzCoreConfigTest : AbstractTest
             // set the default config
             this.defaultConfig = config;
 
-            // add the data source
-            returnCode = nativeConfig.AddDataSource(configHandle,
+            // register the data source
+            returnCode = nativeConfig.RegisterDataSource(configHandle,
                 "{\"DSRC_CODE\": \"" + CUSTOMERS_DATA_SOURCE + "\"}",
                 out string result);
             if (returnCode != 0)
@@ -86,7 +86,7 @@ internal class SzCoreConfigTest : AbstractTest
             }
 
             // export the modified config JSON
-            returnCode = nativeConfig.Save(configHandle, out string modConfig);
+            returnCode = nativeConfig.Export(configHandle, out string modConfig);
             if (returnCode != 0)
             {
                 throw new TestException(nativeConfig.GetLastException());
@@ -280,7 +280,7 @@ internal class SzCoreConfigTest : AbstractTest
     }
 
     [Test]
-    public void TestAddDataSource()
+    public void TestRegisterDataSource()
     {
         this.PerformTest(() =>
         {
@@ -289,7 +289,7 @@ internal class SzCoreConfigTest : AbstractTest
                 SzConfigManager configMgr = this.Env.GetConfigManager();
                 SzConfig config = configMgr.CreateConfig();
 
-                string result = config.AddDataSource(EMPLOYEES_DATA_SOURCE);
+                string result = config.RegisterDataSource(EMPLOYEES_DATA_SOURCE);
 
                 JsonObject? resultObj = null;
                 try
@@ -298,7 +298,7 @@ internal class SzCoreConfigTest : AbstractTest
                 }
                 catch (Exception e)
                 {
-                    Fail("The AddDataSource() result did not parse as JSON: " + result, e);
+                    Fail("The RegisterDataSource() result did not parse as JSON: " + result, e);
                 }
 
                 int? resultId = (int?)resultObj?["DSRC_ID"];
@@ -339,13 +339,13 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed testAddDataSource test with exception", e);
+                Fail("Failed testRegisterDataSource test with exception", e);
             }
         });
     }
 
     [Test]
-    public void TestDeleteDataSource()
+    public void TestUnregisterDataSource()
     {
         this.PerformTest(() =>
         {
@@ -354,7 +354,7 @@ internal class SzCoreConfigTest : AbstractTest
                 SzConfigManager configMgr = this.Env.GetConfigManager();
                 SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                config.DeleteDataSource("CUSTOMERS");
+                config.UnregisterDataSource("CUSTOMERS");
 
                 string configJson = config.Export();
 
@@ -394,14 +394,14 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed TestDeleteDataSource test with exception", e);
+                Fail("Failed TestUnregisterDataSource test with exception", e);
             }
         });
 
     }
 
     [Test]
-    public void TestGetDataSources()
+    public void TestGetDataSourceRegistry()
     {
         this.PerformTest(() =>
         {
@@ -410,7 +410,7 @@ internal class SzCoreConfigTest : AbstractTest
                 SzConfigManager configMgr = this.Env.GetConfigManager();
                 SzConfig config = configMgr.CreateConfig(this.modifiedConfig);
 
-                string dataSources = config.GetDataSources();
+                string dataSources = config.GetDataSourceRegistry();
 
                 Assert.IsNotNull(dataSources, "Data sources result was null");
 
@@ -450,7 +450,7 @@ internal class SzCoreConfigTest : AbstractTest
             }
             catch (Exception e)
             {
-                Fail("Failed GetDataSources test with exception", e);
+                Fail("Failed GetDataSourceRegistry test with exception", e);
             }
         });
     }
@@ -469,7 +469,7 @@ internal class SzCoreConfigTest : AbstractTest
 
                 nativeApi.ClearLastException();
 
-                config.GetDataSources();
+                config.GetDataSourceRegistry();
 
                 string message = nativeApi.GetLastException();
                 long errorCode = nativeApi.GetLastExceptionCode();
