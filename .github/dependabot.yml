@@ -9,7 +9,7 @@ updates:
       interval: "daily"
   - package-ecosystem: “nuget”
     directories: 
-      - /Sening.Sdk.Tests/
+      - /Senzing.Sdk.Tests/
       - /Senzing.Sdk.Demo/
       - /Senzing.Sdk/
     schedule:
