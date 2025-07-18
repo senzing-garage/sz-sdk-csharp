@@ -9,6 +9,8 @@ updates:
       interval: "daily"
   - package-ecosystem: "nuget"
     directories:
-      - "*"
+      - /Senzing.Sdk.Demo/
+      - /Senzing.Sdk.Tests/
+      - /Senzing.Sdk/
     schedule:
       interval: "daily"
