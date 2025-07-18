@@ -11,6 +11,5 @@ updates:
     directories: 
       - /Senzing.Sdk.Tests/
       - /Senzing.Sdk.Demo/
-      - /Senzing.Sdk/
     schedule:
       interval: "daily"
