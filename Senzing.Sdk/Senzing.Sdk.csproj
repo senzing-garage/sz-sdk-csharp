@@ -9,7 +9,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <PackageVersion>4.0.0-beta.4.0</PackageVersion>
+    <PackageVersion>4.0.0-beta.4.1</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
