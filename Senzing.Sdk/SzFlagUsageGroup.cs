@@ -15,15 +15,17 @@ namespace Senzing.Sdk
         /// <summary>
         /// Flags in this usage group can be used for operations that add (load)
         /// records to the entity repository.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.AddRecord(string, string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.AddRecord(string, string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
@@ -31,28 +33,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzAddRecordDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzAddRecordFlags = (1L << 0),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that delete
         /// records from the entity repository.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.DeleteRecord(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.DeleteRecord(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
@@ -60,28 +64,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzDeleteRecordDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzDeleteRecordFlags = (1L << 1),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that reevaluate
         /// records in the entity repository.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.ReevaluateRecord(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.ReevaluateRecord(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
@@ -89,28 +95,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzReevaluateRecordDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzReevaluateRecordFlags = (1L << 2),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that reevaluate
         /// entities in the entity repository.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.ReevaluateEntity(long, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.ReevaluateEntity(long, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
@@ -118,28 +126,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzReevaluateEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzReevaluateEntityFlags = (1L << 3),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that process 
         /// redo records in the entity repository.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.ProcessRedoRecord(string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.ProcessRedoRecord(string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzWithInfo"/></description>
         ///   </item>
@@ -147,28 +157,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRedoDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzRedoFlags = (1L << 4),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve record
         /// data in order to control the level of detail of the returned record.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.GetRecord(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.GetRecord(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeInternalFeatures"/></description>
         ///   </item>
@@ -194,28 +206,30 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzRecordFlags = (1L << 5),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve record
         /// data in order to control the level of detail of the returned record.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.GetRecord(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.GetRecord(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeInternalFeatures"/></description>
         ///   </item>
@@ -238,29 +252,31 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordPreviewDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzRecordPreviewFlags = (1L << 6),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve
         /// entity data in order to control the level of detail of the returned
         /// entity.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.GetEntity(long, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.GetEntity(long, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -337,7 +353,7 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzEntityIncludeAllRelations"/></description>
         ///   </item>
@@ -352,7 +368,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -361,8 +377,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzEntityFlags = (1L << 7),
 
         /// <summary>
@@ -370,16 +386,20 @@ namespace Senzing.Sdk
         /// finding an entity path, what details to include for the entity 
         /// path and the level of detail for the entities on the path that
         /// are returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.FindPath(long, long, int, System.Collections.Generic.ISet{long}, System.Collections.Generic.ISet{string}, SzFlag?)"/></item>
-        ///   <item><see cref="SzEngine.FindPath(string, string, string, string, int, System.Collections.Generic.ISet{ValueTuple{string, string}}, System.Collections.Generic.ISet{string}, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindPath(long, long, int, System.Collections.Generic.ISet{long}, System.Collections.Generic.ISet{string}, SzFlag?)"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindPath(string, string, string, string, int, System.Collections.Generic.ISet{ValueTuple{string, string}}, System.Collections.Generic.ISet{string}, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -463,7 +483,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzFindPathDefaultFlags"/></description>
         ///   </item>
@@ -472,7 +492,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -490,8 +510,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzFindPathFlags = (1L << 8),
 
         /// <summary>
@@ -499,16 +519,20 @@ namespace Senzing.Sdk
         /// finding an entity network, what details to include for the entity 
         /// network and the level of detail for the entities in the network
         /// that are returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.FindNetwork(System.Collections.Generic.ISet{long}, int, int, int, SzFlag?)"/></item>
-        ///   <item><see cref="SzEngine.FindNetwork(System.Collections.Generic.ISet{ValueTuple{string, string}}, int, int, int, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindNetwork(System.Collections.Generic.ISet{long}, int, int, int, SzFlag?)"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindNetwork(System.Collections.Generic.ISet{ValueTuple{string, string}}, int, int, int, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -589,7 +613,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzFindNetworkDefaultFlags"/></description>
         ///   </item>
@@ -598,7 +622,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -616,21 +640,25 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzFindNetworkFlags = (1L << 9),
 
         /// <summary>
         /// Flags in this usage group can be used to control the methodology for
         /// finding an interesting entities and what details to include for the
         /// results of the operation.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.FindInterestingEntities(string, string, SzFlag?)"/></item>
-        ///   <item><see cref="SzEngine.FindInterestingEntities(long, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindInterestingEntities(string, string, SzFlag?)"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzEngine.FindInterestingEntities(long, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// Currently, there are no <see cref="SzFlag"/> instances included in this usage group.
         /// However, this is a placeholder for when such flags are defined in a future release.
@@ -638,14 +666,14 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "find-path" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzFindInterestingEntitiesDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzFindInterestingEntitiesFlags = (1L << 10),
 
         /// <summary>
@@ -653,16 +681,20 @@ namespace Senzing.Sdk
         /// entities to control how the entities are qualified for inclusion
         /// in the search results and the level of detail for the entities
         /// returned in the search results.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.SearchByAttributes(string, SzFlag?)"/></item>
-        ///   <item><see cref="SzEngine.SearchByAttributes(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.SearchByAttributes(string, SzFlag?)"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzEngine.SearchByAttributes(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -767,7 +799,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "search" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzSearchIncludeAllEntities"/></description>
         ///   </item>
@@ -791,7 +823,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -809,8 +841,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzSearchFlags = (1L << 11),
 
         /// <summary>
@@ -818,16 +850,20 @@ namespace Senzing.Sdk
         /// entities to control how the entities are qualified for inclusion
         /// in the export and the level of detail for the entities returned
         /// in the search results.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.ExportJsonEntityReport(SzFlag?)"/></item>
-        ///   <item><see cref="SzEngine.ExportCsvEntityReport(string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.ExportJsonEntityReport(SzFlag?)"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <description><see cref="SzEngine.ExportCsvEntityReport(string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -919,7 +955,7 @@ namespace Senzing.Sdk
         /// </para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "export" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzExportIncludeAllEntities"/></description>
         ///   </item>
@@ -933,7 +969,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -951,8 +987,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzExportFlags = (1L << 12),
 
         /// <summary>
@@ -960,15 +996,17 @@ namespace Senzing.Sdk
         /// performing "why analysis", what details to include for the analysis
         /// and the level of detail for the entities in the network that are 
         /// returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.WhyRecordInEntity(string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.WhyRecordInEntity(string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -1049,7 +1087,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzWhyRecordInEntityDefaultFlags"/></description>
         ///   </item>
@@ -1058,7 +1096,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -1076,8 +1114,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzWhyRecordInEntityFlags = (1L << 13),
 
         /// <summary>
@@ -1085,15 +1123,17 @@ namespace Senzing.Sdk
         /// performing "why analysis", what details to include for the analysis
         /// and the level of detail for the entities in the network that are 
         /// returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.WhyRecords(string, string, string, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.WhyRecords(string, string, string, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -1174,7 +1214,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzWhyRecordsDefaultFlags"/></description>
         ///   </item>
@@ -1183,7 +1223,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -1201,8 +1241,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzWhyRecordsFlags = (1L << 14),
 
         /// <summary>
@@ -1210,15 +1250,17 @@ namespace Senzing.Sdk
         /// performing "why analysis", what details to include for the analysis
         /// and the level of detail for the entities in the network that are 
         /// returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.WhyEntities(long, long, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.WhyEntities(long, long, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -1299,7 +1341,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "why" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzWhyEntitiesDefaultFlags"/></description>
         ///   </item>
@@ -1308,7 +1350,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -1326,8 +1368,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzWhyEntitiesFlags = (1L << 15),
 
         /// <summary>
@@ -1335,15 +1377,17 @@ namespace Senzing.Sdk
         /// entities to control how the entities are qualified for inclusion
         /// in the search results and the level of detail for the entities
         /// returned in the search results.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.WhySearch(string, long, string, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.WhySearch(string, long, string, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludePossiblySameRelations"/></description>
         ///   </item>
@@ -1433,7 +1477,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "search" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzWhySearchDefaultFlags"/></description>
         ///   </item>
@@ -1442,7 +1486,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -1460,8 +1504,8 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzWhySearchFlags = (1L << 16),
 
         /// <summary>
@@ -1469,19 +1513,17 @@ namespace Senzing.Sdk
         /// performing "how analysis", what details to include for the analysis
         /// and the level of detail for the entities in the network that are 
         /// returned.
-        /// Flags in this usage group can be used to control the methodology for
-        /// performing "why analysis", what details to include for the analysis
-        /// and the level of detail for the entities in the network that are 
-        /// returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.HowEntity(long, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.HowEntity(long, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzIncludeMatchKeyDetails"/></description>
         ///   </item>
@@ -1493,7 +1535,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that use this
         /// group and are defined for "how" operations are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzHowEntityDefaultFlags"/></description>
         ///   </item>
@@ -1502,7 +1544,7 @@ namespace Senzing.Sdk
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants that also 
         /// support this group for defining entity or record detail levels are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzRecordDefaultFlags"/></description>
         ///   </item>
@@ -1520,23 +1562,25 @@ namespace Senzing.Sdk
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzHowFlags = (1L << 17),
 
         /// <summary>
         /// Flags in this usage group can be used for operations that retrieve
         /// virtual entities in order to control the level of detail of the
         /// returned virtual entity.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Applicable methods include:
-        /// <list>
-        ///   <item><see cref="SzEngine.GetVirtualEntity(System.Collections.Generic.ISet{ValueTuple{string, string}}, SzFlag?)"/></item>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description><see cref="SzEngine.GetVirtualEntity(System.Collections.Generic.ISet{ValueTuple{string, string}}, SzFlag?)"/></description>
+        ///   </item>
         /// </list>
+        /// </para>
         /// <para>
         /// The <see cref="SzFlag"/> instances included in this usage group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlag.SzEntityIncludeAllFeatures"/></description>
         ///   </item>
@@ -1583,14 +1627,14 @@ namespace Senzing.Sdk
         /// </para>
         /// <para>
         /// The pre-defined <see cref="SzFlag"/> aggregate constants for this group are:
-        /// <list>
+        /// <list type="bullet">
         ///   <item>
         ///     <description><see cref="SzFlags.SzVirtualEntityDefaultFlags"/></description>
         ///   </item>
         /// </list>
         /// </para>
-        /// </remarks>
-        /// <seealso href="https://docs.senzing.com/flags/index.html"/>>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
         SzVirtualEntityFlags = (1L << 18)
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
+using static Senzing.Sdk.Core.SzCoreUtilities;
+
 namespace Senzing.Sdk.Core
 {
     /// <summary>
@@ -11,13 +13,6 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class SzCoreConfigManager : SzConfigManager
     {
-        /// <summary>
-        /// The <b>unmodifiable</b> collection of default data sources.
-        /// </summary>
-        private static readonly ReadOnlyCollection<string> DefaultSources
-            = new ReadOnlyCollection<string>(
-                new List<string>(new[] { "TEST", "SEARCH" }));
-
         /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
         /// </summary>
@@ -290,165 +285,10 @@ namespace Senzing.Sdk.Core
         public long RegisterConfig(string configDefinition)
         {
             // generate a configuration comment
-            string configComment = this.CreateConfigComment(configDefinition);
+            string configComment = CreateConfigComment(configDefinition);
 
             // return the result from the base method
             return this.RegisterConfig(configDefinition, configComment);
-        }
-
-        /// <summary>
-        /// Finds the index of the first non-whitespace character after the
-        /// specified index from the specified character array.
-        /// </summary>
-        ///
-        /// <param name="charArray">The character array.</param>
-        /// <param name="fromIndex">The starting index.</param>
-        ///
-        /// <returns>
-        /// The index of the first non-whitespace character or the length of
-        /// the character array if no non-whitespace character is found.
-        /// </returns>
-        internal static int EatWhiteSpace(char[] charArray, int fromIndex)
-        {
-            int index = fromIndex;
-
-            // advance past any whitespace
-            while (index < charArray.Length && Char.IsWhiteSpace(charArray[index]))
-            {
-                index++;
-            }
-
-            // return the index
-            return index;
-        }
-
-        /// <summary>
-        /// Produce an auto-generated configuration comment for the 
-        /// configuration manager registry.  This does a pseudo-JSON 
-        /// parse to avoid a third-party JSON parser dependency.
-        /// </summary>
-        /// 
-        /// <param name="configDefinition">
-        /// The <c>string</c> configuration definition.
-        /// </param>
-        ///
-        /// <returns>
-        /// The auto-generated comment, which may be empty-string
-        /// if an auto-generated comment could not otherwise be produced.
-        /// </returns>
-        internal string CreateConfigComment(string configDefinition)
-        {
-            int index = configDefinition.IndexOf("\"CFG_DSRC\"");
-            if (index < 0)
-            {
-                return "";
-            }
-            char[] charArray = configDefinition.ToCharArray();
-
-            // advance past any whitespace
-            index = EatWhiteSpace(charArray, index + "\"CFG_DSRC\"".Length);
-
-            // check for the colon
-            if (index >= charArray.Length || charArray[index++] != ':')
-            {
-                return "";
-            }
-
-            // advance past any whitespace
-            index = EatWhiteSpace(charArray, index);
-
-            // check for the open bracket
-            if (index >= charArray.Length || charArray[index++] != '[')
-            {
-                return "";
-            }
-
-            // find the end index
-            int endIndex = configDefinition.IndexOf("]", index);
-            if (endIndex < 0)
-            {
-                return "";
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Data Sources: ");
-            string prefix = "";
-            int dataSourceCount = 0;
-            ISet<string> defaultSources = new SortedSet<string>();
-            while (index > 0 && index < endIndex)
-            {
-                index = configDefinition.IndexOf("\"DSRC_CODE\"", index);
-                if (index < 0 || index >= endIndex)
-                {
-                    continue;
-                }
-                index = EatWhiteSpace(charArray, index + "\"DSRC_CODE\"".Length);
-
-                // check for the colon
-                if (index >= endIndex || charArray[index++] != ':')
-                {
-                    return "";
-                }
-
-                index = EatWhiteSpace(charArray, index);
-
-                // check for the quote
-                if (index >= endIndex || charArray[index++] != '"')
-                {
-                    return "";
-                }
-                int start = index;
-
-                // find the ending quote
-                while (index < endIndex && charArray[index] != '"')
-                {
-                    index++;
-                }
-                if (index >= endIndex)
-                {
-                    return "";
-                }
-
-                // get the data source code
-                string dataSource = configDefinition.Substring(start, (index - start));
-                if (DefaultSources.Contains(dataSource))
-                {
-                    defaultSources.Add(dataSource);
-                    continue;
-                }
-                sb.Append(prefix);
-                sb.Append(dataSource);
-                dataSourceCount++;
-                prefix = ", ";
-            }
-
-            // check if only the default data sources
-            if (dataSourceCount == 0 && defaultSources.Count == 0)
-            {
-                sb.Append("[ NONE ]");
-            }
-            else if (dataSourceCount == 0
-                    && defaultSources.Count == DefaultSources.Count)
-            {
-                sb.Append("[ ONLY DEFAULT ]");
-
-            }
-            else if (dataSourceCount == 0)
-            {
-
-                sb.Append("[ SOME DEFAULT (");
-                prefix = "";
-                foreach (String source in defaultSources)
-                {
-                    sb.Append(prefix);
-                    sb.Append(source);
-                    prefix = ", ";
-                }
-                sb.Append(") ]");
-            }
-
-            // return the constructed string
-            return sb.ToString();
         }
 
         /// <summary>

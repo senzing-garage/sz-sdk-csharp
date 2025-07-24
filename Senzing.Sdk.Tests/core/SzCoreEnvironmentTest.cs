@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 using Senzing.Sdk.Core;
 
-using static Senzing.Sdk.Core.SzCoreEnvironment;
+using static Senzing.Sdk.Core.SzCoreUtilities;
 using static Senzing.Sdk.Tests.Util.TextUtilities;
 
 [TestFixture]
@@ -1200,7 +1200,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
         this.PerformTest(() =>
         {
 
-            SzException e = SzCoreEnvironment.CreateSzException(errorCode, errorMessage);
+            SzException e = CreateSzException(errorCode, errorMessage);
 
             Assert.IsInstanceOf(exceptionType, e,
                                 "Type of exception is not as expected");

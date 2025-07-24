@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 
+using static Senzing.Sdk.Core.SzCoreUtilities;
+
 namespace Senzing.Sdk.Core
 {
     /// <summary>
@@ -60,37 +62,6 @@ namespace Senzing.Sdk.Core
         /// Internal object for class-wide synchronized locking.
         /// </summary>
         private static readonly Object ClassMonitor = new Object();
-
-        /// <summary>
-        /// The <see cref="System.Collections.ObjectModel.ReadOnlyDictionary{TKey, TValue}"/>
-        /// of integer error code keys to <c>Type</c> values representing the exception class
-        /// associated with the respective error code.
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// The dictionary does not store entries that map to <see cref="SzException"/>
-        /// since that is the default for any error code not otherwise mapped.
-        /// </remarks>
-        internal static readonly ReadOnlyDictionary<long, Type> ExceptionMap;
-
-        /// <summary>
-        /// The class initializer.
-        /// </summary>
-        static SzCoreEnvironment()
-        {
-            IDictionary<long, Type> map = new Dictionary<long, Type>();
-            IDictionary<long, Type> result = new Dictionary<long, Type>();
-            SzExceptionMapper.RegisterExceptions(map);
-            Type baseType = typeof(SzException);
-            foreach (KeyValuePair<long, Type> mapping in map)
-            {
-                if (!baseType.Equals(mapping.Value))
-                {
-                    result.Add(mapping.Key, mapping.Value);
-                }
-            }
-            ExceptionMap = new ReadOnlyDictionary<long, Type>(result);
-        }
 
         /// <summary>
         /// Enumerates the possible states for an instance of <c>SzCoreEnvironment</c>.
@@ -543,47 +514,6 @@ namespace Senzing.Sdk.Core
 
             // create the appropriate exception
             throw CreateSzException(errorCode, message);
-        }
-
-
-        /// <summary>
-        /// Creates the appropriate <see cref="SzException"/> instance for the
-        /// specified error code. 
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// If there is a failure in creating the <see cref="SzException"/> 
-        /// instance, then a generic <see cref="SzException"/> is created with 
-        /// the specified parameters and "caused by" exception describing the
-        /// failure.  
-        /// </remarks>
-        /// 
-        /// <param name="errorCode">
-        /// The error code to use to determine the specific type for the
-        /// <see cref="SzException"/> instance.
-        /// </param>
-        /// 
-        /// <param name="message">
-        /// The error message to associate with the exception.
-        /// </param>
-        /// 
-        /// <returns></returns>
-        public static SzException CreateSzException(long errorCode, string message)
-        {
-            // get the exception class
-            Type exceptionType = ExceptionMap.ContainsKey(errorCode)
-                ? ExceptionMap[errorCode] : typeof(SzException);
-
-            try
-            {
-                return (SzException)Activator.CreateInstance(exceptionType,
-                                                             errorCode,
-                                                             message);
-            }
-            catch (Exception e)
-            {
-                return new SzException(errorCode, message, e);
-            }
         }
 
         /// <summary>

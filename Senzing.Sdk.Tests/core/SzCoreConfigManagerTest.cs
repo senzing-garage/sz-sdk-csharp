@@ -8,6 +8,8 @@ using NUnit.Framework;
 
 using Senzing.Sdk.Core;
 
+using static Senzing.Sdk.Core.SzCoreUtilities;
+
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreConfigManagerTest : AbstractTest
@@ -861,10 +863,7 @@ internal class SzCoreConfigManagerTest : AbstractTest
         {
             try
             {
-                SzCoreConfigManager configMgr
-                    = (SzCoreConfigManager)this.Env.GetConfigManager();
-
-                String comment = configMgr.CreateConfigComment(configDefinition);
+                String comment = CreateConfigComment(configDefinition);
 
                 Assert.That(comment, Is.EqualTo(expected),
                             "Comment not as expected: " + configDefinition);
