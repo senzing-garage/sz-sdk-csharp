@@ -21,8 +21,7 @@ namespace Senzing.Sdk
     public interface SzDiagnostic
     {
         /// <summary>
-        /// Gathers detailed information on the data store and returns it as a
-        /// JSON <c>string</c>.
+        /// Returns overview information about the repository.
         /// </summary>
         ///
         /// <example>
@@ -30,16 +29,25 @@ namespace Senzing.Sdk
         /// <include file="../target/examples/SzDiagnosticDemo_GetRepositoryInfo.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzDiagnosticDemo_GetRepositoryInfo.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>A JSON <c>string</c> describing the datastore.</returns>
         ///
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
         string GetRepositoryInfo();
 
         /// <summary>
-        /// Runs non-destruction DB performance tests and returns detail of the 
-        /// result as a JSON <c>string</c>.
+        /// Conducts a rudimentary repository test to gauge I/O and network performance.
         /// </summary>
         ///
+        /// <remarks>
+        /// Typically, this is only run when troubleshooting performance.  This is a
+        /// non-destructive test.
+        /// </remarks>
+        /// 
         /// <param name="secondsToRun">
         /// How long to run the database performance test.
         /// </param>
@@ -47,6 +55,11 @@ namespace Senzing.Sdk
         /// <example>
         /// Usage:
         /// <include file="../target/examples/SzDiagnosticDemo_CheckRepositoryPerformance.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzDiagnosticDemo_CheckRepositoryPerformance.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>
@@ -57,12 +70,14 @@ namespace Senzing.Sdk
         string CheckRepositoryPerformance(int secondsToRun);
 
         /// <summary>
-        /// Purges all data in the configured repository.
+        /// Permanently deletes all data in the repository, except the configuration.
         /// </summary>
         ///
         /// <remarks>
-        /// <b>WARNING:</b> There is no undoing from this.  Make sure your
-        /// repository is regularly backed up.
+        /// <b>WARNING:</b> This method is destructive, it will delete all loaded 
+        /// records and entity resolution decisions.  Senzing does not provide a 
+        /// means to the restore the data.  The only means of recovery would be
+        /// restoring from a database backup.
         /// </remarks>
         ///
         /// <example>
@@ -76,8 +91,7 @@ namespace Senzing.Sdk
         void PurgeRepository();
 
         /// <summary>
-        /// Experimental/internal method for obtaining diagnostic feature definition
-        /// for the specified feature identifier.
+        /// Experimental/internal for Senzing support use.
         /// </summary>
         ///
         /// <param name="featureID">The identifier for the feature.</param>
@@ -85,6 +99,11 @@ namespace Senzing.Sdk
         /// <example>
         /// Usage:
         /// <include file="../target/examples/SzDiagnosticDemo_GetFeature.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzDiagnosticDemo_GetFeature.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>

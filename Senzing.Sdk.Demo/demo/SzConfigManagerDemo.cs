@@ -97,7 +97,7 @@ internal class SzConfigManagerDemo : AbstractTest
         throw e;
     }
 
-    [Test]
+    [Test, Order(10)]
     public void GetConfigManagerDemo()
     {
         try
@@ -180,7 +180,7 @@ internal class SzConfigManagerDemo : AbstractTest
         return config.Export();
     }
 
-    [Test]
+    [Test, Order(20)]
     public void RegisterConfigDemo()
     {
         try
@@ -219,7 +219,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(30)]
     public void RegisterConfigWithCommentDemo()
     {
         try
@@ -259,7 +259,7 @@ internal class SzConfigManagerDemo : AbstractTest
     }
 
 
-    [Test]
+    [Test, Order(40)]
     public void CreateConfigFromConfigIDDemo()
     {
         try
@@ -298,63 +298,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
-    public void GetConfigRegistryDemo()
-    {
-        try
-        {
-            // @start GetConfigRegistry
-            // How to get a JSON document describing all registered configs
-            try
-            {
-                // obtain the SzEnvironment (varies by application)
-                SzEnvironment env = GetEnvironment();
-
-                // get the config manager
-                SzConfigManager configMgr = env.GetConfigManager();
-
-                // get the config definition for the config ID
-                string configRegistry = configMgr.GetConfigRegistry();
-
-                // do something with the returned JSON (e.g.: parse it and extract values)
-                JsonObject? jsonObj = JsonNode.Parse(configRegistry)?.AsObject();
-
-                JsonArray? jsonArr = jsonObj?["CONFIGS"]?.AsArray();
-
-                // iterate over the registered configurations
-                if (jsonArr != null)
-                {
-                    for (int index = 0; index < jsonArr.Count; index++)
-                    {
-                        JsonObject? configObj = jsonArr[index]?.AsObject();
-
-                        long? configID = configObj?["CONFIG_ID"]?.GetValue<long>();
-                        string? createdOn = configObj?["SYS_CREATE_DT"]?.GetValue<string>();
-                        string? comment = configObj?["CONFIG_COMMENTS"]?.GetValue<string>();
-
-                        Assert.That(configID, Is.Not.Null, "CONFIG_ID is null"); // @omit
-                        Assert.That(createdOn, Is.Not.Null, "SYS_CREATE_DT is null"); // @omit
-                        Assert.That(comment, Is.Not.Null, "CONFIG_COMMENTS is null"); // @replace . . .
-
-                    }
-                }
-
-            }
-            catch (SzException e)
-            {
-                // handle or rethrow the exception
-                LogError("Failed to get configurations.", e);
-            }
-            // @end
-
-        }
-        catch (Exception e)
-        {
-            Fail(e);
-        }
-    }
-
-    [Test]
+    [Test, Order(50)]
     public void GetDefaultConfigIDDemo()
     {
         try
@@ -401,7 +345,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(60)]
     public void SetDefaultConfigIDDemo()
     {
         try
@@ -438,7 +382,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(70)]
     public void SetDefaultConfigDemo()
     {
         try
@@ -477,7 +421,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(80)]
     public void SetDefaultConfigWithCommentDemo()
     {
         try
@@ -516,7 +460,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(90)]
     public void ReplaceDefaultConfigIDDemo()
     {
         try
@@ -572,7 +516,7 @@ internal class SzConfigManagerDemo : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(100)]
     public void GetActiveConfigIDDemo()
     {
         try
@@ -606,6 +550,64 @@ internal class SzConfigManagerDemo : AbstractTest
             }
             // @end
 
+        }
+        catch (Exception e)
+        {
+            Fail(e);
+        }
+    }
+
+
+    [Test, Order(1000)]
+    public void GetConfigRegistryDemo()
+    {
+        try
+        {
+            string demoResult = "";
+            // @start GetConfigRegistry
+            // How to get a JSON document describing all registered configs
+            try
+            {
+                // obtain the SzEnvironment (varies by application)
+                SzEnvironment env = GetEnvironment();
+
+                // get the config manager
+                SzConfigManager configMgr = env.GetConfigManager();
+
+                // get the config definition for the config ID
+                string registry = configMgr.GetConfigRegistry();
+                demoResult = registry; // @replace
+                // do something with the returned JSON (e.g.: parse it and extract values)
+                JsonObject? jsonObj = JsonNode.Parse(registry)?.AsObject();
+
+                JsonArray? jsonArr = jsonObj?["CONFIGS"]?.AsArray();
+
+                // iterate over the registered configurations
+                if (jsonArr != null)
+                {
+                    for (int index = 0; index < jsonArr.Count; index++)
+                    {
+                        JsonObject? configObj = jsonArr[index]?.AsObject();
+
+                        long? configID = configObj?["CONFIG_ID"]?.GetValue<long>();
+                        string? createdOn = configObj?["SYS_CREATE_DT"]?.GetValue<string>();
+                        string? comment = configObj?["CONFIG_COMMENTS"]?.GetValue<string>();
+
+                        Assert.That(configID, Is.Not.Null, "CONFIG_ID is null"); // @omit
+                        Assert.That(createdOn, Is.Not.Null, "SYS_CREATE_DT is null"); // @omit
+                        Assert.That(comment, Is.Not.Null, "CONFIG_COMMENTS is null"); // @replace . . .
+
+                    }
+                }
+
+            }
+            catch (SzException e)
+            {
+                // handle or rethrow the exception
+                LogError("Failed to get configurations.", e);
+            }
+            // @end
+            this.saveDemoResult("GetConfigRegistry", demoResult, true);
         }
         catch (Exception e)
         {
