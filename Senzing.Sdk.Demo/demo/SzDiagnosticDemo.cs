@@ -37,6 +37,8 @@ internal class SzDiagnosticDemo : AbstractTest
 
     private long featureID = 0L;
 
+    private readonly DirectoryInfo repoDirectory;
+
     private SzCoreEnvironment Env
     {
         get
@@ -53,6 +55,18 @@ internal class SzDiagnosticDemo : AbstractTest
         }
     }
 
+    public SzDiagnosticDemo()
+    {
+        string tempPath = Path.GetTempPath();
+
+        string tempDirName = Guid.NewGuid().ToString();
+
+        string tempDirPath = Path.Combine(tempPath, "sz-example-" + tempDirName);
+
+        Directory.CreateDirectory(tempDirPath);
+
+        this.repoDirectory = new DirectoryInfo(tempDirPath);
+    }
 
     protected override string GetInstanceName()
     {
@@ -145,6 +159,16 @@ internal class SzDiagnosticDemo : AbstractTest
         }
     }
 
+    protected override DirectoryInfo GetRepositoryDirectory()
+    {
+        return this.repoDirectory;
+    }
+
+    protected override bool IsUsingHybridDatabase()
+    {
+        return false;
+    }
+
     protected SzEnvironment GetEnvironment()
     {
         if (this.env != null)
@@ -212,6 +236,7 @@ internal class SzDiagnosticDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetRepositoryInfo
             // How to get repository info via SzDiagnostic
             try
@@ -223,10 +248,10 @@ internal class SzDiagnosticDemo : AbstractTest
                 SzDiagnostic diagnostic = env.GetDiagnostic();
 
                 // get the repository info
-                string repositoryJson = diagnostic.GetRepositoryInfo();
-
+                string info = diagnostic.GetRepositoryInfo();
+                demoResult = info; // @replace
                 // do something with the returned JSON (varies by application)
-                Log(repositoryJson);
+                Log(info);
 
             }
             catch (SzException e)
@@ -235,7 +260,7 @@ internal class SzDiagnosticDemo : AbstractTest
                 LogError("Failed to get the repository info.", e);
             }
             // @end
-
+            this.saveDemoResult("GetRepositoryInfo", demoResult, true);
         }
         catch (Exception e)
         {
@@ -248,6 +273,7 @@ internal class SzDiagnosticDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start CheckRepositoryPerformance
             // How to get repository info via SzDiagnostic
             try
@@ -259,10 +285,10 @@ internal class SzDiagnosticDemo : AbstractTest
                 SzDiagnostic diagnostic = env.GetDiagnostic();
 
                 // check the repository performance
-                string performanceJson = diagnostic.CheckRepositoryPerformance(10);
-
+                string result = diagnostic.CheckRepositoryPerformance(10);
+                demoResult = result; // @replace
                 // do something with the returned JSON (varies by application)
-                Log(performanceJson);
+                Log(result);
 
             }
             catch (SzException e)
@@ -271,7 +297,7 @@ internal class SzDiagnosticDemo : AbstractTest
                 LogError("Failed to check the repository performance.", e);
             }
             // @end
-
+            this.saveDemoResult("CheckRepositoryPerformance", demoResult, true);
         }
         catch (Exception e)
         {
@@ -289,6 +315,7 @@ internal class SzDiagnosticDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetFeature
             // How to get a feature by its feature ID
             try
@@ -303,10 +330,10 @@ internal class SzDiagnosticDemo : AbstractTest
                 long featureID = GetFeatureID();
 
                 // get the feature for the feature ID
-                string featureJson = diagnostic.GetFeature(featureID);
-
+                string result = diagnostic.GetFeature(featureID);
+                demoResult = result; // @replace
                 // do something with the returned JSON
-                Log(featureJson);
+                Log(result);
 
             }
             catch (SzException e)
@@ -315,7 +342,7 @@ internal class SzDiagnosticDemo : AbstractTest
                 LogError("Failed to purge the repository.", e);
             }
             // @end
-
+            this.saveDemoResult("GetFeature", demoResult, true);
         }
         catch (Exception e)
         {

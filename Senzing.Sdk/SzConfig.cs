@@ -48,8 +48,7 @@ namespace Senzing.Sdk
     public interface SzConfig
     {
         /// <summary>
-        /// Obtains the configuration definition (typically formatted as JSON)
-        /// for this configuration.
+        /// Retrieves the definition for this configuration.
         /// </summary>
         ///
         /// <remarks>
@@ -58,12 +57,19 @@ namespace Senzing.Sdk
         /// </remarks>
         /// 
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzConfigDemo_ExportConfig.xml" path="/*"/>
         /// </example>
         /// 
-        /// <returns>The configuration definition (typically formatted as JSON).</returns>
-        ///
+        /// <example>
+        /// <b>Example Result:</b><br/>
+        /// The example result is rather large, but can be viewed
+        /// <see target="_blank" href="../examples/results/SzConfigDemo_ExportConfig.txt">here</see>
+        /// (formatted for readability). 
+        /// </example>
+        /// 
+        /// <returns>The configuration definition formatted as a JSON object.</returns>
+        /// 
         /// <exception cref="Senzing.Sdk.SzException">
         /// If a failure occurs.
         /// </exception>
@@ -73,36 +79,22 @@ namespace Senzing.Sdk
         string Export();
 
         /// <summary>
-        /// Extracts the data sources from this configuration and returns the
-        /// JSON text describing the data sources from the configuration.
+        /// Gets the data source registry for this configuration.
         /// </summary>
         /// 
-        /// <remarks>
-        /// The format of the JSON response is as follows:
-        /// <code>
-        /// {
-        ///   "DATA_SOURCES": [
-        ///     {
-        ///       "DSRC_ID": 1,
-        ///       "DSRC_CODE": "TEST"
-        ///     },
-        ///     {
-        ///       "DSRC_ID": 2,
-        ///       "DSRC_CODE": "SEARCH"
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// </remarks>
-        ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzConfigDemo_GetDataSourceRegistry.xml" path="/*"/>
         /// </example>
         /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzConfigDemo_GetDataSourceRegistry.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>
-        /// The JSON <c>string</c> describing the data sources found in
-        /// the configuration.
+        /// The data source registry describing the data sources for this
+        /// configuration formatted as a JSON object.
         /// </returns>
         ///
         /// <exception cref="Senzing.Sdk.SzException">
@@ -111,23 +103,38 @@ namespace Senzing.Sdk
         string GetDataSourceRegistry();
 
         /// <summary>
-        /// Registers a new data source that is identified by the specified data source
-        /// code to this configuration.  An exception is thrown if the data source
-        /// already exists in the configuration.
+        /// Adds a data source to this configuration.
         /// </summary>
+        /// 
+        /// <remarks>
+        /// <para>
+        /// Because <see cref="SzConfig"/> is an in-memory representation, the repository
+        /// is not changed unless the configuration is <see cref="SzConfig.Export()"
+        /// >exported</see> and then <see cref="SzConfigManager.RegisterConfig(string, string)"
+        /// >registered</see> via <see cref="SzConfigManager"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// An exception is thrown if the data source already exists in the configuration.
+        /// </para>
+        /// </remarks>
         ///
         /// <param name="dataSourceCode">
         /// The data source code for the new data source.
         /// </param>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzConfigDemo_RegisterDataSource.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzConfigDemo_RegisterDataSource.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <returns>
-        /// The JSON <c>string</c> describing the data source was 
-        /// added to the configuration.
+        /// The JSON <c>string</c> describing the data source was registered.
         /// </returns>
         /// 
         /// <exception cref="Senzing.Sdk.SzException">
@@ -138,17 +145,35 @@ namespace Senzing.Sdk
         string RegisterDataSource(string dataSourceCode);
 
         /// <summary>
-        /// Unregisters the data source identified by the specified data source code
-        /// from this configuration.
+        /// Removes a data source from this configuration.
         /// </summary>
         ///
+        /// <remarks>
+        /// <para>
+        /// Because <see cref="SzConfig"/> is an in-memory representation, the repository
+        /// is not changed unless the configuration is <see cref="SzConfig.Export()"
+        /// >exported</see> and then <see cref="SzConfigManager.RegisterConfig(string, string)"
+        /// >registered</see> via <see cref="SzConfigManager"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>NOTE:</b> This method is idempotent in that it succeeds with no changes
+        /// being made when specifying a data source code that is not found in the registry.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>WARNING:</b> If records in the repository refer to the unregistered data 
+        /// source, the configuration cannot be used as the active configuration.
+        /// </para>
+        /// </remarks>
+        /// 
         /// <param name="dataSourceCode">
         /// The data source code that identifies the data source to delete from
         /// the configuration.
         /// </param>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzConfigDemo_UnregisterDataSource.xml" path="/*"/>
         /// </example>
         ///

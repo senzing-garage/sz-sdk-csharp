@@ -27,12 +27,17 @@ namespace Senzing.Sdk
     public interface SzEngine
     {
         /// <summary>
-        /// May optionally be called to pre-initialize some of the heavier weight
-        /// internal resources of the <c>SzEngine</c>.
+        /// Pre-loads engine resources.
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Explicitly calling this method ensures the performance cost is incurred
+        /// at a predictable time rather than unexpectedly with the first call 
+        /// requiring the resources.
+        /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_PrimeEngine.xml" path="/*"/>
         /// </example>
         /// 
@@ -42,13 +47,25 @@ namespace Senzing.Sdk
         void PrimeEngine();
 
         /// <summary>
-        /// Returns the current internal engine workload statistics for the process.
-        /// The counters are reset after each call.
+        /// Gets and resets the internal engine workload statistics for
+        /// the current operating system process.
         /// </summary>
+        /// 
+        /// <remarks>
+        /// The output is helpful when interacting with Senzing support.
+        /// Best practice to periodically log the results.
+        /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetStats.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b><br/>
+        /// The example result is rather large, but can be viewed
+        /// <see target="_blank" href="../examples/results/SzEngineDemo_GetStats.txt">here</see>
+        /// (formatted for readability). 
         /// </example>
         /// 
         /// <returns>The <c>string</c> describing the statistics as JSON.</returns>
@@ -59,19 +76,17 @@ namespace Senzing.Sdk
         string GetStats();
 
         /// <summary>
-        /// Loads the record described by the specified <c>string</c> record
-        /// definition having the specified data source code and record ID using
-        /// the specified bitwise-OR'd <see cref="SzFlag"/> values.
+        /// Loads a record into the repository and performs entity resolution.
         /// </summary>
         ///
         /// <remarks>
-        /// If a record already exists with the same data source code and record ID,
-        /// then it will be replaced.
         /// <para>
-        /// The specified JSON data may optionally contain the <c>DATA_SOURCE</c>
-        /// and <c>RECORD_ID</c> properties, but, if so, they must match the
-        /// specified parameters.
+        /// If a record already exists with the same data source code and
+        /// record ID, it will be replaced.  If the record definition contains
+        /// <c>DATA_SOURCE</c> and <c>RECORD_ID</c> JSON keys, the values must
+        /// match the <c>dataSourceCode</c> and <c>recordId</c> parameters.
         /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
@@ -83,8 +98,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_AddRecord.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_AddRecord.xml" path="/*"/>
         /// </example>
         /// 
         /// <param name="dataSourceCode">
@@ -146,25 +166,35 @@ namespace Senzing.Sdk
                          SzFlag? flags = SzAddRecordDefaultFlags);
 
         /// <summary>
-        /// Performs a hypothetical load of a the record described by the specified
-        /// <c>string</c> record definition using the specified bitwise-OR'd 
-        /// <see cref="SzFlag"/> values.
+        /// Describes the features resulting from the hypothetical load of a record.
         /// </summary>
         ///
         /// <remarks>
+        /// <para>
+        /// This method is used to preview the features for a record that has not
+        /// been loaded.
+        /// </para>
+        /// 
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzRecordPreviewFlags"/> group will
         /// be recognized (other <see cref="SzFlag"/> values will be ignored unless
         /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetRecordPreview.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_GetRecordPreview.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="recordDefinition">
         /// The <c>string</c> that defines the record, typically in JSON format.
         /// </param>
@@ -190,14 +220,15 @@ namespace Senzing.Sdk
                                 SzFlag? flags = SzRecordPreviewDefaultFlags);
 
         /// <summary>
-        /// Delete a previously loaded record identified by the specified 
-        /// data source code and record ID.
+        /// Deletes a record from the repository and performs entity resolution.
         /// </summary>
         ///
         /// <remarks>
-        /// This method is idempotent, meaning multiple calls this method with
-        /// the same parameters will all succeed regardless of whether or not the
-        /// record is found in the repository.
+        /// <para>
+        /// <b>NOTE:</b> This method is idempotent in that it succeeds with
+        /// no changes being made when the record is not found in the repository.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
@@ -209,8 +240,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_DeleteRecord.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_DeleteRecord.xml" path="/*"/>
         /// </example>
         /// 
         /// <param name="dataSourceCode">
@@ -256,17 +292,15 @@ namespace Senzing.Sdk
                             SzFlag? flags = SzDeleteRecordDefaultFlags);
 
         /// <summary>
-        /// Reevaluate the record identified by the specified data source code
-        /// and record ID.
+        /// Reevaluates an entity by record ID.
         /// </summary>
+        /// 
         /// <remarks>
-        /// If the data source code is not recognized then an
-        /// <see cref="SzUnknownDataSourceException"/> is thrown but if the record
-        /// for the record ID is not found, then the operation silently does nothing
-        /// with no exception.  This is to ensure consistent behavior in case of a
-        /// race condition with record deletion.  To ensure that the record was
-        /// found, specify the <see cref="SzWithInfo"/> flag and check the returned
-        /// INFO document for affected entities.
+        /// <para>
+        /// This operation performs entity resolution.  If the record is not found,
+        /// then no changes are made.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
@@ -278,8 +312,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ReevaluateRecord.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_ReevaluateRecord.xml" path="/*"/>
         /// </example>
         /// 
         /// <param name="dataSourceCode">
@@ -323,15 +362,15 @@ namespace Senzing.Sdk
                                  SzFlag? flags = SzReevaluateRecordDefaultFlags);
 
         /// <summary>
-        /// Reevaluate a resolved entity identified by the specified entity ID.
+        /// Reevaluates an entity by entity ID.
         /// </summary>
+        /// 
         /// <remarks>
-        /// If the entity for the entity ID is not found, then the operation
-        /// silently does nothing with no exception.  This is to ensure consistent
-        /// behavior in case of a race condition with entity re-resolve or unresolve.
-        /// To ensure that the entity was found, specify the
-        /// <see cref="SzFlag.SzWithInfo"/> flag and check the returned INFO document
-        /// for affected entities.
+        /// <para>
+        /// This operation performs entity resolution.  If the entity is not found,
+        /// then no changes are made.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
@@ -343,10 +382,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ReevaluateEntity.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_ReevaluateEntity.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="entityID">
         /// The ID of the resolved entity to reevaluate.
         /// </param>
@@ -377,22 +421,22 @@ namespace Senzing.Sdk
                                 SzFlag? flags = SzReevaluateEntityDefaultFlags);
 
         /// <summary>
-        /// This method searches for entities that match or relate to the provided
-        /// search attributes using the optionally specified search profile.
+        /// Searches for entities that match or relate to the provided attributes.
         /// </summary>
+        /// 
         /// <remarks>
-        /// The specified search attributes are treated as a hypothetical record and 
-        /// the search results are those entities that would match or relate to 
-        /// that hypothetical record on some level (depending on the specified flags).
+        /// <para>
+        /// The default search profile is <c>"SEARCH"</c>.  Alternatively, 
+        /// <c>"INGEST"</c> may be used.
+        /// </para>
+        /// 
         /// <para>
         /// If the specified search profile is <c>null</c> then the default
-        /// generic thresholds from the default search profile will be used for the
-        /// search (alternatively, use <see cref="SearchByAttributes(string,SzFlag?)"/>
-        /// to omit the parameter).  If your search requires different behavior using
-        /// alternate generic thresholds, please contact 
-        /// <see href="mailto:support@senzing.com">support@senzing.com</see> for
-        /// details on configuring a custom search profile.
+        /// will be used (alternatively, use 
+        /// <see cref="SearchByAttributes(string,SzFlag?)"/> as a convenience
+        /// method to omit the parameter).
         /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the search is performed but also the content of the
@@ -404,10 +448,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_SearchByAttributesWithProfile.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_SearchByAttributesWithProfile.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="attributes">
         /// The search attributes defining the hypothetical record to match and/or
         /// relate to in order to obtain the search results.
@@ -454,14 +503,20 @@ namespace Senzing.Sdk
         /// <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// with a <c>null</c> value for the search profile parameter.
         /// </summary>
+        /// 
         /// <remarks>
         /// See <see cref="SearchByAttributes(string,string,SzFlag?)"/>
         /// documentation for details.
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_SearchByAttributes.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_SearchByAttributes.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="attributes">
@@ -500,11 +555,20 @@ namespace Senzing.Sdk
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
 
         /// <summary>
-        /// Compares the specified search attribute criteria against the entity
-        /// identified by the specified entity ID to determine why that entity was
-        /// or was not included in the results of a "search by attributes" operation.
+        /// Describes the ways a set of search attributes relate to an entity.
         /// </summary>
+        /// 
         /// <remarks>
+        /// <para>
+        /// The default search profile is <c>"SEARCH"</c>.  Alternatively, 
+        /// <c>"INGEST"</c> may be used.
+        /// </para>
+        /// 
+        /// <para>
+        /// If the specified search profile is <c>null</c> then the default
+        /// will be used.
+        /// </para>
+        /// 
         /// The specified search attributes are treated as a hypothetical
         ///  single-record entity and the result of this operation is the
         /// "why analysis" of the entity identified by the specified entity ID
@@ -529,10 +593,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_WhySearch.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_WhySearch.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="attributes">
         /// The search attributes defining the hypothetical record to match
         /// and/or relate to in order to obtain the search results.
@@ -578,27 +647,28 @@ namespace Senzing.Sdk
             SzFlag? flags = SzWhySearchDefaultFlags);
 
         /// <summary>
-        /// This method is used to retrieve information about a specific resolved
-        /// entity.
+        /// Retrieves information about an entity, specified by entity ID.
         /// </summary>
         ///
         /// <remarks>
-        /// The result is returned as a JSON document describing the entity.
-        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzEntityFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
-        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetEntityByEntityID.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_GetEntityByEntityID.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="entityID">
         /// The entity ID identifying the entity to retrieve.
         /// </param>
@@ -627,26 +697,26 @@ namespace Senzing.Sdk
                          SzFlag? flags = SzEntityDefaultFlags);
 
         /// <summary>
-        /// This method is used to retrieve information about the resolved entity
-        /// that contains a specific record that is identified by the specified 
-        /// data source code and record ID.
+        /// Retrieves information about an entity, specified by record ID.
         /// </summary>
         ///
         /// <remarks>
-        /// The result is returned as a JSON document describing the entity.
-        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzFlagUsageGroup.SzEntityFlags"/>
         /// group will be recognized (other <see cref="SzFlag"/> values will be
         /// ignored unless they have equivalent bit flags to recognized flags).
-        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetEntityByRecordKey.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_GetEntityByRecordKey.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="dataSourceCode">
@@ -688,14 +758,14 @@ namespace Senzing.Sdk
                          SzFlag? flags = SzEntityDefaultFlags);
 
         /// <summary>
-        /// An <b>experimental</b> method to obtain interesting entities pertaining
-        /// to the entity identified by the specified entity ID using the specified
-        /// flags.
+        /// Experimental method.
         /// </summary>
         ///
         /// <remarks>
-        /// The result is returned as a JSON document describing the interesting
-        /// entities.
+        /// <para>
+        /// Contact Senzing support for the further information.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
         /// may contain any flags, but only flags belonging to the
@@ -706,7 +776,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindInterestingByEntityID.xml" path="/*"/>
         /// </example>
         ///
@@ -742,14 +812,14 @@ namespace Senzing.Sdk
             SzFlag? flags = SzFindInterestingEntitiesDefaultFlags);
 
         /// <summary>
-        /// An <b>experimental</b> method to obtain interesting entities pertaining
-        /// to the entity that contains a specific record that is identified by the
-        /// specified data source code and record ID using the specified flags.
+        /// Experimental method.
         /// </summary>
         ///
         /// <remarks>
-        /// The result is returned as a JSON document describing the interesting
-        /// entities.
+        /// <para>
+        /// Contact Senzing support for the further information.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values
         /// may contain any flags, but only flags belonging to the
@@ -760,7 +830,7 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindInterestingByRecordKey.xml" path="/*"/>
         /// </example>
         ///
@@ -804,23 +874,16 @@ namespace Senzing.Sdk
             SzFlag? flags = SzFindInterestingEntitiesDefaultFlags);
 
         /// <summary>
-        /// Finds a relationship path between two entities identified by their
-        /// entity ID's.
+        /// Searches for the shortest relationship path between two entities,
+        /// specified by entity IDs.
         /// </summary>
         ///
         /// <remarks>
-        /// Entities to be avoided when finding the path may optionally be specified
-        /// as a non-null <see cref="ISet{T}"/> of <c>long</c> entity ID's identifying
-        /// entities to be avoided.  By default the specified entities will be avoided
-        /// unless absolutely necessary to find the path.  To strictly avoid the
-        /// specified entities specify the <see cref="SzFindPathStrictAvoid"/> flag.
         /// <para>
-        /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
-        /// optionally be specified to identify required data sources.  If specified
-        /// as non-null, then the required data sources <see cref="ISet{T}">set</see>
-        /// contains non-null <c>string</c> data source codes that identify data
-        /// sources for which a record from <b>at least one</b> must exist on the path.
+        /// The returned path is the shortest path among the paths that satisfy
+        /// the parameters.
         /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the level of
@@ -833,10 +896,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindPathByEntityID.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_FindPathByEntityID.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="startEntityID">The entity ID of the first entity.</param>
         ///
         /// <param name="endEntityID">The entity ID of the second entity.</param>
@@ -846,16 +914,17 @@ namespace Senzing.Sdk
         /// </param>
         ///
         /// <param name="avoidEntityIDs">
-        /// The optional <see cref="System.Collections.Generic.ISet{T}"/> of <c>long</c>
-        /// entity ID's identifying entities to be avoided when finding the path, or
-        /// <c>null</c> if no entities are to be avoided.
+        /// The optional <see cref="ISet{T}"/> of <c>long</c> entity ID's identifying
+        /// entities to be avoided when finding the path, or <c>null</c> if no 
+        /// entities are to be avoided.  By default the entities will be avoided unless
+        /// necessary to find the path.  To strictly avoid the entities specify the 
+        /// <see cref="SzFindPathStrictAvoid"/> flag.
         /// </param>
         ///
         /// <param name="requiredDataSources">
-        /// The optional <see cref="System.Collections.Generic.ISet{T}"/> of non-null
-        /// <c>string</c> data source codes identifying the data sources for
-        /// which at least one record must be included on the path, or <c>null</c>
-        /// if none are required.
+        /// The optional <see cref="ISet{T}"/> of non-null <c>string</c> data source
+        /// codes identifying the data sources for which at least one record must be
+        /// included on the path, or <c>null</c> if none are required.
         /// </param>
         ///
         /// <param name="flags">
@@ -895,24 +964,16 @@ namespace Senzing.Sdk
                         SzFlag? flags = SzFindPathDefaultFlags);
 
         /// <summary>
-        /// Finds a relationship path between two entities identified by the
-        /// specified data source codes and record ID's of their constituent records.
+        /// Searches for the shortest relationship path between two entities,
+        /// specified by record IDs.
         /// </summary>
         ///
         /// <remarks>
-        /// Entities to be avoided when finding the path may optionally be specified
-        /// as a non-null <see cref="ISet{T}"/> of tuples of data source code and
-        /// record ID pairs identifying the constituent records of entities to be
-        /// avoided.  By default the associated entities will be avoided unless
-        /// absolutely necessary to find the path.  To strictly avoid the associated
-        /// entities specify the <see cref="SzFindPathStrictAvoid"/> flag. 
         /// <para>
-        /// Further, a <see cref="ISet{T}"/> of <c>string</c> data source codes may
-        /// optionally be specified to identify required data sources.  If specified
-        /// as non-null, then the required data sources <see cref="ISet{T}">set</see>
-        /// contains non-null <c>string</c> data source codes that identify data
-        /// sources for which a record from <b>at least one</b> must exist on the path.
+        /// The returned path is the shortest path among the paths that satisfy
+        /// the parameters.
         /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values may
         /// contain any <see cref="SzFlag"/> value, but only flags belonging to the
@@ -923,8 +984,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindPathByRecordKey.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_FindPathByRecordKey.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="startDataSourceCode">
@@ -955,6 +1021,9 @@ namespace Senzing.Sdk
         /// The optional <see cref="ISet{T}"/> of tuples containing data source code
         /// and record ID pairs identifying records whose entities are to be avoided
         /// when finding the path, or <c>null</c> if no entities are to be avoided.
+        /// By default the entities will be avoided unless necessary to find the path.
+        /// To strictly avoid the entities specify the 
+        /// <see cref="SzFindPathStrictAvoid"/> flag.
         /// </param>
         ///
         /// <param name="requiredDataSources">
@@ -1003,18 +1072,17 @@ namespace Senzing.Sdk
             SzFlag? flags = SzFindPathDefaultFlags);
 
         /// <summary>
-        /// Finds a network of entity relationships surrounding the paths between
-        /// a set of entities identified by one or more <c>long</c> entity ID's
-        /// included in the specified <see cref="ISet{T}"/>.
+        /// Retrieves a network of relationships among entities, specified by
+        /// entity IDs.
         /// </summary>
         ///
         /// <remarks>
-        /// Additionally, the maximum degrees of separation for the paths between
-        /// entities must be specified so as to prevent the network growing beyond
-        /// the desired size.  Further, a non-zero number of degrees to build out
-        /// the network may be specified to find other related entities.  If build
-        /// out is specified, it can be limited to a maximum total number of
-        /// build-out entities for the whole network.
+        /// <para>
+        /// <b>WARNING:</b> Entity networks may be very large due to the volume
+        /// of inter-related data in the repository.  The parameters of this
+        /// method can be used to limit the information returned.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1026,8 +1094,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindNetworkByEntityID.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_FindNetworkByEntityID.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="entityIDs">
@@ -1037,16 +1110,22 @@ namespace Senzing.Sdk
         ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
-        /// entities.
+        /// entities.  The maximum degrees of separation for the paths between
+        /// entities must be specified so as to prevent the network growing beyond
+        /// the desired size.
         /// </param>
         ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the found
-        /// entities on the network, or zero to prevent network build-out.
+        /// entities on the network, or zero to prevent network build-out.  If this
+        /// is non-zero, the size of the network can be limited to a maximum total
+        /// number of build-out entities for the whole network.
         /// </param>
         ///
         /// <param name="buildOutMaxEntities">
         /// The maximum number of entities to build out for the entire network.
+        /// This limits the size of the build-out network when the build-out
+        /// degrees is non-zero.
         /// </param>
         ///
         /// <param name="flags">
@@ -1080,19 +1159,17 @@ namespace Senzing.Sdk
             SzFlag? flags = SzFindNetworkDefaultFlags);
 
         /// <summary>
-        /// Finds a network of entity relationships surrounding the paths between
-        /// a set of entities having the constituent records identified by the tuples
-        /// of data source code and record ID pairs included in the specified 
-        /// <see cref="ISet{T}"/>.
+        /// Retrieves a network of relationships among entities, specified by
+        /// record IDs.
         /// </summary>
         ///
         /// <remarks>
-        /// Additionally, the maximum degrees of separation for the paths between
-        /// entities must be specified so as to prevent the network growing beyond
-        /// the desired size.  Further, a non-zero number of degrees to build out
-        /// the network may be specified to find other related entities.  If build
-        /// out is specified, it can be limited to a maximum total number of
-        /// build-out entities for the whole network.
+        /// <para>
+        /// <b>WARNING:</b> Entity networks may be very large due to the volume
+        /// of inter-related data in the repository.  The parameters of this
+        /// method can be used to limit the information returned.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1104,10 +1181,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_FindNetworkByRecordKey.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_FindNetworkByRecordKey.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="recordKeys">
         /// The non-null  <see cref="ISet{T}"/> of tuples of data source code and
         /// record ID pairs identifying the constituent records of the entities for
@@ -1116,16 +1198,22 @@ namespace Senzing.Sdk
         ///
         /// <param name="maxDegrees">
         /// The maximum number of degrees for the path search between the specified
-        /// entities.
+        /// entities.  The maximum degrees of separation for the paths between
+        /// entities must be specified so as to prevent the network growing beyond
+        /// the desired size.
         /// </param>
         ///
         /// <param name="buildOutDegrees">
         /// The number of relationship degrees to build out from each of the found
-        /// entities on the network, or zero to prevent network build-out.
+        /// entities on the network, or zero to prevent network build-out.  If this
+        /// is non-zero, the size of the network can be limited to a maximum total
+        /// number of build-out entities for the whole network.
         /// </param>
         ///
         /// <param name="buildOutMaxEntities">
         /// The maximum number of entities to build out for the entire network.
+        /// This limits the size of the build-out network when the build-out
+        /// degrees is non-zero.
         /// </param>
         ///
         /// <param name="flags">
@@ -1164,9 +1252,9 @@ namespace Senzing.Sdk
             SzFlag? flags = SzFindNetworkDefaultFlags);
 
         /// <summary>
-        /// Determines why the record identified by the specified data source
-        /// code and record ID is included in its respective entity.
+        /// Describes the ways a record relates to the rest of its respective entity.
         /// </summary>
+        /// 
         /// <remarks>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1177,8 +1265,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_WhyRecordInEntity.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_WhyRecordInEntity.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="dataSourceCode">
@@ -1225,8 +1318,7 @@ namespace Senzing.Sdk
             SzFlag? flags = SzWhyRecordInEntityDefaultFlags);
 
         /// <summary>
-        /// Determines ways in which two records identified by their data source
-        /// code and record IDs are related to each other.
+        /// Describes the ways two records relate to each other.
         /// </summary>
         ///
         /// <remarks>
@@ -1239,10 +1331,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_WhyRecords.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_WhyRecords.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="dataSourceCode1">
         /// The data source code identifying the data source for the first record.
         /// </param>
@@ -1297,9 +1394,9 @@ namespace Senzing.Sdk
                           SzFlag? flags = SzWhyRecordsDefaultFlags);
 
         /// <summary>
-        /// Determines the ways in which two entities identified by the specified
-        /// entity ID's are related to each other.
+        /// Describes the ways two entities relate to each other.
         /// </summary>
+        /// 
         /// <remarks>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1310,8 +1407,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_WhyEntities.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_WhyEntities.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="entityID1">The entity ID of the first entity.</param>
@@ -1347,8 +1449,7 @@ namespace Senzing.Sdk
                            SzFlag? flags = SzWhyEntitiesDefaultFlags);
 
         /// <summary>
-        /// Determines how an entity identified by the specified entity ID was
-        /// constructed from its constituent records.
+        /// Explains how an entity was constructed from its records.
         /// </summary>
         ///
         /// <remarks>
@@ -1361,10 +1462,15 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_HowEntity.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_HowEntity.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="entityID">The entity ID of the entity.</param>
         ///
         /// <param name="flags">
@@ -1392,23 +1498,32 @@ namespace Senzing.Sdk
         string HowEntity(long entityID, SzFlag? flags = SzHowEntityDefaultFlags);
 
         /// <summary>
-        /// Describes a hypothetically entity that would be composed of the one or
-        /// more records identified by the tuples of data source code and record ID
-        /// pairs in the specified <see cref="ISet{T}"/>.
+        /// Describes how an entity would look if composed of a given set of records.
         /// </summary>
         ///
         /// <remarks>
+        /// <para>
+        /// Virtual entities do not have relationships.
+        /// </para>
+        /// 
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzVirtualEntityFlags"/> group will be
         /// recognized (other <see cref="SzFlag"/> values will be ignored unless they
         /// have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetVirtualEntity.xml" path="/*"/>
+        /// </example>
+        ///
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_GetVirtualEntity.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="recordKeys">
@@ -1431,6 +1546,10 @@ namespace Senzing.Sdk
         /// the specified constituent records.
         /// </returns>
         ///
+        /// <exception cref="SzUnknownDataSourceException">
+        /// If an unrecognized data source code is specified.
+        /// </exception>
+        /// 
         /// <exception cref="SzNotFoundException">
         /// If any of the records for the specified data source code and
         /// record ID pairs cannot be found.
@@ -1446,22 +1565,33 @@ namespace Senzing.Sdk
             SzFlag? flags = SzVirtualEntityDefaultFlags);
 
         /// <summary>
-        /// Retrieves the record identified by the specified data source code
-        /// and record ID.
+        /// Retrieves information about a record.
         /// </summary>
         ///
         /// <remarks>
+        /// <para>
+        /// The returned information contains the original record data that was
+        /// loaded and may contain other information depending on the flags parameter.
+        /// </para>
+        /// 
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzRecordFlags"/> group will be
         /// recognized (other <see cref="SzFlag"/> values will be ignored unless
         /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_GetRecord.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_GetRecord.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="dataSourceCode">
@@ -1502,15 +1632,20 @@ namespace Senzing.Sdk
                          SzFlag? flags = SzRecordDefaultFlags);
 
         /// <summary>
-        /// Initiates an export of entity data as JSON-lines format and returns an
-        /// "export handle" that can be used to <see cref="FetchNext">read
-        /// the export data</see> and must be 
-        /// <see cref="CloseExportReport">closed</see> when complete.
+        /// Initiates an export report of entity data in JSON Lines format.
         /// </summary>
-        ///
+        /// 
         /// <remarks>
-        /// Each output line contains the exported entity data for a single resolved
-        /// entity.
+        /// <para>
+        /// Used in conjunction with <see cref="FetchNext"/> and 
+        /// <see cref="CloseExportReport"/>.  Each <see cref="FetchNext"/>
+        /// call returns exported entity data as a JSON object.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>WARNING:</b> Use with large repositories is <b>not</b> advised.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1522,8 +1657,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ExportJson.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Complete Export Report:</b>
+        /// <include file="../target/examples/results/SzEngineDemo_ExportJson.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="flags">
@@ -1547,15 +1687,22 @@ namespace Senzing.Sdk
         IntPtr ExportJsonEntityReport(SzFlag? flags = SzExportDefaultFlags);
 
         /// <summary>
-        /// Initiates an export of entity data in CSV format and returns an
-        /// "export handle" that can be used to <see cref="FetchNext">read
-        /// the export data</see> and must be
-        /// <see cref="CloseExportReport">closed</see> when complete.
+        /// Initiates an export report of entity data in CSV format.
         /// </summary>
-        ///
+        /// 
         /// <remarks>
-        /// The first exported line contains the CSV header and each subsequent line
-        /// contains the exported entity data for a single resolved entity.
+        /// <para>
+        /// Used in conjunction with <see cref="FetchNext"/> and 
+        /// <see cref="CloseExportReport"/>.  The first <see cref="FetchNext"/>
+        /// call after calling this method returns the CSV header.  Subsequent
+        /// <see cref="FetchNext"/> calls return exported entity data in 
+        /// CSV format.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>WARNING:</b> Use with large repositories is <b>not</b> advised.
+        /// </para>
+        /// 
         /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only control how the operation is performed but also the content of
@@ -1567,8 +1714,13 @@ namespace Senzing.Sdk
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ExportCsv.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Complete Export Report:</b>
+        /// <include file="../target/examples/results/SzEngineDemo_ExportCsv.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="csvColumnList">
@@ -1600,14 +1752,30 @@ namespace Senzing.Sdk
             SzFlag? flags = SzExportDefaultFlags);
 
         /// <summary>
-        /// Fetches the next line of entity data from the export identified
-        /// by the specified export handle.
+        /// Fetches the next line of entity data from an open export report.
         /// </summary>
         ///
         /// <remarks>
-        /// The specified export handle can be obtained from
-        /// <see cref="ExportJsonEntityReport"/> or
-        /// <see cref="ExportCsvEntityReport"/>.
+        /// <para>
+        /// Used in conjunction with <see cref="ExportJsonEntityReport"/>,
+        /// <see cref="ExportCsvEntityReport"/> and <see cref="CloseExportReport"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// If the export handle was obtained from <see cref="ExportCsvEntityReport"/>,
+        /// this returns the CSV header on the first call and exported entity data
+        /// in CSV format on subsequent calls.
+        /// </para>
+        /// 
+        /// <para>
+        /// If the export handle was obtained from <see cref="ExportJsonEntityReport"/>
+        /// this returns exported entity data as a JSON object.
+        /// </para>
+        /// 
+        /// <para>
+        /// When <c>null</c> is returned, the export report is complete and the 
+        /// caller should invoke <see cref="CloseExportReport"/> to free resources.
+        /// </para>
         /// </remarks>
         ///
         /// <example>
@@ -1616,12 +1784,27 @@ namespace Senzing.Sdk
         /// </example>
         ///
         /// <example>
+        /// <b>Example JSON Line Result:</b>
+        /// <include file="../target/examples/results/SzEngineDemo_ExportJson-fetchNext.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
         /// Usage (CSV Export):
         /// <include file="../target/examples/SzEngineDemo_ExportCsv.xml" path="/*"/>
         /// </example>
         ///
+        /// <example>
+        /// <b>Example CSV Header Result:</b>
+        /// <include file="../target/examples/results/SzEngineDemo_ExportCsv-fetchNext-header.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example CSV Data Result:</b>
+        /// <include file="../target/examples/results/SzEngineDemo_ExportCsv-fetchNext-data.xml" path="/*"/>
+        /// </example>
+        /// 
         /// <param name="exportHandle">
-        /// The export handle to identify the export from which to retrieve
+        /// The export handle for the export report from which to retrieve
         /// the next line of data.
         /// </param>
         ///
@@ -1631,7 +1814,11 @@ namespace Senzing.Sdk
         /// data to be exported via the specified handle.
         /// </returns>
         ///
-        /// <exception cref="SzException">If a failure occurs.</exception>
+        /// <exception cref="SzException">
+        /// If the specified export handle has already been 
+        /// <see cref="CloseExportReport">closed</see> or if
+        /// any other failure occurs.
+        /// </exception>
         ///
         /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportJsonEntityReport"/>
@@ -1639,13 +1826,12 @@ namespace Senzing.Sdk
         string FetchNext(IntPtr exportHandle);
 
         /// <summary>
-        /// This function closes an export handle of a previously opened 
-        /// export to clean up system resources.
+        /// Closes an export report.
         /// </summary>
         ///
         /// <remarks>
-        /// This function is idempotent and may be called for an export
-        /// that has already been closed.
+        /// Used in conjunction with <see cref="ExportJsonEntityReport"/>,
+        /// <see cref="ExportCsvEntityReport"/> and <see cref="FetchNext"/>.
         /// </remarks>
         ///
         /// <example>
@@ -1659,10 +1845,14 @@ namespace Senzing.Sdk
         /// </example>
         ///
         /// <param name="exportHandle">
-        /// The export handle of the export to close.
+        /// The export handle of the export report to close.
         /// </param>
         ///
-        /// <exception cref="SzException">If a failure occurs.</exception>
+        /// <exception cref="SzException">
+        /// If the specified export handle has already been 
+        /// <see cref="CloseExportReport">closed</see> or if
+        /// any other failure occurs.
+        /// </exception>
         ///
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="ExportJsonEntityReport"/>
@@ -1670,22 +1860,38 @@ namespace Senzing.Sdk
         void CloseExportReport(IntPtr exportHandle);
 
         /// <summary>
-        /// Processes the specified redo record using the specified flags.
-        /// The redo record can be retrieved from <see cref="GetRedoRecord"/>.
+        /// Processes the provided redo record.
         /// </summary>
         ///
         /// <remarks>
+        /// <para>
+        /// This operation performs entity resolution.  Calling this method
+        /// has the potential to create more redo records in certain situations.
+        /// </para>
+        /// 
+        /// <para>
+        /// This method is used in conjunction with <see cref="GetRedoRecord"/>
+        /// and <see cref="CountRedoRecords"/>.
+        /// </para>
+        ///   
+        /// <para>
         /// The optionally specified bitwise-OR'd <see cref="SzFlag"/> values not
         /// only controls how the operation is performed, but also the content of
         /// the response.  Any <see cref="SzFlag"/> value may be included, but only
         /// flags belonging to the <see cref="SzRedoFlags"/> group will be 
         /// recognized (other <see cref="SzFlag"/> values will be ignored unless
         /// they have equivalent bit flags to recognized flags).
+        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Info Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzEngineDemo_AddRecord.xml" path="/*"/>
         /// </example>
         ///
         /// <param name="redoRecord">The redo record to be processed.</param>
@@ -1720,15 +1926,26 @@ namespace Senzing.Sdk
         string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzRedoDefaultFlags);
 
         /// <summary>
-        /// Retrieves a pending redo record from the reevaluation queue.
+        /// Retrieves and removes a pending redo record.
         /// </summary>
         ///
         /// <remarks>
-        /// If no redo records are available then this returns an <c>null</c>.
+        /// <para>
+        /// A <c>null</c> value will be returned if there are no pending
+        /// redo records.  Use <see cref="ProcessRedoRecord"/> to process
+        /// the result of this method.  Once Once a redo record is 
+        /// retrieved, it is no longer tracked by Senzing.  The redo 
+        /// record may be stored externally for later processing.
+        /// </para>
+        /// 
+        /// <para>
+        /// This method is used in conjunction with <see 
+        /// cref="ProcessRedoRecord"/> and <see cref="CountRedoRecords"/>.
+        /// </para>
         /// </remarks>
         ///
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
         /// </example>
         ///
@@ -1749,11 +1966,16 @@ namespace Senzing.Sdk
         string GetRedoRecord();
 
         /// <summary>
-        /// Gets the number of redo records pending to be processed.
+        /// Gets the number of redo records pending processing.
         /// </summary>
         ///
+        /// <remarks>
+        /// This method is used in conjunction with <see cref="GetRedoRecord"/>
+        /// and <see cref="ProcessRedoRecord"/>. 
+        /// </remarks>
+        /// 
         /// <example>
-        /// Usage:
+        /// <b>Usage:</b>
         /// <include file="../target/examples/SzEngineDemo_ProcessRedos.xml" path="/*"/>
         /// </example>
         ///

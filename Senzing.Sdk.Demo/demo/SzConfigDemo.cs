@@ -188,6 +188,7 @@ internal class SzConfigDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start ExportConfig
             // How to export config JSON from a config handle
             try
@@ -202,8 +203,8 @@ internal class SzConfigDemo : AbstractTest
                 SzConfig config = configMgr.CreateConfig();
 
                 // export the config
-                String configDefinition = config.Export();
-
+                string configDefinition = config.Export();
+                demoResult = configDefinition; // @replace
                 Assert.That(configDefinition, Is.Not.Null, "Config definition is null"); // @replace . . .
 
             }
@@ -213,6 +214,7 @@ internal class SzConfigDemo : AbstractTest
                 LogError("Failed to export configuration.", e);
             }
             // @end
+            this.saveDemoResult("ExportConfig", demoResult, true);
         }
         catch (Exception e)
         {
@@ -225,6 +227,7 @@ internal class SzConfigDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetDataSourceRegistry
             // How to get the data source registry from an in-memory config
             try
@@ -239,10 +242,10 @@ internal class SzConfigDemo : AbstractTest
                 SzConfig config = configMgr.CreateConfig();
 
                 // get the data sources
-                String sourcesJson = config.GetDataSourceRegistry();
-
+                string registry = config.GetDataSourceRegistry();
+                demoResult = registry; // @replace
                 // do something with the returned JSON (e.g.: parse it and extract values)
-                JsonObject? jsonObj = JsonNode.Parse(sourcesJson)?.AsObject();
+                JsonObject? jsonObj = JsonNode.Parse(registry)?.AsObject();
 
                 JsonArray? jsonArr = jsonObj?["DATA_SOURCES"]?.AsArray();
 
@@ -268,6 +271,7 @@ internal class SzConfigDemo : AbstractTest
                 LogError("Failed to get data sources.", e);
             }
             // @end
+            this.saveDemoResult("GetDataSourceRegistry", demoResult, true);
         }
         catch (Exception e)
         {
@@ -278,6 +282,7 @@ internal class SzConfigDemo : AbstractTest
     [Test]
     public void RegisterDataSourceDemo()
     {
+        string result = "";
         try
         {
             // @start RegisterDataSource
@@ -296,7 +301,7 @@ internal class SzConfigDemo : AbstractTest
                 // add data sources to the config
                 config.RegisterDataSource("CUSTOMERS");
                 config.RegisterDataSource("EMPLOYEES");
-                config.RegisterDataSource("WATCHLIST");
+                result = config.RegisterDataSource("WATCHLIST"); // @replace config.RegisterDataSource("WATCHLIST");
 
                 Assert.That(config, Is.Not.Null); // @replace . . .
 
@@ -307,7 +312,7 @@ internal class SzConfigDemo : AbstractTest
                 LogError("Failed to add data sources.", e);
             }
             // @end
-
+            this.saveDemoResult("RegisterDataSource", result, true);
         }
         catch (Exception e)
         {

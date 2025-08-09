@@ -105,7 +105,8 @@ internal class SzCoreProductTest : AbstractTest
 
                 ValidateJsonDataMap(
                     jsonData,
-                    "customer", "contract", "issueDate", "licenseType",
+                    false,
+                    "customer", "contract", "issueDate", "licenseType", "advSearch",
                     "licenseLevel", "billing", "expireDate", "recordLimit");
 
             }
