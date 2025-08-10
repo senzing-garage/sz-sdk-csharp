@@ -76,7 +76,7 @@ internal class SzExampleExtractor
         targetDir.Create();
 
         // get the snippet prefix
-        string prefix = fileInfo.Name.Substring(0, fileInfo.Name.Length - 3) + "_";
+        string filePrefix = fileInfo.Name.Substring(0, fileInfo.Name.Length - 3) + "_";
 
         // read the input file
         FileStream fs = fileInfo.OpenRead();
@@ -100,7 +100,7 @@ internal class SzExampleExtractor
                     snippet = line.Substring(index + "// @start".Length);
                     snippet = snippet.Trim();
                     string snippetPath = Path.Combine(
-                        targetDir.FullName, prefix + snippet + ".xml");
+                        targetDir.FullName, filePrefix + snippet + ".xml");
                     FileStream fs2 = new FileStream(snippetPath, FileMode.Create, FileAccess.Write);
                     sw = new StreamWriter(fs2, Encoding.UTF8);
                     sw.WriteLine("<code><![CDATA[");
@@ -170,6 +170,21 @@ internal class SzExampleExtractor
                 replacement = replacement.Trim();
                 int length = line.Length - line.TrimStart(null).Length;
                 sw.WriteLine(line.Substring(0, length) + replacement);
+                continue;
+            }
+
+            // check for prefix text
+            index = line.IndexOf("// @prefix ");
+            if (index >= 0)
+            {
+                string prefix = line.Substring(index + "// @prefix".Length);
+                prefix = prefix.Trim();
+                if (prefix.Length > 1 && prefix.StartsWith('"') && prefix.EndsWith('"'))
+                {
+                    prefix = prefix.Substring(1, prefix.Length - 2);
+                }
+                int length = line.Length - line.TrimStart(null).Length;
+                sw.WriteLine(line.Substring(0, length) + prefix + line.Substring(length, index - (length + 1)));
             }
             else
             {

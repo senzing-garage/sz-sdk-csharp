@@ -20,12 +20,20 @@ namespace Senzing.Sdk
     /// </example>
     public interface SzProduct
     {
+        /// <summary>Gets the details and entitlements of the applied product license.</summary>
         ///
-        /// <summary>Returns the currently configured license details.</summary>
-        ///
+        /// <remarks>
+        /// <b>NOTE:</b> The details do not include the license key.
+        /// </remarks>
+        /// 
         /// <example>
         /// Usage:
         /// <include file="../target/examples/SzProductDemo_GetLicense.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzProductDemo_GetLicense.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>The JSON document describing the license details.</returns>
@@ -33,11 +41,16 @@ namespace Senzing.Sdk
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
         string GetLicense();
 
-        /// <summary>Returns the currently installed version details.</summary>
+        /// <summary>Gets the product version details.</summary>
         ///
         /// <example>
         /// Usage:
         /// <include file="../target/examples/SzProductDemo_GetVersion.xml" path="/*"/>
+        /// </example>
+        /// 
+        /// <example>
+        /// <b>Example Result:</b> (formatted for readability)
+        /// <include file="../target/examples/results/SzProductDemo_GetVersion.xml" path="/*"/>
         /// </example>
         /// 
         /// <returns>The JSON document of version details.</returns>

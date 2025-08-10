@@ -164,6 +164,7 @@ internal class SzProductDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetLicense
             // How to obtain the Senzing product license JSON 
             try
@@ -176,7 +177,7 @@ internal class SzProductDemo : AbstractTest
 
                 // obtain the license JSON
                 string license = product.GetLicense();
-
+                demoResult = license; // @replace
                 // do something with the returned JSON (e.g.: parse it and extract values)
                 JsonObject? jsonObj = JsonNode.Parse(license)?.AsObject();
 
@@ -193,6 +194,7 @@ internal class SzProductDemo : AbstractTest
                 LogError("Failed to get license information.", e);
             }
             // @end
+            this.saveDemoResult("GetLicense", demoResult, true);
         }
         catch (Exception e)
         {
@@ -205,6 +207,7 @@ internal class SzProductDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetVersion
             // How to obtain the Senzing product version JSON 
             try
@@ -216,10 +219,10 @@ internal class SzProductDemo : AbstractTest
                 SzProduct product = env.GetProduct();
 
                 // obtain the version JSON
-                String versionJson = product.GetVersion();
-
+                string result = product.GetVersion();
+                demoResult = result; // @replace
                 // do something with the returned JSON (e.g.: parse it and extract values)
-                JsonObject? jsonObj = JsonNode.Parse(versionJson)?.AsObject();
+                JsonObject? jsonObj = JsonNode.Parse(result)?.AsObject();
 
                 string? version = jsonObj?["VERSION"]?.GetValue<string>();
                 string? buildDate = jsonObj?["BUILD_DATE"]?.GetValue<string>();
@@ -233,6 +236,7 @@ internal class SzProductDemo : AbstractTest
                 LogError("Failed to get version information.", e);
             }
             // @end
+            this.saveDemoResult("GetVersion", demoResult, true);
         }
         catch (Exception e)
         {
