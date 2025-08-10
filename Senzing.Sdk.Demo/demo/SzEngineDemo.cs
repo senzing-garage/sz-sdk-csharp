@@ -379,6 +379,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetStats
             // How to get engine stats after loading records
             try
@@ -393,10 +394,11 @@ internal class SzEngineDemo : AbstractTest
                 Assert.That("" + engine, Is.Not.EqualTo("")); // @replace . . .
 
                 // get the stats
-                string statsJson = engine.GetStats();
+                string stats = engine.GetStats();
+                demoResult = stats; // @omit
 
                 // do something with the stats
-                Log(statsJson);
+                Log(stats);
 
             }
             catch (SzException e)
@@ -405,7 +407,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to load records with stats.", e);
             }
             // @end
-
+            this.saveDemoResult("GetStats", demoResult, true);
         }
         catch (Exception e)
         {
@@ -419,6 +421,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start AddRecord
             // How to load a record
             try
@@ -442,11 +445,12 @@ internal class SzEngineDemo : AbstractTest
                         """;
 
                 // add the record to the repository
-                string infoJson = engine.AddRecord(
+                string info = engine.AddRecord(
                     "TEST", "ABC123", recordDefinition, SzWithInfo);
+                demoResult = info; // @omit
 
                 // do something with the "info JSON" (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(infoJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
                 {
                     JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
@@ -472,7 +476,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to add record.", e);
             }
             // @end
-
+            this.saveDemoResult("AddRecord", demoResult, true);
         }
         catch (Exception e)
         {
@@ -485,6 +489,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetRecordPreview
             // How to get a record preview
             try
@@ -508,11 +513,12 @@ internal class SzEngineDemo : AbstractTest
                         """;
 
                 // get the record preview
-                string responseJson = engine.GetRecordPreview(
+                String preview = engine.GetRecordPreview(
                     recordDefinition, SzRecordPreviewDefaultFlags);
+                demoResult = preview; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(preview)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("FEATURES"))
                 {
                     JsonObject? featuresObj = jsonObject["FEATURES"]?.AsObject();
@@ -534,7 +540,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to get a record preview.", e);
             }
             // @end
-
+            this.saveDemoResult("GetRecordPreview", demoResult, true);
         }
         catch (Exception e)
         {
@@ -547,6 +553,22 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string recordDefinition =
+            """
+            {
+                "DATA_SOURCE": "TEST",
+                "RECORD_ID": "ABC123",
+                "NAME_FULL": "Joe Schmoe",
+                "PHONE_NUMBER": "702-555-1212",
+                "EMAIL_ADDRESS": "joeschmoe@nowhere.com"
+            }
+            """;
+
+            // add the record to the repository
+            GetEnvironment().GetEngine().AddRecord(
+                "TEST", "ABC123", recordDefinition);
+
+            string demoResult = "";
             // @start DeleteRecord
             // How to delete a record
             try
@@ -558,10 +580,11 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // delete the record from the repository
-                string infoJson = engine.DeleteRecord("TEST", "ABC123", SzWithInfo);
+                string info = engine.DeleteRecord("TEST", "ABC123", SzWithInfo);
+                demoResult = info; // @omit
 
                 // do something with the "info JSON" (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(infoJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
                 {
                     JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
@@ -589,7 +612,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to delete record.", e);
             }
             // @end
-
+            this.saveDemoResult("DeleteRecord", demoResult, true);
         }
         catch (Exception e)
         {
@@ -602,6 +625,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start ReevaluateRecord
             // How to reevaluate a record
             try
@@ -613,10 +637,11 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // reevaluate a record in the repository
-                string infoJson = engine.ReevaluateRecord("TEST", "ABC123", SzWithInfo);
+                string info = engine.ReevaluateRecord("TEST", "ABC123", SzWithInfo);
+                demoResult = info; // @omit
 
                 // do something with the "info JSON" (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(infoJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
                 {
                     JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
@@ -644,7 +669,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to reevaluate record.", e);
             }
             // @end
-
+            this.saveDemoResult("ReevaluateRecord", demoResult, true);
         }
         catch (Exception e)
         {
@@ -667,6 +692,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start ReevaluateEntity
             // How to reevaluate an entity
             try
@@ -681,10 +707,11 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetEntityID();
 
                 // reevaluate an entity in the repository
-                string infoJson = engine.ReevaluateEntity(entityID, SzWithInfo);
+                string info = engine.ReevaluateEntity(entityID, SzWithInfo);
+                demoResult = info; // @omit
 
                 // do something with the "info JSON" (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(infoJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
                 {
                     JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
@@ -706,7 +733,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to reevaluate entity.", e);
             }
             // @end
-
+            this.saveDemoResult("ReevaluateEntity", demoResult, true);
         }
         catch (Exception e)
         {
@@ -719,6 +746,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start SearchByAttributes
             // How to search for entities matching criteria
             try
@@ -740,12 +768,13 @@ internal class SzEngineDemo : AbstractTest
                         """;
 
                 // search for matching entities in the repository                
-                string responseJson = engine.SearchByAttributes(
+                string results = engine.SearchByAttributes(
                     searchAttributes,
                     SzSearchByAttributesDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("RESOLVED_ENTITIES"))
                 {
                     JsonArray? resultsArr = jsonObject["RESOLVED_ENTITIES"]?.AsArray();
@@ -775,7 +804,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to search for entities.", e);
             }
             // @end
-
+            this.saveDemoResult("SearchByAttributes", demoResult, true);
         }
         catch (Exception e)
         {
@@ -798,6 +827,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start SearchByAttributesWithProfile
             // How to search for entities matching criteria using a search profile
             try
@@ -822,13 +852,14 @@ internal class SzEngineDemo : AbstractTest
                 string searchProfile = GetSearchProfile();
 
                 // search for matching entities in the repository                
-                string responseJson = engine.SearchByAttributes(
+                string results = engine.SearchByAttributes(
                     searchAttributes,
                     searchProfile,
                     SzSearchByAttributesDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 if (jsonObject != null && jsonObject.ContainsKey("RESOLVED_ENTITIES"))
                 {
                     JsonArray? resultsArr = jsonObject["RESOLVED_ENTITIES"]?.AsArray();
@@ -858,7 +889,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to search for entities.", e);
             }
             // @end
-
+            this.saveDemoResult("SearchByAttributesWithProfile", demoResult, true);
         }
         catch (Exception e)
         {
@@ -871,6 +902,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetEntityByEntityID
             // How to retrieve an entity via its entity ID
             try
@@ -885,10 +917,11 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetEntityID();
 
                 // retrieve the entity by entity ID                
-                string responseJson = engine.GetEntity(entityID, SzEntityDefaultFlags);
+                string result = engine.GetEntity(entityID, SzEntityDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
                 string? entityName = entity?["ENTITY_NAME"]?.GetValue<string>();
 
@@ -923,7 +956,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity by entity ID.", e);
             }
             // @end
-
+            this.saveDemoResult("GetEntityByEntityID", demoResult, true);
         }
         catch (Exception e)
         {
@@ -936,6 +969,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetEntityByRecordKey
             // How to retrieve an entity via its record key
             try
@@ -947,10 +981,11 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // retrieve the entity by record key
-                string responseJson = engine.GetEntity("TEST", "ABC123", SzEntityDefaultFlags);
+                string result = engine.GetEntity("TEST", "ABC123", SzEntityDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
                 string? entityName = entity?["ENTITY_NAME"]?.GetValue<string>();
 
@@ -991,6 +1026,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity by record key.", e);
             }
             // @end
+            this.saveDemoResult("GetEntityByRecordKey", demoResult, true);
 
         }
         catch (Exception e)
@@ -1004,6 +1040,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindInterestingByEntityID
             // How to find interesting entities related to an entity via entity ID
             try
@@ -1018,11 +1055,12 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetEntityID();
 
                 // find the interesting entities by entity ID
-                string responseJson = engine.FindInterestingEntities(
+                string result = engine.FindInterestingEntities(
                     entityID, SzFindInterestingEntitiesDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
 
                 Assert.That(jsonObject, Is.Not.Null); // @replace . . .
 
@@ -1039,7 +1077,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to find interesting entities by entity ID.", e);
             }
             // @end
-
+            this.saveDemoResult("FindInterestingByEntityID", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1052,6 +1090,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindInterestingByRecordKey
             // How to find interesting entities related to an entity via record key
             try
@@ -1063,11 +1102,12 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // retrieve the entity by record key                
-                string responseJson = engine.FindInterestingEntities(
+                string result = engine.FindInterestingEntities(
                     "TEST", "ABC123", SzFindInterestingEntitiesDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
 
                 Assert.That(jsonObject, Is.Not.Null); // @replace . . .
 
@@ -1090,7 +1130,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to find interesting entities by record key.", e);
             }
             // @end
-
+            this.saveDemoResult("FindInterestingByRecordKey", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1139,6 +1179,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindPathByEntityID
             // How to find an entity path using entity ID's
             try
@@ -1163,15 +1204,16 @@ internal class SzEngineDemo : AbstractTest
                 ISet<string>? requiredSources = null;
 
                 // retrieve the entity path using the entity ID's
-                string responseJson = engine.FindPath(startEntityID,
-                                                      endEntityID,
-                                                      maxDegrees,
-                                                      avoidEntities,
-                                                      requiredSources,
-                                                      SzFindPathDefaultFlags);
+                string result = engine.FindPath(startEntityID,
+                                                endEntityID,
+                                                maxDegrees,
+                                                avoidEntities,
+                                                requiredSources,
+                                                SzFindPathDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonArray? pathArr = jsonObject?["ENTITY_PATHS"]?.AsArray();
 
                 for (int index = 0; pathArr != null && index < pathArr.Count; index++)
@@ -1206,7 +1248,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity path by entity ID.", e);
             }
             // @end
-
+            this.saveDemoResult("FindPathByEntityID", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1219,6 +1261,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindPathByRecordKey
             // How to find an entity path using record keys
             try
@@ -1243,17 +1286,18 @@ internal class SzEngineDemo : AbstractTest
                 ISet<string>? requiredSources = null;
 
                 // retrieve the entity path using the record keys
-                string responseJson = engine.FindPath(startRecordKey.dataSourceCode,
-                                                      startRecordKey.recordID,
-                                                      endRecordKey.dataSourceCode,
-                                                      endRecordKey.recordID,
-                                                      maxDegrees,
-                                                      avoidRecords,
-                                                      requiredSources,
-                                                      SzFindPathDefaultFlags);
+                string result = engine.FindPath(startRecordKey.dataSourceCode,
+                                                startRecordKey.recordID,
+                                                endRecordKey.dataSourceCode,
+                                                endRecordKey.recordID,
+                                                maxDegrees,
+                                                avoidRecords,
+                                                requiredSources,
+                                                SzFindPathDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonArray? pathArr = jsonObject?["ENTITY_PATHS"]?.AsArray();
 
                 for (int index = 0; pathArr != null && index < pathArr.Count; index++)
@@ -1288,7 +1332,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity path by record key.", e);
             }
             // @end
-
+            this.saveDemoResult("FindPathByRecordKey", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1317,6 +1361,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindNetworkByEntityID
             // How to find an entity network using entity ID's
             try
@@ -1340,14 +1385,15 @@ internal class SzEngineDemo : AbstractTest
                 int buildOutMaxEntities = 10;
 
                 // retrieve the entity network using the entity ID's
-                string responseJson = engine.FindNetwork(entityIDs,
-                                                         maxDegrees,
-                                                         buildOutDegrees,
-                                                         buildOutMaxEntities,
-                                                         SzFindNetworkDefaultFlags);
+                string result = engine.FindNetwork(entityIDs,
+                                                   maxDegrees,
+                                                   buildOutDegrees,
+                                                   buildOutMaxEntities,
+                                                   SzFindNetworkDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonArray? pathArr = jsonObject?["ENTITY_PATHS"]?.AsArray();
 
                 for (int index = 0; pathArr != null && index < pathArr.Count; index++)
@@ -1379,7 +1425,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity network.", e);
             }
             // @end
-
+            this.saveDemoResult("FindNetworkByEntityID", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1392,6 +1438,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start FindNetworkByRecordKey
             // How to find an entity network using record keys
             try
@@ -1415,14 +1462,15 @@ internal class SzEngineDemo : AbstractTest
                 int buildOutMaxEntities = 10;
 
                 // retrieve the entity network using the record keys
-                string responseJson = engine.FindNetwork(recordKeys,
-                                                         maxDegrees,
-                                                         buildOutDegrees,
-                                                         buildOutMaxEntities,
-                                                         SzFindNetworkDefaultFlags);
+                string result = engine.FindNetwork(recordKeys,
+                                                   maxDegrees,
+                                                   buildOutDegrees,
+                                                   buildOutMaxEntities,
+                                                   SzFindNetworkDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonArray? pathArr = jsonObject?["ENTITY_PATHS"]?.AsArray();
 
                 for (int index = 0; pathArr != null && index < pathArr.Count; index++)
@@ -1460,7 +1508,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve entity network.", e);
             }
             // @end
-
+            this.saveDemoResult("FindNetworkByRecordKey", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1473,6 +1521,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start WhyRecordInEntity
             // How to determine why a record is a member of its respective entity
             try
@@ -1484,11 +1533,12 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // determine why the record is part of its entity                
-                string responseJson = engine.WhyRecordInEntity(
+                string results = engine.WhyRecordInEntity(
                     "TEST", "ABC123", SzWhyRecordInEntityDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 JsonArray? resultsArr = jsonObject?["WHY_RESULTS"]?.AsArray();
 
                 for (int index = 0; resultsArr != null && index < resultsArr.Count; index++)
@@ -1519,7 +1569,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to reevaluate record.", e);
             }
             // @end
-
+            this.saveDemoResult("WhyRecordInEntity", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1542,6 +1592,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start WhyRecords
             // How to determine how two records are related
             try
@@ -1557,14 +1608,15 @@ internal class SzEngineDemo : AbstractTest
                 (string dataSourceCode, string recordID) recordKey2 = GetWhyRecordsKey2();
 
                 // determine how the records are related
-                string responseJson = engine.WhyRecords(recordKey1.dataSourceCode,
-                                                        recordKey1.recordID,
-                                                        recordKey2.dataSourceCode,
-                                                        recordKey2.recordID,
-                                                        SzWhyRecordsDefaultFlags);
+                string results = engine.WhyRecords(recordKey1.dataSourceCode,
+                                                   recordKey1.recordID,
+                                                   recordKey2.dataSourceCode,
+                                                   recordKey2.recordID,
+                                                   SzWhyRecordsDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 JsonArray? resultsArr = jsonObject?["WHY_RESULTS"]?.AsArray();
 
                 for (int index = 0; resultsArr != null && index < resultsArr.Count; index++)
@@ -1596,7 +1648,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to reevaluate record.", e);
             }
             // @end
-
+            this.saveDemoResult("WhyRecords", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1624,6 +1676,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start WhySearch
             // How to determine why an entity was excluded from search results
             try
@@ -1648,13 +1701,14 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetWhySearchEntityID();
 
                 // determine how the entities are related                
-                string responseJson = engine.WhySearch(searchAttributes,
-                                                       entityID,
-                                                       null, // search profile
-                                                       SzWhySearchDefaultFlags);
+                string results = engine.WhySearch(searchAttributes,
+                                                  entityID,
+                                                  null, // search profile
+                                                  SzWhySearchDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)                
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 JsonArray? resultsArr = jsonObject?["WHY_RESULTS"]?.AsArray();
 
                 for (int index = 0; resultsArr != null && index < resultsArr.Count; index++)
@@ -1679,7 +1733,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to perform why search.", e);
             }
             // @end
-
+            this.saveDemoResult("WhySearch", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1692,6 +1746,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start WhyEntities
             // How to determine how two entities are related
             try
@@ -1707,12 +1762,13 @@ internal class SzEngineDemo : AbstractTest
                 long entityID2 = GetWhyEntitiesID2();
 
                 // determine how the entities are related
-                string responseJson = engine.WhyEntities(entityID1,
-                                                         entityID2,
-                                                         SzWhyEntitiesDefaultFlags);
+                string results = engine.WhyEntities(entityID1,
+                                                    entityID2,
+                                                    SzWhyEntitiesDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 JsonArray? resultsArr = jsonObject?["WHY_RESULTS"]?.AsArray();
 
                 for (int index = 0; resultsArr != null && index < resultsArr.Count; index++)
@@ -1739,6 +1795,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to perform why entities.", e);
             }
             // @end
+            this.saveDemoResult("WhyEntities", demoResult, true);
 
         }
         catch (Exception e)
@@ -1752,6 +1809,37 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string recordDefinition =
+            """
+            {
+                "DATA_SOURCE": "TEST",
+                "RECORD_ID": "XYZ987",
+                "NAME_FULL": "Joseph Schmoe",
+                "WORK_PHONE_NUMBER": "702-555-1313",
+                "ADDR_FULL": "101 Main St.; Las Vegas, NV 89101",
+                "EMAIL_ADDRESS": "joeschmoe@nowhere.com"
+            }
+            """;
+
+            GetEnvironment().GetEngine().AddRecord(
+                "TEST", "XYZ987", recordDefinition);
+
+            recordDefinition =
+            """
+            {
+                "DATA_SOURCE": "TEST",
+                "RECORD_ID": "ZYX789",
+                "NAME_FULL": "Joseph W. Schmoe",
+                "HOME_PHONE_NUMBER": "702-555-1212",
+                "WORK_PHONE_NUMBER": "702-555-1313",
+                "ADDR_FULL": "101 Main St.; Las Vegas, NV 89101"
+            }
+            """;
+
+            GetEnvironment().GetEngine().AddRecord(
+                "TEST", "ZYX789", recordDefinition);
+
+            string demoResult = "";
             // @start HowEntity
             // How to retrieve the "how analysis" for an entity via its entity ID
             try
@@ -1766,10 +1854,11 @@ internal class SzEngineDemo : AbstractTest
                 long entityID = GetEntityID();
 
                 // determine how the entity was formed
-                string responseJson = engine.HowEntity(entityID, SzHowEntityDefaultFlags);
+                string results = engine.HowEntity(entityID, SzHowEntityDefaultFlags);
+                demoResult = results; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(results)?.AsObject();
                 JsonObject? howResults = jsonObject?["HOW_RESULTS"]?.AsObject();
                 JsonArray? stepsArr = howResults?["RESOLUTION_STEPS"]?.AsArray();
 
@@ -1795,7 +1884,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve how analysis.", e);
             }
             // @end
-
+            this.saveDemoResult("HowEntity", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1814,6 +1903,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetVirtualEntity
             // How to retrieve a virtual entity via a set of record keys
             try
@@ -1828,10 +1918,11 @@ internal class SzEngineDemo : AbstractTest
                 ISet<(string, string)> recordKeys = GetVirtualEntityRecordKeys();
 
                 // retrieve the virtual entity for the record keys
-                string responseJson = engine.GetVirtualEntity(recordKeys, SzVirtualEntityDefaultFlags);
+                string result = engine.GetVirtualEntity(recordKeys, SzVirtualEntityDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 JsonObject? entity = jsonObject?["RESOLVED_ENTITY"]?.AsObject();
                 string? entityName = entity?["ENTITY_NAME"]?.GetValue<string>();
 
@@ -1871,7 +1962,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve virtual entity.", e);
             }
             // @end
-
+            this.saveDemoResult("GetVirtualEntity", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1884,6 +1975,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            string demoResult = "";
             // @start GetRecord
             // How to retrieve a record via its record key
             try
@@ -1895,10 +1987,11 @@ internal class SzEngineDemo : AbstractTest
                 SzEngine engine = env.GetEngine();
 
                 // retrieve the entity by record key
-                string responseJson = engine.GetRecord("TEST", "ABC123", SzEntityDefaultFlags);
+                string result = engine.GetRecord("TEST", "ABC123", SzRecordDefaultFlags);
+                demoResult = result; // @omit
 
                 // do something with the response JSON (varies by application)
-                JsonObject? jsonObject = JsonNode.Parse(responseJson)?.AsObject();
+                JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
                 string? dataSource = jsonObject?["DATA_SOURCE"]?.GetValue<string>();
                 string? recordID = jsonObject?["RECORD_ID"]?.GetValue<string>();
 
@@ -1923,7 +2016,7 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to retrieve record by record key.", e);
             }
             // @end
-
+            this.saveDemoResult("GetRecord", demoResult, true);
         }
         catch (Exception e)
         {
@@ -1944,6 +2037,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            StringWriter sw = new StringWriter();
             // @start ExportJson
             // How to export entity data in JSON format
             try
@@ -1965,6 +2059,7 @@ internal class SzEngineDemo : AbstractTest
 
                     while (jsonData != null)
                     {
+                        sw.WriteLine(jsonData.Trim()); // @omit
                         // parse the JSON data
                         JsonObject? jsonObject = JsonNode.Parse(jsonData)?.AsObject();
 
@@ -1989,7 +2084,11 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to perform JSON export.", e);
             }
             // @end
-
+            string exportReport = sw.ToString();
+            StringReader sr = new StringReader(exportReport);
+            string firstLine = sr.ReadLine() ?? "";
+            this.saveDemoResult("ExportJson", exportReport, false);
+            this.saveDemoResult("ExportJson-fetchNext", firstLine, false);
         }
         catch (Exception e)
         {
@@ -2018,6 +2117,7 @@ internal class SzEngineDemo : AbstractTest
     {
         try
         {
+            StringWriter sw = new StringWriter();
             // @start ExportCsv
             // How to export entity data in CSV format
             try
@@ -2039,6 +2139,7 @@ internal class SzEngineDemo : AbstractTest
 
                     // process the CSV headers (varies by application)
                     ProcessCsvHeaders(csvHeaders);
+                    sw.WriteLine(csvHeaders.Trim()); // @omit
 
                     // fetch the first CSV record from the exported data
                     string csvRecord = engine.FetchNext(exportHandle);
@@ -2047,6 +2148,7 @@ internal class SzEngineDemo : AbstractTest
                     {
                         // do something with the exported record (varies by application)
                         ProcessCsvRecord(csvRecord);
+                        sw.WriteLine(csvRecord.Trim()); // @omit
 
                         // fetch the next exported CSV record
                         csvRecord = engine.FetchNext(exportHandle);
@@ -2066,7 +2168,13 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to perform CSV export.", e);
             }
             // @end
-
+            string exportReport = sw.ToString();
+            StringReader sr = new StringReader(exportReport);
+            string headerLine = sr.ReadLine() ?? "";
+            string dataLine = sr.ReadLine() ?? "";
+            this.saveDemoResult("ExportCsv", exportReport, false);
+            this.saveDemoResult("ExportCsv-fetchNext-header", headerLine, false);
+            this.saveDemoResult("ExportCsv-fetchNext-data", dataLine, false);
         }
         catch (Exception e)
         {
@@ -2104,10 +2212,10 @@ internal class SzEngineDemo : AbstractTest
                         try
                         {
                             // process the redo record
-                            string infoJson = engine.ProcessRedoRecord(redoRecord, SzEntityDefaultFlags);
+                            string info = engine.ProcessRedoRecord(redoRecord, SzWithInfo);
 
                             // do something with the "info JSON" (varies by application)
-                            JsonObject? jsonObject = JsonNode.Parse(infoJson)?.AsObject();
+                            JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
                             if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
                             {
                                 JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
@@ -2139,7 +2247,6 @@ internal class SzEngineDemo : AbstractTest
                 LogError("Failed to process redos.", e);
             }
             // @end
-
         }
         catch (Exception e)
         {

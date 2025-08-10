@@ -413,8 +413,32 @@ public static class RepositoryManager
     /// The <see cref="SzConfiguration"/> describing the initial configuration.
     /// </returns>
     public static SzConfiguration? CreateRepo(DirectoryInfo directory,
-                                            bool excludeConfig,
-                                            bool silent)
+                                              bool excludeConfig,
+                                              bool silent)
+    {
+        return CreateRepo(directory, true, excludeConfig, silent);
+    }
+
+    /// <summary>
+    /// Creates a new Senzing SQLite repository from the default repository data.
+    /// </summary>
+    /// 
+    /// <param name="directory">
+    /// The directory at which to create the repository.
+    /// </param>
+    /// 
+    /// <param name="excludeConfig">
+    /// <c>true</c> if the default configuration should be excluded from the
+    /// repository, and <c>false</c> if it should be included.
+    /// </param>
+    /// 
+    /// <returns>
+    /// The <see cref="SzConfiguration"/> describing the initial configuration.
+    /// </returns>
+    public static SzConfiguration? CreateRepo(DirectoryInfo directory,
+                                              bool hybridDatabase,
+                                              bool excludeConfig,
+                                              bool silent)
     {
         ArgumentNullException.ThrowIfNull(directory, nameof(directory));
         SzConfiguration? result = null;
@@ -498,17 +522,23 @@ public static class RepositoryManager
                 // copy the file
                 CopyFile(templateDB, new FileInfo(Path.Combine(directory.FullName,
                                                                 "G2C.db")));
-                CopyFile(templateDB, new FileInfo(Path.Combine(directory.FullName,
-                                                                "G2_RES.db")));
-                CopyFile(templateDB, new FileInfo(Path.Combine(directory.FullName,
-                                                                "G2_LIB_FEAT.db")));
+                if (hybridDatabase)
+                {
+                    CopyFile(templateDB, new FileInfo(Path.Combine(directory.FullName,
+                                                                    "G2_RES.db")));
+                    CopyFile(templateDB, new FileInfo(Path.Combine(directory.FullName,
+                                                                    "G2_LIB_FEAT.db")));
+                }
             }
             else
             {
                 // handle running in mock replay mode (no installation)
                 TouchFile(Path.Combine(directory.FullName, "G2C.db"));
-                TouchFile(Path.Combine(directory.FullName, "G2_RES.db"));
-                TouchFile(Path.Combine(directory.FullName, "G2_LIB_FEAT.db"));
+                if (hybridDatabase)
+                {
+                    TouchFile(Path.Combine(directory.FullName, "G2_RES.db"));
+                    TouchFile(Path.Combine(directory.FullName, "G2_LIB_FEAT.db"));
+                }
             }
 
             // define the license path
@@ -558,32 +588,38 @@ public static class RepositoryManager
 
             subDict = new Dictionary<string, JsonNode?>();
 
-            subDict.Add("BACKEND", JsonValue.Create("HYBRID").Root);
+            if (hybridDatabase)
+            {
+                subDict.Add("BACKEND", JsonValue.Create("HYBRID").Root);
+            }
             subDict.Add("CONNECTION", JsonValue.Create(sqlitePrefix + "G2C.db"));
 
             objDict.Add("SQL", new JsonObject(subDict));
 
-            subDict = new Dictionary<string, JsonNode?>();
+            if (hybridDatabase)
+            {
+                subDict = new Dictionary<string, JsonNode?>();
 
-            subDict.Add("RES_FEAT", JsonValue.Create("C1").Root);
-            subDict.Add("RES_FEAT_EKEY", JsonValue.Create("C1").Root);
-            subDict.Add("RES_FEAT_LKEY", JsonValue.Create("C1").Root);
-            subDict.Add("RES_FEAT_STAT", JsonValue.Create("C1").Root);
-            subDict.Add("LIB_FEAT", JsonValue.Create("C2").Root);
-            subDict.Add("LIB_FEAT_HKEY", JsonValue.Create("C2").Root);
-            objDict.Add("HYBRID", new JsonObject(subDict));
+                subDict.Add("RES_FEAT", JsonValue.Create("C1").Root);
+                subDict.Add("RES_FEAT_EKEY", JsonValue.Create("C1").Root);
+                subDict.Add("RES_FEAT_LKEY", JsonValue.Create("C1").Root);
+                subDict.Add("RES_FEAT_STAT", JsonValue.Create("C1").Root);
+                subDict.Add("LIB_FEAT", JsonValue.Create("C2").Root);
+                subDict.Add("LIB_FEAT_HKEY", JsonValue.Create("C2").Root);
+                objDict.Add("HYBRID", new JsonObject(subDict));
 
-            subDict = new Dictionary<string, JsonNode?>();
+                subDict = new Dictionary<string, JsonNode?>();
 
-            subDict.Add("CLUSTER_SIZE", JsonValue.Create("1").Root);
-            subDict.Add("DB_1", JsonValue.Create(sqlitePrefix + "G2_RES.db").Root);
-            objDict.Add("C1", new JsonObject(subDict));
+                subDict.Add("CLUSTER_SIZE", JsonValue.Create("1").Root);
+                subDict.Add("DB_1", JsonValue.Create(sqlitePrefix + "G2_RES.db").Root);
+                objDict.Add("C1", new JsonObject(subDict));
 
-            subDict = new Dictionary<string, JsonNode?>();
+                subDict = new Dictionary<string, JsonNode?>();
 
-            subDict.Add("CLUSTER_SIZE", JsonValue.Create("1").Root);
-            subDict.Add("DB_1", JsonValue.Create(sqlitePrefix + "G2_LIB_FEAT.db").Root);
-            objDict.Add("C2", new JsonObject(subDict));
+                subDict.Add("CLUSTER_SIZE", JsonValue.Create("1").Root);
+                subDict.Add("DB_1", JsonValue.Create(sqlitePrefix + "G2_LIB_FEAT.db").Root);
+                objDict.Add("C2", new JsonObject(subDict));
+            }
 
             JsonObject initJson = new JsonObject(objDict);
 

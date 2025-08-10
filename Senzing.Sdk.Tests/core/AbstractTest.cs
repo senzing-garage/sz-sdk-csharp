@@ -457,7 +457,7 @@ internal abstract class AbstractTest
     /// <returns>
     /// The contents of the JSON init file as a <c>string</c>.
     /// </returns>
-    protected string GetRepoSettings()
+    protected virtual string GetRepoSettings()
     {
         return this.ReadRepoSettingsFile(this.GetRepositoryDirectory());
     }
@@ -490,7 +490,7 @@ internal abstract class AbstractTest
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </returns>
-    protected DirectoryInfo CreateTestRepoDirectory()
+    protected virtual DirectoryInfo CreateTestRepoDirectory()
     {
         return CreateTestRepoDirectory(this.GetType(), null);
     }
@@ -506,7 +506,7 @@ internal abstract class AbstractTest
     /// <returns>
     /// The <see cref="System.IO.DirectoryInfo"/> representing the directory.
     /// </summary>
-    protected DirectoryInfo CreateTestRepoDirectory(string testName)
+    protected virtual DirectoryInfo CreateTestRepoDirectory(string testName)
     {
         return CreateTestRepoDirectory(this.GetType(), testName);
     }
@@ -605,9 +605,28 @@ internal abstract class AbstractTest
     /// The <see cref="System.IO.DirectoryInfo"/> identifying the repository
     /// directory used for the test.
     /// </returns>
-    protected DirectoryInfo GetRepositoryDirectory()
+    protected virtual DirectoryInfo GetRepositoryDirectory()
     {
         return this.repoDirectory;
+    }
+
+    /// <summary>
+    /// Checks if the test should use the hybrid database setup for test
+    /// repository to increase performance.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// The default implementation returns <code>true</code>.
+    /// </remarks>
+    ///
+    /// <returns> 
+    /// <c>true</c> if using the hybird database setup for the test
+    /// repository, or <code>false</code> if not using the standard
+    /// database setup.
+    /// </returns>
+    protected virtual bool IsUsingHybridDatabase()
+    {
+        return true;
     }
 
     /// <summary>
@@ -615,7 +634,7 @@ internal abstract class AbstractTest
     /// <c>[OneTimeSetup]</c> to create and initialize the Senzing
     /// entity repository.
     /// </summary>
-    protected void InitializeTestEnvironment()
+    protected virtual void InitializeTestEnvironment()
     {
         this.InitializeTestEnvironment(false);
     }
@@ -630,7 +649,7 @@ internal abstract class AbstractTest
     /// <c>true</c> if the default configuration should be excluded
     /// from the repository, and <c>false</c> if it should be included.
     /// </param>
-    protected void InitializeTestEnvironment(bool excludeConfig)
+    protected virtual void InitializeTestEnvironment(bool excludeConfig)
     {
         String moduleName = this.GetInstanceName("RepoMgr (create)");
         RepositoryManager.SetThreadModuleName(moduleName);
@@ -638,6 +657,7 @@ internal abstract class AbstractTest
         try
         {
             RepositoryManager.CreateRepo(this.GetRepositoryDirectory(),
+                                         this.IsUsingHybridDatabase(),
                                          excludeConfig,
                                          true);
 
@@ -674,7 +694,7 @@ internal abstract class AbstractTest
     /// It will delete the entity repository that was created for the tests if
     /// there are no test failures recorded via <see cref="IncrementFailureCount"/>.
     /// </remarks>
-    protected void TeardownTestEnvironment()
+    protected virtual void TeardownTestEnvironment()
     {
         int failureCount = this.GetFailureCount();
         TeardownTestEnvironment((failureCount == 0));
@@ -694,7 +714,7 @@ internal abstract class AbstractTest
     /// <c>true</c> if the test repository should be deleted,
     /// otherwise <c>false</c>
     /// </param>
-    protected void TeardownTestEnvironment(bool deleteRepository)
+    protected virtual void TeardownTestEnvironment(bool deleteRepository)
     {
         string? preserveProp
             = Environment.GetEnvironmentVariable("SENZING_TEST_PRESERVE_REPOS");
@@ -1775,6 +1795,83 @@ internal abstract class AbstractTest
         else
         {
             Assert.Fail(message);
+        }
+    }
+
+    /// <summary>
+    /// Saves the demo result for the specified region, optionally formatted it
+    /// as pretty-printed JSON.
+    /// </summary>
+    /// 
+    /// <param name="region">The name of the demo region</param>
+    /// <param name="result">The result to save to the file</param>
+    /// <param name="jsonFormat"><c>true</c> to fo
+    /// 
+    protected void saveDemoResult(string region, string result, bool jsonFormat = false)
+    {
+        if (jsonFormat)
+        {
+            JsonSerializerOptions options
+                = new JsonSerializerOptions(JsonSerializerOptions.Default);
+            options.WriteIndented = true;
+
+            JsonObject? jsonObject = JsonNode.Parse(result)?.AsObject();
+            result = jsonObject?.ToJsonString(options) ?? result;
+        }
+        string currentDirectory = Directory.GetCurrentDirectory();
+        DirectoryInfo dirInfo = new DirectoryInfo(currentDirectory);
+
+        // find the bin directory
+        DirectoryInfo? binDir = dirInfo.Parent;
+        while (binDir != null && !"bin".Equals(binDir?.Name, Ordinal))
+        {
+            binDir = binDir?.Parent;
+        }
+        DirectoryInfo? moduleDir = binDir?.Parent;
+        DirectoryInfo? repoDir = moduleDir?.Parent;
+        Assert.That(moduleDir, Is.Not.Null,
+            "Failed to get module directory.  Current directory: "
+            + currentDirectory);
+        Assert.That(repoDir, Is.Not.Null,
+            "Failed to get the repository directory.  Current directory: "
+            + currentDirectory);
+        if (moduleDir != null && repoDir != null)
+        {
+            Assert.That(moduleDir.Name, Is.EqualTo("Senzing.Sdk.Demo"),
+                        "Bad module directory.  Current directory: "
+                        + currentDirectory);
+            Assert.That(repoDir.Name, Is.EqualTo("sz-sdk-csharp"),
+                        "Bad repository directory name.  Current directory: "
+                        + currentDirectory);
+
+            string demoPath = Path.Combine(moduleDir.FullName, "demo");
+            DirectoryInfo demoDir = new DirectoryInfo(demoPath);
+
+            string targetPath = Path.Combine(repoDir.FullName, "target", "examples", "results");
+            DirectoryInfo targetDir = new DirectoryInfo(targetPath);
+
+            // ensure the target directory exists
+            targetDir.Create();
+
+            Type type = this.GetType();
+            string xmlFileName = type.Name + "_" + region + ".xml";
+            string xmlFilePath = Path.Combine(targetDir.FullName, xmlFileName);
+            string txtFileName = type.Name + "_" + region + ".txt";
+            string txtFilePath = Path.Combine(targetDir.FullName, txtFileName);
+
+            // write the XML file snippet
+            FileStream fs = new FileStream(xmlFilePath, FileMode.Create, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+            sw.WriteLine("<code><![CDATA[");
+            sw.WriteLine(result);
+            sw.WriteLine("]]></code>");
+            sw.Close();
+
+            // write the plain-text version
+            fs = new FileStream(txtFilePath, FileMode.Create, FileAccess.Write);
+            sw = new StreamWriter(fs, Encoding.UTF8);
+            sw.WriteLine(result);
+            sw.Close();
         }
     }
 }
