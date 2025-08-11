@@ -1,0 +1,39 @@
+﻿{
+  "CONFIGS": [
+    {
+      "CONFIG_ID": 665230433,
+      "CONFIG_COMMENTS": "Added CUSTOMERS data source",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 1360003129,
+      "CONFIG_COMMENTS": "Initial config with COMPANIES",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 2089303284,
+      "CONFIG_COMMENTS": "Data Sources: EMPLOYEES",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 2198285491,
+      "CONFIG_COMMENTS": "Data Sources: VIPS",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 2553349549,
+      "CONFIG_COMMENTS": "Data Sources: WATCHLIST",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 3420617113,
+      "CONFIG_COMMENTS": "Initial Config",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    },
+    {
+      "CONFIG_ID": 4205176341,
+      "CONFIG_COMMENTS": "Added PASSENGERS data source",
+      "SYS_CREATE_DT": "2025-08-11T21:16:39Z"
+    }
+  ]
+}

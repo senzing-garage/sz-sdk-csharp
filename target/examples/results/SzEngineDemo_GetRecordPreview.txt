@@ -1,0 +1,31 @@
+﻿{
+  "FEATURES": {
+    "NAME": [
+      {
+        "LIB_FEAT_ID": -2,
+        "FEAT_DESC": "John Doe",
+        "ATTRIBUTES": {
+          "NAME_FULL": "John Doe"
+        }
+      }
+    ],
+    "PHONE": [
+      {
+        "LIB_FEAT_ID": 100002,
+        "FEAT_DESC": "702-555-1212",
+        "ATTRIBUTES": {
+          "PHONE_NUMBER": "702-555-1212"
+        }
+      }
+    ],
+    "EMAIL": [
+      {
+        "LIB_FEAT_ID": -3,
+        "FEAT_DESC": "johndoe@nowhere.com",
+        "ATTRIBUTES": {
+          "EMAIL_ADDRESS": "johndoe@nowhere.com"
+        }
+      }
+    ]
+  }
+}

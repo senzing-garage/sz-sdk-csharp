@@ -1,0 +1,222 @@
+﻿{
+  "RESOLVED_ENTITIES": [
+    {
+      "MATCH_INFO": {
+        "MATCH_LEVEL_CODE": "RESOLVED",
+        "MATCH_KEY": "\u002BNAME\u002BPHONE\u002BEMAIL",
+        "ERRULE_CODE": "SF1_PNAME_CFF",
+        "CANDIDATE_KEYS": {
+          "EMAIL_KEY": [
+            {
+              "FEAT_ID": 100007,
+              "FEAT_DESC": "joeschmoe@NOWHERE.COM"
+            }
+          ],
+          "NAMEPHONE_KEY": [
+            {
+              "FEAT_ID": 100008,
+              "FEAT_DESC": "JSF|XM|PHONE.PHONE_LAST_5=51212"
+            },
+            {
+              "FEAT_ID": 100009,
+              "FEAT_DESC": "JOE|XM|PHONE.PHONE_LAST_5=51212"
+            }
+          ],
+          "NAME_KEY": [
+            {
+              "FEAT_ID": 100004,
+              "FEAT_DESC": "JOE|XM"
+            },
+            {
+              "FEAT_ID": 100005,
+              "FEAT_DESC": "JSF|XM"
+            }
+          ],
+          "PHONE_KEY": [
+            {
+              "FEAT_ID": 100006,
+              "FEAT_DESC": "7025551212"
+            }
+          ]
+        },
+        "FEATURE_SCORES": {
+          "EMAIL": [
+            {
+              "INBOUND_FEAT_ID": 100003,
+              "INBOUND_FEAT_DESC": "joeschmoe@nowhere.com",
+              "CANDIDATE_FEAT_ID": 100003,
+              "CANDIDATE_FEAT_DESC": "joeschmoe@nowhere.com",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 100
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "F1"
+            }
+          ],
+          "NAME": [
+            {
+              "INBOUND_FEAT_ID": 100001,
+              "INBOUND_FEAT_DESC": "Joe Schmoe",
+              "CANDIDATE_FEAT_ID": 100001,
+              "CANDIDATE_FEAT_DESC": "Joe Schmoe",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "GNR_FN": 100,
+                "GNR_SN": -1,
+                "GNR_GN": -1,
+                "GENERATION_MATCH": -1,
+                "GNR_ON": -1
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "NAME"
+            }
+          ],
+          "PHONE": [
+            {
+              "INBOUND_FEAT_ID": 100002,
+              "INBOUND_FEAT_DESC": "702-555-1212",
+              "CANDIDATE_FEAT_ID": 100002,
+              "CANDIDATE_FEAT_DESC": "702-555-1212",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 100
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "FF"
+            }
+          ]
+        }
+      },
+      "ENTITY": {
+        "RESOLVED_ENTITY": {
+          "ENTITY_ID": 100002,
+          "ENTITY_NAME": "Joseph W Schmoe",
+          "FEATURES": {
+            "ADDRESS": [
+              {
+                "FEAT_DESC": "101 Main St.; Las Vegas, NV 89101",
+                "LIB_FEAT_ID": 100011,
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "101 Main St.; Las Vegas, NV 89101",
+                    "LIB_FEAT_ID": 100011
+                  }
+                ]
+              }
+            ],
+            "EMAIL": [
+              {
+                "FEAT_DESC": "joeschmoe@nowhere.com",
+                "LIB_FEAT_ID": 100003,
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "joeschmoe@nowhere.com",
+                    "LIB_FEAT_ID": 100003
+                  }
+                ]
+              }
+            ],
+            "NAME": [
+              {
+                "FEAT_DESC": "Joseph W Schmoe",
+                "LIB_FEAT_ID": 100021,
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "Joseph W Schmoe",
+                    "LIB_FEAT_ID": 100021
+                  },
+                  {
+                    "FEAT_DESC": "Joseph Schmoe",
+                    "LIB_FEAT_ID": 100010
+                  },
+                  {
+                    "FEAT_DESC": "Joe Schmoe",
+                    "LIB_FEAT_ID": 100001
+                  }
+                ]
+              }
+            ],
+            "PHONE": [
+              {
+                "FEAT_DESC": "702-555-1212",
+                "LIB_FEAT_ID": 100002,
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "702-555-1212",
+                    "LIB_FEAT_ID": 100002
+                  }
+                ]
+              },
+              {
+                "FEAT_DESC": "702-555-1212",
+                "LIB_FEAT_ID": 100002,
+                "USAGE_TYPE": "HOME",
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "702-555-1212",
+                    "LIB_FEAT_ID": 100002
+                  }
+                ]
+              },
+              {
+                "FEAT_DESC": "702-555-1313",
+                "LIB_FEAT_ID": 100012,
+                "USAGE_TYPE": "WORK",
+                "FEAT_DESC_VALUES": [
+                  {
+                    "FEAT_DESC": "702-555-1313",
+                    "LIB_FEAT_ID": 100012
+                  }
+                ]
+              }
+            ]
+          },
+          "RECORD_SUMMARY": [
+            {
+              "DATA_SOURCE": "TEST",
+              "RECORD_COUNT": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "SEARCH_STATISTICS": [
+    {
+      "CANDIDATE_KEYS": {
+        "FEATURE_TYPES": [
+          {
+            "FTYPE_CODE": "NAME_KEY",
+            "FOUND": 2,
+            "NOT_FOUND": 0,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "PHONE_KEY",
+            "FOUND": 1,
+            "NOT_FOUND": 0,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "EMAIL_KEY",
+            "FOUND": 1,
+            "NOT_FOUND": 0,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "NAMEPHONE_KEY",
+            "FOUND": 2,
+            "NOT_FOUND": 0,
+            "GENERIC": 0
+          }
+        ],
+        "SUMMARY": {
+          "FOUND": 6,
+          "NOT_FOUND": 0,
+          "GENERIC": 0
+        }
+      }
+    }
+  ]
+}

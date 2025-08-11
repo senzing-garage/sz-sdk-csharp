@@ -1,0 +1,10 @@
+﻿{
+  "LIB_FEAT_ID": 6,
+  "FTYPE_CODE": "PHONE_KEY",
+  "ELEMENTS": [
+    {
+      "FELEM_CODE": "EXPRESSION",
+      "FELEM_VALUE": "7025551212"
+    }
+  ]
+}

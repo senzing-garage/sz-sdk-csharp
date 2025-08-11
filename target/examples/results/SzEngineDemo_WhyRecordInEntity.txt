@@ -1,0 +1,101 @@
+﻿{
+  "WHY_RESULTS": [
+    {
+      "INTERNAL_ID": 100002,
+      "ENTITY_ID": 100002,
+      "FOCUS_RECORDS": [
+        {
+          "DATA_SOURCE": "TEST",
+          "RECORD_ID": "ABC123"
+        }
+      ],
+      "MATCH_INFO": {
+        "WHY_KEY": "\u002BNAME\u002BPHONE\u002BEMAIL",
+        "WHY_ERRULE_CODE": "SF1_PNAME_CFF",
+        "MATCH_LEVEL_CODE": "RESOLVED",
+        "CANDIDATE_KEYS": {
+          "EMAIL_KEY": [
+            {
+              "FEAT_ID": 100007,
+              "FEAT_DESC": "joeschmoe@NOWHERE.COM"
+            }
+          ],
+          "NAMEPHONE_KEY": [
+            {
+              "FEAT_ID": 100008,
+              "FEAT_DESC": "JSF|XM|PHONE.PHONE_LAST_5=51212"
+            }
+          ],
+          "NAME_KEY": [
+            {
+              "FEAT_ID": 100005,
+              "FEAT_DESC": "JSF|XM"
+            }
+          ],
+          "PHONE_KEY": [
+            {
+              "FEAT_ID": 100006,
+              "FEAT_DESC": "7025551212"
+            }
+          ]
+        },
+        "FEATURE_SCORES": {
+          "EMAIL": [
+            {
+              "INBOUND_FEAT_ID": 100003,
+              "INBOUND_FEAT_DESC": "joeschmoe@nowhere.com",
+              "CANDIDATE_FEAT_ID": 100003,
+              "CANDIDATE_FEAT_DESC": "joeschmoe@nowhere.com",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 100
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "F1"
+            }
+          ],
+          "NAME": [
+            {
+              "INBOUND_FEAT_ID": 100001,
+              "INBOUND_FEAT_DESC": "Joe Schmoe",
+              "CANDIDATE_FEAT_ID": 100010,
+              "CANDIDATE_FEAT_DESC": "Joseph Schmoe",
+              "SCORE": 98,
+              "ADDITIONAL_SCORES": {
+                "GNR_FN": 98,
+                "GNR_SN": -1,
+                "GNR_GN": -1,
+                "GENERATION_MATCH": -1,
+                "GNR_ON": -1
+              },
+              "SCORE_BUCKET": "CLOSE",
+              "SCORE_BEHAVIOR": "NAME"
+            }
+          ],
+          "PHONE": [
+            {
+              "INBOUND_FEAT_ID": 100002,
+              "INBOUND_FEAT_DESC": "702-555-1212",
+              "CANDIDATE_FEAT_ID": 100002,
+              "CANDIDATE_FEAT_DESC": "702-555-1212",
+              "CANDIDATE_FEAT_USAGE_TYPE": "HOME",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 100
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "FF"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "ENTITIES": [
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 100002
+      }
+    }
+  ]
+}

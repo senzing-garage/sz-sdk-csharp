@@ -1,0 +1,169 @@
+﻿{
+  "WHY_RESULTS": [
+    {
+      "ENTITY_ID": 5,
+      "MATCH_INFO": {
+        "WHY_KEY": "",
+        "WHY_ERRULE_CODE": "",
+        "MATCH_LEVEL_CODE": "",
+        "CANDIDATE_KEYS": {},
+        "FEATURE_SCORES": {},
+        "DISCLOSED_RELATIONS": {}
+      }
+    }
+  ],
+  "SEARCH_REQUEST": {
+    "JSON_DATA": "{\n    \u0022NAME_FULL\u0022: \u0022Joe Schmoe\u0022,\n    \u0022PHONE_NUMBER\u0022: \u0022702-555-1212\u0022,\n    \u0022EMAIL_ADDRESS\u0022: \u0022joeschmoe@nowhere.com\u0022\n}",
+    "SEARCH_PROFILE": "",
+    "FEATURES": {
+      "NAME": [
+        {
+          "LIB_FEAT_ID": 100001,
+          "FEAT_DESC": "Joe Schmoe",
+          "ATTRIBUTES": {
+            "NAME_FULL": "Joe Schmoe"
+          },
+          "USED_FOR_CAND": "N",
+          "USED_FOR_SCORING": "Y",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "PHONE": [
+        {
+          "LIB_FEAT_ID": 100002,
+          "FEAT_DESC": "702-555-1212",
+          "ATTRIBUTES": {
+            "PHONE_NUMBER": "702-555-1212"
+          },
+          "USED_FOR_CAND": "N",
+          "USED_FOR_SCORING": "Y",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "EMAIL": [
+        {
+          "LIB_FEAT_ID": 100003,
+          "FEAT_DESC": "joeschmoe@nowhere.com",
+          "ATTRIBUTES": {
+            "EMAIL_ADDRESS": "joeschmoe@nowhere.com"
+          },
+          "USED_FOR_CAND": "N",
+          "USED_FOR_SCORING": "Y",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "NAME_KEY": [
+        {
+          "LIB_FEAT_ID": 100004,
+          "FEAT_DESC": "JOE|XM",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        },
+        {
+          "LIB_FEAT_ID": 100005,
+          "FEAT_DESC": "JSF|XM",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "PHONE_KEY": [
+        {
+          "LIB_FEAT_ID": 100006,
+          "FEAT_DESC": "7025551212",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "EMAIL_KEY": [
+        {
+          "LIB_FEAT_ID": 100007,
+          "FEAT_DESC": "joeschmoe@NOWHERE.COM",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ],
+      "NAMEPHONE_KEY": [
+        {
+          "LIB_FEAT_ID": 100008,
+          "FEAT_DESC": "JSF|XM|PHONE.PHONE_LAST_5=51212",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        },
+        {
+          "LIB_FEAT_ID": 100009,
+          "FEAT_DESC": "JOE|XM|PHONE.PHONE_LAST_5=51212",
+          "USED_FOR_CAND": "Y",
+          "USED_FOR_SCORING": "N",
+          "ENTITY_COUNT": 1,
+          "CANDIDATE_CAP_REACHED": "N",
+          "SCORING_CAP_REACHED": "N"
+        }
+      ]
+    }
+  },
+  "SEARCH_STATISTICS": [
+    {
+      "CANDIDATE_KEYS": {
+        "FEATURE_TYPES": [
+          {
+            "FTYPE_CODE": "NAME_KEY",
+            "FOUND": 0,
+            "NOT_FOUND": 2,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "PHONE_KEY",
+            "FOUND": 0,
+            "NOT_FOUND": 1,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "EMAIL_KEY",
+            "FOUND": 0,
+            "NOT_FOUND": 1,
+            "GENERIC": 0
+          },
+          {
+            "FTYPE_CODE": "NAMEPHONE_KEY",
+            "FOUND": 0,
+            "NOT_FOUND": 2,
+            "GENERIC": 0
+          }
+        ],
+        "SUMMARY": {
+          "FOUND": 0,
+          "NOT_FOUND": 6,
+          "GENERIC": 0
+        }
+      }
+    }
+  ],
+  "ENTITIES": [
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 5
+      }
+    }
+  ]
+}
