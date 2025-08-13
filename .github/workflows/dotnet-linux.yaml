@@ -67,7 +67,7 @@ jobs:
     needs: dotnet-linux
     permissions:
       pull-requests: write
-    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@199-skern
+    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
     with:
       thresholds: "85 90"
 
