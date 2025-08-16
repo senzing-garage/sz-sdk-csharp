@@ -829,8 +829,8 @@ namespace Senzing.Sdk.Core
             /// </remarks>
             private long? configID = null;
 
-            /// <summary>Default constructor.</summary>
-            public Builder()
+            /// <summary>Internal constructor.</summary>
+            internal Builder()
             {
                 this.settings = DefaultSettings;
                 this.instanceName = DefaultInstanceName;
