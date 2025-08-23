@@ -59,6 +59,7 @@ format-demo:
 .PHONY: format-test
 format-test:
 	dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Tests
+	dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.TestHelpers
 
 # -----------------------------------------------------------------------------
 # Runs formatting against all modules

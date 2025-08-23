@@ -160,6 +160,7 @@ namespace Senzing.Sdk
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadViaQueue/Program.cs">Code Snippet: Load via Queue</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadWithInfoViaFutures/Program.cs">Code Snippet: Load "With Info" via Futures</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/loading/LoadWithStatsViaLoop/Program.cs">Code Snippet: Load "With Stats" Via Loop</seealso>
+        [SzConfigRetryable]
         string AddRecord(string dataSourceCode,
                          string recordID,
                          string recordDefinition,
@@ -216,6 +217,7 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzRecordPreviewDefaultFlags"/>
         /// <seealso cref="SzRecordPreviewFlags"/>
+        [SzConfigRetryable]
         string GetRecordPreview(string recordDefinition,
                                 SzFlag? flags = SzRecordPreviewDefaultFlags);
 
@@ -287,6 +289,7 @@ namespace Senzing.Sdk
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteViaLoop/Program.cs">Code Snippet: Delete via Loop</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteViaFutures/Program.cs">Code Snippet: Delete via Futures</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/deleting/DeleteWithInfoViaFutures/Program.cs">Code Snippet: Delete "With Info" via Futures</seealso>
+        [SzConfigRetryable]
         string DeleteRecord(string dataSourceCode,
                             string recordID,
                             SzFlag? flags = SzDeleteRecordDefaultFlags);
@@ -357,6 +360,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlag.SzWithInfo"/>
         /// <seealso cref="SzFlags.SzReevaluateRecordDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzReevaluateRecordFlags"/>
+        [SzConfigRetryable]
         string ReevaluateRecord(string dataSourceCode,
                                  string recordID,
                                  SzFlag? flags = SzReevaluateRecordDefaultFlags);
@@ -417,6 +421,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlag.SzWithInfo"/>
         /// <seealso cref="SzFlags.SzReevaluateEntityDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzReevaluateEntityFlags"/>
+        [SzConfigRetryable]
         string ReevaluateEntity(long entityID,
                                 SzFlag? flags = SzReevaluateEntityDefaultFlags);
 
@@ -493,6 +498,7 @@ namespace Senzing.Sdk
         /// 
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchRecords/Program.cs">Code Snippet: Search Records</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchViaFutures/Program.cs">Code Snippet: Search via Futures</seealso>
+        [SzConfigRetryable]
         string SearchByAttributes(
             string attributes,
             string searchProfile,
@@ -550,6 +556,7 @@ namespace Senzing.Sdk
         /// 
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchRecords/Program.cs">Code Snippet: Search Records</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/searching/SearchViaFutures/Program.cs">Code Snippet: Search via Futures</seealso>
+        [SzConfigRetryable]
         string SearchByAttributes(
             string attributes,
             SzFlag? flags = SzSearchByAttributesDefaultFlags);
@@ -640,6 +647,7 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzFlags.SzWhySearchDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzWhySearchFlags"/>
+        [SzConfigRetryable]
         string WhySearch(
             string attributes,
             long entityID,
@@ -693,6 +701,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzEntityDefaultFlags"/>
         /// <seealso cref="SzFlags.SzEntityBriefDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzEntityFlags"/>
+        [SzConfigRetryable]
         string GetEntity(long entityID,
                          SzFlag? flags = SzEntityDefaultFlags);
 
@@ -753,6 +762,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzEntityDefaultFlags"/>
         /// <seealso cref="SzFlags.SzEntityBriefDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzEntityFlags"/>
+        [SzConfigRetryable]
         string GetEntity(string dataSourceCode,
                          string recordID,
                          SzFlag? flags = SzEntityDefaultFlags);
@@ -807,6 +817,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzNoFlags"/>
         /// <seealso cref="SzFlags.SzFindInterestingEntitiesDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzFindInterestingEntitiesFlags"/>
+        [SzConfigRetryable]
         string FindInterestingEntities(
             long entityID,
             SzFlag? flags = SzFindInterestingEntitiesDefaultFlags);
@@ -868,6 +879,7 @@ namespace Senzing.Sdk
         /// </exception>
         ///
         /// <exception cref="SzException">If a failure occurs.</exception>
+        [SzConfigRetryable]
         string FindInterestingEntities(
             string dataSourceCode,
             string recordID,
@@ -956,6 +968,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzFindPathDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzFindPathFlags"/>
         /// <seealso cref="FindPath(string,string,string,string,int,ISet{ValueTuple{string,string}},ISet{string},SzFlag?)"/>
+        [SzConfigRetryable]
         string FindPath(long startEntityID,
                         long endEntityID,
                         int maxDegrees,
@@ -1061,6 +1074,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFindPathDefaultFlags"/>
         /// <seealso cref="SzFindPathFlags"/>
         /// <seealso cref="FindPath(long,long,int,ISet{long},ISet{string},SzFlag?)"/>
+        [SzConfigRetryable]
         string FindPath(
             string startDataSourceCode,
             string startRecordID,
@@ -1151,6 +1165,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFlags.SzFindNetworkDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzFindNetworkFlags"/>
         /// <seealso cref="FindNetwork(ISet{ValueTuple{string,string}},int,int,int,SzFlag?)"/>
+        [SzConfigRetryable]
         string FindNetwork(
             ISet<long> entityIDs,
             int maxDegrees,
@@ -1244,6 +1259,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzFindNetworkDefaultFlags"/>
         /// <seealso cref="SzFindNetworkFlags"/>
         /// <seealso cref="FindNetwork(ISet{long},int,int,int,SzFlag?)"/>
+        [SzConfigRetryable]
         string FindNetwork(
             ISet<(string dataSourceCode, string recordID)> recordKeys,
             int maxDegrees,
@@ -1312,6 +1328,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzWhyRecordInEntityFlags"/>
         /// <seealso cref="WhyEntities(long,long,SzFlag?)"/>
         /// <seealso cref="WhyRecords(string,string,string,string,SzFlag?)"/>
+        [SzConfigRetryable]
         string WhyRecordInEntity(
             string dataSourceCode,
             string recordID,
@@ -1387,6 +1404,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzWhyRecordsFlags"/>
         /// <seealso cref="WhyRecordInEntity(string,string,SzFlag?)"/>
         /// <seealso cref="WhyEntities(long,long,SzFlag?)"/>
+        [SzConfigRetryable]
         string WhyRecords(string dataSourceCode1,
                           string recordID1,
                           string dataSourceCode2,
@@ -1444,6 +1462,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzWhyEntitiesFlags"/>
         /// <seealso cref="WhyRecords(string,string,string,string,SzFlag?)"/>
         /// <seealso cref="WhyRecordInEntity(string,string,SzFlag?)"/>
+        [SzConfigRetryable]
         string WhyEntities(long entityID1,
                            long entityID2,
                            SzFlag? flags = SzWhyEntitiesDefaultFlags);
@@ -1495,6 +1514,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzHowEntityDefaultFlags"/>
         /// <seealso cref="SzHowFlags"/>
         /// <seealso cref="GetVirtualEntity"/>
+        [SzConfigRetryable]
         string HowEntity(long entityID, SzFlag? flags = SzHowEntityDefaultFlags);
 
         /// <summary>
@@ -1560,6 +1580,7 @@ namespace Senzing.Sdk
         /// <seealso cref="SzVirtualEntityDefaultFlags"/>
         /// <seealso cref="SzHowFlags"/>
         /// <seealso cref="HowEntity(long,SzFlag?)"/>
+        [SzConfigRetryable]
         string GetVirtualEntity(
             ISet<(string dataSourceCode, string recordID)> recordKeys,
             SzFlag? flags = SzVirtualEntityDefaultFlags);
@@ -1627,6 +1648,7 @@ namespace Senzing.Sdk
         ///
         /// <seealso cref="SzFlags.SzRecordDefaultFlags"/>
         /// <seealso cref="SzFlagUsageGroup.SzRecordFlags"/>
+        [SzConfigRetryable]
         string GetRecord(string dataSourceCode,
                          string recordID,
                          SzFlag? flags = SzRecordDefaultFlags);
@@ -1684,6 +1706,7 @@ namespace Senzing.Sdk
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
+        [SzConfigRetryable]
         IntPtr ExportJsonEntityReport(SzFlag? flags = SzExportDefaultFlags);
 
         /// <summary>
@@ -1747,6 +1770,7 @@ namespace Senzing.Sdk
         /// <seealso cref="FetchNext"/>
         /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportJsonEntityReport(SzFlag?)"/>
+        [SzConfigRetryable]
         IntPtr ExportCsvEntityReport(
             string csvColumnList,
             SzFlag? flags = SzExportDefaultFlags);
@@ -1823,6 +1847,7 @@ namespace Senzing.Sdk
         /// <seealso cref="CloseExportReport"/>
         /// <seealso cref="ExportJsonEntityReport"/>
         /// <seealso cref="ExportCsvEntityReport"/>
+        [SzConfigRetryable]
         string FetchNext(IntPtr exportHandle);
 
         /// <summary>
@@ -1923,6 +1948,7 @@ namespace Senzing.Sdk
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuous/Program.cs">Code Snippet: Continuous Redo Processing</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuousViaFutures/Program.cs">Code Snippet: Continuous Redo Processing via Futures</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoWithInfoContinuous/Program.cs">Code Snippet: Continuous Redo "With Info" Processing</seealso>
+        [SzConfigRetryable]
         string ProcessRedoRecord(string redoRecord, SzFlag? flags = SzRedoDefaultFlags);
 
         /// <summary>
@@ -1963,6 +1989,7 @@ namespace Senzing.Sdk
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuous/Program.cs">Code Snippet: Continuous Redo Processing</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoContinuousViaFutures/Program.cs">Code Snippet: Continuous Redo Processing via Futures</seealso>
         /// <seealso href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/redo/RedoWithInfoContinuous/Program.cs">Code Snippet: Continuous Redo "With Info" Processing</seealso>
+        [SzConfigRetryable]
         string GetRedoRecord();
 
         /// <summary>

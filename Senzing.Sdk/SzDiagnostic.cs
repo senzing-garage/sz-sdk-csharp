@@ -111,6 +111,7 @@ namespace Senzing.Sdk
         /// </returns>
         /// 
         /// <exception cref="SzException">Thrown if a failure occurs.</exception>
+        [SzConfigRetryable]
         string GetFeature(long featureID);
     }
 

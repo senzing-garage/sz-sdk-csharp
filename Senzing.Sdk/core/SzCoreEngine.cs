@@ -1188,7 +1188,7 @@ namespace Senzing.Sdk.Core
 
                     // TODO(bcaceres): remove this if not-found records produce an error
                     // check if record not found yields empty INFO
-                    if (result.Length == 0)
+                    if (result != null && result.Length == 0)
                     {
                         result = null;
                     }
