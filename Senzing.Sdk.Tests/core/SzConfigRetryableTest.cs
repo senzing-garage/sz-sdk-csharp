@@ -363,8 +363,8 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
-        startInfo.RedirectStandardError = true;
-        startInfo.RedirectStandardOutput = true;
+        startInfo.RedirectStandardError = false;
+        startInfo.RedirectStandardOutput = false;
         startInfo.WorkingDirectory = dir.FullName;
 
         Process? process = Process.Start(startInfo);
@@ -375,26 +375,12 @@ internal class SzConfigRetryableTest : AbstractTest
             throw new AssertionException("Failed to launch new process");
         }
         process.WaitForExit();
-        string stdOutput = process.StandardOutput.ReadToEnd();
-        string errOutput = process.StandardError.ReadToEnd();
 
         int exitCode = process.ExitCode;
 
         if (exitCode != 0)
         {
-            StringWriter sw = new StringWriter();
-            sw.WriteLine("Failed to launch alternate process to update config: ");
-            sw.WriteLine("Standard Output: ");
-            sw.WriteLine(stdOutput);
-            sw.WriteLine();
-            sw.WriteLine("Error Output: ");
-            sw.WriteLine(errOutput);
-            sw.WriteLine();
-
-            String msg = sw.ToString();
-            sw.Dispose();
-
-            Fail(msg);
+            Fail("Failed to launch alternate process to update config");
         }
 
         string output = File.ReadAllText(outputFilePath, UTF8);
