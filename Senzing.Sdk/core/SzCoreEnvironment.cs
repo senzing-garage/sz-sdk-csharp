@@ -241,7 +241,8 @@ namespace Senzing.Sdk.Core
         private readonly Object monitor = new Object();
 
         /// <summary>
-        /// Private constructor used by the builder to construct the instance.
+        /// Protected constructor used by the <see cref="Builder"/> to 
+        /// construct the instance.
         /// </summary>
         ///  
         /// <param name="instanceName">The Senzing instance name.</param>
@@ -256,10 +257,10 @@ namespace Senzing.Sdk.Core
         /// The explicit config ID for the Senzing environment initialization,
         /// or <code>null</code> if using the default configuration.
         /// </param>
-        private SzCoreEnvironment(string instanceName,
-                                  string settings,
-                                  bool verboseLogging,
-                                  long? configID)
+        protected SzCoreEnvironment(string instanceName,
+                                    string settings,
+                                    bool verboseLogging,
+                                    long? configID)
         {
             // set the fields
             this.readWriteLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
@@ -383,13 +384,26 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Executes the specified task (<c>Func</c>) and returns the result if successful.
+        /// Executes the specified task (<c>Func</c>) via <see cref="DoExecute"/>
+        /// after ensuring that this instance is not <see cref="Destroy">destroyed</see>
+        /// and will not be <see cref="Destroy">destroyed</see> before the task's
+        /// completion.
         /// </summary>
         /// 
         /// <remarks>
-        /// This will throw any exception produced by the specified task, wrapping it in
-        /// an <see cref="Senzing.Sdk.SzException"/> if it is a that is not of type
-        /// <see cref="SzException"/>.
+        /// <para>
+        /// This is used by the core implementations of <see cref="SzEngine"/>,
+        /// <see cref="SzProduct"/>, <see cref="SzConfigManager"/>, 
+        /// <see cref="SzConfig"/> and <see cref="SzDiagnostic"/> to execute their
+        /// functionality and ensure the environment is stable during execution.
+        /// </para>
+        /// 
+        /// <para>
+        /// If successful, this will return the result of the specified task.
+        /// If not successful, this will throw any exception produced by the
+        /// specified task, wrapping it in an <see cref="Senzing.Sdk.SzException"/>
+        /// if it is a that is not of type <see cref="SzException"/>.
+        /// </para>
         /// </remarks>
         /// 
         /// <typeparam name="T">
@@ -410,7 +424,7 @@ namespace Senzing.Sdk.Core
         /// <exception cref="System.InvalidOperationException">
         /// If this <c>SzCoreEnvironment</c> instance has already been destroyed.
         /// </exception>
-        internal T Execute<T>(Func<T> task)
+        protected internal virtual T Execute<T>(Func<T> task)
         {
             ReaderWriterLockSlim localLock = null;
             try
@@ -430,7 +444,7 @@ namespace Senzing.Sdk.Core
                 }
                 try
                 {
-                    return task();
+                    return DoExecute(task);
                 }
                 catch (SzException)
                 {
@@ -451,6 +465,35 @@ namespace Senzing.Sdk.Core
                 }
                 localLock = this.ReleaseLock(localLock);
             }
+        }
+
+        /// <summary>
+        /// Called by <see cref="Execute"/> after ensuring that this instance
+        /// is not <see cref="Destroy">destroyed</see> and ensuring any calls
+        /// to <see cref="Destroy"/> will block until after this method's 
+        /// invocation is completed.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// If successful, this will return the result of the specified task.
+        /// If not successful, this will throw any exception produced by the
+        /// specified task, wrapping it in an <see cref="Senzing.Sdk.SzException"/>
+        /// if it is a that is not of type <see cref="SzException"/>.
+        /// </remarks>
+        /// 
+        /// <typeparam name="T">
+        /// The return type of the specified function and the type returned by this function.
+        /// If your function does not really need a return value, then have it return <c>null</c>.
+        /// </typeparam>
+        /// 
+        /// <param name="task">
+        /// The no-argument <c>Func</c> to execute.
+        /// </param>
+        /// 
+        /// <returns>The result from the specified task.</returns>
+        protected internal virtual T DoExecute<T>(Func<T> task)
+        {
+            return task();
         }
 
         /// <summary>
@@ -829,8 +872,8 @@ namespace Senzing.Sdk.Core
             /// </remarks>
             private long? configID = null;
 
-            /// <summary>Internal constructor.</summary>
-            internal Builder()
+            /// <summary>Protected default constructor.</summary>
+            protected internal Builder()
             {
                 this.settings = DefaultSettings;
                 this.instanceName = DefaultInstanceName;
@@ -839,18 +882,19 @@ namespace Senzing.Sdk.Core
             }
 
             /// <summary>
-            /// Provides the Senzing settings to configure the
+            /// Provides the Senzing settings to initialize the
             /// <see cref="SzCoreEnvironment" />.
             /// </summary>
             /// 
             /// <remarks>
             /// If this is set to <c>null</c> or empty-string then
-            /// <see cref="SzCoreEnvironment.DefaultSettings" /> will be used to provide
-            /// limited functionality.
+            /// <see cref="SzCoreEnvironment.DefaultSettings" /> will 
+            /// be used to provide limited functionality.
             /// </remarks>
             /// 
             /// <param name="settings">
-            /// The Senzing settings, or <c>null</c> or empty-string to restore the default value.
+            /// The Senzing settings, or <c>null</c> or empty-string 
+            /// to restore the default value.
             /// </param>
             /// 
             /// <returns>A reference to this instance.</returns>
@@ -868,7 +912,21 @@ namespace Senzing.Sdk.Core
             }
 
             /// <summary>
-            /// Provides the Senzing instance name to configure the
+            /// Gets the Senzing settings which which to initialize 
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// The Senzing settings which which to initialize the 
+            /// <see cref="SzCoreEnvironment" />.
+            /// </returns>
+            public string GetSettings()
+            {
+                return this.settings;
+            }
+
+            /// <summary>
+            /// Provides the Senzing instance name to initialize the
             /// <see cref="SzCoreEnvironment" />
             /// </summary>
             /// 
@@ -897,17 +955,32 @@ namespace Senzing.Sdk.Core
             }
 
             /// <summary>
-            /// Sets the verbose logging flag for configuring the 
+            /// Gets the Senzing instance name with which to initialize
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// The Senzing instance name with which to initialize
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </returns>
+            public string GetInstanceName()
+            {
+                return this.instanceName;
+            }
+
+            /// <summary>
+            /// Sets the verbose logging flag for initializing the 
             /// <see cref="SzCoreEnvironment"/>.
             /// </summary>
             /// 
             /// <remarks>
-            /// Call this method to explicitly set the value.  If not called, the
-            /// default value is <c>false</c>.
+            /// Call this method to explicitly set the value.  If not
+            /// called, the default value is <c>false</c>.
             /// </remarks>
             /// 
             /// <param name="verboseLogging">
-            /// <c>true</c> if verbose logging should be enabled, otherwise <c>false</c>.
+            /// <c>true</c> if verbose logging should be enabled, 
+            /// otherwise <c>false</c>.
             /// </param>
             /// 
             /// <returns>A reference to this instance</returns>
@@ -918,9 +991,24 @@ namespace Senzing.Sdk.Core
             }
 
             /// <summary>
+            /// Checks if initializing the <see cref="SzCoreEnvironment"/>
+            /// with verbose logging.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// <c>true</c> if verbose logging will be enabled, otherwise
+            /// <c>false</c>.
+            /// </returns>
+            public bool IsVerboseLogging()
+            {
+                return this.verboseLogging;
+            }
+
+            /// <summary>
             /// Sets the explicit configuration ID to use to initialize the 
             /// <c>SzCoreEnvironment</c>.
             /// </summary>
+            /// 
             /// <remarks>
             /// If not specified then the default configuration ID obtained
             /// from the Senzing repository is used.
@@ -937,6 +1025,28 @@ namespace Senzing.Sdk.Core
             {
                 this.configID = configID;
                 return this;
+            }
+
+            /// <summary>
+            /// Gets the explicit configuration ID (if any) with which to 
+            /// initialize the <see cref="SzCoreEnvironment"/>.
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This returns <c>null</c> if no explicit configuration ID has
+            /// been provided and the default configuration ID from the
+            /// Senzing repository should be used.
+            /// </remarks>
+            /// 
+            /// <returns>
+            /// The explicit configuration ID with which to initialize the 
+            /// <see cref="SzCoreEnvironment"/>, or <c>null</c> if no explicit 
+            /// configuration ID has been provided and the the default
+            /// configuration ID from the Senzing repository should be used.
+            /// </returns>
+            public long? GetConfigID()
+            {
+                return this.configID;
             }
 
             /// <summary>
@@ -962,10 +1072,10 @@ namespace Senzing.Sdk.Core
             /// </exception>
             public SzCoreEnvironment Build()
             {
-                return new SzCoreEnvironment(this.instanceName,
-                                             this.settings,
-                                             this.verboseLogging,
-                                             this.configID);
+                return new SzCoreEnvironment(this.GetInstanceName(),
+                                             this.GetSettings(),
+                                             this.IsVerboseLogging(),
+                                             this.GetConfigID());
             }
         }
 

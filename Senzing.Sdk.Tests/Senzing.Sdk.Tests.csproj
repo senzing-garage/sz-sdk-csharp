@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Senzing.Sdk\Senzing.Sdk.csproj" />
     <InternalsVisibleTo Include="Senzing.Sdk.Demo" />
+    <InternalsVisibleTo Include="Senzing.Sdk.TestHelpers" />
   </ItemGroup>
 
 </Project>
