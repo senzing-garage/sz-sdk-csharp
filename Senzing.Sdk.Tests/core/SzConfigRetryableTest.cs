@@ -21,6 +21,7 @@ using static Senzing.Sdk.Tests.Core.SzRecord;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
+[Platform(Exclude = "Windows")] // file-locking on SQLite file precludes tests
 internal class SzConfigRetryableTest : AbstractTest
 {
     /// <summary>
