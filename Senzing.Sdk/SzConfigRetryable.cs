@@ -36,6 +36,7 @@ namespace Senzing.Sdk
     /// cref="SzEnvironment.Reinitialize">reinitializing</see> using the current
     /// <see cref="SzConfigManager.GetDefaultConfigID">default configuration ID</see>
     /// </para>
+    /// </remarks>
     [System.AttributeUsage(System.AttributeTargets.Method)]
     public class SzConfigRetryable : System.Attribute
     {

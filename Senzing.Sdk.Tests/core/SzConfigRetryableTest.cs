@@ -354,11 +354,18 @@ internal class SzConfigRetryableTest : AbstractTest
                     outputFilePath));
 
         IDictionary origEnv = Environment.GetEnvironmentVariables();
+        StringWriter sw = new StringWriter();
+        sw.WriteLine();
         foreach (DictionaryEntry entry in origEnv)
         {
             startInfo.Environment[entry.Key?.ToString() ?? ""]
                 = entry.Value?.ToString() ?? "";
+            sw.WriteLine(entry.Key?.ToString() + "="
+                         + entry.Value?.ToString());
         }
+        sw.WriteLine();
+        string env = sw.ToString();
+        sw.Dispose();
 
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
         startInfo.UseShellExecute = false;
@@ -371,7 +378,7 @@ internal class SzConfigRetryableTest : AbstractTest
 
         if (process == null)
         {
-            Fail("Failed ot launch new process");
+            Fail("Failed ot launch new process: " + env);
             throw new AssertionException("Failed to launch new process");
         }
         string errorOutput = process.StandardError.ReadToEnd();
@@ -381,7 +388,8 @@ internal class SzConfigRetryableTest : AbstractTest
 
         if (exitCode != 0)
         {
-            Fail("Failed to launch alternate process to update config: " + errorOutput);
+            Fail("Failed to launch alternate process to update config: "
+                 + env + errorOutput);
         }
 
         string output = File.ReadAllText(outputFilePath, UTF8);
