@@ -82,11 +82,14 @@ clean:
 	@dotnet clean Senzing.Sdk
 	@dotnet clean -c Release Senzing.Sdk
 	@dotnet clean Senzing.Sdk.Tests
+	@dotnet clean Senzing.Sdk.TestHelpers
 	@dotnet clean Senzing.Sdk.Demo
 	@rm -rf Senzing.Sdk/bin
 	@rm -rf Senzing.Sdk/obj
 	@rm -rf Senzing.Sdk.Tests/bin
 	@rm -rf Senzing.Sdk.Tests/obj
+	@rm -rf Senzing.Sdk.TestHelpers/bin
+	@rm -rf Senzing.Sdk.TestHelpers/obj
 	@rm -rf Senzing.Sdk.Demo/bin
 	@rm -rf Senzing.Sdk.Demo/obj
 	@rm -rf target
