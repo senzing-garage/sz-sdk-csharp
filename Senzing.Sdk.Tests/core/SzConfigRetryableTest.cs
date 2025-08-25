@@ -375,14 +375,13 @@ internal class SzConfigRetryableTest : AbstractTest
             throw new AssertionException("Failed to launch new process");
         }
         string errorOutput = process.StandardError.ReadToEnd();
-        Console.Error.WriteLine(errorOutput);
 
         process.WaitForExit();
         int exitCode = process.ExitCode;
 
         if (exitCode != 0)
         {
-            Fail("Failed to launch alternate process to update config");
+            Fail("Failed to launch alternate process to update config: " + errorOutput);
         }
 
         string output = File.ReadAllText(outputFilePath, UTF8);
