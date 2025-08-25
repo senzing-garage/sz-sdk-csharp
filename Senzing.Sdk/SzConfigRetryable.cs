@@ -40,6 +40,9 @@ namespace Senzing.Sdk
     [System.AttributeUsage(System.AttributeTargets.Method)]
     public class SzConfigRetryable : System.Attribute
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public SzConfigRetryable()
         {
 
