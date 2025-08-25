@@ -354,42 +354,47 @@ internal class SzConfigRetryableTest : AbstractTest
                     outputFilePath));
 
         IDictionary origEnv = Environment.GetEnvironmentVariables();
-        StringWriter sw = new StringWriter();
-        sw.WriteLine();
         foreach (DictionaryEntry entry in origEnv)
         {
             startInfo.Environment[entry.Key?.ToString() ?? ""]
                 = entry.Value?.ToString() ?? "";
-            sw.WriteLine(entry.Key?.ToString() + "="
-                         + entry.Value?.ToString());
         }
-        sw.WriteLine();
-        string env = sw.ToString();
-        sw.Dispose();
 
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
         startInfo.RedirectStandardError = true;
-        startInfo.RedirectStandardOutput = false;
+        startInfo.RedirectStandardOutput = true;
         startInfo.WorkingDirectory = dir.FullName;
 
         Process? process = Process.Start(startInfo);
 
         if (process == null)
         {
-            Fail("Failed ot launch new process: " + env);
+            Fail("Failed ot launch new process");
             throw new AssertionException("Failed to launch new process");
         }
-        string errorOutput = process.StandardError.ReadToEnd();
-
         process.WaitForExit();
+        string stdOutput = process.StandardOutput.ReadToEnd();
+        string errOutput = process.StandardError.ReadToEnd();
+
         int exitCode = process.ExitCode;
 
         if (exitCode != 0)
         {
-            Fail("Failed to launch alternate process to update config: "
-                 + env + errorOutput);
+            StringWriter sw = new StringWriter();
+            sw.WriteLine("Failed to launch alternate process to update config: ");
+            sw.WriteLine("Standard Output: ");
+            sw.WriteLine(stdOutput);
+            sw.WriteLine();
+            sw.WriteLine("Error Output: ");
+            sw.WriteLine(errOutput);
+            sw.WriteLine();
+
+            String msg = sw.ToString();
+            sw.Dispose();
+
+            Fail(msg);
         }
 
         string output = File.ReadAllText(outputFilePath, UTF8);
