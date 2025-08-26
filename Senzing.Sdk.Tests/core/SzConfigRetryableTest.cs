@@ -19,7 +19,7 @@ using static System.StringComparison;
 using static Senzing.Sdk.SzFlags;
 using static Senzing.Sdk.Tests.Core.SzRecord;
 
-//[TestFixture]
+[TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzConfigRetryableTest : AbstractTest
 {
@@ -255,7 +255,7 @@ internal class SzConfigRetryableTest : AbstractTest
         return this.byRecordKeyLookup[key];
     }
 
-    //[OneTimeSetUp]
+    [OneTimeSetUp]
     public void InitializeEnvironment()
     {
         this.BeginTests();
@@ -316,8 +316,8 @@ internal class SzConfigRetryableTest : AbstractTest
                                         true);
     }
 
-    [Test]
-    public void DummyTest()
+    //[Test]
+    public static void DummyTest()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string assemblyName = assembly.GetName().Name ?? "";
@@ -460,6 +460,7 @@ internal class SzConfigRetryableTest : AbstractTest
         ProcessStartInfo startInfo = new ProcessStartInfo(
             "dotnet",
             ListOf("run",
+                    "--no-build",
                     "--project",
                     "Senzing.Sdk.TestHelpers",
                     logFilePath,
@@ -477,8 +478,8 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
-        startInfo.RedirectStandardError = false;
-        startInfo.RedirectStandardOutput = false;
+        startInfo.RedirectStandardError = true;
+        startInfo.RedirectStandardOutput = true;
         startInfo.WorkingDirectory = dir?.FullName ?? dirPath;
 
         using (Process? process = Process.Start(startInfo))
@@ -488,24 +489,70 @@ internal class SzConfigRetryableTest : AbstractTest
                 Fail("Failed ot launch new process");
                 throw new AssertionException("Failed to launch new process");
             }
-            process.WaitForExit();
 
+            StringWriter stdout = new StringWriter();
+            StringWriter stderr = new StringWriter();
+            Thread outputThread = new Thread(() =>
+            {
+                for (string? line = process.StandardOutput.ReadLine();
+                     line != null;
+                     line = process.StandardOutput.ReadLine())
+                {
+                    stdout.WriteLine(line);
+                }
+            });
+            Thread errorThread = new Thread(() =>
+            {
+                for (string? line = process.StandardError.ReadLine();
+                     line != null;
+                     line = process.StandardOutput.ReadLine())
+                {
+                    stderr.WriteLine(line);
+                }
+            });
+
+            outputThread.Start();
+            errorThread.Start();
+
+            process.WaitForExit();
+            
             int exitCode = process.ExitCode;
 
-            if (exitCode != 0)
+            try
             {
-                string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8)
-                    : "[ no log file ]";
-                StringWriter sw = new StringWriter();
-                sw.WriteLine("Failed to launch alternate process to update config: ");
-                sw.WriteLine("- Repository Directory: " + repoDirectory.FullName);
-                sw.WriteLine("- Working Directory: " + startInfo.WorkingDirectory);
-                sw.WriteLine("- Log File: " + logFilePath);
-                sw.WriteLine(log);
-                String msg = sw.ToString();
-                sw.Dispose();
+                if (exitCode != 0)
+                {
+                    string log = File.Exists(logFilePath)
+                        ? File.ReadAllText(logFilePath, UTF8) : "[ no log file ]";
 
-                Fail(msg);
+                    using (StringWriter sw = new StringWriter())
+                    {
+                        sw.WriteLine("Failed to launch alternate process to update config: ");
+                        sw.WriteLine("- Repository Directory: " + repoDirectory.FullName);
+                        sw.WriteLine("- Working Directory: " + startInfo.WorkingDirectory);
+                        sw.WriteLine("- Log File: " + logFilePath);
+                        sw.WriteLine();
+                        sw.WriteLine(log);
+                        sw.WriteLine();
+                        sw.WriteLine("Standard Output: ");
+                        sw.WriteLine(stdout.ToString());
+                        sw.WriteLine();
+                        sw.WriteLine("Standard Error; ");
+                        sw.WriteLine(stderr.ToString());
+                        Fail(sw.ToString());
+                    }
+                }
+            }
+            finally
+            {
+                process.StandardError.Close();
+                process.StandardOutput.Close();
+                stdout.Close();
+                stderr.Close();
+                outputThread.Interrupt();
+                errorThread.Interrupt();
+                outputThread.Join();
+                errorThread.Join();
             }
         }
 
@@ -567,7 +614,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[OneTimeTearDown]
+    [OneTimeTearDown]
     public void TeardownEnvironment()
     {
         try
@@ -1229,7 +1276,7 @@ internal class SzConfigRetryableTest : AbstractTest
         return results;
     }
 
-    //[Test, TestCaseSource(nameof(GetTestParameters)), Order(10)]
+    [Test, TestCaseSource(nameof(GetTestParameters)), Order(10)]
     public void TestMethodPreReinitialize(Getter<object> getter,
                                           MethodInfo method,
                                           bool? expectRetryable,
@@ -1305,7 +1352,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[Test, Order(20)]
+    [Test, Order(20)]
     public void TestReinitialize()
     {
         try
@@ -1344,7 +1391,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[Test, TestCaseSource(nameof(GetTestParameters)), Order(30)]
+    [Test, TestCaseSource(nameof(GetTestParameters)), Order(30)]
     public void TestMethodPostReinitialize(Getter<object> getter,
                                            MethodInfo method,
                                            bool? expectRetryable,

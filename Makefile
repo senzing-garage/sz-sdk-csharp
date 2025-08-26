@@ -37,7 +37,9 @@ release: demo
 # -----------------------------------------------------------------------------
 .PHONY: test
 test:
-	dotnet test Senzing.Sdk.Tests
+	dotnet build Senzing.Sdk.Tests
+	dotnet build Senzing.Sdk.TestHelpers
+	dotnet test --no-build Senzing.Sdk.Tests
 
 # -----------------------------------------------------------------------------
 # Runs formatting against Senzing.Sdk
