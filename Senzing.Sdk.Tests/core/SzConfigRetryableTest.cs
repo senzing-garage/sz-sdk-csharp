@@ -385,7 +385,7 @@ internal class SzConfigRetryableTest : AbstractTest
             errorThread.Start();
 
             process.WaitForExit();
-            
+
             int exitCode = process.ExitCode;
 
             try
@@ -457,16 +457,21 @@ internal class SzConfigRetryableTest : AbstractTest
             File.Delete(logFilePath);
         }
 
-        ProcessStartInfo startInfo = new ProcessStartInfo(
-            "dotnet",
-            ListOf("run",
-                    "--no-build",
-                    "--project",
-                    "Senzing.Sdk.TestHelpers",
-                    logFilePath,
-                    typeof(SzConfigRetryableTest).Name + "Helper",
-                    initFilePath,
-                    outputFilePath));
+        List<string> args = new List<string>();
+        args.Add("run");
+        if (OperatingSystem.IsWindows())
+        {
+            args.Add("--no-build");
+        }
+        args.AddRange([
+            "--project",
+            "Senzing.Sdk.TestHelpers",
+            logFilePath,
+            typeof(SzConfigRetryableTest).Name + "Helper",
+            initFilePath,
+            outputFilePath ]);
+
+        ProcessStartInfo startInfo = new ProcessStartInfo("dotnet", args);
 
         IDictionary origEnv = Environment.GetEnvironmentVariables();
         foreach (DictionaryEntry entry in origEnv)
@@ -515,7 +520,7 @@ internal class SzConfigRetryableTest : AbstractTest
             errorThread.Start();
 
             process.WaitForExit();
-            
+
             int exitCode = process.ExitCode;
 
             try
