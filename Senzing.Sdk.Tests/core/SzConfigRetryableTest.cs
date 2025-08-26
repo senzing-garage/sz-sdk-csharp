@@ -388,7 +388,7 @@ internal class SzConfigRetryableTest : AbstractTest
 
         if (exitCode != 0)
         {
-            string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8) 
+            string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8)
                 : "[ no log file ]";
             StringWriter sw = new StringWriter();
             sw.WriteLine("Failed to launch alternate process to update config: ");
