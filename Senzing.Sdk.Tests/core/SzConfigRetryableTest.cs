@@ -375,30 +375,31 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.RedirectStandardOutput = false;
         startInfo.WorkingDirectory = dir?.FullName ?? dirPath;
 
-        Process? process = Process.Start(startInfo);
-
-        if (process == null)
+        using (Process? process = Process.Start(startInfo))
         {
-            Fail("Failed ot launch new process");
-            throw new AssertionException("Failed to launch new process");
-        }
-        process.WaitForExit();
+            if (process == null)
+            {
+                Fail("Failed ot launch new process");
+                throw new AssertionException("Failed to launch new process");
+            }
+            process.WaitForExit();
 
-        int exitCode = process.ExitCode;
+            int exitCode = process.ExitCode;
 
-        if (exitCode != 0)
-        {
-            string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8)
-                : "[ no log file ]";
-            StringWriter sw = new StringWriter();
-            sw.WriteLine("Failed to launch alternate process to update config: ");
-            sw.WriteLine("- Working Directory: " + startInfo.WorkingDirectory);
-            sw.WriteLine("- Log File: " + logFilePath);
-            sw.WriteLine(log);
-            String msg = sw.ToString();
-            sw.Dispose();
+            if (exitCode != 0)
+            {
+                string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8)
+                    : "[ no log file ]";
+                StringWriter sw = new StringWriter();
+                sw.WriteLine("Failed to launch alternate process to update config: ");
+                sw.WriteLine("- Working Directory: " + startInfo.WorkingDirectory);
+                sw.WriteLine("- Log File: " + logFilePath);
+                sw.WriteLine(log);
+                String msg = sw.ToString();
+                sw.Dispose();
 
-            Fail(msg);
+                Fail(msg);
+            }
         }
 
         string output = File.ReadAllText(outputFilePath, UTF8);
