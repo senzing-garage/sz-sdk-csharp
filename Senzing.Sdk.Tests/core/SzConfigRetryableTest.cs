@@ -357,21 +357,16 @@ internal class SzConfigRetryableTest : AbstractTest
             File.Delete(logFilePath);
         }
 
-        List<string> args = new List<string>();
-        args.Add("run");
-        if (OperatingSystem.IsWindows())
-        {
-            args.Add("--no-build");
-        }
-        args.AddRange([
-            "--project",
-            "Senzing.Sdk.TestHelpers",
-            logFilePath,
-            typeof(SzConfigRetryableTest).Name + "Helper",
-            initFilePath,
-            outputFilePath ]);
-
-        ProcessStartInfo startInfo = new ProcessStartInfo("dotnet", args);
+        ProcessStartInfo startInfo = new ProcessStartInfo(
+            "dotnet",
+            [ "run",
+              "--no-build",
+              "--project",
+              "Senzing.Sdk.TestHelpers",
+              logFilePath,
+              typeof(SzConfigRetryableTest).Name + "Helper",
+              initFilePath,
+              outputFilePath ]);
 
         IDictionary origEnv = Environment.GetEnvironmentVariables();
         foreach (DictionaryEntry entry in origEnv)

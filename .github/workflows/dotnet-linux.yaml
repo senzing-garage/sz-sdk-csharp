@@ -53,7 +53,8 @@ jobs:
         env:
           LD_LIBRARY_PATH: "/opt/senzing/er/lib"
         run: |
-          dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          dotnet test Senzing.Sdk.TestHelpers
+          dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
       - name: Store coverage file
