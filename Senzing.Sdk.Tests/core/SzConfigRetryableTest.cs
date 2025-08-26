@@ -367,7 +367,7 @@ internal class SzConfigRetryableTest : AbstractTest
 
             if (exitCode != 0)
             {
-                Fail("Got exit code 0 on dotnet --version");
+                Fail("Got exit code non-zero on dotnet --version");
             }
         }
     }

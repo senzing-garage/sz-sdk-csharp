@@ -58,8 +58,16 @@ jobs:
 
       - name: Run DotNet tests
         run: |
+          dotnet build Senzing.Sdk.TestHelpers
           dotnet test Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
-          if ( $? -eq $false ) { exit 1 }
+          if ( $? -eq $false ) { 
+            Get-ChildItem -Path "D:\a\sz-sdk-csharp\sz-sdk-csharp\target" -Directory -Recurse | Select-Object FullName, @{Name = 'Owner'; Expression = {(Get-Acl -Path $_.FullName).Owner}}
+            Get-ChildItem -Path "D:\a\sz-sdk-csharp\sz-sdk-csharp\target" -Recurse -Directory | Get-Acl | Select-Object Path, @{Name='Access';Expression={$_.Access | Format-List -Force}}
+            Get-ChildItem -Path "D:\a\sz-sdk-csharp\sz-sdk-csharp\target\logs" -Directory -Recurse | Select-Object FullName, @{Name = 'Owner'; Expression = {(Get-Acl -Path $_.FullName).Owner}}
+            Get-ChildItem -Path "D:\a\sz-sdk-csharp\sz-sdk-csharp\target\logs" -Recurse -Directory | Get-Acl | Select-Object Path, @{Name='Access';Expression={$_.Access | Format-List -Force}}
+            Get-Content -Path "D:\a\sz-sdk-csharp\sz-sdk-csharp\target\logs\SzConfigRetryableTestHelper.log"
+            exit 1 
+          }
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
       - name: Store coverage file
