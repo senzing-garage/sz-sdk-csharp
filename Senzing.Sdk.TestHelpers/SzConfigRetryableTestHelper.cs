@@ -15,15 +15,15 @@ public class SzConfigRetryableTestHelper : TestHelper
 {
     private static readonly Encoding UTF8 = new UTF8Encoding();
 
-    public void Execute(string[] args)
+    public void Execute(string[] args, Action<object?> logger)
     {
         try
         {
             if (args.Length < 2)
             {
-                Console.Error.WriteLine("Must specify the following command-line arguments:");
-                Console.Error.WriteLine("  1: Path to setting JSON file for the repository");
-                Console.Error.WriteLine("  2: Path to the output file for the results");
+                logger("Must specify the following command-line arguments:");
+                logger("  1: Path to setting JSON file for the repository");
+                logger("  2: Path to the output file for the results");
                 Environment.Exit(1);
             }
 
@@ -34,18 +34,21 @@ public class SzConfigRetryableTestHelper : TestHelper
 
             if (!initFile.Exists)
             {
-                Console.Error.WriteLine("Settings file does not exist: " + initFilePath);
+                logger("Settings file does not exist: " + initFilePath);
                 Environment.Exit(1);
             }
+            logger("Init file exists");
 
             string initJson = File.ReadAllText(initFile.FullName, UTF8).Trim();
 
+            logger("Initializing Senzing");
             SzEnvironment env
                 = SzCoreEnvironment.NewBuilder()
                                    .Settings(initJson)
                                    .InstanceName("SzConfigRetryableTestHelper")
                                    .Build();
 
+            logger("Initialized Senzing");
             try
             {
                 SzConfigManager configMgr = env.GetConfigManager();
@@ -53,33 +56,49 @@ public class SzConfigRetryableTestHelper : TestHelper
                 SzConfig config = configMgr.CreateConfig(configMgr.GetDefaultConfigID());
                 config.RegisterDataSource(Customers);
                 config.RegisterDataSource(Passengers);
+                logger("Setting default config...");
                 long configID = configMgr.SetDefaultConfig(config.Export());
+                logger("Setting default config: " + configID);
                 env.Reinitialize(configID);
+                logger("Reinitialized");
+
 
                 SzEngine engine = env.GetEngine();
 
+                logger("Adding records...");
                 engine.AddRecord(Customers, CustomerABC123.recordID, RecordABC123);
                 engine.AddRecord(Customers, CustomerDEF456.recordID, RecordDEF456);
+                logger("Added records.");
 
+                logger("Finding network...");
                 string network = engine.FindNetwork(
                     new SortedSet<(string, string)> { CustomerABC123, CustomerDEF456 },
                     2, 0, 0, SzFlags.SzFindNetworkAllFlags);
 
-                FileStream fs = new FileStream(outputFile.FullName, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs, UTF8);
-                sw.WriteLine(network);
-                sw.Flush();
+                logger("Found network.");
+                logger("Opening output file: " + outputFile.FullName);
+                using (FileStream fs = new FileStream(outputFile.FullName, FileMode.Create))
+                {
+                    StreamWriter sw = new StreamWriter(fs, UTF8);
+                    logger("Writing network to output file: " + outputFile.FullName);
+                    sw.WriteLine(network);
+                    sw.Flush();
+                    logger("Wrote network to output file: " + outputFile.FullName);
+                }
+                logger("Closed output file: " + outputFile.FullName);
             }
             finally
             {
+                logger("Destroying SzEnvironment...");
                 env.Destroy();
+                logger("Destroyed SzEnvironment.");
             }
 
         }
         catch (Exception e)
         {
-            Console.Error.WriteLine(e);
-            Console.Error.WriteLine(e.StackTrace);
+            logger(e);
+            logger(e.StackTrace);
             Environment.Exit(1);
         }
     }

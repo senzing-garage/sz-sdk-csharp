@@ -21,7 +21,6 @@ using static Senzing.Sdk.Tests.Core.SzRecord;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
-[Platform("Unix,Linux,MacOsX")] // file-locking on SQLite file precludes Windows
 internal class SzConfigRetryableTest : AbstractTest
 {
     /// <summary>
@@ -345,11 +344,19 @@ internal class SzConfigRetryableTest : AbstractTest
         string initFilePath = Path.Combine(repoDirectory.FullName, "sz-init.json");
         string outputFilePath = Path.GetTempFileName();
 
+        string logFileDirPath = Path.Combine(dirPath, "target", "logs");
+
+        Directory.CreateDirectory(logFileDirPath);
+
+        string logFilePath = Path.Combine(
+            logFileDirPath, typeof(SzConfigRetryableTest).Name + ".log");
+
         ProcessStartInfo startInfo = new ProcessStartInfo(
             "dotnet",
             ListOf("run",
                     "--project",
                     "Senzing.Sdk.TestHelpers",
+                    logFilePath,
                     typeof(SzConfigRetryableTest).Name + "Helper",
                     initFilePath,
                     outputFilePath));
@@ -364,8 +371,8 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
-        startInfo.RedirectStandardError = true;
-        startInfo.RedirectStandardOutput = true;
+        startInfo.RedirectStandardError = false;
+        startInfo.RedirectStandardOutput = false;
         startInfo.WorkingDirectory = dir.FullName;
 
         Process? process = Process.Start(startInfo);
@@ -376,22 +383,15 @@ internal class SzConfigRetryableTest : AbstractTest
             throw new AssertionException("Failed to launch new process");
         }
         process.WaitForExit();
-        string stdOutput = process.StandardOutput.ReadToEnd();
-        string errOutput = process.StandardError.ReadToEnd();
 
         int exitCode = process.ExitCode;
 
         if (exitCode != 0)
         {
+            string log = File.ReadAllText(logFilePath, UTF8);
             StringWriter sw = new StringWriter();
             sw.WriteLine("Failed to launch alternate process to update config: ");
-            sw.WriteLine("Standard Output: ");
-            sw.WriteLine(stdOutput);
-            sw.WriteLine();
-            sw.WriteLine("Error Output: ");
-            sw.WriteLine(errOutput);
-            sw.WriteLine();
-
+            sw.WriteLine(log);
             String msg = sw.ToString();
             sw.Dispose();
 

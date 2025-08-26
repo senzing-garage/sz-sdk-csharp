@@ -12,5 +12,5 @@ interface TestHelper
     /// </summary>
     /// 
     /// <param name="args">The command-line arguments</param>
-    void Execute(string[] args);
+    void Execute(string[] args, Action<object?> logger);
 }
