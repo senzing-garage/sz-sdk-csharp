@@ -430,7 +430,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
 
         startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        startInfo.UseShellExecute = true;
+        startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
         startInfo.RedirectStandardError = false;
         startInfo.RedirectStandardOutput = false;
