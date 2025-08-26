@@ -338,7 +338,7 @@ internal class SzConfigRetryableTest : AbstractTest
 
         ProcessStartInfo startInfo = new ProcessStartInfo(
             "dotnet",
-            ListOf("--version"));
+            ListOf("build", "Senzing.Sdk.TestHelpers"));
 
         IDictionary origEnv = Environment.GetEnvironmentVariables();
         foreach (DictionaryEntry entry in origEnv)
