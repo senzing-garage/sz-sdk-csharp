@@ -344,7 +344,7 @@ internal class SzConfigRetryableTest : AbstractTest
         string initFilePath = Path.Combine(repoDirectory.FullName, "sz-init.json");
         string outputFilePath = Path.GetTempFileName();
 
-        string logFileDirPath = Path.Combine(dirPath, "target", "logs");
+        string logFileDirPath = Path.Combine(dir?.FullName ?? dirPath, "target", "logs");
 
         Directory.CreateDirectory(logFileDirPath);
 
@@ -373,7 +373,7 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.RedirectStandardInput = false;
         startInfo.RedirectStandardError = false;
         startInfo.RedirectStandardOutput = false;
-        startInfo.WorkingDirectory = dir.FullName;
+        startInfo.WorkingDirectory = dir?.FullName ?? dirPath;
 
         Process? process = Process.Start(startInfo);
 
@@ -388,9 +388,11 @@ internal class SzConfigRetryableTest : AbstractTest
 
         if (exitCode != 0)
         {
-            string log = File.ReadAllText(logFilePath, UTF8);
+            string log = File.Exists(logFilePath) ? File.ReadAllText(logFilePath, UTF8) 
+                : "[ no log file ]";
             StringWriter sw = new StringWriter();
             sw.WriteLine("Failed to launch alternate process to update config: ");
+            sw.WriteLine(startInfo.ToString());
             sw.WriteLine(log);
             String msg = sw.ToString();
             sw.Dispose();
