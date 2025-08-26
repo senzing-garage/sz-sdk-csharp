@@ -351,7 +351,7 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
         startInfo.RedirectStandardError = true;
-        startInfo.RedirectStandardOutput = false;
+        startInfo.RedirectStandardOutput = true;
         startInfo.WorkingDirectory = dir?.FullName ?? dirPath;
 
         using (Process? process = Process.Start(startInfo))
@@ -361,26 +361,57 @@ internal class SzConfigRetryableTest : AbstractTest
                 Fail("Failed ot launch new process");
                 throw new AssertionException("Failed to launch new process");
             }
-
-            string output = "";  //process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
+            StringWriter output = new StringWriter();
+            StringWriter error = new StringWriter();
+            Thread outputThread = new Thread(() =>
+            {
+                for (string? line = process.StandardOutput.ReadLine();
+                     line != null;
+                     line = process.StandardOutput.ReadLine())
+                {
+                    output.WriteLine(line);
+                }
+            });
+            Thread errorThread = new Thread(() =>
+            {
+                for (string? line = process.StandardError.ReadLine();
+                     line != null;
+                     line = process.StandardOutput.ReadLine())
+                {
+                    error.WriteLine(line);
+                }
+            });
+            outputThread.Start();
+            errorThread.Start();
 
             process.WaitForExit();
-
+            
             int exitCode = process.ExitCode;
 
-            if (exitCode != 0)
+            try
             {
-                using (StringWriter sw = new StringWriter())
+                if (exitCode != 0)
                 {
-                    sw.WriteLine("Got exit code non-zero on dotnet build:");
-                    sw.WriteLine("Standard Output: ");
-                    sw.WriteLine(output);
-                    sw.WriteLine();
-                    sw.WriteLine("Standard Error; ");
-                    sw.WriteLine(error);
-                    Fail(sw.ToString());
+                    using (StringWriter sw = new StringWriter())
+                    {
+                        sw.WriteLine("Got exit code non-zero on dotnet build:");
+                        sw.WriteLine("Standard Output: ");
+                        sw.WriteLine(output.ToString());
+                        sw.WriteLine();
+                        sw.WriteLine("Standard Error; ");
+                        sw.WriteLine(error.ToString());
+                        Fail(sw.ToString());
+                    }
                 }
+            }
+            finally
+            {
+                process.StandardError.Close();
+                process.StandardOutput.Close();
+                output.Close();
+                error.Close();
+                outputThread.Interrupt();
+                errorThread.Interrupt();
             }
         }
     }
