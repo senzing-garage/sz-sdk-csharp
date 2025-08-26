@@ -350,6 +350,12 @@ internal class SzConfigRetryableTest : AbstractTest
 
         string logFilePath = Path.Combine(
             logFileDirPath, typeof(SzConfigRetryableTest).Name + ".log");
+        
+        // delete any old log file
+        if (File.Exists(logFilePath))
+        {
+            File.Delete(logFilePath);
+        }
 
         ProcessStartInfo startInfo = new ProcessStartInfo(
             "dotnet",
