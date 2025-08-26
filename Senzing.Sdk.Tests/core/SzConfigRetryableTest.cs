@@ -351,7 +351,7 @@ internal class SzConfigRetryableTest : AbstractTest
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardInput = false;
         startInfo.RedirectStandardError = true;
-        startInfo.RedirectStandardOutput = true;
+        startInfo.RedirectStandardOutput = false;
         startInfo.WorkingDirectory = dir?.FullName ?? dirPath;
 
         using (Process? process = Process.Start(startInfo))
@@ -361,12 +361,13 @@ internal class SzConfigRetryableTest : AbstractTest
                 Fail("Failed ot launch new process");
                 throw new AssertionException("Failed to launch new process");
             }
+
+            string output = "";  //process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
             process.WaitForExit();
 
             int exitCode = process.ExitCode;
-
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
 
             if (exitCode != 0)
             {
