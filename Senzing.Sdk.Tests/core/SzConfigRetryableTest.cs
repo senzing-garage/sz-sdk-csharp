@@ -398,6 +398,7 @@ internal class SzConfigRetryableTest : AbstractTest
                     : "[ no log file ]";
                 StringWriter sw = new StringWriter();
                 sw.WriteLine("Failed to launch alternate process to update config: ");
+                sw.WriteLine("- Repository Directory: " + repoDirectory.FullName);
                 sw.WriteLine("- Working Directory: " + startInfo.WorkingDirectory);
                 sw.WriteLine("- Log File: " + logFilePath);
                 sw.WriteLine(log);
