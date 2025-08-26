@@ -255,7 +255,7 @@ internal class SzConfigRetryableTest : AbstractTest
         return this.byRecordKeyLookup[key];
     }
 
-    //[OneTimeSetUp]
+    [OneTimeSetUp]
     public void InitializeEnvironment()
     {
         this.BeginTests();
@@ -316,7 +316,6 @@ internal class SzConfigRetryableTest : AbstractTest
                                         true);
     }
 
-    [Test]
     public void DummyTest()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -523,7 +522,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[OneTimeTearDown]
+    [OneTimeTearDown]
     public void TeardownEnvironment()
     {
         try
@@ -1185,7 +1184,7 @@ internal class SzConfigRetryableTest : AbstractTest
         return results;
     }
 
-    //[Test, TestCaseSource(nameof(GetTestParameters)), Order(10)]
+    [Test, TestCaseSource(nameof(GetTestParameters)), Order(10)]
     public void TestMethodPreReinitialize(Getter<object> getter,
                                           MethodInfo method,
                                           bool? expectRetryable,
@@ -1261,7 +1260,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[Test, Order(20)]
+    [Test, Order(20)]
     public void TestReinitialize()
     {
         try
@@ -1300,7 +1299,7 @@ internal class SzConfigRetryableTest : AbstractTest
         }
     }
 
-    //[Test, TestCaseSource(nameof(GetTestParameters)), Order(30)]
+    [Test, TestCaseSource(nameof(GetTestParameters)), Order(30)]
     public void TestMethodPostReinitialize(Getter<object> getter,
                                            MethodInfo method,
                                            bool? expectRetryable,
