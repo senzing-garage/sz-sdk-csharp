@@ -101,6 +101,5 @@ public class SzConfigRetryableTestHelper : TestHelper
             logger(e.StackTrace);
             Environment.Exit(1);
         }
-        Environment.Exit(0);
     }
 }
