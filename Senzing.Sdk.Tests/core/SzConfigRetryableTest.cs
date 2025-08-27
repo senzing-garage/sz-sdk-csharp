@@ -524,6 +524,10 @@ internal class SzConfigRetryableTest : AbstractTest
                 this.env.Destroy();
                 this.env = null;
             }
+            if (OperatingSystem.IsWindows())
+            {
+                Thread.Sleep(1000 * 120);
+            }
             this.TeardownTestEnvironment();
         }
         finally
