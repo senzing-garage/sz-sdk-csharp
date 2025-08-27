@@ -10,7 +10,7 @@ This repository is dependent on the Senzing native shared library (`.so`,
 `.dylib` or `.dll`) that is part of the Senzing product and function without it.
 
 While this SDK is being made available as open source, the actual Senzing.Sdk
-NuGet package file (`Senzing.Sdk.4.0.0-beta.2.0.nupkg`) that you use should be
+NuGet package file (`Senzing.Sdk.4.0.0.nupkg`) that you use should be
 obtained from Senzing product installation to ensure that the C# code version
 matches the native library version.
 
@@ -35,13 +35,13 @@ matches the native library version.
     - macOS: Set `DYLD_LIBRARY_PATH`:
 
         ```console
-        export DYLD_LIBRARY_PATH=/Library/Senzing/er/lib:/Library/Senzing/er/lib/macOS:$DYLD_LIBRARY_PATH
+        export DYLD_LIBRARY_PATH=/Library/Senzing/er/lib:/Library/Senzing/er/lib/macos:$DYLD_LIBRARY_PATH
         ```
 
     - Windows: Set `Path`:
 
         ```console
-        set Path=C:\Senzing\er\lib;C:\Senzing\er\lib\windows;%Path%
+        set Path=C:\Senzing\er\lib;%Path%
         ```
 
 ### Building
@@ -75,7 +75,7 @@ matches the native library version.
     ```
 
     The DLL will be found in `Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be found in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
+    The NuGet package will be found in `Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0.nupkg`
 
 1. Building with Release:
 
@@ -94,7 +94,7 @@ matches the native library version.
     example documentation snippets.
 
     The DLL will be found in `Senzing.Sdk/bin/Release/netstandard2.0/Senzing.Sdk.dll`
-    The NuGet package will be found in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0-beta.2.0.nupkg`
+    The NuGet package will be found in `Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0.nupkg`
 
 1. Running unit tests:
 
@@ -192,19 +192,19 @@ matches the native library version.
 1. Push the `Senzing.Sdk` NuGet package from your Senzing distribution to your local repository:
 
     ```console
-    dotnet nuget push [path-to-Senzing.Sdk.4.0.0-beta.2.0.nupkg] --source [local-source-name]
+    dotnet nuget push [path-to-Senzing.Sdk.4.0.0.nupkg] --source [local-source-name]
     ```
 
     - Example (macOS / Linux):
 
         ```console
-        dotnet nuget push /opt/senzing/er/sdk/dotnet/Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
+        dotnet nuget push /opt/senzing/er/sdk/dotnet/Senzing.Sdk.4.0.0.nupkg --source dev
         ```
 
     - Example (Windows):
 
         ```console
-        dotnet nuget push %USERPROFILE%\Senzing\er\sdk\dotnet\Senzing.Sdk.4.0.0-beta.2.0.nupkg --source dev
+        dotnet nuget push %USERPROFILE%\Senzing\er\sdk\dotnet\Senzing.Sdk.4.0.0.nupkg --source dev
         ```
 
 1. Add the `Senzing.Sdk` NuGet package as a dependency to your project:
@@ -217,7 +217,7 @@ matches the native library version.
     - **OPTION 2:** Add a specific version of Senzing.Sdk as your dependency:
 
         ```console
-        dotnet add [your-project-name] package Senzing.Sdk --version 4.0.0-beta.2.0
+        dotnet add [your-project-name] package Senzing.Sdk --version 4.0.0
         ```
 
     - **OPTION 3:** Add the latest production version of Senzing.Sdk as your dependency
