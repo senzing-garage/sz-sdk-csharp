@@ -1184,111 +1184,117 @@ internal class SzConfigRetryableTest : AbstractTest
                                           PreProcess? preProcess,
                                           PostProcess? postProcess)
     {
-        try
+        this.PerformTest(() =>
         {
-            object[] attrs = method.GetCustomAttributes(typeof(SzConfigRetryable), false);
-            bool retryable = (attrs.Length > 0);
-
-            if (expectRetryable == null)
-            {
-                Fail("Method from interface (" + method.DeclaringType?.Name
-                     + ") is " + (retryable ? "" : "not ")
-                     + "annotated and has no explicit config retryable test defined: "
-                     + method.ToString());
-            }
-
-            Assert.That(retryable, Is.EqualTo(expectRetryable),
-                        "Method from interface (" + method.DeclaringType?.Name
-                        + ") is " + (retryable ? "" : "not ")
-                        + "retryable but should " + (retryable ? "" : "not ")
-                        + "be: " + method.ToString());
-
-            if (paramGetter == null)
-            {
-                return;
-            }
-
-            object? preProcessResult = (preProcess == null) ? null : preProcess(this);
-
-            object? target = (getter == null) ? null : getter(this, preProcessResult);
-
-            object?[] args = paramGetter(this, preProcessResult) ?? [];
-
-            object? result = null;
             try
             {
-                // this may or may not succeed
-                result = method.Invoke(target, args);
-            }
-            catch (Exception e)
-            when (e is SystemException || e is ApplicationException || e is SzException)
-            {
-                Exception cause = (e is SzException) ? e : e.GetBaseException();
-                if (!(cause is SzException))
-                {
-                    Fail("Method from " + method.DeclaringType?.Name + " got an "
-                         + "unexpected exception: " + method.ToString(), e);
-                }
-                if (expectRetryable == false)
-                {
-                    Fail("Non-annotated method from " + method.DeclaringType?.Name
-                         + "got an exception before reinitialization: "
-                         + method.ToString(), e);
-                }
-            }
-            finally
-            {
-                if (postProcess != null)
-                {
-                    postProcess(this, preProcessResult, result);
-                }
-            }
+                object[] attrs = method.GetCustomAttributes(typeof(SzConfigRetryable), false);
+                bool retryable = (attrs.Length > 0);
 
-        }
-        catch (Exception e) when (!(e is AssertionException))
-        {
-            Fail("Method from " + method.DeclaringType?.Name
-                 + " failed with exception: " + method.ToString(), e);
-        }
+                if (expectRetryable == null)
+                {
+                    Fail("Method from interface (" + method.DeclaringType?.Name
+                        + ") is " + (retryable ? "" : "not ")
+                        + "annotated and has no explicit config retryable test defined: "
+                        + method.ToString());
+                }
+
+                Assert.That(retryable, Is.EqualTo(expectRetryable),
+                            "Method from interface (" + method.DeclaringType?.Name
+                            + ") is " + (retryable ? "" : "not ")
+                            + "retryable but should " + (retryable ? "" : "not ")
+                            + "be: " + method.ToString());
+
+                if (paramGetter == null)
+                {
+                    return;
+                }
+
+                object? preProcessResult = (preProcess == null) ? null : preProcess(this);
+
+                object? target = (getter == null) ? null : getter(this, preProcessResult);
+
+                object?[] args = paramGetter(this, preProcessResult) ?? [];
+
+                object? result = null;
+                try
+                {
+                    // this may or may not succeed
+                    result = method.Invoke(target, args);
+                }
+                catch (Exception e)
+                when (e is SystemException || e is ApplicationException || e is SzException)
+                {
+                    Exception cause = (e is SzException) ? e : e.GetBaseException();
+                    if (!(cause is SzException))
+                    {
+                        Fail("Method from " + method.DeclaringType?.Name + " got an "
+                            + "unexpected exception: " + method.ToString(), e);
+                    }
+                    if (expectRetryable == false)
+                    {
+                        Fail("Non-annotated method from " + method.DeclaringType?.Name
+                            + "got an exception before reinitialization: "
+                            + method.ToString(), e);
+                    }
+                }
+                finally
+                {
+                    if (postProcess != null)
+                    {
+                        postProcess(this, preProcessResult, result);
+                    }
+                }
+
+            }
+            catch (Exception e) when (!(e is AssertionException))
+            {
+                Fail("Method from " + method.DeclaringType?.Name
+                    + " failed with exception: " + method.ToString(), e);
+            }
+        });
     }
 
     [Test, Order(20)]
     public void TestReinitialize()
     {
-        try
+        this.PerformTest(() =>
         {
-            this.Env.Reinitialize(this.Env.GetConfigManager().GetDefaultConfigID());
-
-            Dictionary<(string, string), long> map
-                = new Dictionary<(string, string), long>();
-            foreach ((string dataSource, string recordID) in this.byRecordKeyLookup.Keys)
+            try
             {
-                try
+                this.Env.Reinitialize(this.Env.GetConfigManager().GetDefaultConfigID());
+
+                Dictionary<(string, string), long> map
+                    = new Dictionary<(string, string), long>();
+                foreach ((string dataSource, string recordID) in this.byRecordKeyLookup.Keys)
                 {
-                    string entity = this.Env.GetEngine().GetEntity(
-                        dataSource, recordID, SzNoFlags);
+                    try
+                    {
+                        string entity = this.Env.GetEngine().GetEntity(
+                            dataSource, recordID, SzNoFlags);
 
-                    JsonObject? jsonObj = JsonNode.Parse(entity)?.AsObject();
-                    jsonObj = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
+                        JsonObject? jsonObj = JsonNode.Parse(entity)?.AsObject();
+                        jsonObj = jsonObj?["RESOLVED_ENTITY"]?.AsObject();
 
-                    long? entityID = jsonObj?["ENTITY_ID"]?.GetValue<long>();
+                        long? entityID = jsonObj?["ENTITY_ID"]?.GetValue<long>();
 
-                    map[(dataSource, recordID)] = entityID ?? 0L;
+                        map[(dataSource, recordID)] = entityID ?? 0L;
 
+                    }
+                    catch (SzException e)
+                    {
+                        Fail("Failed to update entity ID for record key: "
+                            + "[" + dataSource + ":" + recordID + "]", e);
+                    }
                 }
-                catch (SzException e)
-                {
-                    Fail("Failed to update entity ID for record key: "
-                         + "[" + dataSource + ":" + recordID + "]", e);
-                }
+                this.byRecordKeyLookup = map;
+
             }
-            this.byRecordKeyLookup = map;
-
-        }
-        catch (Exception e) when (e is not AssertionException)
-        {
-            Fail("Failed to reinitialize", e);
-        }
+            catch (Exception e) when (e is not AssertionException)
+            {
+                Fail("Failed to reinitialize", e);
+            }
+        });
     }
 
     [Test, TestCaseSource(nameof(GetTestParameters)), Order(30)]
@@ -1299,65 +1305,68 @@ internal class SzConfigRetryableTest : AbstractTest
                                            PreProcess? preProcess,
                                            PostProcess? postProcess)
     {
-        try
+        this.PerformTest(() =>
         {
-            object[] attrs = method.GetCustomAttributes(typeof(SzConfigRetryable), false);
-            bool retryable = (attrs.Length > 0);
-
-            if (expectRetryable == null)
-            {
-                Fail("Method from interface (" + method.DeclaringType?.Name
-                     + ") is " + (retryable ? "" : "not ")
-                     + "annotated and has no explicit config retryable test defined: "
-                     + method.ToString());
-            }
-
-            Assert.That(retryable, Is.EqualTo(expectRetryable),
-                        "Method from interface (" + method.DeclaringType?.Name
-                        + ") is " + (retryable ? "" : "not ")
-                        + "retryable but should " + (retryable ? "" : "not ")
-                        + "be: " + method.ToString());
-
-            if (paramGetter == null)
-            {
-                return;
-            }
-
-            object? preProcessResult = (preProcess == null) ? null : preProcess(this);
-
-            object? target = (getter == null) ? null : getter(this, preProcessResult);
-
-            object?[] args = paramGetter(this, preProcessResult) ?? [];
-
-            object? result = null;
             try
             {
-                // this may or may not succeed
-                result = method.Invoke(target, args);
-            }
-            catch (Exception e)
-            when (e is SystemException || e is ApplicationException || e is SzException)
-            {
-                Exception cause = (e is SzException) ? e : e.GetBaseException();
+                object[] attrs = method.GetCustomAttributes(typeof(SzConfigRetryable), false);
+                bool retryable = (attrs.Length > 0);
 
-                Fail((retryable ? "Annotated" : "Non-annotated")
-                      + " method from " + method.DeclaringType?.Name
-                      + " got an exception AFTER reinitialization: "
-                      + method.ToString(), e);
-            }
-            finally
-            {
-                if (postProcess != null)
+                if (expectRetryable == null)
                 {
-                    postProcess(this, preProcessResult, result);
+                    Fail("Method from interface (" + method.DeclaringType?.Name
+                        + ") is " + (retryable ? "" : "not ")
+                        + "annotated and has no explicit config retryable test defined: "
+                        + method.ToString());
                 }
-            }
 
-        }
-        catch (Exception e) when (!(e is AssertionException))
-        {
-            Fail("Method from " + method.DeclaringType?.Name
-                 + " failed with exception: " + method.ToString(), e);
-        }
+                Assert.That(retryable, Is.EqualTo(expectRetryable),
+                            "Method from interface (" + method.DeclaringType?.Name
+                            + ") is " + (retryable ? "" : "not ")
+                            + "retryable but should " + (retryable ? "" : "not ")
+                            + "be: " + method.ToString());
+
+                if (paramGetter == null)
+                {
+                    return;
+                }
+
+                object? preProcessResult = (preProcess == null) ? null : preProcess(this);
+
+                object? target = (getter == null) ? null : getter(this, preProcessResult);
+
+                object?[] args = paramGetter(this, preProcessResult) ?? [];
+
+                object? result = null;
+                try
+                {
+                    // this may or may not succeed
+                    result = method.Invoke(target, args);
+                }
+                catch (Exception e)
+                when (e is SystemException || e is ApplicationException || e is SzException)
+                {
+                    Exception cause = (e is SzException) ? e : e.GetBaseException();
+
+                    Fail((retryable ? "Annotated" : "Non-annotated")
+                        + " method from " + method.DeclaringType?.Name
+                        + " got an exception AFTER reinitialization: "
+                        + method.ToString(), e);
+                }
+                finally
+                {
+                    if (postProcess != null)
+                    {
+                        postProcess(this, preProcessResult, result);
+                    }
+                }
+
+            }
+            catch (Exception e) when (!(e is AssertionException))
+            {
+                Fail("Method from " + method.DeclaringType?.Name
+                    + " failed with exception: " + method.ToString(), e);
+            }
+        });
     }
 }
