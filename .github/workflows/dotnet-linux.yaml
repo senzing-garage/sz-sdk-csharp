@@ -57,6 +57,12 @@ jobs:
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
 
+      - name: debug
+        if: always()
+        run: |
+          pwd
+          ls -tlc
+
       - name: Store coverage file
         uses: actions/upload-artifact@v4
         with:
