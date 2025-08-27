@@ -36,6 +36,8 @@ Senzing.Sdk/bin/
 Senzing.Sdk/obj/
 Senzing.Sdk.Tests/bin/
 Senzing.Sdk.Tests/obj/
+Senzing.Sdk.TestHelpers/bin/
+Senzing.Sdk.TestHelpers/obj/
 Senzing.Sdk.Demo/bin/
 Senzing.Sdk.Demo/obj/
 target/
