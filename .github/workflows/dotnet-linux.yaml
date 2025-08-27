@@ -62,6 +62,8 @@ jobs:
         run: |
           pwd
           ls -tlc
+          ls -tlc /home/runner/work/sz-sdk-csharp/sz-sdk-csharp/Senzing.Sdk.TestHelpers/bin/Debug/net8.0/
+          ls -tlc /home/runner/work/sz-sdk-csharp/sz-sdk-csharp/target/logs
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
