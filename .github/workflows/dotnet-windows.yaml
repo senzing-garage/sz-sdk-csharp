@@ -64,7 +64,7 @@ jobs:
           if ( $? -eq $false ) { exit 1 }
           $Env:filter = (Get-Date -Format "yyyy-MM-dd")
           $Env:results_folder = (ls Senzing.Sdk.Tests/TestResults/ | Select-String -NotMatch $Env:filter)
-          cp Senzing.Sdk.Tests/TestResults/$results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          cp Senzing.Sdk.Tests/TestResults/$Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
