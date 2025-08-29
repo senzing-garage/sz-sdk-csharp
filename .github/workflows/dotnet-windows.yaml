@@ -62,10 +62,8 @@ jobs:
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           if ( $? -eq $false ) { exit 1 }
-          $Env:filter = (Get-Date -Format "yyyy-MM-dd")
-          echo "[INFO] date is $Env:filter"
-          Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Filter *$Env:filter* -Depth 1 -Directory
-          $Env:results_folder = (Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Filter *$Env:filter* -Depth 1 -Directory)
+          Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Filter *runneradmin* -Depth 1 -Directory
+          $Env:results_folder = (Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Filter *runneradmin* -Depth 1 -Directory)
           echo "[INFO] date is $Env:results_folder"
           cp ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/$Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
