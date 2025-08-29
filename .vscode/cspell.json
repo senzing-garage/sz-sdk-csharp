@@ -36,6 +36,7 @@
         "elete",
         "ERFRAG",
         "ERRULE",
+        "extglob",
         "FBOVR",
         "FCLASS",
         "FELEM",
@@ -75,6 +76,7 @@
         "Sepulveda",
         "SFCALL",
         "SFUNC",
+        "shopt",
         "smod",
         "SOPIN",
         "stackoverflow",
@@ -85,13 +87,13 @@
         "SZSS",
         "tpascalcase",
         "Uninitializes",
+        "UNREGISTER",
+        "UNREGISTERS",
         "unresolve",
         "USERPROFILE",
         "UTYPE",
         "WATCHLIST",
-        "XLITERATOR",
-        "UNREGISTER",
-        "UNREGISTERS"
+        "XLITERATOR"
     ],
     "ignorePaths": [
         ".git",
