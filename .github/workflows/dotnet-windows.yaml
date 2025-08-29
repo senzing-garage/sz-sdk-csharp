@@ -61,7 +61,7 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
-          if ( $? -eq $false ) { exit 1 }.
+          if ( $? -eq $false ) { exit 1 }
           filter=$(date +%F)
           results_folder=$(ls Senzing.Sdk.Tests/TestResults/ | grep -v $filter)
           cp Senzing.Sdk.Tests/TestResults/$results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
