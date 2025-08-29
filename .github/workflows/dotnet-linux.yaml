@@ -57,9 +57,11 @@ jobs:
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           ls -tlc Senzing.Sdk.Tests/TestResults/
-          echo "[INFO] cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml"
-          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
-          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml ${{ github.workspace }}
+          filter=$(date +%F)
+          results_folder=$(ls Senzing.Sdk.Tests/TestResults/ | grep -v $filter)
+          echo "[INFO] results folder is $results_folder"
+          echo "[INFO] cp Senzing.Sdk.Tests/TestResults/$results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml"
+          cp Senzing.Sdk.Tests/TestResults/$results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
