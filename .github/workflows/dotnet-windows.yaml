@@ -20,10 +20,11 @@ jobs:
       status: ${{ job.status }}
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
+        senzingsdk-version: [production-v4, staging-v4]
         include:
           - dotnet-version: "8"
-            senzingsdk-version: "staging-v4"
 
     steps:
       - name: Checkout repository
@@ -38,7 +39,7 @@ jobs:
       - name: Install Senzing SDK
         uses: senzing-factory/github-action-install-senzing-sdk@v3
         with:
-          senzingsdk-repository-path: ${{ secrets.SENZING_WIN_BETA_REPOSITORY }}
+          senzingsdk-version: ${{ matrix.senzingsdk-version }}
 
       - name: Add to "Path" environment variable
         run: |
@@ -61,13 +62,14 @@ jobs:
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           if ( $? -eq $false ) { exit 1 }
-          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
+          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml ${{ github.workspace }}
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
         with:
-          name: coverage.cobertura.xml
-          path: ${{ github.workspace }}/coverage.cobertura.xml
+          name: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          path: ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
   coverage:
     name: Coverage
