@@ -245,29 +245,17 @@ namespace Senzing.Sdk.Core
         /// construct the instance.
         /// </summary>
         ///  
-        /// <param name="instanceName">The Senzing instance name.</param>
-        /// 
-        /// <param name="settings">The Senzing core settings.</param>
-        /// 
-        /// <param name="verboseLogging">
-        /// The verbose logging setting for Senzing environment.
+        /// <param name="builder">
+        /// The <see cref="Builder"/> with which to construct.
         /// </param>
-        /// 
-        /// <param name="configID">
-        /// The explicit config ID for the Senzing environment initialization,
-        /// or <code>null</code> if using the default configuration.
-        /// </param>
-        protected SzCoreEnvironment(string instanceName,
-                                    string settings,
-                                    bool verboseLogging,
-                                    long? configID)
+        protected SzCoreEnvironment(Builder builder)
         {
             // set the fields
             this.readWriteLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
-            this.instanceName = instanceName;
-            this.settings = settings;
-            this.verboseLogging = verboseLogging;
-            this.configID = configID;
+            this.instanceName = builder.GetInstanceName();
+            this.settings = builder.GetSettings();
+            this.verboseLogging = builder.IsVerboseLogging();
+            this.configID = builder.GetConfigID();
 
             lock (ClassMonitor)
             {
@@ -1072,10 +1060,7 @@ namespace Senzing.Sdk.Core
             /// </exception>
             public SzCoreEnvironment Build()
             {
-                return new SzCoreEnvironment(this.GetInstanceName(),
-                                             this.GetSettings(),
-                                             this.IsVerboseLogging(),
-                                             this.GetConfigID());
+                return new SzCoreEnvironment(this);
             }
         }
 
