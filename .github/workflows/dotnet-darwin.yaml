@@ -58,8 +58,7 @@ jobs:
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           filter=$(date +%F)
-          shopt -s extglob
-          results_folder=$(ls Senzing.Sdk.Tests/TestResults/ -- !("$filter"))
+          results_folder=$(find Senzing.Sdk.Tests/TestResults/ ! -name "*$filter*" -type d -maxdepth 1)
           cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file

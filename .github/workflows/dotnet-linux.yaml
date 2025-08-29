@@ -58,7 +58,7 @@ jobs:
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           ls -tlc Senzing.Sdk.Tests/TestResults/
           filter=$(date +%F)
-          results_folder=$(find Senzing.Sdk.Tests/TestResults/ -type d -not -name *"$filter"*)
+          results_folder=$(find Senzing.Sdk.Tests/TestResults/ ! -name "*$filter*" -type d -maxdepth 1)
           echo "[INFO] cp Senzing.Sdk.Tests/TestResults/$results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml"
           cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
