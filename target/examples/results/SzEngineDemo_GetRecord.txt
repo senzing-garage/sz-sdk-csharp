@@ -1,0 +1,11 @@
+﻿{
+  "DATA_SOURCE": "TEST",
+  "RECORD_ID": "ABC123",
+  "JSON_DATA": {
+    "DATA_SOURCE": "TEST",
+    "RECORD_ID": "ABC123",
+    "NAME_FULL": "Joe Schmoe",
+    "PHONE_NUMBER": "702-555-1212",
+    "EMAIL_ADDRESS": "joeschmoe@nowhere.com"
+  }
+}

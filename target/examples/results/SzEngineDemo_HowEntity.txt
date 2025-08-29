@@ -1,0 +1,296 @@
+﻿{
+  "HOW_RESULTS": {
+    "RESOLUTION_STEPS": [
+      {
+        "STEP": 1,
+        "VIRTUAL_ENTITY_1": {
+          "VIRTUAL_ENTITY_ID": "V100002",
+          "MEMBER_RECORDS": [
+            {
+              "INTERNAL_ID": 100002,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "ABC123"
+                }
+              ]
+            }
+          ]
+        },
+        "VIRTUAL_ENTITY_2": {
+          "VIRTUAL_ENTITY_ID": "V100003",
+          "MEMBER_RECORDS": [
+            {
+              "INTERNAL_ID": 100003,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "XYZ987"
+                }
+              ]
+            }
+          ]
+        },
+        "INBOUND_VIRTUAL_ENTITY_ID": "V100003",
+        "RESULT_VIRTUAL_ENTITY_ID": "V100002-S1",
+        "MATCH_INFO": {
+          "MATCH_KEY": "\u002BNAME\u002BEMAIL",
+          "ERRULE_CODE": "SF1_CNAME",
+          "CANDIDATE_KEYS": {
+            "EMAIL_KEY": [
+              {
+                "FEAT_ID": 100007,
+                "FEAT_DESC": "joeschmoe@NOWHERE.COM"
+              }
+            ],
+            "NAME_KEY": [
+              {
+                "FEAT_ID": 100005,
+                "FEAT_DESC": "JSF|XM"
+              }
+            ]
+          },
+          "FEATURE_SCORES": {
+            "EMAIL": [
+              {
+                "INBOUND_FEAT_ID": 100003,
+                "INBOUND_FEAT_DESC": "joeschmoe@nowhere.com",
+                "CANDIDATE_FEAT_ID": 100003,
+                "CANDIDATE_FEAT_DESC": "joeschmoe@nowhere.com",
+                "SCORE": 100,
+                "ADDITIONAL_SCORES": {
+                  "FULL_SCORE": 100
+                },
+                "SCORE_BUCKET": "SAME",
+                "SCORE_BEHAVIOR": "F1"
+              }
+            ],
+            "NAME": [
+              {
+                "INBOUND_FEAT_ID": 100010,
+                "INBOUND_FEAT_DESC": "Joseph Schmoe",
+                "CANDIDATE_FEAT_ID": 100001,
+                "CANDIDATE_FEAT_DESC": "Joe Schmoe",
+                "SCORE": 98,
+                "ADDITIONAL_SCORES": {
+                  "GNR_FN": 98,
+                  "GNR_SN": -1,
+                  "GNR_GN": -1,
+                  "GENERATION_MATCH": -1,
+                  "GNR_ON": -1
+                },
+                "SCORE_BUCKET": "CLOSE",
+                "SCORE_BEHAVIOR": "NAME"
+              }
+            ],
+            "PHONE": [
+              {
+                "INBOUND_FEAT_ID": 100012,
+                "INBOUND_FEAT_DESC": "702-555-1313",
+                "INBOUND_FEAT_USAGE_TYPE": "WORK",
+                "CANDIDATE_FEAT_ID": 100002,
+                "CANDIDATE_FEAT_DESC": "702-555-1212",
+                "SCORE": 85,
+                "ADDITIONAL_SCORES": {
+                  "FULL_SCORE": 85
+                },
+                "SCORE_BUCKET": "LIKELY",
+                "SCORE_BEHAVIOR": "FF"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "STEP": 2,
+        "VIRTUAL_ENTITY_1": {
+          "VIRTUAL_ENTITY_ID": "V100002-S1",
+          "MEMBER_RECORDS": [
+            {
+              "INTERNAL_ID": 100002,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "ABC123"
+                }
+              ]
+            },
+            {
+              "INTERNAL_ID": 100003,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "XYZ987"
+                }
+              ]
+            }
+          ]
+        },
+        "VIRTUAL_ENTITY_2": {
+          "VIRTUAL_ENTITY_ID": "V100004",
+          "MEMBER_RECORDS": [
+            {
+              "INTERNAL_ID": 100004,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "ZYX789"
+                }
+              ]
+            }
+          ]
+        },
+        "INBOUND_VIRTUAL_ENTITY_ID": "V100002-S1",
+        "RESULT_VIRTUAL_ENTITY_ID": "V100002-S2",
+        "MATCH_INFO": {
+          "MATCH_KEY": "\u002BNAME\u002BADDRESS\u002BPHONE",
+          "ERRULE_CODE": "MFF_CNAME",
+          "CANDIDATE_KEYS": {
+            "ADDR_KEY": [
+              {
+                "FEAT_ID": 100013,
+                "FEAT_DESC": "101|MN||89101"
+              },
+              {
+                "FEAT_ID": 100014,
+                "FEAT_DESC": "101|MN||LS FKS"
+              }
+            ],
+            "NAMEADDR_KEY": [
+              {
+                "FEAT_ID": 100016,
+                "FEAT_DESC": "JSF|XM|ADDR_KEY.EXPRESSION=101|MN||LS FKS"
+              },
+              {
+                "FEAT_ID": 100017,
+                "FEAT_DESC": "JSF|XM|ADDR_KEY.EXPRESSION=101|MN||89101"
+              }
+            ],
+            "NAMEPHONE_KEY": [
+              {
+                "FEAT_ID": 100008,
+                "FEAT_DESC": "JSF|XM|PHONE.PHONE_LAST_5=51212"
+              },
+              {
+                "FEAT_ID": 100020,
+                "FEAT_DESC": "JSF|XM|PHONE.PHONE_LAST_5=51313"
+              }
+            ],
+            "NAMEREGION_KEY": [
+              {
+                "FEAT_ID": 100018,
+                "FEAT_DESC": "JSF|XM|POST=89101"
+              },
+              {
+                "FEAT_ID": 100019,
+                "FEAT_DESC": "JSF|XM|ADDRESS.CITY_STD=LS FKS"
+              }
+            ],
+            "NAME_KEY": [
+              {
+                "FEAT_ID": 100005,
+                "FEAT_DESC": "JSF|XM"
+              }
+            ],
+            "PHONE_KEY": [
+              {
+                "FEAT_ID": 100006,
+                "FEAT_DESC": "7025551212"
+              },
+              {
+                "FEAT_ID": 100015,
+                "FEAT_DESC": "7025551313"
+              }
+            ]
+          },
+          "FEATURE_SCORES": {
+            "ADDRESS": [
+              {
+                "INBOUND_FEAT_ID": 100011,
+                "INBOUND_FEAT_DESC": "101 Main St.; Las Vegas, NV 89101",
+                "CANDIDATE_FEAT_ID": 100011,
+                "CANDIDATE_FEAT_DESC": "101 Main St.; Las Vegas, NV 89101",
+                "SCORE": 100,
+                "ADDITIONAL_SCORES": {
+                  "FULL_SCORE": 100
+                },
+                "SCORE_BUCKET": "SAME",
+                "SCORE_BEHAVIOR": "FF"
+              }
+            ],
+            "NAME": [
+              {
+                "INBOUND_FEAT_ID": 100010,
+                "INBOUND_FEAT_DESC": "Joseph Schmoe",
+                "CANDIDATE_FEAT_ID": 100021,
+                "CANDIDATE_FEAT_DESC": "Joseph W Schmoe",
+                "SCORE": 92,
+                "ADDITIONAL_SCORES": {
+                  "GNR_FN": 92,
+                  "GNR_SN": -1,
+                  "GNR_GN": -1,
+                  "GENERATION_MATCH": -1,
+                  "GNR_ON": -1
+                },
+                "SCORE_BUCKET": "CLOSE",
+                "SCORE_BEHAVIOR": "NAME"
+              }
+            ],
+            "PHONE": [
+              {
+                "INBOUND_FEAT_ID": 100002,
+                "INBOUND_FEAT_DESC": "702-555-1212",
+                "CANDIDATE_FEAT_ID": 100002,
+                "CANDIDATE_FEAT_DESC": "702-555-1212",
+                "CANDIDATE_FEAT_USAGE_TYPE": "HOME",
+                "SCORE": 100,
+                "ADDITIONAL_SCORES": {
+                  "FULL_SCORE": 100
+                },
+                "SCORE_BUCKET": "SAME",
+                "SCORE_BEHAVIOR": "FF"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "FINAL_STATE": {
+      "NEED_REEVALUATION": 0,
+      "VIRTUAL_ENTITIES": [
+        {
+          "VIRTUAL_ENTITY_ID": "V100002-S2",
+          "MEMBER_RECORDS": [
+            {
+              "INTERNAL_ID": 100002,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "ABC123"
+                }
+              ]
+            },
+            {
+              "INTERNAL_ID": 100003,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "XYZ987"
+                }
+              ]
+            },
+            {
+              "INTERNAL_ID": 100004,
+              "RECORDS": [
+                {
+                  "DATA_SOURCE": "TEST",
+                  "RECORD_ID": "ZYX789"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

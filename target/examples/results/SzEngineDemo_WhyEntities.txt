@@ -1,0 +1,112 @@
+﻿{
+  "WHY_RESULTS": [
+    {
+      "ENTITY_ID": 5,
+      "ENTITY_ID_2": 8,
+      "MATCH_INFO": {
+        "WHY_KEY": "\u002BPHONE-DOB",
+        "WHY_ERRULE_CODE": "SF1",
+        "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+        "CANDIDATE_KEYS": {
+          "PHONE_KEY": [
+            {
+              "FEAT_ID": 86,
+              "FEAT_DESC": "8184442121"
+            }
+          ]
+        },
+        "FEATURE_SCORES": {
+          "ADDRESS": [
+            {
+              "INBOUND_FEAT_ID": 3,
+              "INBOUND_FEAT_DESC": "101 Main Street, Los Angeles, CA 90011",
+              "CANDIDATE_FEAT_ID": 161,
+              "CANDIDATE_FEAT_DESC": "707 Seventh Ave, Los Angeles, CA 90043",
+              "SCORE": 30,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 30
+              },
+              "SCORE_BUCKET": "NO_CHANCE",
+              "SCORE_BEHAVIOR": "FF"
+            }
+          ],
+          "DOB": [
+            {
+              "INBOUND_FEAT_ID": 81,
+              "INBOUND_FEAT_DESC": "22-AUG-1981",
+              "CANDIDATE_FEAT_ID": 160,
+              "CANDIDATE_FEAT_DESC": "27-JUN-1980",
+              "SCORE": 79,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 79
+              },
+              "SCORE_BUCKET": "NO_CHANCE",
+              "SCORE_BEHAVIOR": "FMES"
+            }
+          ],
+          "NAME": [
+            {
+              "INBOUND_FEAT_ID": 80,
+              "INBOUND_FEAT_DESC": "Bill Bandley",
+              "CANDIDATE_FEAT_ID": 159,
+              "CANDIDATE_FEAT_DESC": "Katrina Osmond",
+              "SCORE": 21,
+              "ADDITIONAL_SCORES": {
+                "GNR_FN": 21,
+                "GNR_SN": 0,
+                "GNR_GN": 7,
+                "GENERATION_MATCH": -1,
+                "GNR_ON": -1
+              },
+              "SCORE_BUCKET": "NO_CHANCE",
+              "SCORE_BEHAVIOR": "NAME"
+            }
+          ],
+          "PHONE": [
+            {
+              "INBOUND_FEAT_ID": 83,
+              "INBOUND_FEAT_DESC": "818-444-2121",
+              "INBOUND_FEAT_USAGE_TYPE": "MOBILE",
+              "CANDIDATE_FEAT_ID": 83,
+              "CANDIDATE_FEAT_DESC": "818-444-2121",
+              "CANDIDATE_FEAT_USAGE_TYPE": "MOBILE",
+              "SCORE": 100,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 100
+              },
+              "SCORE_BUCKET": "SAME",
+              "SCORE_BEHAVIOR": "F1"
+            },
+            {
+              "INBOUND_FEAT_ID": 83,
+              "INBOUND_FEAT_DESC": "818-444-2121",
+              "INBOUND_FEAT_USAGE_TYPE": "MOBILE",
+              "CANDIDATE_FEAT_ID": 162,
+              "CANDIDATE_FEAT_DESC": "818-111-2222",
+              "CANDIDATE_FEAT_USAGE_TYPE": "HOME",
+              "SCORE": 70,
+              "ADDITIONAL_SCORES": {
+                "FULL_SCORE": 70
+              },
+              "SCORE_BUCKET": "PLAUSIBLE",
+              "SCORE_BEHAVIOR": "FF"
+            }
+          ]
+        },
+        "DISCLOSED_RELATIONS": {}
+      }
+    }
+  ],
+  "ENTITIES": [
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 5
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 8
+      }
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+﻿{
+  "RESOLVED_ENTITY": {
+    "ENTITY_ID": 2,
+    "ENTITY_NAME": "Joann Smith",
+    "FEATURES": {
+      "ADDRESS": [
+        {
+          "FEAT_DESC": "101 Fifth Ave, Los Angeles, CA 90018",
+          "LIB_FEAT_ID": 22,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "101 Fifth Ave, Los Angeles, CA 90018",
+              "LIB_FEAT_ID": 22
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "400 River Street, Pasadena, CA 90034",
+          "LIB_FEAT_ID": 65,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "400 River Street, Pasadena, CA 90034",
+              "LIB_FEAT_ID": 65
+            }
+          ]
+        }
+      ],
+      "DOB": [
+        {
+          "FEAT_DESC": "15-MAR-1982",
+          "LIB_FEAT_ID": 21,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "15-MAR-1982",
+              "LIB_FEAT_ID": 21
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "17-DEC-1977",
+          "LIB_FEAT_ID": 48,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "17-DEC-1977",
+              "LIB_FEAT_ID": 48
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "23-MAY-1973",
+          "LIB_FEAT_ID": 64,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "23-MAY-1973",
+              "LIB_FEAT_ID": 64
+            }
+          ]
+        }
+      ],
+      "NAME": [
+        {
+          "FEAT_DESC": "Jane Donaldson",
+          "LIB_FEAT_ID": 63,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "Jane Donaldson",
+              "LIB_FEAT_ID": 63
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "Joann Smith",
+          "LIB_FEAT_ID": 20,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "Joann Smith",
+              "LIB_FEAT_ID": 20
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "John Parker",
+          "LIB_FEAT_ID": 47,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "John Parker",
+              "LIB_FEAT_ID": 47
+            }
+          ]
+        }
+      ],
+      "PHONE": [
+        {
+          "FEAT_DESC": "818-222-3131",
+          "LIB_FEAT_ID": 66,
+          "USAGE_TYPE": "HOME",
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "818-222-3131",
+              "LIB_FEAT_ID": 66
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "818-888-3939",
+          "LIB_FEAT_ID": 23,
+          "USAGE_TYPE": "HOME",
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "818-888-3939",
+              "LIB_FEAT_ID": 23
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "818-999-2121",
+          "LIB_FEAT_ID": 49,
+          "USAGE_TYPE": "HOME",
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "818-999-2121",
+              "LIB_FEAT_ID": 49
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "213-555-1212",
+          "LIB_FEAT_ID": 5,
+          "USAGE_TYPE": "MOBILE",
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "213-555-1212",
+              "LIB_FEAT_ID": 5
+            }
+          ]
+        },
+        {
+          "FEAT_DESC": "818-555-1313",
+          "LIB_FEAT_ID": 50,
+          "USAGE_TYPE": "MOBILE",
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "818-555-1313",
+              "LIB_FEAT_ID": 50
+            }
+          ]
+        }
+      ]
+    },
+    "RECORD_SUMMARY": [
+      {
+        "DATA_SOURCE": "PASSENGERS",
+        "RECORD_COUNT": 3
+      }
+    ],
+    "RECORDS": [
+      {
+        "DATA_SOURCE": "PASSENGERS",
+        "RECORD_ID": "DEF456",
+        "INTERNAL_ID": 2
+      },
+      {
+        "DATA_SOURCE": "PASSENGERS",
+        "RECORD_ID": "GHI789",
+        "INTERNAL_ID": 3
+      },
+      {
+        "DATA_SOURCE": "PASSENGERS",
+        "RECORD_ID": "JKL012",
+        "INTERNAL_ID": 4
+      }
+    ]
+  }
+}
