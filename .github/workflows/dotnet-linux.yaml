@@ -56,6 +56,8 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
+          ls -tlc Senzing.Sdk.Tests/TestResults/
+          echo "[INFO] cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml"
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
           cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml ${{ github.workspace }}
 
