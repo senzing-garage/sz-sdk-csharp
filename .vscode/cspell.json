@@ -53,6 +53,7 @@
         "LIBFEAT",
         "locklist",
         "netstandard",
+        "notmatch",
         "Osmond",
         "ound",
         "Parallelizable",
