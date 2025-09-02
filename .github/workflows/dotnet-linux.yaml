@@ -17,7 +17,9 @@ jobs:
       status: ${{ job.status }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
+        senzingsdk-version: [production-v4, staging-v4]
         include:
           - dotnet-version: "8"
 
@@ -35,8 +37,7 @@ jobs:
         uses: senzing-factory/github-action-install-senzing-sdk@v3
         with:
           packages-to-install: "senzingsdk-runtime senzingsdk-setup"
-          senzingsdk-repository-package: ${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_PACKAGE }}
-          senzingsdk-repository-path: ${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_URL }}
+          senzingsdk-version: ${{ matrix.senzingsdk-version }}
 
       - name: Build with DotNet
         env:
@@ -55,21 +56,28 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
-          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
+          filter=$(date +%F)
+          results_folder=$(find Senzing.Sdk.Tests/TestResults/ ! -name "*$filter*" -type d -maxdepth 1 | awk -F '/' '{print $NF}' | tr -d '\n')
+          cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
         with:
-          name: coverage.cobertura.xml
-          path: coverage.cobertura.xml
+          name: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          path: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
   coverage:
     name: Coverage
     needs: dotnet-linux
     permissions:
       pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        senzingsdk-version: [production-v4, staging-v4]
     uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
     with:
+      filename: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
       thresholds: "85 90"
 
   slack-notification:
