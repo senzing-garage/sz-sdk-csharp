@@ -65,8 +65,8 @@ jobs:
           ls ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/
           $Env:filter = (Get-Date -Format "yyyy-MM-dd")
           echo "[INFO] date is $Env:filter"
-          Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Depth 1 -Directory | Where-Object { $_.Name -notmatch "$Env:filter" }
-          $Env:results_folder = (Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Depth 1 -Directory | Where-Object { $_.Name -notmatch "$Env:filter" })
+          Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Depth 0 -Directory | Where-Object { $_.Name -notmatch "$Env:filter" }
+          $Env:results_folder = (Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Depth 0 -Directory | Where-Object { $_.Name -notmatch "$Env:filter" })
           echo "[INFO] results folder is $Env:results_folder"
           cp ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/$Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
