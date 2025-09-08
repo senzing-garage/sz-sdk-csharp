@@ -1182,8 +1182,8 @@ namespace Senzing.Sdk.Core
         /// </summary>
         public class Builder : AbstractBuilder<SzCoreEnvironment, Builder>
         {
-            /// <summary>Protected default constructor.</summary>
-            protected internal Builder() : base()
+            /// <summary>Default constructor.</summary>
+            public Builder() : base()
             {
                 // do nothing
             }

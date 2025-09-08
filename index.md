@@ -2,10 +2,9 @@
 _layout: landing
 ---
 
-# Senzing.Sdk for C #
+# Senzing.Sdk for C# #
 
-This is the Senzing SDK for C#.  After adding the `Senzing.Sdk.dll` to your
-project you can leverage the Senzing SDK via the `SzCoreEnvironment` class:
+This is the Senzing SDK for C#.  After adding the `Senzing.Sdk` NuGet package to your project dependencies (see [instructions](https://github.com/senzing-garage/sz-sdk-csharp/blob/main/README.md#Usage)) you can leverage the Senzing SDK via the `SzCoreEnvironment` class:
 
 ```c#
 using Senzing.Sdk;
@@ -36,7 +35,7 @@ try {
 }
 ```
 
-## See the "API" tab above for API reference documentation
+## See the "API" tab above for reference documentation ##
 
 - A good starting place is the `Senzing.Sdk.SzEnvironment` interface and
   its "core" implementation `Senzing.Sdk.Core.SzCoreEnvironment`.
