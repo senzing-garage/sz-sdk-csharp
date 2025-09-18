@@ -67,7 +67,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// The number of milliseconds to delay (if not notified) until checking
-        /// if we are ready to destroy.
+        /// if we are destroyed.
         /// </summary>
         private const int DestroyDelay = 5000;
 
@@ -135,10 +135,17 @@ namespace Senzing.Sdk.Core
         /// </summary>
         /// 
         /// <remarks>
+        /// <para>
         /// Keep in mind that while multiple <see cref="Builder"/> instances can
         /// exists, <b>only one active instance</b> of <c>SzCoreEnvironment</c>
         /// can exist at time.  An active instance is one that has not yet been
         /// destroyed.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>Alternatively</b>, you can directly call the
+        /// <see cref="Builder.Builder()"/> constructor.
+        /// </para>
         /// </remarks>
         /// 
         /// <returns>
@@ -177,32 +184,16 @@ namespace Senzing.Sdk.Core
                 {
                     return null;
                 }
-                Interlocked.MemoryBarrier();
-                lock (currentInstance.monitor)
+                // validate the active instance
+                if (!currentInstance.ValidateActiveInstance())
                 {
-                    State state = currentInstance.state;
-                    switch (state)
-                    {
-                        case State.Destroying:
-                            // wait until destroyed and fall through
-                            WaitUntilDestroyed(currentInstance);
-                            goto case State.Destroyed;
-                        case State.Destroyed:
-                            // if still set but destroyed, clear it and fall through
-                            currentInstance = null;
-                            goto case State.Active;
-
-                        case State.Active:
-                            // return the current instance
-                            return currentInstance;
-                        default:
-                            throw new InvalidOperationException(
-                                "Unrecognized SzCoreEnvironment state: " + state);
-                    }
+                    currentInstance = null;
                 }
+
+                // return the instance (or null)
+                return currentInstance;
             }
         }
-
 
         /// <summary>The instance name to initialize the API's with.</summary>
         private readonly string instanceName;
@@ -291,36 +282,29 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Waits until the specified <c>SzCoreEnvironment</c> instance has
-        /// been destroyed.
+        /// Waits until this instance has been destroyed.
         /// </summary>
         /// 
         /// <remarks>
-        /// Use this when obtaining an instance of <c>SzCoreEnvironment</c> in
-        /// the <see cref="State.Destroying"/> state and you want to wait until
-        /// it is fully destroyed.
+        /// This is an internal method used when this instance is in 
+        /// the <see cref="State.Destroying"/> state and you want to
+        /// wait until it is fully destroyed.
         /// </remarks>
-        /// 
-        /// <param name="environment">
-        /// The non-null <c>SzCoreEnvironment</c> instance to wait on.
-        /// </param>
-        /// 
-        /// <exception cref="System.ArgumentNullException">
-        /// If the specified parameter is <c>null</c>.
-        /// </exception>
-        private static void WaitUntilDestroyed(SzCoreEnvironment environment)
+        private void WaitUntilDestroyed()
         {
-            if (environment == null)
+            lock (this.monitor)
             {
-                throw new ArgumentNullException("The specified instance cannot be null");
-            }
-            lock (environment.monitor)
-            {
-                while (environment.state != State.Destroyed)
+                if (this.state == State.Active)
+                {
+                    throw new InvalidOperationException(
+                        "This method should never be called when in "
+                        + "the Active state");
+                }
+                while (this.state != State.Destroyed)
                 {
                     try
                     {
-                        Monitor.Wait(environment.monitor, DestroyDelay);
+                        Monitor.Wait(this.monitor, DestroyDelay);
                     }
                     catch (ThreadInterruptedException)
                     {
@@ -742,6 +726,64 @@ namespace Senzing.Sdk.Core
                 return this.state != State.Active;
             }
         }
+
+        /// <summary>
+        /// Internal method that is called by <see cref="GetActiveInstance()"/>
+        /// to validate the active instance before returning it.  
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// It is expected that if this instance is in the process of destroying
+        /// itself, then this method will <b>block</b> until the completion of the 
+        /// <see cref="Destroy()"/> method.  <c>true</c> is returned if this
+        /// instance is active and has <b>not</b> had its <see cref="Destroy()"/>
+        /// method called, otherwise <c>false</c> is returned for an instance that
+        /// was already destroyed.
+        /// </remarks>
+        /// 
+        /// <para>
+        /// This method should be overridden by derived classes that override
+        /// <see cref="Destroy()"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>IMPORTANT:</b> If this instance is in the process of being 
+        /// destroyed (e.g.: waiting for in-flight operations to complete)
+        /// then this method <b>must block</b> until destruction is complete.
+        /// </para>
+        ///
+        /// <returns>
+        /// <c>true</c> if this instance if still active, or <c>false</c>
+        /// if this instance has been destroyed.
+        /// </returns>
+        protected bool ValidateActiveInstance()
+        {
+            Interlocked.MemoryBarrier();
+            lock (this.monitor)
+            {
+                State state = currentInstance.state;
+                switch (state)
+                {
+                    case State.Destroying:
+                        // wait until destroyed and fall through
+                        this.WaitUntilDestroyed();
+                        return false;
+
+                    case State.Destroyed:
+                        // if still set but destroyed, clear it and fall through
+                        return false;
+
+                    case State.Active:
+                        // return the current instance
+                        return true;
+
+                    default:
+                        throw new InvalidOperationException(
+                            "Unrecognized SzCoreEnvironment state: " + state);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Implemented to call the underlying native method to obtain

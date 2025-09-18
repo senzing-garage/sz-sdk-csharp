@@ -19,14 +19,14 @@ namespace Senzing.Sdk.Core
         private readonly SzCoreEnvironment env;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfig"/>.
         /// </summary>
-        private NativeConfigExtern configApi = null;
+        private NativeConfig configApi = null;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfigManagerExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfigManager"/>.
         /// </summary>
-        private NativeConfigManagerExtern configMgrApi = null;
+        private NativeConfigManager configMgrApi = null;
 
         /// <summary>
         /// Internal object for instance-wide synchronized locking.
@@ -63,29 +63,29 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfig"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeConfig"/>
         /// instance.
         /// </returns>
-        internal NativeConfigExtern GetConfigApi()
+        internal NativeConfig GetConfigApi()
         {
             return this.configApi;
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfigManagerExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfigManager"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeConfigManagerExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeConfigManager"/>
         /// instance.
         /// </returns>
-        internal NativeConfigManagerExtern GetConfigManagerApi()
+        internal NativeConfigManager GetConfigManagerApi()
         {
             lock (this.monitor)
             {
@@ -156,7 +156,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_create_helper"</c> via
-        /// <see cref="NativeConfigExtern.Create(out IntPtr)"/>.
+        /// <see cref="NativeConfig.Create(out IntPtr)"/>.
         /// </summary>
         public SzConfig CreateConfig()
         {
@@ -177,7 +177,7 @@ namespace Senzing.Sdk.Core
                     this.env.HandleReturnCode(returnCode, this.configApi);
 
                     // create and return a new SzConfig
-                    return new SzCoreConfig(this.env, configDef);
+                    return new SzCoreConfig(this.env, this.configApi, configDef);
 
                 }
                 finally
@@ -194,7 +194,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_load_helper"</c> via
-        /// <see cref="NativeConfigExtern.Load(string, out IntPtr)"/>.
+        /// <see cref="NativeConfig.Load(string, out IntPtr)"/>.
         /// </summary>
         public SzConfig CreateConfig(string configDefinition)
         {
@@ -216,7 +216,7 @@ namespace Senzing.Sdk.Core
                     this.env.HandleReturnCode(returnCode, this.configApi);
 
                     // create and return a new SzConfig
-                    return new SzCoreConfig(this.env, configDef);
+                    return new SzCoreConfig(this.env, this.configApi, configDef);
 
                 }
                 finally
@@ -233,7 +233,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_getConfig_helper"</c> via
-        /// <see cref="NativeConfigManagerExtern.GetConfig(long, out string)"/>. 
+        /// <see cref="NativeConfigManager.GetConfig(long, out string)"/>. 
         /// </summary>
         public SzConfig CreateConfig(long configID)
         {
@@ -250,14 +250,14 @@ namespace Senzing.Sdk.Core
                 this.env.HandleReturnCode(returnCode, nativeApi);
 
                 // return the config handle
-                return new SzCoreConfig(this.env, configDef);
+                return new SzCoreConfig(this.env, this.configApi, configDef);
             });
         }
 
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_registerConfig_helper"</c> via
-        /// <see cref="NativeConfigManagerExtern.RegisterConfig(string, string, out long)"/>. 
+        /// <see cref="NativeConfigManager.RegisterConfig(string, string, out long)"/>. 
         /// </summary>
         public long RegisterConfig(string configDefinition, string configComment)
         {
@@ -317,7 +317,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_getDefaultConfigID_helper"</c> via
-        /// <see cref="NativeConfigManagerExtern.GetDefaultConfigID(out long)"/>. 
+        /// <see cref="NativeConfigManager.GetDefaultConfigID(out long)"/>. 
         /// </summary>
         public long GetDefaultConfigID()
         {
@@ -340,7 +340,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_replaceDefaultConfigID"</c> via
-        /// <see cref="NativeConfigManagerExtern.ReplaceDefaultConfigID(long, long)"/>. 
+        /// <see cref="NativeConfigManager.ReplaceDefaultConfigID(long, long)"/>. 
         /// </summary>
         public void ReplaceDefaultConfigID(long currentDefaultConfigID,
                                            long newDefaultConfigID)
@@ -365,7 +365,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfigMgr_setDefaultConfigID_helper"</c> via
-        /// <see cref="NativeConfigManagerExtern.SetDefaultConfigID(long)"/>. 
+        /// <see cref="NativeConfigManager.SetDefaultConfigID(long)"/>. 
         /// </summary>
         public void SetDefaultConfigID(long configID)
         {
