@@ -783,7 +783,7 @@ namespace Senzing.Sdk.Core
                 }
             }
         }
-    
+
 
         /// <summary>
         /// Implemented to call the underlying native method to obtain

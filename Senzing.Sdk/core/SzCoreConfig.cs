@@ -60,9 +60,9 @@ namespace Senzing.Sdk.Core
         /// The <c>string</c> config definition describing the configuration
         /// represented by this instance.
         /// </param>
-        public SzCoreConfig(SzCoreEnvironment   env,
-                            NativeConfig        nativeConfig,
-                            string              configDefinition)
+        public SzCoreConfig(SzCoreEnvironment env,
+                            NativeConfig nativeConfig,
+                            string configDefinition)
         {
             if (env == null)
             {
@@ -75,11 +75,11 @@ namespace Senzing.Sdk.Core
                     nameof(nativeConfig), "The NativeConfig cannot be null");
             }
             if (configDefinition == null)
-                {
-                    throw new ArgumentNullException(
-                        nameof(configDefinition),
-                        "The specified config definition cannot be null");
-                }
+            {
+                throw new ArgumentNullException(
+                    nameof(configDefinition),
+                    "The specified config definition cannot be null");
+            }
 
             // set the environment and config definition
             this.env = env;
