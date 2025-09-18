@@ -24,9 +24,9 @@ namespace Senzing.Sdk.Core
         private readonly SzCoreEnvironment env;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeEngineExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeEngine"/>.
         /// </summary>
-        private NativeEngineExtern nativeApi = null;
+        private NativeEngine nativeApi = null;
 
         /// <summary>
         /// Internal object for instance-wide synchronized locking.
@@ -82,15 +82,15 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeEngineExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeEngine"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeEngineExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeEngine"/>
         /// instance.
         /// </returns>
-        internal NativeEngineExtern GetNativeApi()
+        internal NativeEngine GetNativeApi()
         {
             return this.nativeApi;
         }
@@ -129,9 +129,9 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the <c>Sz_addRecord</c> native function
-        /// via <see cref="NativeEngineExtern.AddRecord"/> or
+        /// via <see cref="NativeEngine.AddRecord"/> or
         /// <c>Sz_addRecordWithInfo_helper</c> native function via
-        /// <see cref="NativeEngineExtern.AddRecordWithInfo(string, string, string, long, out string)"/>.
+        /// <see cref="NativeEngine.AddRecordWithInfo(string, string, string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -185,7 +185,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getRecordPreview_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetRecordPreview(string, long, out string)"/>.
+        /// <see cref="NativeEngine.GetRecordPreview(string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -212,7 +212,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_closeExport_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.CloseExportReport(IntPtr)"/>.
+        /// <see cref="NativeEngine.CloseExportReport(IntPtr)"/>.
         /// </summary>
         ///
         /// <returns>
@@ -234,7 +234,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_countRedoRecords</c> 
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.CountRedoRecords"/>.
+        /// <see cref="NativeEngine.CountRedoRecords"/>.
         /// </summary>
         ///
         /// <returns>
@@ -260,9 +260,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_deleteRecord</c> 
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.DeleteRecord(string, string)"/>
+        /// <see cref="NativeEngine.DeleteRecord(string, string)"/>
         /// or <c>Sz_deleteRecordWithInfo_helper</c> function via
-        /// <see cref="NativeEngineExtern.DeleteRecordWithInfo(string, string, long, out string)"/>. 
+        /// <see cref="NativeEngine.DeleteRecordWithInfo(string, string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -313,7 +313,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_exportCSVEntityReport_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.ExportCSVEntityReport(string, long, out IntPtr)"/>. 
+        /// <see cref="NativeEngine.ExportCSVEntityReport(string, long, out IntPtr)"/>. 
         /// </summary>
         ///
         /// <returns>
@@ -342,7 +342,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_exportJSONEntityReport_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.ExportJSONEntityReport(long, out IntPtr)"/>.
+        /// <see cref="NativeEngine.ExportJSONEntityReport(long, out IntPtr)"/>.
         /// </summary>
         ///
         /// <returns>
@@ -370,7 +370,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_fetchNext_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.FetchNext(IntPtr, out string)"/>.
+        /// <see cref="NativeEngine.FetchNext(IntPtr, out string)"/>.
         /// </summary>
         ///
         /// <returns>
@@ -538,7 +538,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_findNetworkByEntityID_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.FindNetworkByEntityID(string, int, int, int, long, out string)"/> 
+        /// <see cref="NativeEngine.FindNetworkByEntityID(string, int, int, int, long, out string)"/> 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -575,7 +575,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_findNetworkByRecordID_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.FindNetworkByRecordID(string, int, int, int, long, out string)"/>.
+        /// <see cref="NativeEngine.FindNetworkByRecordID(string, int, int, int, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -614,9 +614,9 @@ namespace Senzing.Sdk.Core
         /// <c>Sz_findPathByEntityIDWithAvoids_V2_helper</c> or
         /// <c>Sz_findPathByEntityIDIncludingSource_V2_helper</c>
         /// native helper functions via
-        /// <see cref="NativeEngineExtern.FindPathByEntityID(long, long, int, long, out string)"/>,
-        /// <see cref="NativeEngineExtern.FindPathByEntityIDWithAvoids(long, long, int, string, long, out string)"/> or
-        /// <see cref="NativeEngineExtern.FindPathByEntityIDIncludingSource(long, long, int, string, string, long, out string)"/>,
+        /// <see cref="NativeEngine.FindPathByEntityID(long, long, int, long, out string)"/>,
+        /// <see cref="NativeEngine.FindPathByEntityIDWithAvoids(long, long, int, string, long, out string)"/> or
+        /// <see cref="NativeEngine.FindPathByEntityIDIncludingSource(long, long, int, string, string, long, out string)"/>,
         /// respectively.
         /// </summary>
         ///
@@ -694,9 +694,9 @@ namespace Senzing.Sdk.Core
         /// <c>Sz_findPathByRecordIDWithAvoids_V2_helper</c> or
         /// <c>Sz_findPathByRecordIDIncludingSource_V2_helper</c>
         /// native helper function via
-        /// <see cref="NativeEngineExtern.FindPathByRecordID(string, string, string, string, int, long, out string)"/>,
-        /// <see cref="NativeEngineExtern.FindPathByRecordIDWithAvoids(string, string, string, string, int, string, long, out string)"/> or
-        /// <see cref="NativeEngineExtern.FindPathByRecordIDIncludingSource(string, string, string, string, int, string, string, long, out string)"/>,
+        /// <see cref="NativeEngine.FindPathByRecordID(string, string, string, string, int, long, out string)"/>,
+        /// <see cref="NativeEngine.FindPathByRecordIDWithAvoids(string, string, string, string, int, string, long, out string)"/> or
+        /// <see cref="NativeEngine.FindPathByRecordIDIncludingSource(string, string, string, string, int, string, string, long, out string)"/>,
         /// respectively.
         /// </summary>
         ///
@@ -790,7 +790,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getEntityByEntityID_V2_helper"</c> 
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetEntityByEntityID(long, long, out string)"/>.
+        /// <see cref="NativeEngine.GetEntityByEntityID(long, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -817,7 +817,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getEntityByEntityID_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetEntityByRecordID(string, string, long, out string)"/>. 
+        /// <see cref="NativeEngine.GetEntityByRecordID(string, string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -848,7 +848,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_findInterestingEntitiesByEntityID_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.FindInterestingEntitiesByEntityID(long, long, out string)"/>.
+        /// <see cref="NativeEngine.FindInterestingEntitiesByEntityID(long, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -876,7 +876,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_findInterestingEntitiesByRecordID_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.FindInterestingEntitiesByRecordID(string, string, long, out string)"/>. 
+        /// <see cref="NativeEngine.FindInterestingEntitiesByRecordID(string, string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -908,7 +908,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getRecord_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetRecord(string, string, long, out string)"/>. 
+        /// <see cref="NativeEngine.GetRecord(string, string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -939,7 +939,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getRedoRecord_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetRedoRecord(out string)"/>.
+        /// <see cref="NativeEngine.GetRedoRecord(out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -961,7 +961,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_stats_helper</c> 
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.Stats"/>.
+        /// <see cref="NativeEngine.Stats"/>.
         /// </summary>
         ///
         ///
@@ -977,7 +977,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_getVirtualEntityByRecordID_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.GetVirtualEntityByRecordID(string, long, out string)"/>. 
+        /// <see cref="NativeEngine.GetVirtualEntityByRecordID(string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1009,7 +1009,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_howEntityByEntityID_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.HowEntityByEntityID(long, long, out string)"/>. 
+        /// <see cref="NativeEngine.HowEntityByEntityID(long, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1036,7 +1036,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_primeEngine</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.PrimeEngine"/>.
+        /// <see cref="NativeEngine.PrimeEngine"/>.
         /// </summary>
         ///
         /// <returns>
@@ -1060,9 +1060,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_processRedoRecord</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.ProcessRedoRecord(string)"/>
+        /// <see cref="NativeEngine.ProcessRedoRecord(string)"/>
         /// or <c>Sz_processRedoRecordWithInfo_helper</c> function via
-        /// <see cref="NativeEngineExtern.ProcessRedoRecordWithInfo(string, out string)"/>.
+        /// <see cref="NativeEngine.ProcessRedoRecordWithInfo(string, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1099,9 +1099,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_reevaluateEntity</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.ReevaluateEntity(long, long)"/>
+        /// <see cref="NativeEngine.ReevaluateEntity(long, long)"/>
         /// or <c>Sz_reevaluateEntityWithInfo_helper</c> function via
-        /// <see cref="NativeEngineExtern.ReevaluateEntityWithInfo(long, long, out string)"/>.
+        /// <see cref="NativeEngine.ReevaluateEntityWithInfo(long, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1146,9 +1146,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_reevaluateRecord</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.ReevaluateRecord(string, string, long)"/>
+        /// <see cref="NativeEngine.ReevaluateRecord(string, string, long)"/>
         /// or the <c>Sz_reevaluateRecordWithInfo_helper</c> function via
-        /// <see cref="NativeEngineExtern.ReevaluateRecordWithInfo(string, string, long, out string)"/>.
+        /// <see cref="NativeEngine.ReevaluateRecordWithInfo(string, string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1205,9 +1205,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_searchByAttributes_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.SearchByAttributes(string, long, out string)"/> 
+        /// <see cref="NativeEngine.SearchByAttributes(string, long, out string)"/> 
         /// or <c>Sz_searchByAttributes_V3_helper</c> external native function via
-        /// <see cref="NativeEngineExtern.SearchByAttributes(string, string, long, out string)"/>.
+        /// <see cref="NativeEngine.SearchByAttributes(string, string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1270,9 +1270,9 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_whySearch_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.WhySearch(string, long, string, out string)"/> 
+        /// <see cref="NativeEngine.WhySearch(string, long, string, out string)"/> 
         /// or <c>Sz_whySearch_V2_helper</c> external native function via
-        /// <see cref="NativeEngineExtern.WhySearch(string, long, string, long, out string)"/>.
+        /// <see cref="NativeEngine.WhySearch(string, long, string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1302,7 +1302,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_whyEntities_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.WhyEntities(long, long, long, out string)"/>.
+        /// <see cref="NativeEngine.WhyEntities(long, long, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1331,7 +1331,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_whyRecordInEntity_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.WhyRecordInEntity(string, string, long, out string)"/>. 
+        /// <see cref="NativeEngine.WhyRecordInEntity(string, string, long, out string)"/>. 
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>
@@ -1363,7 +1363,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the <c>Sz_whyRecords_V2_helper</c>
         /// external native helper function via
-        /// <see cref="NativeEngineExtern.WhyRecords(string, string, string, string, long, out string)"/>.
+        /// <see cref="NativeEngine.WhyRecords(string, string, string, string, long, out string)"/>.
         /// </summary>
         ///
         /// <returns>Zero (0) on success and non-zero on failure.</returns>

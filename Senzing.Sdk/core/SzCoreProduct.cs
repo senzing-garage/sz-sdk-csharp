@@ -16,9 +16,9 @@ namespace Senzing.Sdk.Core
         private readonly SzCoreEnvironment env;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeProductExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeProduct"/>.
         /// </summary>
-        private NativeProductExtern nativeApi = null;
+        private NativeProduct nativeApi = null;
 
         /// <summary>
         /// Internal object for instance-wide synchronized locking.
@@ -55,15 +55,15 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeProductExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeProduct"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeProductExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeProduct"/>
         /// instance.
         /// </returns>
-        internal NativeProductExtern GetNativeApi()
+        internal NativeProduct GetNativeApi()
         {
             return this.nativeApi;
         }
@@ -102,7 +102,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the native <c>G2Product_license()</c>
-        /// function via <see cref="NativeProductExtern.GetLicense"/> 
+        /// function via <see cref="NativeProduct.GetLicense"/> 
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>
@@ -116,7 +116,7 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Implemented to call the native <c>G2Product_version()</c>
-        /// function via <see cref="NativeProductExtern.GetVersion"/>.
+        /// function via <see cref="NativeProduct.GetVersion"/>.
         /// </summary>
         /// 
         /// <seealso cref="Senzing.Sdk.SzProduct.GetLicense"/>
