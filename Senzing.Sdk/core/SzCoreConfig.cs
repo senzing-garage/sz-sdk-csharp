@@ -8,16 +8,29 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class SzCoreConfig : SzConfig
     {
+        /// <summary>
+        /// The result from the <see cref="ToString()"/> function if the
+        /// environment is already destroyed.
+        /// </summary>
+        internal const string DestroyedMessage = "*** DESTROYED ***";
 
+        /// <summary>
+        /// The prefix to use if an <see cref="SzException"/> is thrown
+        /// from <see cref="Export()"/> and <see cref="ToString()"/>
+        /// was called.
+        /// </summary>
+        internal const string FailurePrefix = "*** FAILURE: ";
+
+        // 
         /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
         /// </summary>
         private readonly SzCoreEnvironment env;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeConfig"/>.
         /// </summary>
-        private readonly NativeConfigExtern nativeApi = null;
+        private readonly NativeConfig nativeApi = null;
 
         /// <summary>
         /// The backing config definition.
@@ -25,46 +38,65 @@ namespace Senzing.Sdk.Core
         private string configDefinition;
 
         /// <summary>
-        /// Constructs with the specified <see cref="SzCoreEnvironment"/>.
+        /// Constructs with the specified <see cref="SzCoreEnvironment"/>,
+        /// <see cref="NativeConfig"/> and <c>string</c> config definition. 
         /// </summary>
         /// 
+        /// <remarks>
+        /// This constructor is called by <see cref="SzCoreConfigManager"/>
+        /// </remarks>
+        ///  
         /// <param name="env">
         /// The <see cref="SzCoreEnvironment"/> that is constructing this instance
         /// and will be used by this instance.
+        /// </param>
+        /// 
+        /// <param name="nativeConfig">
+        /// The <see cref="NativeConfig"/> instance provided by the 
+        /// <see cref="SzCoreConfigManager"/>.  
         /// </param>
         /// 
         /// <param name="configDefinition">
         /// The <c>string</c> config definition describing the configuration
         /// represented by this instance.
         /// </param>
-        public SzCoreConfig(SzCoreEnvironment env, string configDefinition)
+        public SzCoreConfig(SzCoreEnvironment   env,
+                            NativeConfig        nativeConfig,
+                            string              configDefinition)
         {
-            this.env = env;
-            if (configDefinition == null)
+            if (env == null)
             {
                 throw new ArgumentNullException(
-                    "The specified config definition cannot be null");
+                    nameof(env), "The specified environment cannot be null");
             }
+            if (nativeConfig == null)
+            {
+                throw new ArgumentNullException(
+                    nameof(nativeConfig), "The NativeConfig cannot be null");
+            }
+            if (configDefinition == null)
+                {
+                    throw new ArgumentNullException(
+                        nameof(configDefinition),
+                        "The specified config definition cannot be null");
+                }
 
             // set the environment and config definition
+            this.env = env;
             this.configDefinition = configDefinition;
-
-            // construct the native delegate
-            SzCoreConfigManager configMgr = (SzCoreConfigManager)this.env.GetConfigManager();
-
-            this.nativeApi = configMgr.GetConfigApi();
+            this.nativeApi = nativeConfig;
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeConfig"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeConfigExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeConfig"/>
         /// instance.
         /// </returns>
-        internal NativeConfigExtern GetNativeApi()
+        internal NativeConfig GetNativeApi()
         {
             return this.nativeApi;
         }
@@ -74,7 +106,7 @@ namespace Senzing.Sdk.Core
         /// </summary>
         public string Export()
         {
-            return this.configDefinition;
+            return this.env.Execute(() => this.configDefinition);
         }
 
         /// <summary>
@@ -83,13 +115,24 @@ namespace Senzing.Sdk.Core
         /// </summary>
         public override string ToString()
         {
-            return this.Export();
+            try
+            {
+                return this.Export();
+            }
+            catch (InvalidOperationException)
+            {
+                return DestroyedMessage;
+            }
+            catch (Exception e)
+            {
+                return FailurePrefix + e.Message;
+            }
         }
 
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_listDataSources_helper"</c> via 
-        /// <see cref="NativeConfigExtern.GetDataSourceRegistry(IntPtr, out string)"/>.
+        /// <see cref="NativeConfig.GetDataSourceRegistry(IntPtr, out string)"/>.
         /// </summary>
         public string GetDataSourceRegistry()
         {
@@ -129,7 +172,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_registerDataSource_helper"</c> via
-        /// <see cref="NativeConfigExtern.RegisterDataSource(IntPtr, string, out string)"/>. 
+        /// <see cref="NativeConfig.RegisterDataSource(IntPtr, string, out string)"/>. 
         /// </summary>
         public string RegisterDataSource(string dataSourceCode)
         {
@@ -182,7 +225,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzConfig_unregisterDataSource_helper"</c> via
-        /// <see cref="NativeConfigExtern.UnregisterDataSource(IntPtr, string)"/>. 
+        /// <see cref="NativeConfig.UnregisterDataSource(IntPtr, string)"/>. 
         /// </summary>
         public void UnregisterDataSource(string dataSourceCode)
         {
