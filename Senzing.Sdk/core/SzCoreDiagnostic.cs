@@ -16,9 +16,9 @@ namespace Senzing.Sdk.Core
         private readonly SzCoreEnvironment env;
 
         /// <summary>
-        /// The underlying <see cref="Senzing.Sdk.Core.NativeDiagnosticExtern"/>.
+        /// The underlying <see cref="Senzing.Sdk.Core.NativeDiagnostic"/>.
         /// </summary>
-        private NativeDiagnosticExtern nativeApi = null;
+        private NativeDiagnostic nativeApi = null;
 
         /// <summary>
         /// Internal object for instance-wide synchronized locking.
@@ -74,15 +74,15 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeDiagnosticExtern"/>
+        /// Gets the associated <see cref="Senzing.Sdk.Core.NativeDiagnostic"/>
         /// instance.
         /// </summary>
         ///
         /// <returns>
-        /// The associated <see cref="Senzing.Sdk.Core.NativeDiagnosticExtern"/>
+        /// The associated <see cref="Senzing.Sdk.Core.NativeDiagnostic"/>
         /// instance.
         /// </returns>
-        internal NativeDiagnosticExtern GetNativeApi()
+        internal NativeDiagnostic GetNativeApi()
         {
             return this.nativeApi;
         }
@@ -122,7 +122,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_getDatastoreInfo_helper"</c> via
-        /// <see cref="NativeDiagnosticExtern.GetRepositoryInfo(out string)"/>. 
+        /// <see cref="NativeDiagnostic.GetRepositoryInfo(out string)"/>. 
         /// </summary>
         public string GetRepositoryInfo()
         {
@@ -142,7 +142,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_checkDatastorePerformance_helper"</c> via
-        /// <see cref="NativeDiagnosticExtern.CheckRepositoryPerformance(int, out string)"/>.
+        /// <see cref="NativeDiagnostic.CheckRepositoryPerformance(int, out string)"/>.
         /// </summary>
         public string CheckRepositoryPerformance(int secondsToRun)
         {
@@ -163,7 +163,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_checkDatastorePerformance_helper"</c> via
-        /// <see cref="NativeDiagnosticExtern.GetFeature(long, out string)"/>.
+        /// <see cref="NativeDiagnostic.GetFeature(long, out string)"/>.
         /// </summary>
         public string GetFeature(long featureID)
         {
@@ -184,7 +184,7 @@ namespace Senzing.Sdk.Core
         /// <summary>
         /// Implemented to call the external native helper function 
         /// <c>SzDiagnostic_purgeRepository"</c> via
-        /// <see cref="NativeDiagnosticExtern.PurgeRepository"/>.
+        /// <see cref="NativeDiagnostic.PurgeRepository"/>.
         /// </summary>
         public void PurgeRepository()
         {

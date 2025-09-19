@@ -7,6 +7,8 @@ using NUnit.Framework;
 
 using Senzing.Sdk.Core;
 
+using static Senzing.Sdk.Core.SzCoreConfig;
+
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
 internal class SzCoreConfigTest : AbstractTest
@@ -136,7 +138,7 @@ internal class SzCoreConfigTest : AbstractTest
         }
     }
 
-    [Test]
+    [Test, Order(10)]
     public void TestGetNativeApi()
     {
         this.PerformTest(() =>
@@ -163,7 +165,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(20)]
     public void TestCreateConfigFromTemplate()
     {
         this.PerformTest(() =>
@@ -196,7 +198,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(30)]
     public void TestCreateConfigFromDefinition()
     {
         this.PerformTest(() =>
@@ -229,7 +231,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(40)]
     public void TestExportConfig()
     {
         this.PerformTest(() =>
@@ -279,7 +281,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(50)]
     public void TestRegisterDataSource()
     {
         this.PerformTest(() =>
@@ -344,7 +346,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(60)]
     public void TestUnregisterDataSource()
     {
         this.PerformTest(() =>
@@ -400,7 +402,7 @@ internal class SzCoreConfigTest : AbstractTest
 
     }
 
-    [Test]
+    [Test, Order(70)]
     public void TestGetDataSourceRegistry()
     {
         this.PerformTest(() =>
@@ -455,7 +457,7 @@ internal class SzCoreConfigTest : AbstractTest
         });
     }
 
-    [Test]
+    [Test, Order(80)]
     public void TestExceptionFunctions()
     {
         this.PerformTest(() =>
@@ -491,4 +493,102 @@ internal class SzCoreConfigTest : AbstractTest
             }
         });
     }
+
+
+
+    [Test, Order(10000)]
+    public void testDestroyedExportStringConfig()
+    {
+        this.PerformTest(() =>
+        {
+            try
+            {
+                SzConfigManager configMgr = this.Env.GetConfigManager();
+
+                SzConfig config = configMgr.CreateConfig();
+
+                // destroy the environment
+                this.Env.Destroy();
+                this.env = null;
+
+                // export the config
+                string? destroyedMessage = config.ToString();
+
+                Assert.That(destroyedMessage, Is.EqualTo(DestroyedMessage),
+                             "Unexpected destroyed result from toString()");
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed testDestroyedExportConfig test with exception", e);
+            }
+        });
+    }
+
+    private class MockEnvironment : SzCoreEnvironment
+    {
+        private static readonly ThreadLocal<SzException?> MockFailure
+            = new ThreadLocal<SzException?>();
+
+        public MockEnvironment(String instanceName, String settings)
+            : base(SzCoreEnvironment.NewBuilder()
+                    .Settings(settings).InstanceName(instanceName))
+        {
+            // do nothing
+        }
+
+        public static void Mock(SzException e)
+        {
+            MockFailure.Value = e;
+        }
+
+        protected internal override T DoExecute<T>(Func<T> task)
+        {
+            SzException? mockFailure = MockFailure.Value;
+            MockFailure.Value = null;
+            if (mockFailure != null)
+            {
+                throw mockFailure;
+            }
+
+            return base.DoExecute(task);
+        }
+    }
+
+    [Test, Order(10010)]
+    public void testFailedExportStringConfig()
+    {
+        this.PerformTest(() =>
+        {
+            String instanceName = this.GetInstanceName();
+            String settings = this.GetRepoSettings();
+
+            MockEnvironment mockEnv = new MockEnvironment(instanceName, settings);
+
+            try
+            {
+                SzConfigManager configMgr = mockEnv.GetConfigManager();
+
+                SzConfig config = configMgr.CreateConfig();
+
+                // export the config
+                MockEnvironment.Mock(new SzException("mock"));
+                string? failureMessage = config.ToString();
+
+                Assert.That(failureMessage, Is.EqualTo(FailurePrefix + "mock"),
+                             "Unexpected failure result from toString()");
+
+            }
+            catch (Exception e)
+            {
+                Fail("Failed testFailedExportConfig test with exception", e);
+
+            }
+            finally
+            {
+                mockEnv.Destroy();
+            }
+        });
+    }
+
 }

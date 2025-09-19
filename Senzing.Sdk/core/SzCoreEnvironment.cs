@@ -12,26 +12,37 @@ namespace Senzing.Sdk.Core
     /// that directly initializes the Senzing SDK modules and provides management
     /// of the Senzing environment in this process.
     /// </summary>
+    /// 
+    /// <example>
+    /// Usage:
+    /// <include file="../target/examples/SzProductDemo_SzEnvironment.xml" path="/*"/>
+    /// </example>
     ///
     /// <seealso cref="Senzing.Sdk.SzEnvironment"/> 
     public class SzCoreEnvironment : SzEnvironment
     {
         /// <summary>
-        ///  The default instance name to use for the Senzing initialization.
-        ///  The value is <c>"Senzing Instance"</c>.
+        /// The default instance name to use for the Senzing initialization.
+        /// The value is <c>"Senzing Instance"</c>.
         /// </summary>
+        /// 
         /// <remarks>
-        /// An explicit value can be provided via <see cref="Builder.InstanceName"/> 
-        /// during initialization.
+        /// An explicit value can be provided via the <see cref="Builder"/>'s
+        /// <see cref="AbstractBuilder{E,B}.InstanceName"><c>InstanceName</c></see>
+        /// method.
         /// </remarks>
         /// 
-        /// <seealso cref="Builder.InstanceName" />
+        /// <seealso cref="NewBuilder"/> 
+        /// <seealso cref="Builder"/> 
+        /// <seealso cref="AbstractBuilder{E,B}.InstanceName" />
         public const string DefaultInstanceName = "Senzing Instance";
 
         /// <summary>
-        /// The default "bootstrap" settings with which to initialize the
-        /// <c>SzCoreEnvironment</c> when an explicit settings value has not been
-        /// provided via <see cref="Builder.Settings(string)" />.
+        /// The default "bootstrap" settings with which to initialize
+        /// the <c>SzCoreEnvironment</c> when an explicit settings
+        /// value has not been provided via the <see cref="Builder"/>'s 
+        /// <see cref="AbstractBuilder{E,B}.Settings"><c>Settings</c></see>
+        /// method.
         /// </summary>
         /// 
         /// <remarks>
@@ -49,12 +60,14 @@ namespace Senzing.Sdk.Core
         /// </para>
         /// </remarks>
         /// 
-        /// <seealso cref="Builder.Settings" />
+        /// <seealso cref="NewBuilder"/> 
+        /// <seealso cref="Builder"/> 
+        /// <seealso cref="AbstractBuilder{E,B}.Settings" />
         public const string DefaultSettings = "{ }";
 
         /// <summary>
         /// The number of milliseconds to delay (if not notified) until checking
-        /// if we are ready to destroy.
+        /// if we are destroyed.
         /// </summary>
         private const int DestroyDelay = 5000;
 
@@ -122,10 +135,17 @@ namespace Senzing.Sdk.Core
         /// </summary>
         /// 
         /// <remarks>
+        /// <para>
         /// Keep in mind that while multiple <see cref="Builder"/> instances can
         /// exists, <b>only one active instance</b> of <c>SzCoreEnvironment</c>
         /// can exist at time.  An active instance is one that has not yet been
         /// destroyed.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>Alternatively</b>, you can directly call the
+        /// <see cref="Builder.Builder()"/> constructor.
+        /// </para>
         /// </remarks>
         /// 
         /// <returns>
@@ -164,32 +184,16 @@ namespace Senzing.Sdk.Core
                 {
                     return null;
                 }
-                Interlocked.MemoryBarrier();
-                lock (currentInstance.monitor)
+                // validate the active instance
+                if (!currentInstance.ValidateActiveInstance())
                 {
-                    State state = currentInstance.state;
-                    switch (state)
-                    {
-                        case State.Destroying:
-                            // wait until destroyed and fall through
-                            WaitUntilDestroyed(currentInstance);
-                            goto case State.Destroyed;
-                        case State.Destroyed:
-                            // if still set but destroyed, clear it and fall through
-                            currentInstance = null;
-                            goto case State.Active;
-
-                        case State.Active:
-                            // return the current instance
-                            return currentInstance;
-                        default:
-                            throw new InvalidOperationException(
-                                "Unrecognized SzCoreEnvironment state: " + state);
-                    }
+                    currentInstance = null;
                 }
+
+                // return the instance (or null)
+                return currentInstance;
             }
         }
-
 
         /// <summary>The instance name to initialize the API's with.</summary>
         private readonly string instanceName;
@@ -245,29 +249,18 @@ namespace Senzing.Sdk.Core
         /// construct the instance.
         /// </summary>
         ///  
-        /// <param name="instanceName">The Senzing instance name.</param>
-        /// 
-        /// <param name="settings">The Senzing core settings.</param>
-        /// 
-        /// <param name="verboseLogging">
-        /// The verbose logging setting for Senzing environment.
+        /// <param name="initializer">
+        /// The <see cref="Initializer"/> with which to construct.
+        /// (typically an instance of <see cref="AbstractBuilder{E, B}"/>)
         /// </param>
-        /// 
-        /// <param name="configID">
-        /// The explicit config ID for the Senzing environment initialization,
-        /// or <code>null</code> if using the default configuration.
-        /// </param>
-        protected SzCoreEnvironment(string instanceName,
-                                    string settings,
-                                    bool verboseLogging,
-                                    long? configID)
+        protected SzCoreEnvironment(Initializer initializer)
         {
             // set the fields
             this.readWriteLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
-            this.instanceName = instanceName;
-            this.settings = settings;
-            this.verboseLogging = verboseLogging;
-            this.configID = configID;
+            this.instanceName = initializer.GetInstanceName();
+            this.settings = initializer.GetSettings();
+            this.verboseLogging = initializer.IsVerboseLogging();
+            this.configID = initializer.GetConfigID();
 
             lock (ClassMonitor)
             {
@@ -289,36 +282,29 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Waits until the specified <c>SzCoreEnvironment</c> instance has
-        /// been destroyed.
+        /// Waits until this instance has been destroyed.
         /// </summary>
         /// 
         /// <remarks>
-        /// Use this when obtaining an instance of <c>SzCoreEnvironment</c> in
-        /// the <see cref="State.Destroying"/> state and you want to wait until
-        /// it is fully destroyed.
+        /// This is an internal method used when this instance is in 
+        /// the <see cref="State.Destroying"/> state and you want to
+        /// wait until it is fully destroyed.
         /// </remarks>
-        /// 
-        /// <param name="environment">
-        /// The non-null <c>SzCoreEnvironment</c> instance to wait on.
-        /// </param>
-        /// 
-        /// <exception cref="System.ArgumentNullException">
-        /// If the specified parameter is <c>null</c>.
-        /// </exception>
-        private static void WaitUntilDestroyed(SzCoreEnvironment environment)
+        private void WaitUntilDestroyed()
         {
-            if (environment == null)
+            lock (this.monitor)
             {
-                throw new ArgumentNullException("The specified instance cannot be null");
-            }
-            lock (environment.monitor)
-            {
-                while (environment.state != State.Destroyed)
+                if (this.state == State.Active)
+                {
+                    throw new InvalidOperationException(
+                        "This method should never be called when in "
+                        + "the Active state");
+                }
+                while (this.state != State.Destroyed)
                 {
                     try
                     {
-                        Monitor.Wait(environment.monitor, DestroyDelay);
+                        Monitor.Wait(this.monitor, DestroyDelay);
                     }
                     catch (ThreadInterruptedException)
                     {
@@ -742,6 +728,64 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
+        /// Internal method that is called by <see cref="GetActiveInstance()"/>
+        /// to validate the active instance before returning it.  
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// It is expected that if this instance is in the process of destroying
+        /// itself, then this method will <b>block</b> until the completion of the 
+        /// <see cref="Destroy()"/> method.  <c>true</c> is returned if this
+        /// instance is active and has <b>not</b> had its <see cref="Destroy()"/>
+        /// method called, otherwise <c>false</c> is returned for an instance that
+        /// was already destroyed.
+        /// </remarks>
+        /// 
+        /// <para>
+        /// This method should be overridden by derived classes that override
+        /// <see cref="Destroy()"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// <b>IMPORTANT:</b> If this instance is in the process of being 
+        /// destroyed (e.g.: waiting for in-flight operations to complete)
+        /// then this method <b>must block</b> until destruction is complete.
+        /// </para>
+        ///
+        /// <returns>
+        /// <c>true</c> if this instance if still active, or <c>false</c>
+        /// if this instance has been destroyed.
+        /// </returns>
+        protected bool ValidateActiveInstance()
+        {
+            Interlocked.MemoryBarrier();
+            lock (this.monitor)
+            {
+                State state = currentInstance.state;
+                switch (state)
+                {
+                    case State.Destroying:
+                        // wait until destroyed and fall through
+                        this.WaitUntilDestroyed();
+                        return false;
+
+                    case State.Destroyed:
+                        // if still set but destroyed, clear it and fall through
+                        return false;
+
+                    case State.Active:
+                        // return the current instance
+                        return true;
+
+                    default:
+                        throw new InvalidOperationException(
+                            "Unrecognized SzCoreEnvironment state: " + state);
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Implemented to call the underlying native method to obtain
         /// the active config ID.
         /// </summary>
@@ -840,9 +884,110 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// The builder class for creating an instance of <see cref="SzCoreEnvironment"/>.
+        /// Provides an interface for initializing an instance of
+        /// <see cref="SzCoreEnvironment"/>.
         /// </summary>
-        public class Builder
+        /// 
+        /// <remarks>
+        /// <para>
+        /// This interface is not needed to use <see cref="SzCoreEnvironment"/>.
+        /// It is only needed if you are extending <see cref="SzCoreEnvironment"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// This is provided for derived classes of <see cref="SzCoreEnvironment"/>
+        /// to initialize their super class and is typically implemented by
+        /// extending <see cref="AbstractBuilder{E,B}"/> in creating a derived
+        /// builder implementation.
+        /// </para>
+        /// </remarks>
+        public interface Initializer
+        {
+            /// <summary>
+            /// Gets the Senzing settings which which to initialize 
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// The Senzing settings which which to initialize the 
+            /// <see cref="SzCoreEnvironment" />.
+            /// </returns>
+            string GetSettings();
+
+            /// <summary>
+            /// Gets the Senzing instance name with which to initialize
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// The Senzing instance name with which to initialize
+            /// the <see cref="SzCoreEnvironment" />.
+            /// </returns>
+            string GetInstanceName();
+
+            /// <summary>
+            /// Checks if initializing the <see cref="SzCoreEnvironment"/>
+            /// with verbose logging.
+            /// </summary>
+            /// 
+            /// <returns>
+            /// <c>true</c> if verbose logging will be enabled, otherwise
+            /// <c>false</c>.
+            /// </returns>
+            bool IsVerboseLogging();
+
+            /// <summary>
+            /// Gets the explicit configuration ID (if any) with which to 
+            /// initialize the <see cref="SzCoreEnvironment"/>.
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This returns <c>null</c> if no explicit configuration ID has
+            /// been provided and the default configuration ID from the
+            /// Senzing repository should be used.
+            /// </remarks>
+            /// 
+            /// <returns>
+            /// The explicit configuration ID with which to initialize the 
+            /// <see cref="SzCoreEnvironment"/>, or <c>null</c> if no explicit 
+            /// configuration ID has been provided and the the default
+            /// configuration ID from the Senzing repository should be used.
+            /// </returns>
+            long? GetConfigID();
+        }
+
+        /// <summary>
+        /// Provides a base class for builder implementations of
+        /// <see cref="SzCoreEnvironment"/> and its derived classes.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// <para>
+        /// This interface is not needed to use <see cref="SzCoreEnvironment"/>.
+        /// It is only needed if you are extending <see cref="SzCoreEnvironment"/>.
+        /// </para>
+        /// 
+        /// <para>
+        /// This allows the derived builder to return references to its own 
+        /// environment class and to its own builder class rather than
+        /// base classes.  When extending <see cref="SzCoreEnvironment"/> you 
+        /// should provide an implementation of this class that is specific to
+        /// your derived class.
+        /// </para>
+        /// </remarks>
+        /// 
+        /// <typeparam name="E">
+        /// The <see cref="SzCoreEnvironment"/>-derived class build by
+        /// instances of this class.
+        /// </typeparam>
+        /// 
+        /// <typeparam name="B">
+        /// The <see cref="AbstractBuilder{E,B}"/>-derived class of the
+        /// implementation.
+        /// </typeparam>
+        public abstract class AbstractBuilder<E, B> : Initializer
+            where E : SzCoreEnvironment
+            where B : AbstractBuilder<E, B>
         {
             /// <summary>
             /// The settings for the builder which default to
@@ -873,7 +1018,7 @@ namespace Senzing.Sdk.Core
             private long? configID = null;
 
             /// <summary>Protected default constructor.</summary>
-            protected internal Builder()
+            protected internal AbstractBuilder()
             {
                 this.settings = DefaultSettings;
                 this.instanceName = DefaultInstanceName;
@@ -900,7 +1045,7 @@ namespace Senzing.Sdk.Core
             /// <returns>A reference to this instance.</returns>
             /// 
             /// <seealso cref="SzCoreEnvironment.DefaultSettings" />
-            public Builder Settings(string settings)
+            public B Settings(string settings)
             {
                 if (settings != null && settings.Trim().Length == 0)
                 {
@@ -908,7 +1053,7 @@ namespace Senzing.Sdk.Core
                 }
                 this.settings = (settings == null)
                     ? DefaultSettings : settings.Trim();
-                return this;
+                return ((B)this);
             }
 
             /// <summary>
@@ -943,7 +1088,7 @@ namespace Senzing.Sdk.Core
             /// <returns>A reference to this instance</returns>
             /// 
             /// <seealso cref="SzCoreEnvironment.DefaultInstanceName"/>
-            public Builder InstanceName(string instanceName)
+            public B InstanceName(string instanceName)
             {
                 if (instanceName != null && instanceName.Trim().Length == 0)
                 {
@@ -951,7 +1096,7 @@ namespace Senzing.Sdk.Core
                 }
                 this.instanceName = (instanceName == null)
                     ? DefaultInstanceName : instanceName.Trim();
-                return this;
+                return ((B)this);
             }
 
             /// <summary>
@@ -984,10 +1129,10 @@ namespace Senzing.Sdk.Core
             /// </param>
             /// 
             /// <returns>A reference to this instance</returns>
-            public Builder VerboseLogging(bool verboseLogging)
+            public B VerboseLogging(bool verboseLogging)
             {
                 this.verboseLogging = verboseLogging;
-                return this;
+                return ((B)this);
             }
 
             /// <summary>
@@ -1021,10 +1166,10 @@ namespace Senzing.Sdk.Core
             /// </param>
             /// 
             /// <returns>A reference to this instance.</returns>
-            public Builder ConfigID(long? configID)
+            public B ConfigID(long? configID)
             {
                 this.configID = configID;
-                return this;
+                return ((B)this);
             }
 
             /// <summary>
@@ -1050,8 +1195,44 @@ namespace Senzing.Sdk.Core
             }
 
             /// <summary>
-            /// This method creates a new <see cref="SzCoreEnvironment"/> instance
-            /// based on this <c>Builder</c> instance.
+            /// Creates a new <see cref="SzCoreEnvironment"/> instance of
+            /// type <c>E</c> based on this builder instance.
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This method will throw an <see cref="InvalidOperationException"/>
+            /// if another active <see cref="SzCoreEnvironment"/> instance exists
+            /// since only one active instance can exist within a process at any
+            /// given time.  An active instance is one that has been constructed,
+            /// but has not yet been destroyed.
+            /// </remarks>
+            /// 
+            /// <returns>
+            /// The newly created <see cref="SzCoreEnvironment"/> instance of
+            /// type <c>E</c>.
+            /// </returns>
+            /// 
+            /// <exception cref="InvalidOperationException">
+            /// If another active <see cref="SzCoreEnvironment"/> instance exists
+            /// when this method is invoked.
+            /// </exception>
+            public abstract E Build();
+        }
+
+        /// <summary>
+        /// The builder class for creating an instance of <see cref="SzCoreEnvironment"/>.
+        /// </summary>
+        public class Builder : AbstractBuilder<SzCoreEnvironment, Builder>
+        {
+            /// <summary>Default constructor.</summary>
+            public Builder() : base()
+            {
+                // do nothing
+            }
+
+            /// <summary>
+            /// Creates a new <see cref="SzCoreEnvironment"/> instance based
+            /// this <c>Builder</c> instance.
             /// </summary>
             /// 
             /// <remarks>
@@ -1070,12 +1251,9 @@ namespace Senzing.Sdk.Core
             /// If another active <see cref="SzCoreEnvironment"/> instance exists when
             /// this method is invoked.
             /// </exception>
-            public SzCoreEnvironment Build()
+            public override SzCoreEnvironment Build()
             {
-                return new SzCoreEnvironment(this.GetInstanceName(),
-                                             this.GetSettings(),
-                                             this.IsVerboseLogging(),
-                                             this.GetConfigID());
+                return new SzCoreEnvironment(this);
             }
         }
 

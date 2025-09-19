@@ -16,10 +16,11 @@ jobs:
       status: ${{ job.status }}
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
+        senzingsdk-version: [production-v4, staging-v4]
         include:
           - dotnet-version: "8"
-            senzingsdk-version: "staging-v4"
 
     steps:
       - name: checkout repository
@@ -27,14 +28,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: install Senzing SDK
         uses: senzing-factory/github-action-install-senzing-sdk@v3
         with:
-          senzingsdk-repository-path: ${{ secrets.SENZING_OSX_BETA_REPOSITORY }}
+          senzingsdk-version: ${{ matrix.senzingsdk-version }}
 
       - name: configure environment
         run: |
@@ -56,21 +57,28 @@ jobs:
         run: |
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
-          cp Senzing.Sdk.Tests/TestResults/*/coverage.cobertura.xml ${{ github.workspace }}
+          filter=$(date +%F)
+          results_folder=$(find Senzing.Sdk.Tests/TestResults/ ! -name "*$filter*" -type d -maxdepth 1 | awk -F '/' '{print $NF}' | tr -d '\n')
+          cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v4
         with:
-          name: coverage.cobertura.xml
-          path: ${{ github.workspace }}/coverage.cobertura.xml
+          name: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          path: ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
   coverage:
     name: Coverage
     needs: dotnet-darwin
     permissions:
       pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        senzingsdk-version: [production-v4, staging-v4]
     uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
     with:
+      filename: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
       thresholds: "85 90"
 
   slack-notification:
