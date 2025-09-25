@@ -11,13 +11,14 @@ on:
     - cron: "15 7 * * *"
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   dotnet-windows:
     outputs:
       status: ${{ job.status }}
+    permissions:
+      contents: read
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -30,7 +31,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-dotnet@v5
         with:
