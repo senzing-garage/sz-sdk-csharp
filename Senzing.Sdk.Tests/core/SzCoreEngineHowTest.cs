@@ -207,7 +207,8 @@ internal class SzCoreEngineHowTest : AbstractTest
                 ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
-            };
+            }
+            ;
 
         }
         finally
@@ -659,7 +660,8 @@ internal class SzCoreEngineHowTest : AbstractTest
                     string primaryValue = feature?["FEAT_DESC"]?.GetValue<string>() ?? "";
                     valueSet.Add(primaryValue);
                 }
-            };
+            }
+            ;
 
             // verify the feature counts
             if (expectedFeatureCounts != null)
@@ -959,7 +961,8 @@ internal class SzCoreEngineHowTest : AbstractTest
                     Assert.IsNull(details, "The MATCH_KEY_DETAILS are present, despite "
                         + "flags: " + testData + ", matchInfo=[ " + matchInfo + " ]");
                 }
-            };
+            }
+            ;
         }
         JsonObject? finalState = how?["FINAL_STATE"]?.AsObject();
         Assert.IsNotNull(finalState, "The FINAL_STATE property is missing: "
