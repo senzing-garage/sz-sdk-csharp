@@ -81,7 +81,7 @@ jobs:
       fail-fast: false
       matrix:
         senzingsdk-version: [production-v4, staging-v4]
-    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v2
+    uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v3
     with:
       filename: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
       thresholds: "85 90"
@@ -91,6 +91,6 @@ jobs:
     if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.dotnet-windows.outputs.status ) && github.event_name == 'schedule' }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-    uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v2
+    uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v3
     with:
       job-status: ${{ needs.dotnet-windows.outputs.status }}
