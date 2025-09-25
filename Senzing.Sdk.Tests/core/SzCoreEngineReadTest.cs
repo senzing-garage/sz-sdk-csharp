@@ -263,7 +263,8 @@ internal class SzCoreEngineReadTest : AbstractTest
                 ISet<(string dataSourceCode, string recordID)> recordKeySet
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
-            };
+            }
+            ;
 
         }
         finally
