@@ -162,31 +162,33 @@ namespace Senzing.Sdk.Core
         {
             return this.env.Execute(() =>
             {
+                NativeConfig nativeApi = this.GetConfigApi();
+
                 // call the underlying C function
-                long returnCode = this.configApi.Create(out IntPtr configHandle);
+                long returnCode = nativeApi.Create(out IntPtr configHandle);
 
                 // handle any error code if there is one
-                this.env.HandleReturnCode(returnCode, this.configApi);
+                this.env.HandleReturnCode(returnCode, nativeApi);
 
                 try
                 {
                     // export the config definition
-                    returnCode = this.configApi.Export(configHandle, out string configDef);
+                    returnCode = nativeApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
-                    this.env.HandleReturnCode(returnCode, this.configApi);
+                    this.env.HandleReturnCode(returnCode, nativeApi);
 
                     // create and return a new SzConfig
-                    return new SzCoreConfig(this.env, this.configApi, configDef);
+                    return new SzCoreConfig(this.env, nativeApi, configDef);
 
                 }
                 finally
                 {
                     // close the config handle
-                    returnCode = this.configApi.Close(configHandle);
+                    returnCode = nativeApi.Close(configHandle);
 
                     // handle any error code if there is one
-                    this.env.HandleReturnCode(returnCode, this.configApi);
+                    this.env.HandleReturnCode(returnCode, nativeApi);
                 }
             });
         }
@@ -200,32 +202,34 @@ namespace Senzing.Sdk.Core
         {
             return this.env.Execute(() =>
             {
+                NativeConfig nativeApi = this.GetConfigApi();
+
                 // call the underlying C function
-                long returnCode = this.configApi.Load(configDefinition,
-                                                      out IntPtr configHandle);
+                long returnCode = nativeApi.Load(configDefinition,
+                                                 out IntPtr configHandle);
 
                 // handle any error code if there is one
-                this.env.HandleReturnCode(returnCode, this.configApi);
+                this.env.HandleReturnCode(returnCode, nativeApi);
 
                 try
                 {
                     // export the config definition
-                    returnCode = this.configApi.Export(configHandle, out string configDef);
+                    returnCode = nativeApi.Export(configHandle, out string configDef);
 
                     // handle any error code if there is one
-                    this.env.HandleReturnCode(returnCode, this.configApi);
+                    this.env.HandleReturnCode(returnCode, nativeApi);
 
                     // create and return a new SzConfig
-                    return new SzCoreConfig(this.env, this.configApi, configDef);
+                    return new SzCoreConfig(this.env, nativeApi, configDef);
 
                 }
                 finally
                 {
                     // close the config handle
-                    returnCode = this.configApi.Close(configHandle);
+                    returnCode = nativeApi.Close(configHandle);
 
                     // handle any error code if there is one
-                    this.env.HandleReturnCode(returnCode, this.configApi);
+                    this.env.HandleReturnCode(returnCode, nativeApi);
                 }
             });
         }
@@ -250,7 +254,7 @@ namespace Senzing.Sdk.Core
                 this.env.HandleReturnCode(returnCode, nativeApi);
 
                 // return the config handle
-                return new SzCoreConfig(this.env, this.configApi, configDef);
+                return new SzCoreConfig(this.env, this.GetConfigApi(), configDef);
             });
         }
 

@@ -1665,7 +1665,9 @@ namespace Senzing.Sdk
         /// </para>
         /// 
         /// <para>
-        /// <b>WARNING:</b> Use with large repositories is <b>not</b> advised.
+        /// <b>WARNING:</b> This method should only be used on systems containing
+        /// less than a few million records.  For larger systems, see 
+        /// <see cref="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
         /// </para>
         /// 
         /// <para>
@@ -1723,7 +1725,9 @@ namespace Senzing.Sdk
         /// </para>
         /// 
         /// <para>
-        /// <b>WARNING:</b> Use with large repositories is <b>not</b> advised.
+        /// <b>WARNING:</b> This method should only be used on systems containing
+        /// less than a few million records.  For larger systems, see 
+        /// <see cref="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
         /// </para>
         /// 
         /// <para>

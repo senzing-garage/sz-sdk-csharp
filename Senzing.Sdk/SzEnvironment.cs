@@ -27,7 +27,7 @@ namespace Senzing.Sdk
         /// The <see cref="SzProduct" /> instance associated with this <c>SzEnvironment</c>
         /// </returns>
         /// 
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been
         /// <see cref="Destroy">destroyed</see>.
         /// </exception>
@@ -53,7 +53,7 @@ namespace Senzing.Sdk
         /// this <c>SzEnvironment</c>.
         /// </returns>
         ///
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been destroyed.
         /// </exception>
         /// 
@@ -78,7 +78,7 @@ namespace Senzing.Sdk
         /// this <c>SzEnvironment</c>.
         /// </returns>
         ///
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been destroyed.
         /// </exception>
         /// 
@@ -103,7 +103,7 @@ namespace Senzing.Sdk
         /// this <c>SzEnvironment</c>.
         /// </returns>
         ///
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been destroyed.
         /// </exception>
         /// 
@@ -124,7 +124,7 @@ namespace Senzing.Sdk
         /// 
         /// <returns>The currently active configuration ID.</returns>
         ///
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been destroyed.
         /// </exception>
         /// 
@@ -147,7 +147,7 @@ namespace Senzing.Sdk
         /// The configuration ID with which to initialize.
         /// </param>
         /// 
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzEnvironment</c> instance has been destroyed.
         /// </exception>
         /// 

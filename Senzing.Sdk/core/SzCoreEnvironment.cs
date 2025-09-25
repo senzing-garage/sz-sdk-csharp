@@ -104,7 +104,7 @@ namespace Senzing.Sdk.Core
             /// 
             /// <remarks>
             /// In this state, the <c>SzCoreEnvironment</c> will fast-fail any newly
-            /// attempted operations with an <see cref="System.InvalidOperationException" />,
+            /// attempted operations with an <see cref="SzEnvironmentDestroyedException"/>,
             /// but will complete those Senzing operations that were initiated before
             /// <see cref="Destroy"/> was called.
             /// </remarks>
@@ -407,7 +407,7 @@ namespace Senzing.Sdk.Core
         /// If the specified task triggers a failure.
         /// </exception>
         /// 
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this <c>SzCoreEnvironment</c> instance has already been destroyed.
         /// </exception>
         protected internal virtual T Execute<T>(Func<T> task)
@@ -421,7 +421,7 @@ namespace Senzing.Sdk.Core
                 {
                     if (this.state != State.Active)
                     {
-                        throw new InvalidOperationException(
+                        throw new SzEnvironmentDestroyedException(
                             "SzEnvironment has been destroyed");
                     }
 
@@ -499,10 +499,10 @@ namespace Senzing.Sdk.Core
 
         /// <summary>
         /// Ensures this instance is still active and if not will throw 
-        /// an <see cref="InvalidOperationException"/>.
+        /// an <see cref="SzEnvironmentDestroyedException"/>.
         /// </summary>
         ///
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="SzEnvironmentDestroyedException">
         /// If this instance is not active.
         /// </exception>
         internal void EnsureActive()
@@ -511,7 +511,7 @@ namespace Senzing.Sdk.Core
             {
                 if (this.state != State.Active)
                 {
-                    throw new InvalidOperationException(
+                    throw new SzEnvironmentDestroyedException(
                         "The SzCoreEnvironment instance has already been destroyed.");
                 }
             }
