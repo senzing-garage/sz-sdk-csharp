@@ -134,7 +134,8 @@ namespace Senzing.Sdk
                     default:
                         delta = (c < ' ') ? JsonEscapeControlCount : 0;
                         break;
-                };
+                }
+
                 escapeCount += delta;
             }
             if (escapeCount == 0)
