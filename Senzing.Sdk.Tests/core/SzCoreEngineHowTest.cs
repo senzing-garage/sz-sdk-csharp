@@ -208,8 +208,6 @@ internal class SzCoreEngineHowTest : AbstractTest
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             }
-            ;
-
         }
         finally
         {
@@ -661,7 +659,6 @@ internal class SzCoreEngineHowTest : AbstractTest
                     valueSet.Add(primaryValue);
                 }
             }
-            ;
 
             // verify the feature counts
             if (expectedFeatureCounts != null)
@@ -962,7 +959,6 @@ internal class SzCoreEngineHowTest : AbstractTest
                         + "flags: " + testData + ", matchInfo=[ " + matchInfo + " ]");
                 }
             }
-            ;
         }
         JsonObject? finalState = how?["FINAL_STATE"]?.AsObject();
         Assert.IsNotNull(finalState, "The FINAL_STATE property is missing: "

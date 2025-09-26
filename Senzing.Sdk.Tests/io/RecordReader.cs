@@ -1007,7 +1007,6 @@ public class RecordReader
                     {
                         return null;
                     }
-                    ;
                     this.lineNumber++;
                     line = line.Trim();
                     if (line.Length == 0) continue;

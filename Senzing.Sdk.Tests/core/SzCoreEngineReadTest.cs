@@ -264,7 +264,6 @@ internal class SzCoreEngineReadTest : AbstractTest
                     = LoadedEntityMap[entityID];
                 recordKeySet.Add(key);
             }
-            ;
 
         }
         finally
