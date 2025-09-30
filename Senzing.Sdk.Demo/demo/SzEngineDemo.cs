@@ -2197,49 +2197,43 @@ internal class SzEngineDemo : AbstractTest
                 // get the engine
                 SzEngine engine = env.GetEngine();
 
-                // get the redo count
-                long redoCount = engine.CountRedoRecords();
-
-                // check if we have redo records
-                if (redoCount > 0L)
+                // loop through any redo records
+                for (string redoRecord = engine.GetRedoRecord();
+                     redoRecord != null;
+                     redoRecord = engine.GetRedoRecord())
                 {
-                    // get the next redo record
-                    string redoRecord = engine.GetRedoRecord();
-
-                    // loop while we still have redo records
-                    while (redoRecord != null)
+                    try
                     {
-                        try
-                        {
-                            // process the redo record
-                            string info = engine.ProcessRedoRecord(redoRecord, SzWithInfo);
+                        // process the redo record
+                        string info = engine.ProcessRedoRecord(redoRecord, SzWithInfo);
 
-                            // do something with the "info JSON" (varies by application)
-                            JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
-                            if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
+                        // do something with the "info JSON" (varies by application)
+                        JsonObject? jsonObject = JsonNode.Parse(info)?.AsObject();
+                        if (jsonObject != null && jsonObject.ContainsKey("AFFECTED_ENTITIES"))
+                        {
+                            JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
+                            for (int index = 0; affectedArr != null && index < affectedArr.Count; index++)
                             {
-                                JsonArray? affectedArr = jsonObject["AFFECTED_ENTITIES"]?.AsArray();
-                                for (int index = 0; affectedArr != null && index < affectedArr.Count; index++)
-                                {
-                                    JsonObject? affected = affectedArr[index]?.AsObject();
-                                    long affectedID = affected?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
+                                JsonObject? affected = affectedArr[index]?.AsObject();
+                                long affectedID = affected?["ENTITY_ID"]?.GetValue<long>() ?? 0L;
 
-                                    Assert.That(affectedID > 0L); // @replace . . .
-                                }
+                                Assert.That(affectedID > 0L); // @replace . . .
                             }
-
-                        }
-                        catch (SzException e)
-                        {
-                            // handle or rethrow the other exceptions
-                            LogError("Failed to process redo record: " + redoRecord, e);
                         }
 
-                        // get the next redo record
-                        redoRecord = engine.GetRedoRecord();
+                    }
+                    catch (SzException e)
+                    {
+                        // handle or rethrow the other exceptions
+                        LogError("Failed to process redo record: " + redoRecord, e);
                     }
                 }
 
+                // get the redo count
+                long redoCount = engine.CountRedoRecords();
+
+                // do something with the redo count
+                Log("Pending Redos: " + redoCount);
             }
             catch (SzException e)
             {
