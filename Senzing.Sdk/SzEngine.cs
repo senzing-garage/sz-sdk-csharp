@@ -1667,7 +1667,7 @@ namespace Senzing.Sdk
         /// <para>
         /// <b>WARNING:</b> This method should only be used on systems containing
         /// less than a few million records.  For larger systems, see 
-        /// <see cref="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
+        /// <see href="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
         /// </para>
         /// 
         /// <para>
@@ -1727,7 +1727,7 @@ namespace Senzing.Sdk
         /// <para>
         /// <b>WARNING:</b> This method should only be used on systems containing
         /// less than a few million records.  For larger systems, see 
-        /// <see cref="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
+        /// <see href="https://www.senzing.com/docs/tutorials/advanced_replication/"/>.
         /// </para>
         /// 
         /// <para>
@@ -2001,8 +2001,16 @@ namespace Senzing.Sdk
         /// </summary>
         ///
         /// <remarks>
+        /// <para>
+        /// <b>WARNING:</b> When there is a large number of redo records, this
+        /// is an expensive call.  Hint: If processing redo records, use result
+        /// of <see cref="GetRedoRecord"/> to manage looping.
+        /// </para>
+        /// 
+        /// <para>
         /// This method is used in conjunction with <see cref="GetRedoRecord"/>
-        /// and <see cref="ProcessRedoRecord"/>. 
+        /// and <see cref="ProcessRedoRecord"/>.
+        /// </para>
         /// </remarks>
         /// 
         /// <example>
