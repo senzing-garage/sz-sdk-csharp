@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface SzConfig | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface SzConfig | Senzing.Sdk ">
+      
+      <meta name="description" content="Defines the C# interface that encapsulates and represents a Senzing configuration and provides functions to operate on that configuration.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_SzConfig.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzConfig%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzConfig">
+
+
+
+  <h1 id="Senzing_Sdk_SzConfig" data-uid="Senzing.Sdk.SzConfig" class="text-break">
+Interface SzConfig  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the C# interface that encapsulates and represents a
+Senzing configuration and provides functions to operate on that
+configuration.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface SzConfig</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Senzing_Sdk_SzConfig_examples">Examples</h2>
+  <p>Create from template configuration:</p>
+<pre><code class="lang-csharp">// How to create an SzConfig instance representing the template configuration
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // create the config from the template
+    SzConfig config = configMgr.CreateConfig();
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to create new SzConfig from the template.", e);
+}</code></pre>
+
+  <p>Create from configuration definition:</p>
+<pre><code class="lang-csharp">// How to create an SzConfig instance representing a specified config definition
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // obtain a JSON config definition (varies by application)
+    string configDefinition = ReadConfigFile();
+
+    // create the config using the config definition
+    SzConfig config = configMgr.CreateConfig(configDefinition);
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to create a new SzConfig from a definition.", e);
+}</code></pre>
+
+  <p>Create from registered configuration ID:</p>
+<pre><code class="lang-csharp">// How to get a config definition by its configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get a valid configuration ID (will vary by application)
+    long configID = configMgr.GetDefaultConfigID();
+
+    // get the config definition for the config ID
+    SzConfig config = configMgr.CreateConfig(configID);
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to Create SzConfig from config ID.", e);
+}</code></pre>
+
+
+  <h2 id="Senzing_Sdk_SzConfig_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+The Senzing config functions provide means to create, manipulate and
+export Senzing JSON configurations.
+</p>
+<p>
+An <code>SzConfig</code> instance is typically obtained from an 
+<a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a> instance via one of the following methods:
+<ul><li><a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_CreateConfig">CreateConfig()</a></li><li><a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_CreateConfig_System_String_">CreateConfig(string)</a> </li><li><a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_CreateConfig_System_Int64_">CreateConfig(long)</a> </li></ul>
+
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzConfig_Export_" data-uid="Senzing.Sdk.SzConfig.Export*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfig_Export" data-uid="Senzing.Sdk.SzConfig.Export">
+  Export()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the definition for this configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Export()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The configuration definition formatted as a JSON object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_Export_examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to export config JSON from a config handle
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get an SzConfig object (varies by application)
+    SzConfig config = configMgr.CreateConfig();
+
+    // export the config
+    string configDefinition = config.Export();
+    demoResult = configDefinition; // @replace
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to export configuration.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b><br>
+The example result is rather large, but can be viewed
+<a target="_blank" href="../examples/results/SzConfigDemo_ExportConfig.txt">here</a>
+(formatted for readability).</p>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_Export_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> Typically, an implementations <code>ToString()</code> function
+will be implemented to return the result from this function.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfig_GetDataSourceRegistry_" data-uid="Senzing.Sdk.SzConfig.GetDataSourceRegistry*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfig_GetDataSourceRegistry" data-uid="Senzing.Sdk.SzConfig.GetDataSourceRegistry">
+  GetDataSourceRegistry()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the data source registry for this configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetDataSourceRegistry()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source registry describing the data sources for this
+configuration formatted as a JSON object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_GetDataSourceRegistry_examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to get the data source registry from an in-memory config
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get an SzConfig object (varies by application)
+    SzConfig config = configMgr.CreateConfig();
+
+    // get the data sources
+    string registry = config.GetDataSourceRegistry();
+    demoResult = registry; // @replace
+    // do something with the returned JSON (e.g.: parse it and extract values)
+    JsonObject? jsonObj = JsonNode.Parse(registry)?.AsObject();
+
+    JsonArray? jsonArr = jsonObj?["DATA_SOURCES"]?.AsArray();
+
+    // iterate over the data sources
+    if (jsonArr != null)
+    {
+        for (int index = 0; index &lt; jsonArr.Count; index++)
+        {
+
+            JsonObject? sourceObj = jsonArr[index]?.AsObject();
+
+            string? dataSourceCode = sourceObj?["DSRC_CODE"]?.GetValue&lt;string&gt;();
+
+            . . .
+        }
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get data sources.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "DATA_SOURCES": [
+    {
+      "DSRC_ID": 1,
+      "DSRC_CODE": "TEST"
+    },
+    {
+      "DSRC_ID": 2,
+      "DSRC_CODE": "SEARCH"
+    }
+  ]
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzConfig_RegisterDataSource_" data-uid="Senzing.Sdk.SzConfig.RegisterDataSource*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfig_RegisterDataSource_System_String_" data-uid="Senzing.Sdk.SzConfig.RegisterDataSource(System.String)">
+  RegisterDataSource(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a data source to this configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string RegisterDataSource(string dataSourceCode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code for the new data source.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the data source was registered.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_RegisterDataSource_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to register data sources with an in-memory config
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get an SzConfig object (varies by application)
+    SzConfig config = configMgr.CreateConfig();
+
+    // add data sources to the config
+    config.RegisterDataSource("CUSTOMERS");
+    config.RegisterDataSource("EMPLOYEES");
+    config.RegisterDataSource("WATCHLIST");
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to add data sources.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "DSRC_ID": 1003
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_RegisterDataSource_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>
+Because <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> is an in-memory representation, the repository
+is not changed unless the configuration is <a class="xref" href="Senzing.Sdk.SzConfig.html#Senzing_Sdk_SzConfig_Export">exported</a> and then <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String_">registered</a> via <a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a>.
+</p>
+<p>
+An exception is thrown if the data source already exists in the configuration.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfig_UnregisterDataSource_" data-uid="Senzing.Sdk.SzConfig.UnregisterDataSource*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfig_UnregisterDataSource_System_String_" data-uid="Senzing.Sdk.SzConfig.UnregisterDataSource(System.String)">
+  UnregisterDataSource(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a data source from this configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UnregisterDataSource(string dataSourceCode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>dataSourceCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data source code that identifies the data source to delete from
+the configuration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_UnregisterDataSource_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to unregister a data source from an in-memory config
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get an SzConfig object (varies by application)
+    SzConfig config = configMgr.CreateConfig();
+
+    // delete the data source from the config
+    config.UnregisterDataSource("CUSTOMERS");
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to delete data source.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfig_UnregisterDataSource_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>
+Because <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> is an in-memory representation, the repository
+is not changed unless the configuration is <a class="xref" href="Senzing.Sdk.SzConfig.html#Senzing_Sdk_SzConfig_Export">exported</a> and then <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String_">registered</a> via <a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a>.
+</p>
+<p>
+<b>NOTE:</b> This method is idempotent in that it succeeds with no changes
+being made when specifying a data source code that is not found in the registry.
+</p>
+<p>
+<b>WARNING:</b> If records in the repository refer to the unregistered data 
+source, the configuration cannot be used as the active configuration.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfig.cs/#L48" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

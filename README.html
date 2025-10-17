@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>sz-sdk-csharp | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="sz-sdk-csharp | Senzing.Sdk ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sz-sdk-csharp">sz-sdk-csharp</h1>
+
+<p>If you are beginning your journey with <a href="https://senzing.com/">Senzing</a>,
+please start with <a href="https://docs.senzing.com/quickstart/">Senzing Quick Start guides</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>The Senzing C# SDK provides the C# interface to the native Senzing SDK's.
+This repository is dependent on the Senzing native shared library (<code>.so</code>,
+<code>.dylib</code> or <code>.dll</code>) that is part of the Senzing product and function without it.</p>
+<p>While this SDK is being made available as open source, the actual Senzing.Sdk
+NuGet package file (<code>Senzing.Sdk.4.0.0.nupkg</code>) that you use should be
+obtained from Senzing product installation to ensure that the C# code version
+matches the native library version.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ol>
+<li><p>Microsoft .NET for your platform: <a href="https://dotnet.microsoft.com/en-us/download">https://dotnet.microsoft.com/en-us/download</a></p>
+</li>
+<li><p>Senzing v4.0 or later (for running unit tests)</p>
+</li>
+<li><p>Set the <code>SENZING_PATH</code> environment variable:</p>
+<ul>
+<li>Linux: <code>export SENZING_PATH=/opt/senzing</code></li>
+<li>macOS: <code>export SENZING_PATH=$HOME/senzing</code></li>
+<li>Windows: <code>set SENZING_PATH=%USERPROFILE%\senzing</code></li>
+</ul>
+</li>
+<li><p>Set your library path appropriately for Senzing libraries:</p>
+<ul>
+<li><p>Linux: Set the <code>LD_LIBRARY_PATH</code>:</p>
+<pre><code class="lang-console">export LD_LIBRARY_PATH=/opt/senzing/er/lib:$LD_LIBRARY_PATH
+</code></pre>
+</li>
+<li><p>macOS: Set <code>DYLD_LIBRARY_PATH</code>:</p>
+<pre><code class="lang-console">export DYLD_LIBRARY_PATH=/Library/Senzing/er/lib:/Library/Senzing/er/lib/macos:$DYLD_LIBRARY_PATH
+</code></pre>
+</li>
+<li><p>Windows: Set <code>Path</code>:</p>
+<pre><code class="lang-console">set Path=C:\Senzing\er\lib;%Path%
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="building">Building</h3>
+<ol>
+<li><p>Generating the Example Documentation Snippets</p>
+<pre><code class="lang-console">dotnet test Senzing.Sdk.Demo -p:GeneratePackageOnBuild=false
+</code></pre>
+<p>Alternatively, via <code>Makefile</code>:</p>
+<pre><code class="lang-console">gmake demo
+</code></pre>
+</li>
+<li><p>Building with Debug:</p>
+<pre><code class="lang-console">dotnet build Senzing.Sdk -p:GenerateDocumentationFile=true
+</code></pre>
+<p><strong>NOTE:</strong> This will produce warnings if you have <strong>NOT</strong> generated the
+example documentation snippets.</p>
+<p>Alternatively, via <code>Makefile</code> it will always generate the documentation
+example snippets first:</p>
+<pre><code class="lang-console">gmake debug
+</code></pre>
+<p>The DLL will be found in <code>Senzing.Sdk/bin/Debug/netstandard2.0/Senzing.Sdk.dll</code>
+The NuGet package will be found in <code>Senzing.Sdk/bin/Debug/Senzing.Sdk.4.0.0.nupkg</code></p>
+</li>
+<li><p>Building with Release:</p>
+<pre><code class="lang-console">dotnet build -c Release Senzing.Sdk -p:GenerateDocumentationFile=true
+</code></pre>
+<p>Alternatively, via <code>Makefile</code> it will always generate the documentation
+example snippets first:</p>
+<pre><code class="lang-console">gmake release
+</code></pre>
+<p><strong>NOTE:</strong> This will produce warnings if you have <strong>NOT</strong> generated the
+example documentation snippets.</p>
+<p>The DLL will be found in <code>Senzing.Sdk/bin/Release/netstandard2.0/Senzing.Sdk.dll</code>
+The NuGet package will be found in <code>Senzing.Sdk/bin/Release/Senzing.Sdk.4.0.0.nupkg</code></p>
+</li>
+<li><p>Running unit tests:</p>
+<pre><code class="lang-console">dotnet test Senzing.Sdk.Tests
+</code></pre>
+<p>Alternatively, via <code>Makefile</code>:</p>
+<pre><code class="lang-console">gmake release
+</code></pre>
+</li>
+<li><p>Verifying the code formatting:</p>
+<pre><code class="lang-console">dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk
+dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Tests
+dotnet format --verify-no-changes --verbosity diagnostic Senzing.Sdk.Demo
+</code></pre>
+<p>Alternative, via <code>Makefile</code>:</p>
+<pre><code class="lang-console">gmake format
+</code></pre>
+<p>Or for each module individually:</p>
+<pre><code class="lang-console">gmake format-sdk
+gmake format-test
+gmake format-demo
+</code></pre>
+</li>
+<li><p>Generate documentation:</p>
+<pre><code class="lang-console">dotnet docfx docfx.json
+</code></pre>
+<p>Alternatively, via <code>Makefile</code>:</p>
+<pre><code class="lang-console">gmake docs
+</code></pre>
+<p>The generated documentation will reside in <code>target/apidocs/_site/</code></p>
+</li>
+<li><p>Clean up build artifacts:</p>
+<pre><code class="lang-console">dotnet clean Senzing.Sdk
+dotnet clean -c Release Senzing.Sdk
+dotnet clean Senzing.Sdk.Tests
+dotnet clean Senzing.Sdk.Demo
+rm -rf Senzing.Sdk/bin
+rm -rf Senzing.Sdk/obj
+rm -rf Senzing.Sdk.Tests/bin
+rm -rf Senzing.Sdk.Tests/obj
+rm -rf Senzing.Sdk.Demo/bin
+rm -rf Senzing.Sdk.Demo/obj
+rm -rf target
+</code></pre>
+<p>Alternative, via <code>Makefile</code>:</p>
+<pre><code class="lang-console">gmake clean
+</code></pre>
+</li>
+</ol>
+<h3 id="usage">Usage</h3>
+<ol>
+<li><p>Create and configure a local NuGet repository:</p>
+<pre><code class="lang-console">mkdir [path]
+dotnet nuget add source [path] -n [local-source-name]
+</code></pre>
+<ul>
+<li><p>Example (macOS / Linux):</p>
+<pre><code class="lang-console">mkdir -p ~/dev/nuget/packages
+dotnet nuget add source ~/dev/nuget/packages -n dev
+</code></pre>
+</li>
+<li><p>Example (Windows):</p>
+<pre><code class="lang-console">mkdir %USERPROFILE%\dev\nuget\packages
+dotnet nuget add source %USERPROFILE%\dev\nuget\packages -n dev
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Push the <code>Senzing.Sdk</code> NuGet package from your Senzing distribution to your local repository:</p>
+<pre><code class="lang-console">dotnet nuget push [path-to-Senzing.Sdk.4.0.0.nupkg] --source [local-source-name]
+</code></pre>
+<ul>
+<li><p>Example (macOS / Linux):</p>
+<pre><code class="lang-console">dotnet nuget push /opt/senzing/er/sdk/dotnet/Senzing.Sdk.4.0.0.nupkg --source dev
+</code></pre>
+</li>
+<li><p>Example (Windows):</p>
+<pre><code class="lang-console">dotnet nuget push %USERPROFILE%\Senzing\er\sdk\dotnet\Senzing.Sdk.4.0.0.nupkg --source dev
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Add the <code>Senzing.Sdk</code> NuGet package as a dependency to your project:</p>
+<ul>
+<li><p><strong>OPTION 1:</strong> Add the latest pre-release version of Senzing.Sdk as your dependency:</p>
+<pre><code class="lang-console">dotnet add [your-project-name] package Senzing.Sdk --prerelease
+</code></pre>
+</li>
+<li><p><strong>OPTION 2:</strong> Add a specific version of Senzing.Sdk as your dependency:</p>
+<pre><code class="lang-console">dotnet add [your-project-name] package Senzing.Sdk --version 4.0.0
+</code></pre>
+</li>
+<li><p><strong>OPTION 3:</strong> Add the latest production version of Senzing.Sdk as your dependency
+<em>(note: this will only function once Senzing.Sdk v4.0.0 is released)</em>:</p>
+<pre><code class="lang-console">dotnet add [your-project-name] package Senzing.Sdk
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="using-example-code">Using Example Code</h2>
+<p>Senzing encourages and allows you to freely copy the provided example code and modify it to your own
+needs as you see fit.  However, please refer to the <a href="https://github.com/Senzing/code-snippets-v4/blob/main/csharp/GlobalSuppressions.md">Global Suppression Notes</a> to understand how to
+best adapt the example code to your own coding project.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

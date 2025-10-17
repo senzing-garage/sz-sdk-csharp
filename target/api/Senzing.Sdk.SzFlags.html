@@ -1,0 +1,2798 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SzFlags | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SzFlags | Senzing.Sdk ">
+      
+      <meta name="description" content="Provides aggregate  constants as well as extension methods and utility methods pertaining to  and .">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_SzFlags.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzFlags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzFlags">
+
+
+
+  <h1 id="Senzing_Sdk_SzFlags" data-uid="Senzing.Sdk.SzFlags" class="text-break">
+Class SzFlags  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Provides aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> constants as well as
+extension methods and utility methods pertaining to
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> and <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class SzFlags</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SzFlags</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzAddRecordAllFlags" data-uid="Senzing.Sdk.SzFlags.SzAddRecordAllFlags">
+  SzAddRecordAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzAddRecordFlags">SzAddRecordFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzAddRecordAllFlags = SzWithInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzAddRecordFlags">SzAddRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzAddRecordDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzAddRecordDefaultFlags">
+  SzAddRecordDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;add record&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzAddRecordDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzAddRecordDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzAddRecordFlags">SzAddRecordFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzDeleteRecordAllFlags" data-uid="Senzing.Sdk.SzFlags.SzDeleteRecordAllFlags">
+  SzDeleteRecordAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzDeleteRecordFlags">SzDeleteRecordFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzDeleteRecordAllFlags = SzWithInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzDeleteRecordFlags">SzDeleteRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzDeleteRecordDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzDeleteRecordDefaultFlags">
+  SzDeleteRecordDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1267"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;delete record&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzDeleteRecordDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzDeleteRecordDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzDeleteRecordFlags">SzDeleteRecordFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzEntityAllFlags" data-uid="Senzing.Sdk.SzFlags.SzEntityAllFlags">
+  SzEntityAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzEntityAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzEntityBriefDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzEntityBriefDefaultFlags">
+  SzEntityBriefDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L811"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to produce the default level of
+detail when retrieving entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzEntityBriefDefaultFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRelatedMatchingInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzEntityBriefDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityIncludeAllRelations">SzEntityIncludeAllRelations</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordMatchingInfo">SzEntityIncludeRecordMatchingInfo</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRelatedMatchingInfo">SzEntityIncludeRelatedMatchingInfo</a></li></ul>
+<p>
+All the flags in this constant belong to the 
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> usage group, and by extension 
+belong to the following usage groups which are super sets:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzEntityCoreFlags" data-uid="Senzing.Sdk.SzFlags.SzEntityCoreFlags">
+  SzEntityCoreFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L688"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to produce basic entity output without
+any related entity data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzEntityCoreFlags = SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzEntityCoreFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This constant may be used directly but is primarily used as a basis for
+other aggregate constants.</p>
+<p>
+The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRepresentativeFeatures">SzEntityIncludeRepresentativeFeatures</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeEntityName">SzEntityIncludeEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordSummary">SzEntityIncludeRecordSummary</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordData">SzEntityIncludeRecordData</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordMatchingInfo">SzEntityIncludeRecordMatchingInfo</a></li></ul>
+
+<p>
+All the flags in this constant belong to the 
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> usage group, and by extension 
+belong to the following usage groups which are super sets:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzEntityDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzEntityDefaultFlags">
+  SzEntityDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L754"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to produce the default level of
+detail when retrieving entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzEntityDefaultFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzEntityDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityCoreFlags">SzEntityCoreFlags</a></li><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityIncludeAllRelations">SzEntityIncludeAllRelations</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRepresentativeFeatures">SzEntityIncludeRepresentativeFeatures</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRelatedEntityName">SzEntityIncludeRelatedEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRelatedRecordSummary">SzEntityIncludeRelatedRecordSummary</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRelatedMatchingInfo">SzEntityIncludeRelatedMatchingInfo</a></li></ul>
+<p>
+All the flags in this constant belong to the 
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> usage group, and by extension 
+belong to the following usage groups which are super sets:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzEntityIncludeAllRelations" data-uid="Senzing.Sdk.SzFlags.SzEntityIncludeAllRelations">
+  SzEntityIncludeAllRelations
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L535"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> for including all relations for entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzEntityIncludeAllRelations = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzEntityIncludeAllRelations_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludePossiblySameRelations">SzEntityIncludePossiblySameRelations</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludePossiblyRelatedRelations">SzEntityIncludePossiblyRelatedRelations</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeNameOnlyRelations">SzEntityIncludeNameOnlyRelations</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeDisclosedRelations">SzEntityIncludeDisclosedRelations</a></li></ul>
+<p>
+All the flags in this constant belong to the 
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a> usage group, and by extension 
+belong to the following usage groups which are super sets:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzExportAllFlags" data-uid="Senzing.Sdk.SzFlags.SzExportAllFlags">
+  SzExportAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L345"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzExportAllFlags = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzExportIncludeDisclosed | SzExportIncludeSingleRecordEntities | SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzExportDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzExportDefaultFlags">
+  SzExportDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L840"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for exporting entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzExportDefaultFlags = SzExportIncludeMultiRecordEntities | SzExportIncludeSingleRecordEntities | SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzExportDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzExportIncludeAllEntities">SzExportIncludeAllEntities</a></li><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityDefaultFlags">SzEntityDefaultFlags</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzExportIncludeAllEntities" data-uid="Senzing.Sdk.SzFlags.SzExportIncludeAllEntities">
+  SzExportIncludeAllEntities
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L443"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> for export functionality to indicate
+that all entities should be included in an export.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzExportIncludeAllEntities = SzExportIncludeMultiRecordEntities | SzExportIncludeSingleRecordEntities</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzExportIncludeAllEntities_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludeMultiRecordEntities">SzExportIncludeMultiRecordEntities</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludeSingleRecordEntities">SzExportIncludeSingleRecordEntities</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzExportIncludeAllHavingRelationships" data-uid="Senzing.Sdk.SzFlags.SzExportIncludeAllHavingRelationships">
+  SzExportIncludeAllHavingRelationships
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L477"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> for export functionality to indicate that
+entities having relationships of any kind should be included in an export.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzExportIncludeAllHavingRelationships = SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzExportIncludeDisclosed</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzExportIncludeAllHavingRelationships_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludePossiblySame">SzExportIncludePossiblySame</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludePossiblyRelated">SzExportIncludePossiblyRelated</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludeNameOnly">SzExportIncludeNameOnly</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludeDisclosed">SzExportIncludeDisclosed</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindInterestingEntitiesAllFlags" data-uid="Senzing.Sdk.SzFlags.SzFindInterestingEntitiesAllFlags">
+  SzFindInterestingEntitiesAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L301"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindInterestingEntitiesFlags">SzFindInterestingEntitiesFlags</a> usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindInterestingEntitiesAllFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindInterestingEntitiesFlags">SzFindInterestingEntitiesFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindInterestingEntitiesDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzFindInterestingEntitiesDefaultFlags">
+  SzFindInterestingEntitiesDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1346"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;find interesting entities&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindInterestingEntitiesDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzFindInterestingEntitiesDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindInterestingEntitiesFlags">SzFindInterestingEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindNetworkAllFlags" data-uid="Senzing.Sdk.SzFlags.SzFindNetworkAllFlags">
+  SzFindNetworkAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindNetworkAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzFindNetworkIncludeMatchingInfo | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzFindNetworkDefaultFlags">
+  SzFindNetworkDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L902"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for finding entity networks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindNetworkDefaultFlags = SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzFindNetworkIncludeMatchingInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzFindNetworkDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzFindNetworkIncludeMatchingInfo">SzFindNetworkIncludeMatchingInfo</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeEntityName">SzEntityIncludeEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordSummary">SzEntityIncludeRecordSummary</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindPathAllFlags" data-uid="Senzing.Sdk.SzFlags.SzFindPathAllFlags">
+  SzFindPathAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L279"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindPathAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzFindPathStrictAvoid | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzFindPathIncludeMatchingInfo | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzFindPathDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzFindPathDefaultFlags">
+  SzFindPathDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L870"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for finding entity paths.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzFindPathDefaultFlags = SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzFindPathIncludeMatchingInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzFindPathDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzFindPathIncludeMatchingInfo">SzFindPathIncludeMatchingInfo</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeEntityName">SzEntityIncludeEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordSummary">SzEntityIncludeRecordSummary</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzHowAllFlags" data-uid="Senzing.Sdk.SzFlags.SzHowAllFlags">
+  SzHowAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L391"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzHowAllFlags = SzIncludeFeatureScores | SzIncludeMatchKeyDetails</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzHowEntityDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzHowEntityDefaultFlags">
+  SzHowEntityDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L998"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for &quot;how entity&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzHowEntityDefaultFlags = SzIncludeFeatureScores</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzHowEntityDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzHowFlags">SzHowFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzNoFlagUsageGroups" data-uid="Senzing.Sdk.SzFlags.SzNoFlagUsageGroups">
+  SzNoFlagUsageGroups
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value representing no <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>
+values (i.e.: zero typed as the enum).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlagUsageGroup SzNoFlagUsageGroups = (SzFlagUsageGroup)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzNoFlags" data-uid="Senzing.Sdk.SzFlags.SzNoFlags">
+  SzNoFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value representing no flags are being passed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzNoFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzNoFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Alternatively, a <code>null</code> value will indicate
+no flags as well.</p>
+</div>
+
+
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRecordAllFlags" data-uid="Senzing.Sdk.SzFlags.SzRecordAllFlags">
+  SzRecordAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRecordAllFlags = SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeInternalFeatures | SzEntityIncludeRecordUnmappedData | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRecordDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzRecordDefaultFlags">
+  SzRecordDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L625"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to produce the default level
+of detail when retrieving records.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRecordDefaultFlags = SzEntityIncludeRecordJsonData</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzRecordDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordJsonData">SzEntityIncludeRecordJsonData</a></li></ul>
+<p>
+All the flags in this constant belong to the 
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a> usage group, and by extension 
+belong to the following usage groups which are super sets:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordFlags">SzRecordFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzEntityFlags">SzEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzExportFlags">SzExportFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindPathFlags">SzFindPathFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzFindNetworkFlags">SzFindNetworkFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRecordPreviewAllFlags" data-uid="Senzing.Sdk.SzFlags.SzRecordPreviewAllFlags">
+  SzRecordPreviewAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordPreviewFlags">SzRecordPreviewFlags</a> usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRecordPreviewAllFlags = SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeInternalFeatures | SzEntityIncludeRecordUnmappedData | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordPreviewFlags">SzRecordPreviewFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRecordPreviewDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzRecordPreviewDefaultFlags">
+  SzRecordPreviewDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+<a class="xref" href="Senzing.Sdk.SzEngine.html#Senzing_Sdk_SzEngine_GetRecordPreview_System_String_System_Nullable_Senzing_Sdk_SzFlag__">record preview</a>
+operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRecordPreviewDefaultFlags = SzEntityIncludeRecordFeatureDetails</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzRecordPreviewDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordFeatureDetails">SzEntityIncludeRecordFeatureDetails</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRecordPreviewFlags">SzRecordPreviewFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRedoAllFlags" data-uid="Senzing.Sdk.SzFlags.SzRedoAllFlags">
+  SzRedoAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRedoFlags">SzRedoFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRedoAllFlags = SzWithInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzDeleteRecordFlags">SzDeleteRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzRedoDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzRedoDefaultFlags">
+  SzRedoDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1364"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;process redo&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzRedoDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzRedoDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzRedoFlags">SzRedoFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzReevaluateEntityAllFlags" data-uid="Senzing.Sdk.SzFlags.SzReevaluateEntityAllFlags">
+  SzReevaluateEntityAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateEntityFlags">SzReevaluateEntityFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzReevaluateEntityAllFlags = SzWithInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateEntityFlags">SzReevaluateEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzReevaluateEntityDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzReevaluateEntityDefaultFlags">
+  SzReevaluateEntityDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1328"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;reevaluate entity&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzReevaluateEntityDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzReevaluateEntityDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateEntityFlags">SzReevaluateEntityFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzReevaluateRecordAllFlags" data-uid="Senzing.Sdk.SzFlags.SzReevaluateRecordAllFlags">
+  SzReevaluateRecordAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateRecordFlags">SzReevaluateRecordFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzReevaluateRecordAllFlags = SzWithInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateRecordFlags">SzReevaluateRecordFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzReevaluateRecordDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzReevaluateRecordDefaultFlags">
+  SzReevaluateRecordDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1310"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;reevaluate record&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzReevaluateRecordDefaultFlags = (SzFlag)0</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzReevaluateRecordDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Currently, this is equivalent to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlags">SzNoFlags</a>.</p>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzReevaluateRecordFlags">SzReevaluateRecordFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchAllFlags" data-uid="Senzing.Sdk.SzFlags.SzSearchAllFlags">
+  SzSearchAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchAllFlags = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzIncludeFeatureScores | SzSearchIncludeStats | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzSearchIncludeAllCandidates | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzSearchIncludeRequest | SzSearchIncludeRequestDetails | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchByAttributesAll" data-uid="Senzing.Sdk.SzFlags.SzSearchByAttributesAll">
+  SzSearchByAttributesAll
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1060"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> indicating that search results
+should include all matching entities regardless of match level.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchByAttributesAll = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzIncludeFeatureScores | SzSearchIncludeStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchByAttributesAll_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchIncludeAllEntities">SzSearchIncludeAllEntities</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeStats">SzSearchIncludeStats</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRepresentativeFeatures">SzEntityIncludeRepresentativeFeatures</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeEntityName">SzEntityIncludeEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordSummary">SzEntityIncludeRecordSummary</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzSearchByAttributesDefaultFlags">
+  SzSearchByAttributesDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1199"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;search by attribute&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchByAttributesDefaultFlags = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzIncludeFeatureScores | SzSearchIncludeStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchByAttributesDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchByAttributesAll">SzSearchByAttributesAll</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalAll" data-uid="Senzing.Sdk.SzFlags.SzSearchByAttributesMinimalAll">
+  SzSearchByAttributesMinimalAll
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> indicating that search results
+should include all matching entities regardless of match level
+while returning minimal data for those entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchByAttributesMinimalAll = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly | SzSearchIncludeStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalAll_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzSearchIncludeAllEntities">SzSearchIncludeAllEntities</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeStats">SzSearchIncludeStats</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalStrong" data-uid="Senzing.Sdk.SzFlags.SzSearchByAttributesMinimalStrong">
+  SzSearchByAttributesMinimalStrong
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> indicating that search results
+should only include strongly matching entities while returning
+minimal data for those matching entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchByAttributesMinimalStrong = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzSearchIncludeStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchByAttributesMinimalStrong_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeResolved">SzSearchIncludeResolved</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeStats">SzSearchIncludeStats</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchByAttributesStrong" data-uid="Senzing.Sdk.SzFlags.SzSearchByAttributesStrong">
+  SzSearchByAttributesStrong
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> indicating that search results
+should only include strongly matching entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchByAttributesStrong = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzIncludeFeatureScores | SzSearchIncludeStats</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchByAttributesStrong_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeResolved">SzSearchIncludeResolved</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeStats">SzSearchIncludeStats</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRepresentativeFeatures">SzEntityIncludeRepresentativeFeatures</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeEntityName">SzEntityIncludeEntityName</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzEntityIncludeRecordSummary">SzEntityIncludeRecordSummary</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzSearchIncludeAllEntities" data-uid="Senzing.Sdk.SzFlags.SzSearchIncludeAllEntities">
+  SzSearchIncludeAllEntities
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L572"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> for search functionality to indicate that
+search results should include entities that are related to the search
+attributes at any match level.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzSearchIncludeAllEntities = SzExportIncludeMultiRecordEntities | SzExportIncludePossiblySame | SzExportIncludePossiblyRelated | SzExportIncludeNameOnly</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzSearchIncludeAllEntities_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeResolved">SzSearchIncludeResolved</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblyRelated">SzSearchIncludePossiblyRelated</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeNameOnly">SzSearchIncludeNameOnly</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzSearchFlags">SzSearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzVirtualEntityAllFlags" data-uid="Senzing.Sdk.SzFlags.SzVirtualEntityAllFlags">
+  SzVirtualEntityAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L401"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzVirtualEntityFlags">SzVirtualEntityFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzVirtualEntityAllFlags = SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzEntityIncludeRecordTypes | SzEntityIncludeRecordUnmappedData | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzVirtualEntityFlags">SzVirtualEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzVirtualEntityDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzVirtualEntityDefaultFlags">
+  SzVirtualEntityDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1022"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+when retrieving virtual entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzVirtualEntityDefaultFlags = SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzVirtualEntityDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li>All flags from <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzEntityCoreFlags">SzEntityCoreFlags</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzVirtualEntityFlags">SzVirtualEntityFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyEntitiesAllFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyEntitiesAllFlags">
+  SzWhyEntitiesAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L381"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyEntitiesAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzIncludeFeatureScores | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyEntitiesDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyEntitiesDefaultFlags">
+  SzWhyEntitiesDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L928"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings for
+&quot;why entity&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyEntitiesDefaultFlags = SzIncludeFeatureScores</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzWhyEntitiesDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyEntitiesFlags">SzWhyEntitiesFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyRecordInEntityAllFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyRecordInEntityAllFlags">
+  SzWhyRecordInEntityAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L361"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyRecordInEntityAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzIncludeFeatureScores | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyRecordInEntityDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyRecordInEntityDefaultFlags">
+  SzWhyRecordInEntityDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L974"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for &quot;why record in entity&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyRecordInEntityDefaultFlags = SzIncludeFeatureScores</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzWhyRecordInEntityDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyRecordsAllFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyRecordsAllFlags">
+  SzWhyRecordsAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L371"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyRecordsAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzIncludeFeatureScores | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordInEntityFlags">SzWhyRecordInEntityFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhyRecordsDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzWhyRecordsDefaultFlags">
+  SzWhyRecordsDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L951"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default settings
+for &quot;why records&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhyRecordsDefaultFlags = SzIncludeFeatureScores</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzWhyRecordsDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhyRecordsFlags">SzWhyRecordsFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhySearchAllFlags" data-uid="Senzing.Sdk.SzFlags.SzWhySearchAllFlags">
+  SzWhySearchAllFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L331"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value that aggregates all <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+constants belonging to the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhySearchFlags">SzWhySearchFlags</a>
+usage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhySearchAllFlags = SzEntityIncludePossiblySameRelations | SzEntityIncludePossiblyRelatedRelations | SzEntityIncludeNameOnlyRelations | SzEntityIncludeDisclosedRelations | SzEntityIncludeAllFeatures | SzEntityIncludeRepresentativeFeatures | SzEntityIncludeEntityName | SzEntityIncludeRecordSummary | SzEntityIncludeRecordData | SzEntityIncludeRecordMatchingInfo | SzEntityIncludeRecordJsonData | SzEntityIncludeRecordFeatures | SzEntityIncludeRelatedEntityName | SzEntityIncludeRelatedMatchingInfo | SzEntityIncludeRelatedRecordSummary | SzEntityIncludeRelatedRecordData | SzEntityIncludeInternalFeatures | SzEntityIncludeFeatureStats | SzIncludeFeatureScores | SzSearchIncludeStats | SzEntityIncludeRecordTypes | SzEntityIncludeRelatedRecordTypes | SzEntityIncludeRecordUnmappedData | SzIncludeMatchKeyDetails | SzEntityIncludeRecordFeatureDetails | SzEntityIncludeRecordFeatureStats | SzSearchIncludeRequest | SzSearchIncludeRequestDetails | SzEntityIncludeRecordDates</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhySearchFlags">SzWhySearchFlags</a></div>
+    </dd>
+  </dl>
+
+
+
+  <h3 id="Senzing_Sdk_SzFlags_SzWhySearchDefaultFlags" data-uid="Senzing.Sdk.SzFlags.SzWhySearchDefaultFlags">
+  SzWhySearchDefaultFlags
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1228"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> representing the default flags for
+&quot;why search&quot; operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const SzFlag SzWhySearchDefaultFlags = SzIncludeFeatureScores | SzSearchIncludeStats | SzSearchIncludeRequestDetails</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_SzWhySearchDefaultFlags_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The included <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values are:</p>
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzIncludeFeatureScores">SzIncludeFeatureScores</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeRequestDetails">SzSearchIncludeRequestDetails</a></li><li><a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludeStats">SzSearchIncludeStats</a></li></ul>
+<p>
+All the flags in this constant belong to the following usage groups:
+<ul><li><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html#Senzing_Sdk_SzFlagUsageGroup_SzWhySearchFlags">SzWhySearchFlags</a></li></ul>
+
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://docs.senzing.com/flags/index.html">https://docs.senzing.com/flags/index.html</a></span></div>
+    </dd>
+  </dl>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzFlags_FlagsToLong_" data-uid="Senzing.Sdk.SzFlags.FlagsToLong*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_FlagsToLong_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzFlags.FlagsToLong(System.Nullable{Senzing.Sdk.SzFlag})">
+  FlagsToLong(SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1859"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts a nullable <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to a non-null
+<code>long</code> value representation of the flag with all the
+appropriate bits set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static long FlagsToLong(SzFlag? flags)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>flags</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Senzing_Sdk_SzFlags_FlagsToString_" data-uid="Senzing.Sdk.SzFlags.FlagsToString*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_FlagsToString_Senzing_Sdk_SzFlag_" data-uid="Senzing.Sdk.SzFlags.FlagsToString(Senzing.Sdk.SzFlag)">
+  FlagsToString(SzFlag)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1754"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the <code>string</code> representation describing the respective
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FlagsToString(this SzFlag flag)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>flag</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> on which to operate.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> representation describing the respective
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> which may be an aggregate value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Senzing_Sdk_SzFlags_FlagsToString_" data-uid="Senzing.Sdk.SzFlags.FlagsToString*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_FlagsToString_Senzing_Sdk_SzFlagUsageGroup_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzFlags.FlagsToString(Senzing.Sdk.SzFlagUsageGroup,System.Nullable{Senzing.Sdk.SzFlag})">
+  FlagsToString(SzFlagUsageGroup, SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1654"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats a <code>string</code> representation of the specified
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> according to the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+instances associated with the respective <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FlagsToString(this SzFlagUsageGroup group, SzFlag? flag)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>group</code> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> on which to operate.</p>
+</dd>
+    <dt><code>flag</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value (which may be an aggregate value) to format
+as a <code>string</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> describing the specified flags.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_FlagsToString_Senzing_Sdk_SzFlagUsageGroup_System_Nullable_Senzing_Sdk_SzFlag___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>
+<b>NOTE:</b> This method is useful in logging which flags were past to a
+particular method using the <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> for the flags that
+are accepted by that method.
+</p>
+<p>
+Some <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values have the same underlying bitwise flag value
+which can lead to ambiguity with the default <code>ToString()</code> implementation
+for enums.  However, none of the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> instances for a single
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> should overlap in bitwise values and this
+method will prefer the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbol belonging to the respective
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> for formatting the <code>string</code>.
+</p>
+<p>
+If the respective <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> is an aggregate group value
+representing multiple groups (or no groups) then this method simply defaults 
+to formatting the set bit values using numeric representation, foregoing the
+use of symbolic flag names altogether.
+</p>
+</div>
+
+
+
+
+  <a id="Senzing_Sdk_SzFlags_FlagsToString_" data-uid="Senzing.Sdk.SzFlags.FlagsToString*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_FlagsToString_System_Nullable_Senzing_Sdk_SzFlag__" data-uid="Senzing.Sdk.SzFlags.FlagsToString(System.Nullable{Senzing.Sdk.SzFlag})">
+  FlagsToString(SzFlag?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1772"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the <code>string</code> representation describing the specified
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FlagsToString(SzFlag? flag)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>flag</code> <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>?</dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> to format as a <code>string</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The <code>string</code> representation describing the specified
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> which may be an aggregate value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Senzing_Sdk_SzFlags_GetFlags_" data-uid="Senzing.Sdk.SzFlags.GetFlags*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_GetFlags_Senzing_Sdk_SzFlagUsageGroup_" data-uid="Senzing.Sdk.SzFlags.GetFlags(Senzing.Sdk.SzFlagUsageGroup)">
+  GetFlags(SzFlagUsageGroup)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1476"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Obtains the flags belonging to an <b>individual</b>
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> as an aggregate
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value for all flags associated with
+the specified group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SzFlag GetFlags(SzFlagUsageGroup group)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>group</code> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd><p>The <b>individual</b> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> for
+which to obtain the list of flags with their names.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a></dt>
+    <dd><p>The aggregate <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> value with the bits set
+for all flags belonging to specified <b>individual</b>
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>If the specified <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> is itself an aggregate
+value of multiple groups or equal to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlagUsageGroups">SzNoFlagUsageGroups</a>
+(i.e.: zero).</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzFlags_GetFlagsByName_" data-uid="Senzing.Sdk.SzFlags.GetFlagsByName*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_GetFlagsByName" data-uid="Senzing.Sdk.SzFlags.GetFlagsByName">
+  GetFlagsByName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1609"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Obtains all individually declared flag constants from <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>
+as a read-only dictionary of individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name
+keys mapped to <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ReadOnlyDictionary&lt;string, SzFlag&gt; GetFlagsByName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2">ReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>&gt;</dt>
+    <dd><p>The read-only dictionary of individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name
+keys mapped to <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values for all individual flag constants
+from  the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> enum.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_GetFlagsByName_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> The is provided for disambiguation of different flags that
+otherwise have the same value (e.g.:
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a> and
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludePossiblySame">SzExportIncludePossiblySame</a>).</p>
+</div>
+
+
+
+
+  <a id="Senzing_Sdk_SzFlags_GetFlagsByName_" data-uid="Senzing.Sdk.SzFlags.GetFlagsByName*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_GetFlagsByName_Senzing_Sdk_SzFlagUsageGroup_" data-uid="Senzing.Sdk.SzFlags.GetFlagsByName(Senzing.Sdk.SzFlagUsageGroup)">
+  GetFlagsByName(SzFlagUsageGroup)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1573"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Obtains the flags belonging to an <b>individual</b>
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> as a read-only dictionary of
+individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name keys mapped to
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ReadOnlyDictionary&lt;string, SzFlag&gt; GetFlagsByName(SzFlagUsageGroup group)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>group</code> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd><p>The <b>individual</b> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> for which to
+obtain the list of flags with their names.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2">ReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>&gt;</dt>
+    <dd><p>A read-only dictionary of individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name
+keys mapped to <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> values for those flags belonging to
+specified <b>individual</b> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_GetFlagsByName_Senzing_Sdk_SzFlagUsageGroup__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> The is provided as an alternative to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_GetFlags_Senzing_Sdk_SzFlagUsageGroup_">GetFlags(SzFlagUsageGroup)</a>
+for disambiguation of different flags that otherwise have the same value
+(e.g.: <a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a> and
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludePossiblySame">SzExportIncludePossiblySame</a>).</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>If the specified <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> is itself an aggregate
+value of multiple groups or equal to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlagUsageGroups">SzNoFlagUsageGroups</a>
+(i.e.: zero).</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzFlags_GetGroups_" data-uid="Senzing.Sdk.SzFlags.GetGroups*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_GetGroups_System_String_" data-uid="Senzing.Sdk.SzFlags.GetGroups(System.String)">
+  GetGroups(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1728"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the aggregate <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> value representing
+the one or more usage groups associated with the specified symbolic
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SzFlagUsageGroup GetGroups(string symbolicFlagName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>symbolicFlagName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The symbolic flag name from the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> <code>enum</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> value that aggregates all the
+groups associated with the specified <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic
+name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_GetGroups_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the specified name is not recognized as a symbolic name from
+the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> <code>enum</code> then an
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a> is thrown.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>If the specified symbolic flag name is not recognized as an enum
+symbol from the <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> <code>enum</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzFlags_GetNamesByFlag_" data-uid="Senzing.Sdk.SzFlags.GetNamesByFlag*"></a>
+
+  <h3 id="Senzing_Sdk_SzFlags_GetNamesByFlag_Senzing_Sdk_SzFlagUsageGroup_" data-uid="Senzing.Sdk.SzFlags.GetNamesByFlag(Senzing.Sdk.SzFlagUsageGroup)">
+  GetNamesByFlag(SzFlagUsageGroup)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L1525"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Obtains the flags belonging to an <b>individual</b>
+<a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> as a read-only dictionary of
+individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> keys mapped to
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ReadOnlyDictionary&lt;SzFlag, string&gt; GetNamesByFlag(SzFlagUsageGroup group)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>group</code> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a></dt>
+    <dd><p>The <b>individual</b> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> for which to
+obtain the list of flags with their names.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2">ReadOnlyDictionary</a>&lt;<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A read-only dictionary of individual <a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> keys mapped to
+<a class="xref" href="Senzing.Sdk.SzFlag.html">SzFlag</a> symbolic name values for those flags belonging to
+specified <b>individual</b> <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzFlags_GetNamesByFlag_Senzing_Sdk_SzFlagUsageGroup__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> The is provided as an alternative to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_GetFlags_Senzing_Sdk_SzFlagUsageGroup_">GetFlags(SzFlagUsageGroup)</a>
+for disambiguation of different flags that otherwise have the same value
+(e.g.: <a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzSearchIncludePossiblySame">SzSearchIncludePossiblySame</a> and
+<a class="xref" href="Senzing.Sdk.SzFlag.html#Senzing_Sdk_SzFlag_SzExportIncludePossiblySame">SzExportIncludePossiblySame</a>) so the actual flag name can
+be obtained with respect to a specific <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a>
+since there is no ambiguity within a group.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>If the specified <a class="xref" href="Senzing.Sdk.SzFlagUsageGroup.html">SzFlagUsageGroup</a> is itself an aggregate
+value of multiple groups or equal to <a class="xref" href="Senzing.Sdk.SzFlags.html#Senzing_Sdk_SzFlags_SzNoFlagUsageGroups">SzNoFlagUsageGroups</a>
+(i.e.: zero).</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzFlags.cs/#L137" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

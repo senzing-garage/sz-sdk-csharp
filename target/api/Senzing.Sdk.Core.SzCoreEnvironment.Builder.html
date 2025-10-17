@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SzCoreEnvironment.Builder | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SzCoreEnvironment.Builder | Senzing.Sdk ">
+      
+      <meta name="description" content="The builder class for creating an instance of .">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_Core_SzCoreEnvironment_Builder.md&amp;value=---%0Auid%3A%20Senzing.Sdk.Core.SzCoreEnvironment.Builder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder">
+
+
+
+  <h1 id="Senzing_Sdk_Core_SzCoreEnvironment_Builder" data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder" class="text-break">
+Class SzCoreEnvironment.Builder  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/core/SzCoreEnvironment.cs/#L1225"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a>.<a class="xref" href="Senzing.Sdk.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The builder class for creating an instance of <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SzCoreEnvironment.Builder : SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;, SzCoreEnvironment.Initializer</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a>.<a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html">AbstractBuilder</a>&lt;<a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a>, <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a>.<a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.Builder.html">Builder</a>&gt;</div>
+      <div><span class="xref">SzCoreEnvironment.Builder</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a>.<a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.Initializer.html">Initializer</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_Settings_System_String_">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.Settings(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_GetSettings">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.GetSettings()</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_InstanceName_System_String_">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.InstanceName(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_GetInstanceName">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.GetInstanceName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_VerboseLogging_System_Boolean_">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.VerboseLogging(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_IsVerboseLogging">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.IsVerboseLogging()</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_ConfigID_System_Nullable_System_Int64__">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.ConfigID(long?)</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_GetConfigID">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.GetConfigID()</a>
+    </div>
+    <div>
+      <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html#Senzing_Sdk_Core_SzCoreEnvironment_AbstractBuilder_2_Build">SzCoreEnvironment.AbstractBuilder&lt;SzCoreEnvironment, SzCoreEnvironment.Builder&gt;.Build()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Senzing_Sdk_Core_SzCoreEnvironment_Builder__ctor_" data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder.#ctor*"></a>
+
+  <h3 id="Senzing_Sdk_Core_SzCoreEnvironment_Builder__ctor" data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder.#ctor">
+  Builder()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/core/SzCoreEnvironment.cs/#L1228"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Default constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Builder()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_Core_SzCoreEnvironment_Builder_Build_" data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder.Build*"></a>
+
+  <h3 id="Senzing_Sdk_Core_SzCoreEnvironment_Builder_Build" data-uid="Senzing.Sdk.Core.SzCoreEnvironment.Builder.Build">
+  Build()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/core/SzCoreEnvironment.cs/#L1254"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a> instance based
+this <code>Builder</code> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override SzCoreEnvironment Build()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a></dt>
+    <dd><p>The newly created <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a> instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_Core_SzCoreEnvironment_Builder_Build_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method will throw an <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a>
+if another active <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a> instance exists since
+only one active instance can exist within a process at any given time.
+An active instance is one that has been constructed, but has not yet
+been destroyed.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd><p>If another active <a class="xref" href="Senzing.Sdk.Core.SzCoreEnvironment.html">SzCoreEnvironment</a> instance exists when
+this method is invoked.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/core/SzCoreEnvironment.cs/#L1225" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

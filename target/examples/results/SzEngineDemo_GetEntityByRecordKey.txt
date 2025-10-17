@@ -1,0 +1,61 @@
+﻿{
+  "RESOLVED_ENTITY": {
+    "ENTITY_ID": 100002,
+    "ENTITY_NAME": "Joe Schmoe",
+    "FEATURES": {
+      "EMAIL": [
+        {
+          "FEAT_DESC": "joeschmoe@nowhere.com",
+          "LIB_FEAT_ID": 100003,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "joeschmoe@nowhere.com",
+              "LIB_FEAT_ID": 100003
+            }
+          ]
+        }
+      ],
+      "NAME": [
+        {
+          "FEAT_DESC": "Joe Schmoe",
+          "LIB_FEAT_ID": 100001,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "Joe Schmoe",
+              "LIB_FEAT_ID": 100001
+            }
+          ]
+        }
+      ],
+      "PHONE": [
+        {
+          "FEAT_DESC": "702-555-1212",
+          "LIB_FEAT_ID": 100002,
+          "FEAT_DESC_VALUES": [
+            {
+              "FEAT_DESC": "702-555-1212",
+              "LIB_FEAT_ID": 100002
+            }
+          ]
+        }
+      ]
+    },
+    "RECORD_SUMMARY": [
+      {
+        "DATA_SOURCE": "TEST",
+        "RECORD_COUNT": 1
+      }
+    ],
+    "RECORDS": [
+      {
+        "DATA_SOURCE": "TEST",
+        "RECORD_ID": "ABC123",
+        "INTERNAL_ID": 100002,
+        "MATCH_KEY": "",
+        "MATCH_LEVEL_CODE": "",
+        "ERRULE_CODE": ""
+      }
+    ]
+  },
+  "RELATED_ENTITIES": []
+}

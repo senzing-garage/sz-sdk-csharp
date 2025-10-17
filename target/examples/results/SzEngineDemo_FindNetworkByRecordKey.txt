@@ -1,0 +1,171 @@
+﻿{
+  "ENTITY_PATHS": [
+    {
+      "START_ENTITY_ID": 1,
+      "END_ENTITY_ID": 7,
+      "ENTITIES": [
+        1,
+        2,
+        6,
+        7
+      ]
+    },
+    {
+      "START_ENTITY_ID": 1,
+      "END_ENTITY_ID": 12,
+      "ENTITIES": [
+        1,
+        5,
+        8,
+        12
+      ]
+    },
+    {
+      "START_ENTITY_ID": 7,
+      "END_ENTITY_ID": 12,
+      "ENTITIES": []
+    }
+  ],
+  "ENTITY_NETWORK_LINKS": [
+    {
+      "MIN_ENTITY_ID": 1,
+      "MAX_ENTITY_ID": 2,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BPHONE-DOB",
+      "ERRULE_CODE": "SF1",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 1,
+      "MAX_ENTITY_ID": 5,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BADDRESS-DOB",
+      "ERRULE_CODE": "SFF",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 2,
+      "MAX_ENTITY_ID": 6,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BPHONE\u002BSURNAME-DOB",
+      "ERRULE_CODE": "CFF_SURNAME",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 5,
+      "MAX_ENTITY_ID": 8,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BPHONE-DOB",
+      "ERRULE_CODE": "SF1",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 6,
+      "MAX_ENTITY_ID": 7,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BADDRESS-DOB",
+      "ERRULE_CODE": "SFF",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 8,
+      "MAX_ENTITY_ID": 12,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BADDRESS-DOB",
+      "ERRULE_CODE": "SFF",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    }
+  ],
+  "ENTITIES": [
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 1,
+        "ENTITY_NAME": "Joseph Schmidt",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "PASSENGERS",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 2,
+        "ENTITY_NAME": "Joann Smith",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "PASSENGERS",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 5,
+        "ENTITY_NAME": "Bill Bandley",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 6,
+        "ENTITY_NAME": "Craig Smith",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 7,
+        "ENTITY_NAME": "Kim Long",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 8,
+        "ENTITY_NAME": "Katrina Osmond",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 12,
+        "ENTITY_NAME": "Kelly Rogers",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "VIPS",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    }
+  ]
+}

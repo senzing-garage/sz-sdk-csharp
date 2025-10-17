@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface SzDiagnostic | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface SzDiagnostic | Senzing.Sdk ">
+      
+      <meta name="description" content="Defines the interface to the Senzing diagnostic functions.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_SzDiagnostic.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzDiagnostic%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzDiagnostic">
+
+
+
+  <h1 id="Senzing_Sdk_SzDiagnostic" data-uid="Senzing.Sdk.SzDiagnostic" class="text-break">
+Interface SzDiagnostic  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the interface to the Senzing diagnostic functions.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface SzDiagnostic</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Senzing_Sdk_SzDiagnostic_examples">Examples</h2>
+  <p>An <code>SzDiagnostic</code> instance is typically obtained from an
+<a class="xref" href="Senzing.Sdk.SzEnvironment.html">SzEnvironment</a> instance via the
+<a class="xref" href="Senzing.Sdk.SzEnvironment.html#Senzing_Sdk_SzEnvironment_GetDiagnostic">GetDiagnostic()</a> method as follows.</p>
+<p>For example:</p>
+<pre><code class="lang-csharp">// How to obtain an SzDiagnostic instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get SzDiagnostic.", e);
+}</code></pre>
+
+
+  <h2 id="Senzing_Sdk_SzDiagnostic_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The Senzing diagnostic functions provide diagnostics and
+statistics pertaining to the host system and the Senzing repository.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzDiagnostic_CheckRepositoryPerformance_" data-uid="Senzing.Sdk.SzDiagnostic.CheckRepositoryPerformance*"></a>
+
+  <h3 id="Senzing_Sdk_SzDiagnostic_CheckRepositoryPerformance_System_Int32_" data-uid="Senzing.Sdk.SzDiagnostic.CheckRepositoryPerformance(System.Int32)">
+  CheckRepositoryPerformance(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Conducts a rudimentary repository test to gauge I/O and network performance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string CheckRepositoryPerformance(int secondsToRun)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>secondsToRun</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>How long to run the database performance test.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON <code>string</code> describing the results of the performance test.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_CheckRepositoryPerformance_System_Int32__examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to get repository info via SzDiagnostic
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the diagnostic instance
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    // check the repository performance
+    string result = diagnostic.CheckRepositoryPerformance(10);
+    demoResult = result; // @replace
+    // do something with the returned JSON (varies by application)
+    Log(result);
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to check the repository performance.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "numRecordsInserted": 337000,
+  "insertTime": 10000
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_CheckRepositoryPerformance_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Typically, this is only run when troubleshooting performance.  This is a
+non-destructive test.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>Thrown if a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzDiagnostic_GetFeature_" data-uid="Senzing.Sdk.SzDiagnostic.GetFeature*"></a>
+
+  <h3 id="Senzing_Sdk_SzDiagnostic_GetFeature_System_Int64_" data-uid="Senzing.Sdk.SzDiagnostic.GetFeature(System.Int64)">
+  GetFeature(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Experimental/internal for Senzing support use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SzConfigRetryable]
+string GetFeature(long featureID)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>featureID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The identifier for the feature.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The feature definition describing the feature for the specified feature ID.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_GetFeature_System_Int64__examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to get a feature by its feature ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the diagnostic instance
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    // get a valid feature (varies by application)
+    long featureID = GetFeatureID();
+
+    // get the feature for the feature ID
+    string result = diagnostic.GetFeature(featureID);
+    demoResult = result; // @replace
+    // do something with the returned JSON
+    Log(result);
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to purge the repository.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "LIB_FEAT_ID": 6,
+  "FTYPE_CODE": "PHONE_KEY",
+  "ELEMENTS": [
+    {
+      "FELEM_CODE": "EXPRESSION",
+      "FELEM_VALUE": "7025551212"
+    }
+  ]
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>Thrown if a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzDiagnostic_GetRepositoryInfo_" data-uid="Senzing.Sdk.SzDiagnostic.GetRepositoryInfo*"></a>
+
+  <h3 id="Senzing_Sdk_SzDiagnostic_GetRepositoryInfo" data-uid="Senzing.Sdk.SzDiagnostic.GetRepositoryInfo">
+  GetRepositoryInfo()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns overview information about the repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetRepositoryInfo()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A JSON <code>string</code> describing the datastore.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_GetRepositoryInfo_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to get repository info via SzDiagnostic
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the diagnostic instance
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    // get the repository info
+    string info = diagnostic.GetRepositoryInfo();
+    demoResult = info; // @replace
+    // do something with the returned JSON (varies by application)
+    Log(info);
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get the repository info.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "dataStores": [
+    {
+      "id": "CORE",
+      "type": "sqlite3",
+      "location": "/tmp/sz-example-4f518d0b-780a-44f6-a940-ab98515cee08/G2C.db"
+    }
+  ]
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>Thrown if a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzDiagnostic_PurgeRepository_" data-uid="Senzing.Sdk.SzDiagnostic.PurgeRepository*"></a>
+
+  <h3 id="Senzing_Sdk_SzDiagnostic_PurgeRepository" data-uid="Senzing.Sdk.SzDiagnostic.PurgeRepository">
+  PurgeRepository()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Permanently deletes all data in the repository, except the configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void PurgeRepository()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_PurgeRepository_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to purge the Senzing repository
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the diagnostic instance
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    // purge the repository (MAKE SURE YOU WANT TO DO THIS)
+    if (ConfirmPurge())
+    {
+        diagnostic.PurgeRepository();
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to purge the repository.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzDiagnostic_PurgeRepository_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>WARNING:</b> This method is destructive, it will delete all loaded
+records and entity resolution decisions.  Senzing does not provide a
+means to the restore the data.  The only means of recovery would be
+restoring from a database backup.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>Thrown if a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/initialization/PurgeRepository/Program.cs">Purge Repository Code Snippet</a></span></div>
+    </dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzDiagnostic.cs/#L21" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+﻿{
+  "ENTITY_PATHS": [
+    {
+      "START_ENTITY_ID": 1,
+      "END_ENTITY_ID": 12,
+      "ENTITIES": [
+        1,
+        5,
+        8,
+        12
+      ]
+    }
+  ],
+  "ENTITY_PATH_LINKS": [
+    {
+      "MIN_ENTITY_ID": 1,
+      "MAX_ENTITY_ID": 5,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BADDRESS-DOB",
+      "ERRULE_CODE": "SFF",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 5,
+      "MAX_ENTITY_ID": 8,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BPHONE-DOB",
+      "ERRULE_CODE": "SF1",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    },
+    {
+      "MIN_ENTITY_ID": 8,
+      "MAX_ENTITY_ID": 12,
+      "MATCH_LEVEL_CODE": "POSSIBLY_RELATED",
+      "MATCH_KEY": "\u002BADDRESS-DOB",
+      "ERRULE_CODE": "SFF",
+      "IS_DISCLOSED": 0,
+      "IS_AMBIGUOUS": 0
+    }
+  ],
+  "ENTITIES": [
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 1,
+        "ENTITY_NAME": "Joseph Schmidt",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "PASSENGERS",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 5,
+        "ENTITY_NAME": "Bill Bandley",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 8,
+        "ENTITY_NAME": "Katrina Osmond",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "EMPLOYEES",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    },
+    {
+      "RESOLVED_ENTITY": {
+        "ENTITY_ID": 12,
+        "ENTITY_NAME": "Kelly Rogers",
+        "RECORD_SUMMARY": [
+          {
+            "DATA_SOURCE": "VIPS",
+            "RECORD_COUNT": 1
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface SzConfigManager | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface SzConfigManager | Senzing.Sdk ">
+      
+      <meta name="description" content="Defines the C# interface to the Senzing config management functions.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_SzConfigManager.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzConfigManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzConfigManager">
+
+
+
+  <h1 id="Senzing_Sdk_SzConfigManager" data-uid="Senzing.Sdk.SzConfigManager" class="text-break">
+Interface SzConfigManager  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines the C# interface to the Senzing config management functions.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface SzConfigManager</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Senzing_Sdk_SzConfigManager_examples">Examples</h2>
+  <p>An <code>SzConfigManager</code> instance is typically obtained from an
+<a class="xref" href="Senzing.Sdk.SzEnvironment.html">SzEnvironment</a> instance via the <a class="xref" href="Senzing.Sdk.SzEnvironment.html#Senzing_Sdk_SzEnvironment_GetConfigManager">GetConfigManager()</a>
+method as follows:</p>
+<pre><code class="lang-csharp">// How to obtain an SzConfigManager instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get SzConfigManager.", e);
+}</code></pre>
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_CreateConfig_" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_CreateConfig" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig">
+  CreateConfig()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> instance from the template
+configuration definition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzConfig CreateConfig()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a></dt>
+    <dd><p>A newly created <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> instance representing the
+template configuration definition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_CreateConfig_examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to create an SzConfig instance representing the template configuration
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // create the config from the template
+    SzConfig config = configMgr.CreateConfig();
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to create new SzConfig from the template.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_CreateConfig_" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_CreateConfig_System_Int64_" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig(System.Int64)">
+  CreateConfig(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> instance for a configuration ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzConfig CreateConfig(long configID)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The configuration ID of the configuration to retrieve.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a></dt>
+    <dd><p>A newly created <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> instance representing the
+configuration definition that is registered with the specified
+config ID.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_CreateConfig_System_Int64__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to get a config definition by its configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get a valid configuration ID (will vary by application)
+    long configID = configMgr.GetDefaultConfigID();
+
+    // get the config definition for the config ID
+    SzConfig config = configMgr.CreateConfig(configID);
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to Create SzConfig from config ID.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_CreateConfig_System_Int64__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the configuration ID is not found the an exception is thrown.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzConfigManager_CreateConfig_" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_CreateConfig_System_String_" data-uid="Senzing.Sdk.SzConfigManager.CreateConfig(System.String)">
+  CreateConfig(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> instance from a
+configuration definition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzConfig CreateConfig(string configDefinition)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The definition for the Senzing configuration.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a></dt>
+    <dd><p>A newly created <a class="xref" href="Senzing.Sdk.SzConfig.html">SzConfig</a> representing the specified
+configuration definition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_CreateConfig_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to create an SzConfig instance representing a specified config definition
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the SzConfigManager instance
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // obtain a JSON config definition (varies by application)
+    string configDefinition = ReadConfigFile();
+
+    // create the config using the config definition
+    SzConfig config = configMgr.CreateConfig(configDefinition);
+
+    // do something with the SzConfig
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to create a new SzConfig from a definition.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzConfigManager_GetConfigRegistry_" data-uid="Senzing.Sdk.SzConfigManager.GetConfigRegistry*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_GetConfigRegistry" data-uid="Senzing.Sdk.SzConfigManager.GetConfigRegistry">
+  GetConfigRegistry()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configuration registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetConfigRegistry()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The JSON object <code>string</code> describing the configurations registered
+in the repository with their identifiers, timestamps and comments.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_GetConfigRegistry_examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to get a JSON document describing all registered configs
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get the config definition for the config ID
+    string registry = configMgr.GetConfigRegistry();
+    demoResult = registry; // @replace
+    // do something with the returned JSON (e.g.: parse it and extract values)
+    JsonObject? jsonObj = JsonNode.Parse(registry)?.AsObject();
+
+    JsonArray? jsonArr = jsonObj?["CONFIGS"]?.AsArray();
+
+    // iterate over the registered configurations
+    if (jsonArr != null)
+    {
+        for (int index = 0; index &lt; jsonArr.Count; index++)
+        {
+            JsonObject? configObj = jsonArr[index]?.AsObject();
+
+            long? configID = configObj?["CONFIG_ID"]?.GetValue&lt;long&gt;();
+            string? createdOn = configObj?["SYS_CREATE_DT"]?.GetValue&lt;string&gt;();
+            string? comment = configObj?["CONFIG_COMMENTS"]?.GetValue&lt;string&gt;();
+
+            . . .
+
+        }
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get configurations.", e);
+}</code></pre>
+
+  <p><b>Example Result:</b> (formatted for readability)</p>
+<pre><code class="lang-csharp">{
+  "CONFIGS": [
+    {
+      "CONFIG_ID": 48641147,
+      "CONFIG_COMMENTS": "Data Sources: EMPLOYEES",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 181306537,
+      "CONFIG_COMMENTS": "Initial Config",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 1433495806,
+      "CONFIG_COMMENTS": "Data Sources: VIPS",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 1588422919,
+      "CONFIG_COMMENTS": "Added PASSENGERS data source",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 3202498516,
+      "CONFIG_COMMENTS": "Initial config with COMPANIES",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 4059713681,
+      "CONFIG_COMMENTS": "Data Sources: WATCHLIST",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    },
+    {
+      "CONFIG_ID": 4209002856,
+      "CONFIG_COMMENTS": "Added CUSTOMERS data source",
+      "SYS_CREATE_DT": "2025-10-17T23:20:48Z"
+    }
+  ]
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_GetConfigRegistry_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>
+The registry contains the original timestamp, original comment and
+configuration ID of all configurations ever registered with the repository.
+</p>
+<p>
+<b>NOTE:</b> Registered configurations cannot be unregistered.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzConfigManager_GetDefaultConfigID_" data-uid="Senzing.Sdk.SzConfigManager.GetDefaultConfigID*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_GetDefaultConfigID" data-uid="Senzing.Sdk.SzConfigManager.GetDefaultConfigID">
+  GetDefaultConfigID()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the default configuration ID for the repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long GetDefaultConfigID()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The current default configuration ID, or zero (0) if the default
+configuration has not been set.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_GetDefaultConfigID_examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to get the registered default configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get the default configuration ID
+    long configID = configMgr.GetDefaultConfigID();
+
+    // check if no default configuration ID is registered
+    if (configID == 0)
+    {
+        // handle having no registered configuration ID
+        . . .
+
+    }
+    else
+    {
+        // do something with the configuration ID
+        . . .
+
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get the default configuration ID.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_GetDefaultConfigID_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unless an explicit configuration ID is specified at
+initialization, the default configuration ID is used.</p>
+<p><b>NOTE:</b> The default configuration ID may not be the
+same as the active configuration ID.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_RegisterConfig_" data-uid="Senzing.Sdk.SzConfigManager.RegisterConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_" data-uid="Senzing.Sdk.SzConfigManager.RegisterConfig(System.String)">
+  RegisterConfig(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a configuration definition in the repository with an
+auto-generated comment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long RegisterConfig(string configDefinition)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The configuration definition to register.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The identifier for referencing the config in the entity repository.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to register a configuration with the Senzing repository
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // obtain a JSON config definition (will vary by application)
+    string configDefinition = CreateConfigWithDataSources("EMPLOYEES");
+
+    // register the config (using an auto-generated comment)
+    long configID = configMgr.RegisterConfig(configDefinition);
+
+    // do something with the config ID
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to register configuration.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> Registered configurations do not become
+immediately active nor do they become the default.
+Further, registered configurations cannot be unregistered.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_RegisterConfig_" data-uid="Senzing.Sdk.SzConfigManager.RegisterConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String_" data-uid="Senzing.Sdk.SzConfigManager.RegisterConfig(System.String,System.String)">
+  RegisterConfig(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a configuration definition in the repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long RegisterConfig(string configDefinition, string configComment)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The configuration definition to register.</p>
+</dd>
+    <dt><code>configComment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The comments for the configuration.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The identifier for referencing the config in the entity repository.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to register a configuration with the Senzing repository
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // obtain a JSON config definition (will vary by application)
+    string configDefinition = CreateConfigWithDataSources("CUSTOMERS");
+
+    // register the config with a custom comment
+    long configID = configMgr.RegisterConfig(configDefinition, "Added CUSTOMERS data source");
+
+    // do something with the config ID
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to register configuration.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>NOTE:</b> Registered configurations do not become
+immediately active nor do they become the default.
+Further, registered configurations cannot be unregistered.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_ReplaceDefaultConfigID_" data-uid="Senzing.Sdk.SzConfigManager.ReplaceDefaultConfigID*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_ReplaceDefaultConfigID_System_Int64_System_Int64_" data-uid="Senzing.Sdk.SzConfigManager.ReplaceDefaultConfigID(System.Int64,System.Int64)">
+  ReplaceDefaultConfigID(long, long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L258"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces the existing default configuration ID with a new configuration ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReplaceDefaultConfigID(long currentDefaultConfigID, long newDefaultConfigID)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>currentDefaultConfigID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The configuration ID that is believed to be the current default
+configuration ID.</p>
+</dd>
+    <dt><code>newDefaultConfigID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The new configuration ID for the repository.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_ReplaceDefaultConfigID_System_Int64_System_Int64__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to replace the registered default configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    do
+    {
+        // get the current default configuration ID
+        long oldConfigID = configMgr.GetDefaultConfigID();
+
+        // Create a new config (usually modifying the current -- varies by application)
+        string configDefinition = AddDataSourcesToConfig(oldConfigID, "PASSENGERS");
+        long newConfigID = configMgr.RegisterConfig(configDefinition, "Added PASSENGERS data source");
+
+        try
+        {
+            // replace the default config ID with the new config ID
+            configMgr.ReplaceDefaultConfigID(oldConfigID, newConfigID);
+
+            // if we get here then break out of the loop
+            break;
+
+        }
+        catch (SzReplaceConflictException)
+        {
+            // race condition detected
+            // do nothing so we loop through and try again
+        }
+
+    } while (true);
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to replace default configuration ID.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_ReplaceDefaultConfigID_System_Int64_System_Int64__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The change is prevented (with an <a class="xref" href="Senzing.Sdk.SzReplaceConflictException.html">SzReplaceConflictException</a>
+being thrown) if the current default configuration ID value is not as
+expected.  Use this in place of <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64_">SetDefaultConfigID(long)</a>
+to handle race conditions.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzReplaceConflictException.html">SzReplaceConflictException</a></dt>
+    <dd><p>If the default configuration ID was not updated to the specified
+new value because the current default configuration ID found in
+the repository was not equal to the specified expected current
+default configuration ID value.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/RegisterDataSources/Program.cs">Code Snippet: Register Data Sources</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfig(System.String)">
+  SetDefaultConfig(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a configuration in the repository and then sets its ID as
+the default for the repository with an auto-generated comment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long SetDefaultConfig(string configDefinition)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The configuration definition to register as the default.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The identifier for referencing the config in the entity repository.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to set the registered default configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get the configuration ID (varies by application)
+    string configDefinition = CreateConfigWithDataSources("VIPS");
+
+    // set the default config (using an auto-generated comment)
+    long configID = configMgr.SetDefaultConfig(configDefinition);
+
+    // do something with the registered config ID
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to set default configuration.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is a convenience method for <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_">RegisterConfig(string)</a>
+followed by <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64_">SetDefaultConfigID(long)</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfig*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String_System_String_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfig(System.String,System.String)">
+  SetDefaultConfig(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L319"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a configuration in the repository and then sets its ID as
+the default for the repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long SetDefaultConfig(string configDefinition, string configComment)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configDefinition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The configuration definition to register as the default.</p>
+</dd>
+    <dt><code>configComment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The comments for the configuration.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The identifier for referencing the config in the entity repository.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String_System_String__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to set the registered default configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get the configuration ID (varies by application)
+    string configDefinition = CreateConfigWithDataSources("COMPANIES");
+
+    // set the default config (using a specific comment)
+    long configID = configMgr.SetDefaultConfig(configDefinition, "Initial config with COMPANIES");
+
+    // do something with the registered config ID
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to set default configuration.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfig_System_String_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is a convenience method for <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_RegisterConfig_System_String_System_String_">RegisterConfig(string, string)</a>
+followed by <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64_">SetDefaultConfigID(long)</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</a></span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Senzing_Sdk_SzConfigManager_SetDefaultConfigID_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfigID*"></a>
+
+  <h3 id="Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64_" data-uid="Senzing.Sdk.SzConfigManager.SetDefaultConfigID(System.Int64)">
+  SetDefaultConfigID(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L285"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the default configuration ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetDefaultConfigID(long configID)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The configuration ID to set as the default configuration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64__examples">Examples</h4>
+  <p><b>Usage:</b></p>
+<pre><code class="lang-csharp">// How to set the registered default configuration ID
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    // get the configuration ID (varies by application)
+    string configDefinition = CreateConfigWithDataSources("WATCHLIST");
+    long configID = configMgr.RegisterConfig(configDefinition);
+
+    // set the default config ID
+    configMgr.SetDefaultConfigID(configID);
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to set default configuration ID.", e);
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzConfigManager_SetDefaultConfigID_System_Int64__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Usually this method is sufficient for setting the default configuration ID.
+However in concurrent environments that could encounter race conditions,
+consider using <a class="xref" href="Senzing.Sdk.SzConfigManager.html#Senzing_Sdk_SzConfigManager_ReplaceDefaultConfigID_System_Int64_System_Int64_">ReplaceDefaultConfigID(long, long)</a> instead.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If a failure occurs.</p>
+</dd>
+  </dl>
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span><a href="https://raw.githubusercontent.com/Senzing/code-snippets-v4/refs/heads/main/csharp/snippets/configuration/InitDefaultConfig/Program.cs">Code Snippet: Initialize Config</a></span></div>
+    </dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzConfigManager.cs/#L16" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

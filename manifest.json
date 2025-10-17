@@ -1,0 +1,957 @@
+{
+  "source_base_path": "/home/runner/work/sz-sdk-csharp/sz-sdk-csharp",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CODE_OF_CONDUCT.md",
+      "output": {
+        ".html": {
+          "relative_path": "CODE_OF_CONDUCT.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/development.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/development.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/errors.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/errors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/examples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder<E, B>",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.Core.SzCoreEnvironment.AbstractBuilder-2.yml\" sourcestartlinenumber=\"1\">Provides a base class for builder implementations of\n<xref href=\"Senzing.Sdk.Core.SzCoreEnvironment\" data-throw-if-not-resolved=\"false\"></xref> and its derived classes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Builder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Builder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core.SzCoreEnvironment.Builder",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.Core.SzCoreEnvironment.Builder.yml\" sourcestartlinenumber=\"1\">The builder class for creating an instance of <xref href=\"Senzing.Sdk.Core.SzCoreEnvironment\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Initializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.Initializer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core.SzCoreEnvironment.Initializer",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.Core.SzCoreEnvironment.Initializer.yml\" sourcestartlinenumber=\"1\">Provides an interface for initializing an instance of\n<xref href=\"Senzing.Sdk.Core.SzCoreEnvironment\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreEnvironment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core.SzCoreEnvironment",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.Core.SzCoreEnvironment.yml\" sourcestartlinenumber=\"1\">Provides the core implementation of <xref href=\"Senzing.Sdk.SzEnvironment\" data-throw-if-not-resolved=\"false\"></xref>\nthat directly initializes the Senzing SDK modules and provides management\nof the Senzing environment in this process.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.SzCoreUtilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.SzCoreUtilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core.SzCoreUtilities",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.Core.SzCoreUtilities.yml\" sourcestartlinenumber=\"1\">Provides utility functions that are useful when implementing\nthe Senzing SDK interfaces from the <code>Senzing.Sdk</code> namespace.\nThis is functionality leveraged by the &quot;core&quot; implementation\nthat is made visible to aid in other implementations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.Core.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.Core",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzBadInputException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzBadInputException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzBadInputException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzBadInputException.yml\" sourcestartlinenumber=\"1\">Defines an exceptional condition when an invalid input value is\nprovided to a Senzing operation preventing the successful\ncompletion of that operation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzConfig",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzConfig.yml\" sourcestartlinenumber=\"1\">Defines the C# interface that encapsulates and represents a\nSenzing configuration and provides functions to operate on that\nconfiguration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfigManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfigManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzConfigManager",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzConfigManager.yml\" sourcestartlinenumber=\"1\">Defines the C# interface to the Senzing config management functions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfigRetryable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfigRetryable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzConfigRetryable",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzConfigRetryable.yml\" sourcestartlinenumber=\"1\">Used to annotate which Senzing SDK methods are dependent upon the\nactive configuration being current.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzConfigurationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzConfigurationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzConfigurationException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzConfigurationException.yml\" sourcestartlinenumber=\"1\">Defines an exceptional condition when a failure has occurred\npertaining to the Senzing configuration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseConnectionLostException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseConnectionLostException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzDatabaseConnectionLostException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzDatabaseConnectionLostException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzRetryableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition where a database connection was lost causing a Senzing\noperation to fail.  Retrying the operation would likely result in\nthe connection being reestablished and the operation succeeding.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzDatabaseException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzDatabaseException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzUnrecoverableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition triggered by a database error from which we cannot recover\n(e.g.: missing or unexpected schema definition).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDatabaseTransientException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDatabaseTransientException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzDatabaseTransientException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzDatabaseTransientException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzRetryableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition where an operation failed because a database condition\nthat is transient and would like be resolved on a repeated attempt.\nRetrying the operation may result in it completing successfully.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzDiagnostic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzDiagnostic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzDiagnostic",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzDiagnostic.yml\" sourcestartlinenumber=\"1\">Defines the interface to the Senzing diagnostic functions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzEngine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzEngine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzEngine",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzEngine.yml\" sourcestartlinenumber=\"1\">Defines the interface to the Senzing engine functions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzEnvironment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzEnvironment",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzEnvironment.yml\" sourcestartlinenumber=\"1\">Provides a factory interface for obtaining the references to the Senzing SDK\nsingleton instances that have been initialized.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzEnvironmentDestroyedException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzEnvironmentDestroyedException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzEnvironmentDestroyedException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzEnvironmentDestroyedException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"System.InvalidOperationException\" data-throw-if-not-resolved=\"false\"></xref> so the exceptional\ncondition of the <xref href=\"Senzing.Sdk.SzEnvironment\" data-throw-if-not-resolved=\"false\"></xref> already being destroyed\ncan be differentiated from other <xref href=\"System.InvalidOperationException\" data-throw-if-not-resolved=\"false\"></xref>\ninstances that might be thrown.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzException.yml\" sourcestartlinenumber=\"1\">Defines the base exception for Senzing errors.  This adds a property\nfor the numeric Senzing error code which can optionally be set.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlag.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzFlag",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzFlag.yml\" sourcestartlinenumber=\"1\">Enumerates the Senzing flag values so they can be referred to as\nbitwise enumerated flags.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlagUsageGroup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlagUsageGroup.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzFlagUsageGroup",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzFlagUsageGroup.yml\" sourcestartlinenumber=\"1\">Enumerates the various classifications of usage groups for the\n<xref href=\"Senzing.Sdk.SzFlag\" data-throw-if-not-resolved=\"false\"></xref> instances.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzFlags.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzFlags",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzFlags.yml\" sourcestartlinenumber=\"1\">Provides aggregate <xref href=\"Senzing.Sdk.SzFlag\" data-throw-if-not-resolved=\"false\"></xref> constants as well as\nextension methods and utility methods pertaining to\n<xref href=\"Senzing.Sdk.SzFlag\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"Senzing.Sdk.SzFlagUsageGroup\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzLicenseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzLicenseException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzLicenseException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzLicenseException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzUnrecoverableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition triggered by an invalid, expired or exhausted Senzing license.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzNotFoundException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzNotFoundException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzNotFoundException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzNotFoundException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzBadInputException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition where the provided bad input to a Senzing operation is an\nidentifier that could not be used to successfully locate required\ndata for that operation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzNotInitializedException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzNotInitializedException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzNotInitializedException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzNotInitializedException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzUnrecoverableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition triggered by Senzing not being initialized.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzProduct.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzProduct.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzProduct",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzProduct.yml\" sourcestartlinenumber=\"1\">Defines the C# interface to the Senzing product functions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzReplaceConflictException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzReplaceConflictException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzReplaceConflictException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzReplaceConflictException.yml\" sourcestartlinenumber=\"1\">Describes an exceptional condition when an attempt is made to replace\na Senzing value with a new value providing it has not not already been\nchanged, however, the current value is no longer the expected value and\nhas therefore already been changed.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzRetryTimeoutExceededException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzRetryTimeoutExceededException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzRetryTimeoutExceededException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzRetryTimeoutExceededException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzRetryableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition where an operation failed because a timeout was exceeded.\nRetrying the operation (possibly with a longer timeout) may result\nin it completing successfully.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzRetryableException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzRetryableException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzRetryableException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzRetryableException.yml\" sourcestartlinenumber=\"1\">Defines an exceptional condition where the failure is an\nintermittent condition and the operation may be retried with\nthe same parameters with an expectation of success.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnhandledException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnhandledException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzUnhandledException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzUnhandledException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzUnrecoverableException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition caused by an otherwise unhandled and unexpected failure in the\nSenzing SDK.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnknownDataSourceException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnknownDataSourceException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzUnknownDataSourceException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzUnknownDataSourceException.yml\" sourcestartlinenumber=\"1\">Extends <xref href=\"Senzing.Sdk.SzBadInputException\" data-throw-if-not-resolved=\"false\"></xref> to define an exceptional\ncondition where the provided bad input to a Senzing operation is an\nidentifier that could not be used to successfully locate required\ndata for that operation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.SzUnrecoverableException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.SzUnrecoverableException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk.SzUnrecoverableException",
+      "Summary": "<p sourcefile=\"target/api/Senzing.Sdk.SzUnrecoverableException.yml\" sourcestartlinenumber=\"1\">Defines an exceptional condition where the failure is not\nrecoverable and all operations should be stopped until the\nsystem can be modified to resolve the condition causing the\nfailure.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "target/api/Senzing.Sdk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/Senzing.Sdk.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Senzing.Sdk",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "target/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "target/api/toc.html"
+        },
+        ".json": {
+          "relative_path": "target/api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzConfigDemo_ExportConfig.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzConfigDemo_ExportConfig.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzConfigDemo_GetDataSourceRegistry.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzConfigDemo_GetDataSourceRegistry.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzConfigDemo_RegisterDataSource.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzConfigDemo_RegisterDataSource.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzConfigManagerDemo_GetConfigRegistry.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzConfigManagerDemo_GetConfigRegistry.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzDiagnosticDemo_CheckRepositoryPerformance.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzDiagnosticDemo_CheckRepositoryPerformance.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzDiagnosticDemo_GetFeature.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzDiagnosticDemo_GetFeature.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzDiagnosticDemo_GetRepositoryInfo.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzDiagnosticDemo_GetRepositoryInfo.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_AddRecord.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_AddRecord.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_DeleteRecord.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_DeleteRecord.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ExportCsv-fetchNext-data.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ExportCsv-fetchNext-data.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ExportCsv-fetchNext-header.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ExportCsv-fetchNext-header.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ExportCsv.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ExportCsv.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ExportJson-fetchNext.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ExportJson-fetchNext.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ExportJson.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ExportJson.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindInterestingByEntityID.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindInterestingByEntityID.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindInterestingByRecordKey.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindInterestingByRecordKey.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindNetworkByEntityID.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindNetworkByEntityID.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindNetworkByRecordKey.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindNetworkByRecordKey.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindPathByEntityID.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindPathByEntityID.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_FindPathByRecordKey.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_FindPathByRecordKey.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetEntityByEntityID.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetEntityByEntityID.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetEntityByRecordKey.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetEntityByRecordKey.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetRecord.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetRecord.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetRecordPreview.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetRecordPreview.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetStats.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetStats.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_GetVirtualEntity.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_GetVirtualEntity.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_HowEntity.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_HowEntity.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ReevaluateEntity.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ReevaluateEntity.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_ReevaluateRecord.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_ReevaluateRecord.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_SearchByAttributes.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_SearchByAttributes.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_SearchByAttributesWithProfile.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_SearchByAttributesWithProfile.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_WhyEntities.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_WhyEntities.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_WhyRecordInEntity.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_WhyRecordInEntity.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_WhyRecords.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_WhyRecords.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzEngineDemo_WhySearch.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzEngineDemo_WhySearch.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzProductDemo_GetLicense.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzProductDemo_GetLicense.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "target/examples/results/SzProductDemo_GetVersion.txt",
+      "output": {
+        "resource": {
+          "relative_path": "target/examples/results/SzProductDemo_GetVersion.txt"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

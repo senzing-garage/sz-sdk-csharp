@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface SzEnvironment | Senzing.Sdk </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface SzEnvironment | Senzing.Sdk ">
+      
+      <meta name="description" content="Provides a factory interface for obtaining the references to the Senzing SDK singleton instances that have been initialized.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/senzing-garage/sz-sdk-csharp/new/4.1.0/apiSpec/new?filename=Senzing_Sdk_SzEnvironment.md&amp;value=---%0Auid%3A%20Senzing.Sdk.SzEnvironment%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="Senzing.Sdk">
+            Senzing.Sdk
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Senzing.Sdk.SzEnvironment">
+
+
+
+  <h1 id="Senzing_Sdk_SzEnvironment" data-uid="Senzing.Sdk.SzEnvironment" class="text-break">
+Interface SzEnvironment  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Senzing.html">Senzing</a>.<a class="xref" href="Senzing.Sdk.html">Sdk</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Senzing.Sdk.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Provides a factory interface for obtaining the references to the Senzing SDK
+singleton instances that have been initialized.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface SzEnvironment</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Senzing_Sdk_SzEnvironment_examples">Examples</h2>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// get the settings (varies by application)
+string settings = GetSettings();
+
+// get the instance name (varies by application)
+string instanceName = GetInstanceName();
+
+// construct the environment
+SzEnvironment env = SzCoreEnvironment.NewBuilder()
+                                     .InstanceName(instanceName)
+                                     .Settings(settings)
+                                     .VerboseLogging(false)
+                                     .Build();
+
+// use the environment for some time (usually as long as the application is running)
+. . .
+
+// destroy the environment when done (sometimes in a finally block)
+env.Destroy();</code></pre>
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Senzing_Sdk_SzEnvironment_Destroy_" data-uid="Senzing.Sdk.SzEnvironment.Destroy*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_Destroy" data-uid="Senzing.Sdk.SzEnvironment.Destroy">
+  Destroy()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Destroys this <code>SzEnvironment</code> and invalidates any SDK singleton
+references that has previously provided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Destroy()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_Destroy_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// obtain the SzEnvironment (varies by application)
+SzEnvironment env = GetEnvironment();
+
+// check if already destroyed
+if (!env.IsDestroyed())
+{
+    // destroy the environment
+    env.Destroy();
+}</code></pre>
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_Destroy_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If this instance has already been destroyed then this method has no effect.</p>
+</div>
+
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_GetActiveConfigID_" data-uid="Senzing.Sdk.SzEnvironment.GetActiveConfigID*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_GetActiveConfigID" data-uid="Senzing.Sdk.SzEnvironment.GetActiveConfigID">
+  GetActiveConfigID()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the currently active configuration ID for this <code>SzEnvironment</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long GetActiveConfigID()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The currently active configuration ID.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_GetActiveConfigID_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to get the active config ID for the SzEnvironment
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the active config ID
+    long activeConfigID = env.GetActiveConfigID();
+
+    // do something with the active config ID (varies by application)
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    long defaultConfigID = configMgr.GetDefaultConfigID();
+
+    if (activeConfigID != defaultConfigID)
+    {
+        // reinitialize the environment with the default config ID                    
+        env.Reinitialize(defaultConfigID);
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to verify the active config ID.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been destroyed.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure in obtaining the active config ID.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_GetConfigManager_" data-uid="Senzing.Sdk.SzEnvironment.GetConfigManager*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_GetConfigManager" data-uid="Senzing.Sdk.SzEnvironment.GetConfigManager">
+  GetConfigManager()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides a reference to the <a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a> instance
+associated with this <code>SzEnvironment</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzConfigManager GetConfigManager()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a> instance associated with
+this <code>SzEnvironment</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_GetConfigManager_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to obtain an SzConfigManager instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the config manager
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get SzConfigManager.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been destroyed.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure in obtaining or initializing the
+<a class="xref" href="Senzing.Sdk.SzConfigManager.html">SzConfigManager</a> instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_GetDiagnostic_" data-uid="Senzing.Sdk.SzEnvironment.GetDiagnostic*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_GetDiagnostic" data-uid="Senzing.Sdk.SzEnvironment.GetDiagnostic">
+  GetDiagnostic()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides a reference to the <a class="xref" href="Senzing.Sdk.SzDiagnostic.html">SzDiagnostic</a> instance
+associated with this <code>SzEnvironment</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzDiagnostic GetDiagnostic()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzDiagnostic.html">SzDiagnostic</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzDiagnostic.html">SzDiagnostic</a> instance associated with
+this <code>SzEnvironment</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_GetDiagnostic_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to obtain an SzDiagnostic instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    SzDiagnostic diagnostic = env.GetDiagnostic();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get SzDiagnostic.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been destroyed.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure in obtaining or initializing the
+<a class="xref" href="Senzing.Sdk.SzDiagnostic.html">SzDiagnostic</a> instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_GetEngine_" data-uid="Senzing.Sdk.SzEnvironment.GetEngine*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_GetEngine" data-uid="Senzing.Sdk.SzEnvironment.GetEngine">
+  GetEngine()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides a reference to the <a class="xref" href="Senzing.Sdk.SzEngine.html">SzEngine</a> instance associated
+with this <code>SzEnvironment</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzEngine GetEngine()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEngine.html">SzEngine</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzEngine.html">SzEngine</a> instance associated with
+this <code>SzEnvironment</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_GetEngine_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to obtain an SzEngine instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the engine
+    SzEngine engine = env.GetEngine();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to get SzEngine.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been destroyed.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure in obtaining or initializing the
+<a class="xref" href="Senzing.Sdk.SzEngine.html">SzEngine</a> instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_GetProduct_" data-uid="Senzing.Sdk.SzEnvironment.GetProduct*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_GetProduct" data-uid="Senzing.Sdk.SzEnvironment.GetProduct">
+  GetProduct()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Provides a reference to the <a class="xref" href="Senzing.Sdk.SzProduct.html">SzProduct</a> singleton associated
+with this <code>SzEnvironment</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SzProduct GetProduct()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzProduct.html">SzProduct</a></dt>
+    <dd><p>The <a class="xref" href="Senzing.Sdk.SzProduct.html">SzProduct</a> instance associated with this <code>SzEnvironment</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_GetProduct_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to obtain an SzProduct instance
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the product from the environment
+    SzProduct product = env.GetProduct();
+
+    . . .
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception (varies by application)
+    LogError("Failed to get SzProduct.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been
+<a class="xref" href="Senzing.Sdk.SzEnvironment.html#Senzing_Sdk_SzEnvironment_Destroy">destroyed</a>.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure in obtaining or initializing the
+<a class="xref" href="Senzing.Sdk.SzProduct.html">SzProduct</a> instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_IsDestroyed_" data-uid="Senzing.Sdk.SzEnvironment.IsDestroyed*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_IsDestroyed" data-uid="Senzing.Sdk.SzEnvironment.IsDestroyed">
+  IsDestroyed()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if this instance has had its <a class="xref" href="Senzing.Sdk.SzEnvironment.html#Senzing_Sdk_SzEnvironment_Destroy">Destroy()</a> method called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsDestroyed()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if this instance has had its <a class="xref" href="Senzing.Sdk.SzEnvironment.html#Senzing_Sdk_SzEnvironment_Destroy">Destroy()</a><br>
+method called, otherwise <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_IsDestroyed_examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// obtain the SzEnvironment (varies by application)
+SzEnvironment env = GetEnvironment();
+
+// check if already destroyed
+if (!env.IsDestroyed())
+{
+    // destroy the environment
+    env.Destroy();
+}</code></pre>
+
+
+
+
+
+
+  <a id="Senzing_Sdk_SzEnvironment_Reinitialize_" data-uid="Senzing.Sdk.SzEnvironment.Reinitialize*"></a>
+
+  <h3 id="Senzing_Sdk_SzEnvironment_Reinitialize_System_Int64_" data-uid="Senzing.Sdk.SzEnvironment.Reinitialize(System.Int64)">
+  Reinitialize(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reinitializes the <code>SzEnvironment</code> with the specified
+configuration ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Reinitialize(long configID)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configID</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The configuration ID with which to initialize.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Senzing_Sdk_SzEnvironment_Reinitialize_System_Int64__examples">Examples</h4>
+  <p>Usage:</p>
+<pre><code class="lang-csharp">// How to get the active config ID for the SzEnvironment
+try
+{
+    // obtain the SzEnvironment (varies by application)
+    SzEnvironment env = GetEnvironment();
+
+    // get the active config ID
+    long activeConfigID = env.GetActiveConfigID();
+
+    // do something with the active config ID (varies by application)
+    SzConfigManager configMgr = env.GetConfigManager();
+
+    long defaultConfigID = configMgr.GetDefaultConfigID();
+
+    if (activeConfigID != defaultConfigID)
+    {
+        // reinitialize the environment with the default config ID                    
+        env.Reinitialize(defaultConfigID);
+    }
+
+}
+catch (SzException e)
+{
+    // handle or rethrow the exception
+    LogError("Failed to verify the active config ID.", e);
+}</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Senzing.Sdk.SzEnvironmentDestroyedException.html">SzEnvironmentDestroyedException</a></dt>
+    <dd><p>If this <code>SzEnvironment</code> instance has been destroyed.</p>
+</dd>
+    <dt><a class="xref" href="Senzing.Sdk.SzException.html">SzException</a></dt>
+    <dd><p>If there was a failure reinitializing.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/senzing-garage/sz-sdk-csharp/blob/4.1.0/Senzing.Sdk/SzEnvironment.cs/#L14" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

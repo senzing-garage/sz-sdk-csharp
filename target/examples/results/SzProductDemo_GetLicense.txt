@@ -1,0 +1,11 @@
+﻿{
+  "customer": "",
+  "contract": "",
+  "issueDate": "2025-10-06",
+  "licenseType": "EVAL (Solely for non-productive use)",
+  "licenseLevel": "",
+  "billing": "",
+  "expireDate": "2026-10-07",
+  "recordLimit": 500,
+  "advSearch": 0
+}

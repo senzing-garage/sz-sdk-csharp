@@ -1,0 +1,5 @@
+﻿{
+  "INTERESTING_ENTITIES": {
+    "ENTITIES": []
+  }
+}
