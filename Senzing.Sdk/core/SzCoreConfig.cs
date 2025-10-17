@@ -8,19 +8,6 @@ namespace Senzing.Sdk.Core
     /// </summary>
     internal class SzCoreConfig : SzConfig
     {
-        /// <summary>
-        /// The result from the <see cref="ToString()"/> function if the
-        /// environment is already destroyed.
-        /// </summary>
-        internal const string DestroyedMessage = "*** DESTROYED ***";
-
-        /// <summary>
-        /// The prefix to use if an <see cref="SzException"/> is thrown
-        /// from <see cref="Export()"/> and <see cref="ToString()"/>
-        /// was called.
-        /// </summary>
-        internal const string FailurePrefix = "*** FAILURE: ";
-
         // 
         /// <summary>
         /// THe <see cref="SzCoreEnvironment"/> that constructed this instance.
@@ -110,23 +97,12 @@ namespace Senzing.Sdk.Core
         }
 
         /// <summary>
-        /// Implemented to call the <see cref="Export"/> function and
-        /// return the result.
+        /// Implemented to call the <see cref="SzCoreUtilities.ConfigToString(SzConfig)"/>
+        /// function and return the result.
         /// </summary>
         public override string ToString()
         {
-            try
-            {
-                return this.Export();
-            }
-            catch (InvalidOperationException)
-            {
-                return DestroyedMessage;
-            }
-            catch (Exception e)
-            {
-                return FailurePrefix + e.Message;
-            }
+            return SzCoreUtilities.ConfigToString(this);
         }
 
         /// <summary>
