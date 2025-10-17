@@ -21,6 +21,19 @@ namespace Senzing.Sdk.Core
     public static class SzCoreUtilities
     {
         /// <summary>
+        /// The result from the <see cref="ToString()"/> function if the
+        /// environment is already destroyed.
+        /// </summary>
+        internal const string DestroyedMessage = "*** DESTROYED ***";
+
+        /// <summary>
+        /// The prefix to use if an <see cref="SzException"/> is thrown
+        /// from <see cref="Export()"/> and <see cref="ToString()"/>
+        /// was called.
+        /// </summary>
+        internal const string FailurePrefix = "*** FAILURE: ";
+        
+        /// <summary>
         /// The <b>unmodifiable</b> collection of default data sources.
         /// </summary>
         private static readonly ReadOnlyCollection<string> DefaultSources
@@ -252,6 +265,23 @@ namespace Senzing.Sdk.Core
 
             // return the index
             return index;
+        }
+
+        public static String ConfigToString(SzConfig config)
+        {
+            try
+            {
+                return config.Export();
+            }
+            catch (SzEnvironmentDestroyedException)
+            {
+                return DestroyedMessage;
+            }
+            catch (Exception e)
+            {
+                return FailurePrefix + e.Message;
+            }
+            
         }
     }
 }

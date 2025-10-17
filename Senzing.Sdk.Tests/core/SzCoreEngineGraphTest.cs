@@ -1027,7 +1027,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                          + testData + ", " + description, e);
 
                 }
-                else if (recordExceptionType != e.GetType())
+                else if (entityExceptionType != e.GetType())
                 {
                     Assert.IsInstanceOf(
                         entityExceptionType, e,
@@ -1851,7 +1851,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                          + testData + ", " + description, e);
 
                 }
-                else if (recordExceptionType != e.GetType())
+                else if (entityExceptionType != e.GetType())
                 {
                     Assert.IsInstanceOf(
                         entityExceptionType, e,
@@ -1963,7 +1963,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                     description = "exception=[ " + e.ToString() + " ]";
                 }
 
-                if (entityExceptionType == null)
+                if (recordExceptionType == null)
                 {
                     Fail("Unexpectedly failed finding an entity network: "
                          + testData + ", " + description, e);
@@ -1972,7 +1972,7 @@ internal class SzCoreEngineGraphTest : AbstractTest
                 else if (recordExceptionType != e.GetType())
                 {
                     Assert.IsInstanceOf(
-                        entityExceptionType, e,
+                        recordExceptionType, e,
                         "FindNetwork() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }

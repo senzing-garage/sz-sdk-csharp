@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 using Senzing.Sdk.Core;
 
-using static Senzing.Sdk.Core.SzCoreConfig;
+using static Senzing.Sdk.Core.SzCoreUtilities;
 
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.SingleInstance)]
