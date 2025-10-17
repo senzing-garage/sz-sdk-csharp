@@ -21,18 +21,18 @@ namespace Senzing.Sdk.Core
     public static class SzCoreUtilities
     {
         /// <summary>
-        /// The result from the <see cref="ToString()"/> function if the
-        /// environment is already destroyed.
+        /// The result from the <see cref="ConfigToString"/> method if
+        /// the environment is already destroyed.
         /// </summary>
         internal const string DestroyedMessage = "*** DESTROYED ***";
 
         /// <summary>
         /// The prefix to use if an <see cref="SzException"/> is thrown
-        /// from <see cref="Export()"/> and <see cref="ToString()"/>
+        /// from <see cref="SzConfig.Export"/> and <see cref="ConfigToString"/>
         /// was called.
         /// </summary>
         internal const string FailurePrefix = "*** FAILURE: ";
-        
+
         /// <summary>
         /// The <b>unmodifiable</b> collection of default data sources.
         /// </summary>
@@ -267,6 +267,35 @@ namespace Senzing.Sdk.Core
             return index;
         }
 
+        /// <summary>
+        /// Converts the specified <see cref="SzConfig"/> to a <c>string</c>
+        /// via its <see cref="SzConfig.Export"/> method.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// <para>
+        /// This will handle any <see cref="SzEnvironmentDestroyedException"/>
+        /// exception by returning a message indicating the environment is
+        /// destroyed as well as any <see cref="SzException"/> by returning
+        /// the result from that exception's <see cref="System.Exception.Message"/>
+        /// with a prefix.
+        /// </para>
+        /// 
+        /// <para>
+        /// This method is made available so implementations of <see cref="SzConfig"/>
+        /// can easily override <see cref="Object.ToString"/> while consistently
+        /// handling common exceptions that may be thrown.
+        /// </para>
+        /// </remarks>
+        /// 
+        /// <param name="config">
+        /// The <see cref="SzConfig"/> to convert to a <c>string</c>.
+        /// </param>
+        /// 
+        /// <returns>
+        /// The <c>string</c> representation obtained from the <see cref="SzConfig"/>
+        /// via <see cref="SzConfig.Export"/> or an error message if a failure occurs.
+        /// </returns>
         public static String ConfigToString(SzConfig config)
         {
             try
@@ -281,7 +310,7 @@ namespace Senzing.Sdk.Core
             {
                 return FailurePrefix + e.Message;
             }
-            
+
         }
     }
 }
