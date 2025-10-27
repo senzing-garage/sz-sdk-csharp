@@ -526,7 +526,8 @@ internal class SzConfigRetryableTest : AbstractTest
                 this.env.Destroy();
                 this.env = null;
             }
-            this.TeardownTestEnvironment();
+            bool deleteRepo = !OperatingSystem.IsWindows();
+            this.TeardownTestEnvironment(deleteRepo);
         }
         finally
         {
