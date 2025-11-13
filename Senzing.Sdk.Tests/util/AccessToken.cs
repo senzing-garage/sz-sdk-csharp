@@ -1,4 +1,5 @@
 namespace Senzing.Sdk.Tests.Util;
+
 using System.Runtime.CompilerServices;
 
 internal sealed class AccessToken : Object
