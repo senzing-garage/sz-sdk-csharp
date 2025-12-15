@@ -68,7 +68,7 @@ jobs:
           cp $Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
 
       - name: Store coverage file
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
           path: ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
