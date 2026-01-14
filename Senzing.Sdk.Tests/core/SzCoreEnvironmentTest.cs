@@ -613,7 +613,7 @@ internal class SzCoreEnvironmentTest : AbstractTest
                     {
                         lock (monitor)
                         {
-                            Monitor.Wait(monitor, 15000);
+                            Monitor.Wait(monitor, 6000);
                         }
                         return null;
                     });

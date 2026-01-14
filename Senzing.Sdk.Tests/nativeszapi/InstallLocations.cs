@@ -214,8 +214,10 @@ public class InstallLocations
             previousDir = workingDir;
             workingDir = workingDir.Parent;
         }
-        DirectoryInfo? devDistDir = (devStructure && previousDir != null)
-            ? new DirectoryInfo(Path.Combine(previousDir.FullName, "dist")) : null;
+        DirectoryInfo? buildDir = (devStructure && previousDir != null)
+            ? new DirectoryInfo(Path.Combine(previousDir.FullName, "build")) : null;
+        DirectoryInfo? devDistDir = (devStructure && buildDir != null && buildDir.Exists)
+            ? new DirectoryInfo(Path.Combine(buildDir.FullName, "dist")) : null;
         DirectoryInfo? devSupport = (devDistDir != null)
             ? new DirectoryInfo(Path.Combine(devDistDir.FullName, "data")) : null;
         DirectoryInfo? devResource = (devDistDir != null)

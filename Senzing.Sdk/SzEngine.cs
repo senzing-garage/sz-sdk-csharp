@@ -213,6 +213,10 @@ namespace Senzing.Sdk
         /// (depending on the specified flags).
         /// </returns>
         ///
+        /// <exception cref="SzUnknownDataSourceException">
+        /// If the specified record includes an unrecognized data source code.
+        /// </exception>
+        /// 
         /// <exception cref="SzException">If a failure occurs.</exception>
         ///
         /// <seealso cref="SzRecordPreviewDefaultFlags"/>

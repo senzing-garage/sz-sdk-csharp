@@ -505,7 +505,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
         }
     }
 
-    public static List<object?[]> GetPreprocessRecordArguments()
+    public static List<object?[]> GetRecordPreviewArguments()
     {
         List<object?[]> result = new List<object?[]>();
         int count = Math.Min(NewRecordKeys.Count, NewRecords.Count);
@@ -518,9 +518,10 @@ internal class SzCoreEngineWriteTest : AbstractTest
         {
             keyIter.MoveNext();
             recordIter.MoveNext();
-            (string, string) key = keyIter.Current;
+            (string dataSourceCode, string recordID) key = keyIter.Current;
             SzRecord record = recordIter.Current;
-            Type? exceptionType = null;
+            Type? exceptionType = ((UnknownDataSource.Equals(key.dataSourceCode, Ordinal))
+                                    ? typeof(SzUnknownDataSourceException) : null);
             SzFlag? flagSet = flagSetIter.Next();
 
             record = new SzRecord(key, record);
@@ -531,9 +532,9 @@ internal class SzCoreEngineWriteTest : AbstractTest
         return result;
     }
 
-    public static List<object?[]> GetPreprocessRecordDefaultArguments()
+    public static List<object?[]> GetRecordPreviewDefaultArguments()
     {
-        List<object?[]> baseArgs = GetPreprocessRecordArguments();
+        List<object?[]> baseArgs = GetRecordPreviewArguments();
 
         List<object?[]> defaultArgs = new List<object?[]>(baseArgs.Count);
 
@@ -549,8 +550,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
         return defaultArgs;
     }
 
-    [Test, TestCaseSource(nameof(GetPreprocessRecordArguments)), Order(5)]
-    public void TestPreprocessRecord(SzRecord record,
+    [Test, TestCaseSource(nameof(GetRecordPreviewArguments)), Order(5)]
+    public void TestGetRecordPreview(SzRecord record,
                                      SzFlag? flags,
                                      Type? expectedExceptionType)
     {
@@ -569,7 +570,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
                 if (expectedExceptionType != null)
                 {
-                    Fail("Unexpectedly succeeded in adding record: " + testData);
+                    Fail("Unexpectedly succeeded in getting record preview: " + testData);
                 }
 
                 // parse the result as JSON and check that it parses
@@ -578,7 +579,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 if (flags == null || flags == SzNoFlags)
                 {
                     Assert.That(jsonObject?.Count, Is.EqualTo(0),
-                                "Unexpected return properties on preprocess: "
+                                "Unexpected return properties on record preview: "
                                 + testData + ", " + result);
                 }
                 else
@@ -610,6 +611,10 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 }
 
             }
+            catch (AssertionException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 String description = "";
@@ -626,7 +631,7 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
                 if (expectedExceptionType == null)
                 {
-                    Fail("Unexpectedly failed preprocessing a record: "
+                    Fail("Unexpectedly failed getting a record preview: "
                          + testData + ", " + description, e);
 
                 }
@@ -634,15 +639,15 @@ internal class SzCoreEngineWriteTest : AbstractTest
                 {
                     Assert.IsInstanceOf(
                         expectedExceptionType, e,
-                        "preprocessRecord() failed with an unexpected exception type: "
+                        "GetRecordPreview() failed with an unexpected exception type: "
                         + testData + ", " + description);
                 }
             }
         });
     }
 
-    [Test, TestCaseSource(nameof(GetPreprocessRecordDefaultArguments))]
-    public void TestPreprocessRecordDefaults(SzRecord record)
+    [Test, TestCaseSource(nameof(GetRecordPreviewDefaultArguments))]
+    public void TestRecordPreviewDefaults(SzRecord record)
     {
         this.PerformTest(() =>
         {
