@@ -10,6 +10,7 @@ using NUnit.Framework.Internal;
 
 using Senzing.Sdk;
 using Senzing.Sdk.Core;
+using Senzing.Sdk.Tests.Util;
 
 using static System.StringComparison;
 
@@ -316,6 +317,24 @@ internal class SzCoreEngineWriteTest : AbstractTest
         }
     }
 
+    private SemanticVersion? senzingVersion;
+
+    private SemanticVersion SenzingVersion
+    {
+        get
+        {
+            if (this.senzingVersion != null)
+            {
+                return this.senzingVersion;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "The senzing version is null");
+            }
+        }
+    }
+
     [OneTimeSetUp]
     public void InitializeEnvironment()
     {
@@ -372,6 +391,8 @@ internal class SzCoreEngineWriteTest : AbstractTest
                                     .Settings(settings)
                                     .VerboseLogging(false)
                                     .Build();
+
+        this.senzingVersion = GetSenzingVersion(this.env);
     }
 
     public long GetEntityID(string dataSourceCode, string recordID)
@@ -514,19 +535,24 @@ internal class SzCoreEngineWriteTest : AbstractTest
 
         Iterator<SzFlag?> flagSetIter = GetCircularIterator(RecordFlagSets);
 
+        SemanticVersion modern = new SemanticVersion("4.2.0");
         for (int index = 0; index < count; index++)
         {
             keyIter.MoveNext();
             recordIter.MoveNext();
             (string dataSourceCode, string recordID) key = keyIter.Current;
             SzRecord record = recordIter.Current;
-            Type? exceptionType = ((UnknownDataSource.Equals(key.dataSourceCode, Ordinal))
-                                    ? typeof(SzUnknownDataSourceException) : null);
+            Func<SzCoreEngineWriteTest, Type?>? exceptionTypeFunc
+                = (!UnknownDataSource.Equals(key.dataSourceCode, Ordinal))
+                    ? null
+                    : ((SzCoreEngineWriteTest t) =>
+                        (t.SenzingVersion.CompareTo(modern) >= 0)
+                        ? typeof(SzUnknownDataSourceException) : null);
             SzFlag? flagSet = flagSetIter.Next();
 
             record = new SzRecord(key, record);
 
-            result.Add(new object?[] { record, flagSet, exceptionType });
+            result.Add(new object?[] { record, flagSet, exceptionTypeFunc });
         }
 
         return result;
@@ -551,10 +577,14 @@ internal class SzCoreEngineWriteTest : AbstractTest
     }
 
     [Test, TestCaseSource(nameof(GetRecordPreviewArguments)), Order(5)]
-    public void TestGetRecordPreview(SzRecord record,
-                                     SzFlag? flags,
-                                     Type? expectedExceptionType)
+    public void TestGetRecordPreview(
+        SzRecord record,
+        SzFlag? flags,
+        Func<SzCoreEngineWriteTest, Type?>? expectedExceptionTypeFunc)
     {
+        Type? expectedExceptionType = (expectedExceptionTypeFunc == null)
+            ? null : expectedExceptionTypeFunc(this);
+
         String testData = "record=[ " + record + " ], withFlags=[ "
             + SzRecordFlags.FlagsToString(flags)
             + " ], expectedException=[ " + expectedExceptionType + " ]";
