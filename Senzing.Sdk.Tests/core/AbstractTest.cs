@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 
 using Senzing.Sdk.Core;
+using Senzing.Sdk.Tests.Util;
 
 using static System.StringComparison;
 
@@ -509,6 +510,47 @@ internal abstract class AbstractTest
     protected virtual DirectoryInfo CreateTestRepoDirectory(string testName)
     {
         return CreateTestRepoDirectory(this.GetType(), testName);
+    }
+
+    /// <summary>
+    /// Obtains the Senzing version number using the specified 
+    /// <see cref="SzEnvironment"/> and returns it as an instance of 
+    /// <see cref="SemanticVersion"/>.
+    /// </summary>
+    /// 
+    /// <param name="env">The <see cref="SzEnvironment"/> to use.</param>
+    /// 
+    /// <returns>The <see cref="SemanticVersion"/> obtained</returns>
+    /// 
+    /// <exception cref="ArgumentNullException">
+    /// If the specified <see cref="SzEnvironment"/> is null.
+    /// </exception>
+    /// 
+    /// <exception cref="InvalidDataException">
+    /// If the version number cannot be parsed.
+    /// </exception>
+    /// 
+    /// <exception cref="SzException">
+    /// If a Senzing SDK failure occurs.
+    /// </exception>
+    public static SemanticVersion GetSenzingVersion(SzEnvironment env)
+    {
+        ArgumentNullException.ThrowIfNull(env, "The SzEnvironment cannot be null");
+        SzProduct product = env.GetProduct();
+
+        String versionJson = product.GetVersion();
+
+        JsonObject? jsonObj = ParseJsonObject(versionJson);
+
+        string? version = jsonObj?["VERSION"]?.GetValue<string>();
+
+        if (version == null)
+        {
+            throw new InvalidDataException(
+                "Did not find Senzing VERSION in JSON: " + versionJson);
+        }
+
+        return new SemanticVersion(version);
     }
 
     /// <summary>
