@@ -74,7 +74,7 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
             List<int> normalized = new List<int>(this.versionParts.Count - count);
             for (int index = 0; index < this.versionParts.Count - count; index++)
             {
-                normalized[index] = this.versionParts[index];
+                normalized.Add(this.versionParts[index]);
             }
 
 
