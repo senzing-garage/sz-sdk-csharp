@@ -3,15 +3,23 @@
 
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    assignees:
+      - kernelsam
+    cooldown:
+      default-days: 21
+    directory: /
     schedule:
-      interval: "daily"
-  - package-ecosystem: "nuget"
+      interval: daily
+  - package-ecosystem: nuget
+    assignees:
+      - barrycaceres
+    cooldown:
+      default-days: 21
     directories:
       - /Senzing.Sdk.Demo/
       - /Senzing.Sdk.TestHelpers/
       - /Senzing.Sdk.Tests/
       - /Senzing.Sdk/
     schedule:
-      interval: "daily"
+      interval: daily
