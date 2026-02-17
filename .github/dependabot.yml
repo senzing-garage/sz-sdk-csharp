@@ -1,4 +1,3 @@
----
 version: 2
 updates:
   - package-ecosystem: "github-actions"
@@ -21,9 +20,9 @@ updates:
     cooldown:
       default-days: 21
     directories:
-      - "/Senzing.Sdk.Demo/"
-      - "/Senzing.Sdk.TestHelpers/"
-      - "/Senzing.Sdk.Tests/"
-      - "/Senzing.Sdk/"
+      - /Senzing.Sdk.Demo/
+      - /Senzing.Sdk.TestHelpers/
+      - /Senzing.Sdk.Tests/
+      - /Senzing.Sdk/
     schedule:
       interval: "daily"
