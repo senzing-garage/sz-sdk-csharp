@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0] - 2026-03-03
+
+### Changed in 4.3.0
+
+- Updated macOS library path documentation in README.md from
+  `/Library/Senzing/er/lib:/Library/Senzing/er/lib/macos` to `/opt/homebrew/lib`.
+
+## [4.2.1] - 2026-02-19
+
+### Changed in 4.2.1
+
+- Standardized GitHub workflows for build-resources v4.
+- Fixed Slack notifications for matrix jobs, added assignees and cooldown
+  to dependabot configuration.
+
+## [4.2.0] - 2026-01-28
+
+### Changed in 4.2.0
+
+- Refactored `SzCoreConfig.ToString()` implementation into `SzCoreUtilities`.
+- Updated `SzExceptionMapper` with latest error code mappings.
+- Updated `SzEngine.GetRecordPreview` unit tests and documentation for
+  Senzing 4.2.0 behavior.
+
 ## [4.1.0] - 2025-10-13
 
 ### Changed in 4.1.0
