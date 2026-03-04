@@ -35,7 +35,7 @@ matches the native library version.
     - macOS: Set `DYLD_LIBRARY_PATH`:
 
         ```console
-        export DYLD_LIBRARY_PATH=/Library/Senzing/er/lib:/Library/Senzing/er/lib/macos:$DYLD_LIBRARY_PATH
+        export DYLD_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_LIBRARY_PATH
         ```
 
     - Windows: Set `Path`:
