@@ -40,7 +40,7 @@ jobs:
         run: |
           SENZING_PATH="${HOME}/senzing"
           {
-            echo "DYLD_LIBRARY_PATH=${SENZING_PATH}/er/lib"
+            echo "DYLD_LIBRARY_PATH=${SENZING_PATH}/er/lib:/opt/homebrew/lib"
           } >> "$GITHUB_ENV"
 
       - name: Build with DotNet
