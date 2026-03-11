@@ -267,7 +267,8 @@ namespace Senzing.Sdk
                 | SzFlag.SzEntityIncludeRelatedRecordData
                 | SzFlag.SzEntityIncludeInternalFeatures
                 | SzFlag.SzEntityIncludeFeatureStats
-                | SzFlag.SzIncludeMatchKeyDetails;
+                | SzFlag.SzIncludeMatchKeyDetails
+                | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -389,7 +390,9 @@ namespace Senzing.Sdk
         ///
         /// See also: <seealso cref="SzFlagUsageGroup.SzHowFlags"/>
         public const SzFlag SzHowAllFlags
-            = SzFlag.SzIncludeMatchKeyDetails | SzFlag.SzIncludeFeatureScores;
+            = SzFlag.SzIncludeMatchKeyDetails
+                | SzFlag.SzIncludeFeatureScores
+                | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
