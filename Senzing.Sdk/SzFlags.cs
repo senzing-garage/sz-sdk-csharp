@@ -403,7 +403,6 @@ namespace Senzing.Sdk
         /// See also: <seealso cref="SzFlagUsageGroup.SzVirtualEntityFlags"/>
         public const SzFlag SzVirtualEntityAllFlags
             = SzFlag.SzEntityIncludeAllFeatures
-                  | SzFlag.SzEntityIncludeAllFeatures
                   | SzFlag.SzEntityIncludeRepresentativeFeatures
                   | SzFlag.SzEntityIncludeEntityName
                   | SzFlag.SzEntityIncludeRecordSummary
