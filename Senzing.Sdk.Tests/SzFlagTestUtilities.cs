@@ -22,46 +22,6 @@ internal static class SzFlagTestUtilities
 
     /// <summary>
     /// Gets the <see cref="SemanticVersion"/> from the
-    /// <see cref="SinceAttribute"/> on the specified <see cref="SzFlags"/>
-    /// field, or <see cref="DefaultSince"/> if no annotation is present.
-    /// </summary>
-    ///
-    /// <param name="fieldName">
-    /// The name of the field on <see cref="SzFlags"/>.
-    /// </param>
-    ///
-    /// <returns>
-    /// The <see cref="SemanticVersion"/> from the
-    /// <see cref="SinceAttribute"/>, or <see cref="DefaultSince"/>
-    /// if not annotated.
-    /// </returns>
-    public static SemanticVersion GetSinceVersion(string fieldName)
-    {
-        try
-        {
-            Type flagsType = typeof(SzFlags);
-            FieldInfo? field = flagsType.GetField(
-                fieldName, BindingFlags.Public | BindingFlags.Static);
-            if (field == null)
-            {
-                return DefaultSince;
-            }
-            object[] attrs = field.GetCustomAttributes(
-                typeof(SinceAttribute), false);
-            if (attrs.Length > 0)
-            {
-                return new SemanticVersion(((SinceAttribute)attrs[0]).version);
-            }
-        }
-        catch (Exception)
-        {
-            // fall through
-        }
-        return DefaultSince;
-    }
-
-    /// <summary>
-    /// Gets the <see cref="SemanticVersion"/> from the
     /// <see cref="SinceAttribute"/> on the specified <see cref="SzFlag"/>
     /// field (enum constant), or <see cref="DefaultSince"/> if no
     /// annotation is present.
@@ -96,7 +56,8 @@ internal static class SzFlagTestUtilities
         }
         catch (Exception)
         {
-            // fall through
+            // intentional: reflection may fail for unknown or synthetic fields;
+            // fall back to DefaultSince so tests remain tolerant
         }
         return DefaultSince;
     }

@@ -86,6 +86,8 @@ internal class SzFlagsTest : AbstractTest
         }
         catch (Exception)
         {
+            // intentional: if szBuildVersion.json is missing or unreadable,
+            // fall back to 0.0.0 so all [Since] checks trigger tolerance
             this.senzingBuildVersion = new SemanticVersion("0.0.0");
         }
     }
