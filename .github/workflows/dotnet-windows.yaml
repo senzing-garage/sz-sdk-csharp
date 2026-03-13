@@ -74,7 +74,7 @@ jobs:
           if ( $? -eq $false ) { exit 1 }
           $Env:filter = (Get-Date -Format "yyyy-MM-dd")
           $Env:results_folder = (Get-ChildItem -Path ${{ github.workspace }}/Senzing.Sdk.Tests/TestResults/ -Depth 0 -Directory | Where-Object { $_.Name -notmatch "$Env:filter" })
-          cp $Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${SENZING_SDK_VERSION}.xml
+          cp $Env:results_folder/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.$env:SENZING_SDK_VERSION.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v6
