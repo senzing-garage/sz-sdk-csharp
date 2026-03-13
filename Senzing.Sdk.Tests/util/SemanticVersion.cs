@@ -1,15 +1,53 @@
 namespace Senzing.Sdk.Tests.Util;
 
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.Text;
 
 /// <summary>
 /// Represents a semantic version described as a <c>string</c> containing
-/// integer numbers separated by decimal points (e.g.: "1.4.5").
+/// integer numbers separated by decimal points (e.g.: "1.4.5"), optionally
+/// followed by a pre-release suffix of <c>"-alpha"</c>, <c>"-beta"</c>,
+/// or <c>"-rc"</c> with additional dot-separated version parts (e.g.:
+/// "2.0.0-alpha.2.0", "2.0.0-beta.3.2", "2.0.0-rc.2.1").  Pre-release
+/// suffixes are normalized to lowercase on construction (e.g.: <c>"RC"</c>
+/// becomes <c>"rc"</c>).
 /// </summary>
 internal sealed class SemanticVersion : IComparable<SemanticVersion>
 {
+    /// <summary>
+    /// The value used to represent a release candidate pre-release suffix.
+    /// </summary>
+    private const int RcValue = -1;
+
+    /// <summary>
+    /// The value used to represent a beta pre-release suffix.
+    /// </summary>
+    private const int BetaValue = -2;
+
+    /// <summary>
+    /// The value used to represent an alpha pre-release suffix.
+    /// </summary>
+    private const int AlphaValue = -3;
+
+    /// <summary>
+    /// The separator characters used to split the version string.
+    /// </summary>
+    private static readonly char[] Separators = new char[] { '-', '.' };
+
+    /// <summary>
+    /// A read-only dictionary of pre-release integer sentinel values to
+    /// their corresponding string suffix representations for use in
+    /// reconstructing the version string via <see cref="ToString()"/>.
+    /// </summary>
+    private static readonly Dictionary<int, string> SuffixMap
+        = new Dictionary<int, string>
+        {
+            { RcValue,    "-rc" },
+            { BetaValue,  "-beta" },
+            { AlphaValue, "-alpha" }
+        };
+
     /// <summary>
     /// The <c>List</c> of version parts.
     /// </summary>
@@ -28,16 +66,19 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
 
     /// <summary>
     /// Constructs with the specified version string (e.g.: "1.4.5").
+    /// Pre-release suffixes (<c>"alpha"</c>, <c>"beta"</c>, <c>"rc"</c>)
+    /// are supported and normalized to lowercase (e.g.: <c>"RC"</c> becomes
+    /// <c>"rc"</c>).
     /// </summary>
-    /// 
+    ///
     /// <param name="versionString">
     /// The version string with which to construct.
     /// </param>
-    /// 
+    ///
     /// <exception cref="ArgumentNullException">
     /// If the specified parameter is <c>null</c>.
     /// </exception>
-    /// 
+    ///
     /// <exception cref="ArgumentException">
     /// If the specified parameter is not properly formatted.
     /// </exception>
@@ -48,17 +89,46 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
 
         try
         {
-            string[] tokens = versionString.Split(".");
+            string[] tokens = versionString.Split(Separators);
             this.versionParts = new List<int>(tokens.Length);
+            bool hasSuffix = false;
             foreach (string token in tokens)
             {
-                int part = Convert.ToInt32(token, 10);
-                if (part < 0)
+                string upperToken = token.ToUpperInvariant();
+                switch (upperToken)
                 {
-                    throw new ArgumentOutOfRangeException(
-                        "Negative version part is not allowed: " + part);
+                    case "ALPHA":
+                    case "BETA":
+                    case "RC":
+                        if (hasSuffix)
+                        {
+                            throw new ArgumentException(
+                                "Multiple pre-release suffixes are not "
+                                + "allowed: " + versionString);
+                        }
+                        if (this.versionParts.Count == 0)
+                        {
+                            throw new ArgumentException(
+                                "Pre-release suffix must follow at least "
+                                + "one numeric version part: "
+                                + versionString);
+                        }
+                        hasSuffix = true;
+                        this.versionParts.Add(
+                            upperToken == "ALPHA" ? AlphaValue
+                            : upperToken == "BETA" ? BetaValue
+                            : RcValue);
+                        break;
+                    default:
+                        int part = Convert.ToInt32(token, 10);
+                        if (part < 0)
+                        {
+                            throw new ArgumentOutOfRangeException(
+                                "Negative version part is not allowed: " + part);
+                        }
+                        this.versionParts.Add(part);
+                        break;
                 }
-                this.versionParts.Add(part);
             }
 
             // create a normalized list of version parts by removing trailing zeroes
@@ -77,28 +147,11 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
                 normalized.Add(this.versionParts[index]);
             }
 
-
             // set the version strings
-            StringBuilder versionSB = new StringBuilder();
-            String prefix = "";
-            foreach (int part in this.versionParts)
-            {
-                versionSB.Append(prefix).Append(part);
-                prefix = ".";
-            }
-            this.versionString = versionSB.ToString();
-
-            StringBuilder normalizedSB = new StringBuilder();
-            prefix = "";
-            foreach (int part in normalized)
-            {
-                normalizedSB.Append(prefix).Append(part);
-                prefix = ".";
-            }
-            this.normalizedString = normalizedSB.ToString();
-
+            this.versionString = BuildVersionString(this.versionParts);
+            this.normalizedString = BuildVersionString(normalized);
         }
-        catch (Exception e)
+        catch (Exception e) when (e is not ArgumentException)
         {
             throw new ArgumentException(
                 "Invalid semantic version string: " + versionString, e);
@@ -106,11 +159,38 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
     }
 
     /// <summary>
+    /// Builds a version string from the specified list of version parts,
+    /// converting pre-release sentinel values back to their string suffixes.
+    /// </summary>
+    ///
+    /// <param name="parts">The list of version parts.</param>
+    /// <returns>The version string.</returns>
+    private static string BuildVersionString(List<int> parts)
+    {
+        StringBuilder sb = new StringBuilder();
+        string prefix = "";
+        foreach (int part in parts)
+        {
+            if (SuffixMap.TryGetValue(part, out string? suffix))
+            {
+                sb.Append(suffix);
+                prefix = ".";
+            }
+            else
+            {
+                sb.Append(prefix).Append(part);
+                prefix = ".";
+            }
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>
     /// Overridden to return <c>true</c> if and only if the specified parameter
     /// is a non-null reference to an object of the same class with equivalent
     /// version parts.
     /// </summary>
-    /// 
+    ///
     /// <param name="obj">The object to compare with.</param>
     ///
     /// <returns>
@@ -138,7 +218,7 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
     /// Implemented to return a hash code that is consistent with the
     /// <see cref="Equals"/> implementation.
     /// </summary>
-    /// 
+    ///
     /// <returns>The hash code for this instance.</returns>
     public override sealed int GetHashCode()
     {
@@ -153,9 +233,6 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
         ArgumentNullException.ThrowIfNull(
             other, "The specified parameter cannot be null");
 
-        IEnumerator<int> enum1 = this.versionParts.GetEnumerator();
-        IEnumerator<int> enum2 = other.versionParts.GetEnumerator();
-
         // iterate over the parts
         int max = Math.Max(this.versionParts.Count, other.versionParts.Count);
         for (int index = 0; index < max; index++)
@@ -165,8 +242,8 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
             int part2 = (index < other.versionParts.Count)
                 ? other.versionParts[index] : 0;
 
-            // get the diff between the parts
-            int diff = part1 - part2;
+            // compare the parts
+            int diff = part1.CompareTo(part2);
 
             // if the diff is non-zero then return it
             if (diff != 0)
@@ -184,7 +261,7 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
     /// Returns the version string for this instance. This is equivalent to
     /// calling <see cref="ToString(bool)"/> with <c>false</c> as the parameter.
     /// </summary>
-    /// 
+    ///
     /// <returns>The version string for this instance.</returns>
     public override string ToString()
     {
@@ -195,11 +272,11 @@ internal sealed class SemanticVersion : IComparable<SemanticVersion>
     /// Returns a version string for this instance that is optionally normalized
     /// to remove trailing zeroes.
     /// </summary>
-    /// 
+    ///
     /// <param name="normalized">
     /// <c>true</c> if trailing zeroes should be stripped, otherwise <c>false</c>.
     /// </param>
-    /// 
+    ///
     /// <returns>
     /// A <c>string</c> representation of this instance that is optionally
     /// normalized to remove trailing zeroes.

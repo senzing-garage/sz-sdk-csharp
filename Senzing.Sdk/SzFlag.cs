@@ -1373,6 +1373,56 @@ namespace Senzing.Sdk
         /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
         /// </summary>
         [SzFlagUsageGroups(SzFlagUsageGroupSets.SzWhySearchSet)]
-        SzSearchIncludeRequestDetails = (1L << 38)
+        SzSearchIncludeRequestDetails = (1L << 38),
+
+        /// <summary>
+        /// The bitwise flag for including feature hashes when retrieving
+        /// records and entities.
+        /// <para>
+        /// This flag belongs to the following usage groups:
+        /// <list type="bullet">
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzRecordPreviewFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzEntityFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzSearchFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzExportFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindPathFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzFindNetworkFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordsFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyEntitiesFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhyRecordInEntityFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzWhySearchFlags"/></description>
+        ///    </item>
+        ///    <item>
+        ///      <description><see cref="SzFlagUsageGroup.SzVirtualEntityFlags"/></description>
+        ///    </item>
+        /// </list>
+        /// </para>
+        /// See also: <seealso href="https://docs.senzing.com/flags/index.html"/>
+        /// </summary>
+        [Since("4.3.0")]
+        [SzFlagUsageGroups(SzFlagUsageGroupSets.SzRecordPreviewSet)]
+        SzIncludeFeatureHashes = (1L << 41)
     }
 }

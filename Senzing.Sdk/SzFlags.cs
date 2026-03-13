@@ -218,7 +218,8 @@ namespace Senzing.Sdk
                 | SzFlag.SzEntityIncludeRecordFeatureStats
                 | SzFlag.SzEntityIncludeRecordDates
                 | SzFlag.SzEntityIncludeRecordJsonData
-                | SzFlag.SzEntityIncludeRecordUnmappedData;
+                | SzFlag.SzEntityIncludeRecordUnmappedData
+                | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -233,7 +234,8 @@ namespace Senzing.Sdk
                 | SzFlag.SzEntityIncludeRecordFeatureDetails
                 | SzFlag.SzEntityIncludeRecordFeatureStats
                 | SzFlag.SzEntityIncludeRecordJsonData
-                | SzFlag.SzEntityIncludeRecordUnmappedData;
+                | SzFlag.SzEntityIncludeRecordUnmappedData
+                | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -267,7 +269,8 @@ namespace Senzing.Sdk
                 | SzFlag.SzEntityIncludeRelatedRecordData
                 | SzFlag.SzEntityIncludeInternalFeatures
                 | SzFlag.SzEntityIncludeFeatureStats
-                | SzFlag.SzIncludeMatchKeyDetails;
+                | SzFlag.SzIncludeMatchKeyDetails
+                | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The <see cref="SzFlag"/> value that aggregates all <see cref="SzFlag"/> 
@@ -400,7 +403,6 @@ namespace Senzing.Sdk
         /// See also: <seealso cref="SzFlagUsageGroup.SzVirtualEntityFlags"/>
         public const SzFlag SzVirtualEntityAllFlags
             = SzFlag.SzEntityIncludeAllFeatures
-                  | SzFlag.SzEntityIncludeAllFeatures
                   | SzFlag.SzEntityIncludeRepresentativeFeatures
                   | SzFlag.SzEntityIncludeEntityName
                   | SzFlag.SzEntityIncludeRecordSummary
@@ -414,7 +416,8 @@ namespace Senzing.Sdk
                   | SzFlag.SzEntityIncludeRecordFeatureDetails
                   | SzFlag.SzEntityIncludeRecordFeatureStats
                   | SzFlag.SzEntityIncludeInternalFeatures
-                  | SzFlag.SzEntityIncludeFeatureStats;
+                  | SzFlag.SzEntityIncludeFeatureStats
+                  | SzFlag.SzIncludeFeatureHashes;
 
         /// <summary>
         /// The aggregate <see cref="SzFlag"/> for export functionality to indicate
