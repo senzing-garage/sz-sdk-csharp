@@ -14,14 +14,23 @@ on:
 permissions: {}
 
 jobs:
+
+  sdk-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      senzingsdk-versions: ${{ steps.cfg.outputs.senzingsdk-versions }}
+    steps:
+      - id: cfg
+        uses: senzing-factory/build-resources/sdk-versions@v4
   dotnet-windows:
+    needs: sdk-versions
     permissions:
       contents: read
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        senzingsdk-version: [production-v4, staging-v4]
+        senzingsdk-version: ${{ fromJSON(needs.sdk-versions.outputs.senzingsdk-versions) }}
         include:
           - dotnet-version: "8"
 
@@ -73,13 +82,13 @@ jobs:
 
   coverage:
     name: Coverage
-    needs: dotnet-windows
+    needs: [sdk-versions, dotnet-windows]
     permissions:
       pull-requests: write
     strategy:
       fail-fast: false
       matrix:
-        senzingsdk-version: [production-v4, staging-v4]
+        senzingsdk-version: ${{ fromJSON(needs.sdk-versions.outputs.senzingsdk-versions) }}
     uses: senzing-factory/build-resources/.github/workflows/csharp-coverage-comment.yaml@v4
     with:
       filename: coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
