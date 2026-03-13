@@ -130,7 +130,8 @@ internal class SemanticVersionTest
     [TestCase("1.2.-3")]
     public void TestInvalidInputThrows(string input)
     {
-        Assert.Throws<ArgumentException>(() => new SemanticVersion(input));
+        Assert.That(() => new SemanticVersion(input),
+            Throws.InstanceOf<ArgumentException>());
     }
 
     [Test]
