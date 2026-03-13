@@ -10,7 +10,6 @@ on:
 permissions: {}
 
 jobs:
-
   sdk-versions:
     runs-on: ubuntu-latest
     outputs:
@@ -18,6 +17,7 @@ jobs:
     steps:
       - id: cfg
         uses: senzing-factory/build-resources/sdk-versions@v4
+
   dotnet-darwin:
     needs: sdk-versions
     permissions:
@@ -62,12 +62,14 @@ jobs:
           dotnet build Senzing.Sdk.Tests
 
       - name: Run DotNet tests
+        env:
+          SENZING_SDK_VERSION: ${{ matrix.senzingsdk-version }}
         run: |
           dotnet build Senzing.Sdk.TestHelpers
           dotnet test --no-build Senzing.Sdk.Tests --logger trx --collect:"XPlat Code Coverage"
           filter=$(date +%F)
           results_folder=$(find Senzing.Sdk.Tests/TestResults/ ! -name "*$filter*" -type d -maxdepth 1 | awk -F '/' '{print $NF}' | tr -d '\n')
-          cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${{ matrix.senzingsdk-version }}.xml
+          cp Senzing.Sdk.Tests/TestResults/"$results_folder"/coverage.cobertura.xml ${{ github.workspace }}/coverage.cobertura.${SENZING_SDK_VERSION}.xml
 
       - name: Store coverage file
         uses: actions/upload-artifact@v6
