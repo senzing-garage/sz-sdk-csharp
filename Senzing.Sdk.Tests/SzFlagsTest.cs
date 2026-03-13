@@ -11,8 +11,11 @@ using Senzing.Sdk;
 using Senzing.Sdk.Core;
 using Senzing.Sdk.Tests.Core;
 
+using Senzing.Sdk.Tests.Util;
+
 using static System.StringComparison;
 using static Senzing.Sdk.Tests.SzFlagsMetaData;
+using static Senzing.Sdk.Tests.SzFlagTestUtilities;
 using static Senzing.Sdk.Utilities;
 
 [TestFixture]
@@ -34,9 +37,14 @@ internal class SzFlagsTest : AbstractTest
     private readonly Dictionary<string, SzFlag> flagsMap = new Dictionary<string, SzFlag>();
 
     /// <summary>
-    /// The <see cref="SzFlagsMetaData"/> describing all the flags. 
+    /// The <see cref="SzFlagsMetaData"/> describing all the flags.
     /// </summary>
     private SzFlagsMetaData? flagsMetaData;
+
+    /// <summary>
+    /// The <see cref="SemanticVersion"/> for the installed Senzing build.
+    /// </summary>
+    private SemanticVersion? senzingBuildVersion;
 
     [OneTimeSetUp]
     public void ReflectFlags()
@@ -64,12 +72,21 @@ internal class SzFlagsTest : AbstractTest
         try
         {
             this.flagsMetaData = new SzFlagsMetaData();
-
         }
         catch (Exception e)
         {
             Fail(e);
             throw;
+        }
+
+        // get the installed Senzing build version
+        try
+        {
+            this.senzingBuildVersion = GetSenzingBuildVersion();
+        }
+        catch (Exception)
+        {
+            this.senzingBuildVersion = new SemanticVersion("0.0.0");
         }
     }
 
@@ -189,15 +206,30 @@ internal class SzFlagsTest : AbstractTest
 
                 SzFlag groupFlagsValue = SzFlags.GetFlags(group);
 
+                // compute sinceAdjustment for flags newer than installed runtime
+                long sinceAdjustment = 0L;
+                ReadOnlyDictionary<string, SzFlag> groupFlagsByName
+                    = SzFlags.GetFlagsByName(group);
+                foreach (KeyValuePair<string, SzFlag> kvp in groupFlagsByName)
+                {
+                    if (!metaMap.ContainsKey(kvp.Key)
+                        && this.senzingBuildVersion != null
+                        && GetSinceVersionForSzFlag(kvp.Key).CompareTo(
+                            this.senzingBuildVersion) > 0)
+                    {
+                        sinceAdjustment |= (long)kvp.Value;
+                    }
+                }
 
-                Assert.That(((long)value), Is.EqualTo(metaGroupValue),
+                Assert.That(((long)value) & ~sinceAdjustment, Is.EqualTo(metaGroupValue),
                          "Meta value for group (" + group + ") has a different "
                         + "primitive long value (" + HexFormat(metaGroupValue)
                         + " / " + sb.ToString()
                         + ") than expected (" + HexFormat((long)value)
                         + " / " + group.FlagsToString(value) + "): " + name);
 
-                Assert.That(groupFlagsValue, Is.EqualTo(value),
+                Assert.That((long)groupFlagsValue & ~sinceAdjustment,
+                            Is.EqualTo((long)value & ~sinceAdjustment),
                             "Value for group (" + group + ") has a different "
                             + "primitive long value ("
                             + HexFormat((long)groupFlagsValue)
@@ -230,6 +262,15 @@ internal class SzFlagsTest : AbstractTest
             SzFlag value = args.value;
 
             SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+
+            // version tolerance: skip if flag is newer than installed runtime
+            if (metaData == null
+                && this.senzingBuildVersion != null
+                && GetSinceVersionForSzFlag(name).CompareTo(
+                    this.senzingBuildVersion) > 0)
+            {
+                return;
+            }
 
             Assert.That(metaData, Is.Not.Null,
                 "Enum flag constant (" + name + ") not found in meta-data");
@@ -336,6 +377,16 @@ internal class SzFlagsTest : AbstractTest
             SzFlag flag = args.flag;
 
             SzFlagMetaData? metaData = this.flagsMetaData?.GetFlag(name);
+
+            // version tolerance: skip if flag is newer than installed runtime
+            if (metaData == null
+                && this.senzingBuildVersion != null
+                && GetSinceVersionForSzFlag(name).CompareTo(
+                    this.senzingBuildVersion) > 0)
+            {
+                return;
+            }
+
             if (metaData == null)
             {
                 Fail("Meta data not found for SDK enum flag: " + name);
@@ -471,6 +522,14 @@ internal class SzFlagsTest : AbstractTest
             }
             foreach (string flagName in flagsByName.Keys)
             {
+                // version tolerance: skip if flag is newer than installed runtime
+                if (!metaFlags.ContainsKey(flagName)
+                    && this.senzingBuildVersion != null
+                    && GetSinceVersionForSzFlag(flagName).CompareTo(
+                        this.senzingBuildVersion) > 0)
+                {
+                    continue;
+                }
                 Assert.That(metaFlags.ContainsKey(flagName),
                          "SDK flags for group name (" + group + ") contains flag ("
                          + flagName + ") NOT found in meta data: "

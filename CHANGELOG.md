@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed in 4.3.0
 
+- Added `SzIncludeFeatureHashes` flag (`1L << 41`) for including feature hashes
+  when retrieving records and entities (available in Senzing 4.3.0+).
+- Added `[Since]` attribute and version-aware test tolerance so that flag tests
+  pass against both production and staging Senzing builds.
+- Enhanced `SemanticVersion` to support pre-release suffixes (alpha, beta, rc).
 - Updated macOS library path documentation in README.md from
   `/Library/Senzing/er/lib:/Library/Senzing/er/lib/macos` to `/opt/homebrew/lib`.
 

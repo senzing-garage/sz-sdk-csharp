@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 
 using Senzing.Sdk.Core;
+using Senzing.Sdk.Tests.NativeSzApi;
 using Senzing.Sdk.Tests.Util;
 
 using static System.StringComparison;
@@ -513,23 +514,69 @@ internal abstract class AbstractTest
     }
 
     /// <summary>
-    /// Obtains the Senzing version number using the specified 
-    /// <see cref="SzEnvironment"/> and returns it as an instance of 
-    /// <see cref="SemanticVersion"/>.
+    /// Gets the Senzing version from the <c>szBuildVersion.json</c>
+    /// file of the Senzing installation returning the value as a
+    /// <see cref="SemanticVersion"/> instance.  This does not require the
+    /// Senzing environment to be initialized.
     /// </summary>
-    /// 
+    ///
+    /// <returns>The <see cref="SemanticVersion"/> for Senzing.</returns>
+    ///
+    /// <exception cref="InvalidOperationException">
+    /// If the Senzing install location cannot be found.
+    /// </exception>
+    ///
+    /// <exception cref="InvalidDataException">
+    /// If the version file cannot be parsed.
+    /// </exception>
+    public static SemanticVersion GetSenzingBuildVersion()
+    {
+        InstallLocations? locations = InstallLocations.FindLocations();
+        if (locations == null)
+        {
+            throw new InvalidOperationException(
+                "Failed to find Senzing install location.");
+        }
+        DirectoryInfo? baseDir = locations.InstallDirectory;
+        if (baseDir == null)
+        {
+            throw new InvalidOperationException(
+                "Failed to find base Senzing install directory.");
+        }
+        string versionFilePath = Path.Combine(baseDir.FullName, "szBuildVersion.json");
+        if (!File.Exists(versionFilePath))
+        {
+            // Fall back to a very old version so all @Since checks trigger tolerance
+            return new SemanticVersion("0.0.0");
+        }
+        string versionJson = File.ReadAllText(versionFilePath, UTF8);
+        JsonObject? jsonObj = ParseJsonObject(versionJson);
+        string? version = jsonObj?["VERSION"]?.GetValue<string>();
+        if (version == null)
+        {
+            throw new InvalidDataException(
+                "Did not find VERSION in szBuildVersion.json: " + versionJson);
+        }
+        return new SemanticVersion(version);
+    }
+
+    /// <summary>
+    /// Gets the Senzing version from the specified <see cref="SzEnvironment"/>
+    /// and returns the value as a <see cref="SemanticVersion"/> instance.
+    /// </summary>
+    ///
     /// <param name="env">The <see cref="SzEnvironment"/> to use.</param>
-    /// 
+    ///
     /// <returns>The <see cref="SemanticVersion"/> obtained</returns>
-    /// 
+    ///
     /// <exception cref="ArgumentNullException">
     /// If the specified <see cref="SzEnvironment"/> is null.
     /// </exception>
-    /// 
+    ///
     /// <exception cref="InvalidDataException">
     /// If the version number cannot be parsed.
     /// </exception>
-    /// 
+    ///
     /// <exception cref="SzException">
     /// If a Senzing SDK failure occurs.
     /// </exception>
